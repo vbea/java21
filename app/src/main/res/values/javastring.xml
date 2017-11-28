@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="java_username">用户名：
+	</string>
+	<string name="java_uid">帐号：
+	</string>
+	<string name="java_psd">密码：
+	</string>
+	<string name="java_pasd">确认密码：
+	</string>
+	<string name="java_email">邮箱：
+	</string>
+	<string name="java_emails">绑定邮箱：
+	</string>
+	<string name="java_nick">昵称：
+	</string>
+	<string name="java_sign">注册
+	</string>
+	<string name="java_login">登录
+	</string>
+	<string name="java_qqlogin">QQ登录
+	</string>
+	<string name="java_gender">性别：
+	</string>
+	<string name="java_birthday">生日：
+	</string>
+	<string name="java_level">等级：
+	</string>
+	<string name="java_role">用户组：
+	</string>
+	<string name="java_address">地址：
+	</string>
+	<string name="java_mobile">绑定手机：
+	</string>
+	<string name="java_phone">手机：
+	</string>
+	<string name="java_qq">绑定QQ：
+	</string>
+	<string name="java_binding">绑定手机
+	</string>
+	<string name="java_mark">个性签名：
+	</string>
+	<string name="sign">注册
+	</string>
+	<string name="logout">注销
+	</string>
+	<string name="hint_login">用户名、手机或邮箱
+	</string>
+	<string name="hint_user">数字或字母，3~11个字符
+	</string>
+	<string name="hint_email">找回密码的凭证
+	</string>
+	<string name="forgetpsd">找回密码
+	</string>
+	<string name="resetpsd">重置密码
+	</string>
+</resources>
+	

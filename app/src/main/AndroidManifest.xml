@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.vbea.java21" >
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+		android:supportsRtl="true"
+		android:theme="@style/AppTheme"
+		android:hardwareAccelerated="true">
+        <activity
+            android:name=".MainActivity"
+			android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+		<activity
+			android:name=".Main"
+			android:launchMode="singleTask"
+			android:screenOrientation="portrait">
+			<intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+		</activity>
+		<service
+			android:name=".audio.AudioService"/>
+		<service
+			android:name="com.qq.e.comm.DownloadService"
+			android:exported="false"/>
+		<activity
+			android:name=".Themes"
+			android:label="@string/setheme"
+			android:screenOrientation="portrait"/>
+		<activity
+			android:name=".ApiWord"
+			android:label="@string/apidoc"
+			android:windowSoftInputMode="adjustPan">
+			<intent-filter>
+				<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
+    	<activity
+			android:name=".TextReplace"
+			android:label="@string/textEditor"/>
+		<activity
+			android:name=".CodeEditor"
+			android:screenOrientation="portrait"
+			android:label="@string/codeEditor"
+			android:windowSoftInputMode="stateHidden|adjustResize"/>
+		<activity
+			android:name=".ChapterText"/>
+		<activity
+			android:name=".Comment"
+			android:screenOrientation="portrait"
+			android:windowSoftInputMode="adjustResize|stateHidden"/>
+		<activity
+			android:name=".Knowledge"
+			android:windowSoftInputMode="adjustPan"/>
+		<activity
+			android:name=".AndroidWeb"
+			android:windowSoftInputMode="adjustPan">
+			<intent-filter>
+				<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+		</activity>
+		<activity
+			android:name=".Machine"
+			android:label="@string/actived"/>
+		<activity
+			android:name=".Setting"
+			android:label="@string/settings"/>
+		<activity
+			android:name=".SetDrawerImage"
+			android:label="@string/setimage"/>
+		<activity
+			android:name=".Help"
+			android:label="@string/help"/>
+		<activity
+			android:name=".Login"
+			android:label="@string/java_login"/>
+		<activity
+			android:name=".Sign"
+			android:label="@string/java_sign"/>
+		<activity
+			android:name=".UserCentral"
+			android:label="@string/userinfo"/>
+		<activity
+			android:name=".UserEdit"
+			android:label="@string/useredit"/>
+		<activity
+			android:name=".More"
+			android:label="@string/more"/>
+		<activity
+			android:name=".Piano"
+			android:label="@string/piano"
+			android:screenOrientation="landscape"/>
+		<activity
+			android:name=".MusicTest"
+			android:label="@string/musictest"
+			android:screenOrientation="portrait"
+			android:windowSoftInputMode="adjustResize|stateHidden"/>
+		<activity
+			android:name=".MusicTrans"
+			android:label="@string/musictrans"
+			android:screenOrientation="portrait"/>
+		<activity
+			android:name=".HtmlViewer"
+			android:configChanges="orientation|screenSize"
+			android:windowSoftInputMode="stateHidden|adjustResize">
+			<intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+				<data android:scheme="http" />
+            </intent-filter>
+			<intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+				<data android:scheme="https" />
+            </intent-filter>
+			<intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+				<data android:mimeType="text/plain" />
+            </intent-filter>
+			<intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+				<data android:mimeType="text/html" />
+            </intent-filter>
+			<intent-filter>
+                <action android:name="android.intent.action.WEB_SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+			<intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+				<data android:scheme="vbea" />
+            </intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<data android:scheme="file" />
+				<data android:mimeType="text/html" />
+				<data android:pathPattern="*.htm" />
+				<data android:pathPattern="*.html" />
+			</intent-filter>
+		</activity>
+		<activity
+			android:name=".BrowserSet"
+			android:label="@string/browserset"
+			android:screenOrientation="portrait"
+			android:windowSoftInputMode="adjustPan"/>
+		<activity
+			android:name=".Feedback"
+			android:label="@string/feedback"/>
+		<activity
+			android:name=".VbeStudio"
+			android:label="@string/aboutus"/>
+		<activity
+			android:name=".About"
+			android:label="@string/about"/>
+		<activity
+			android:name=".ForgetPassword"
+			android:label="@string/forgetpsd"/>
+		<activity
+			android:name=".ResetPassword"
+			android:label="@string/resetpsd"/>
+		<activity
+			android:name=".QQLoginReg"
+			android:label="@string/java_qqlogin"/>
+		<activity
+			android:name=".QQShareMessage"
+			android:label="@string/qqmessage"/>
+		<activity
+			android:name=".BindMobile"
+			android:label="@string/java_binding"/>
+		<activity
+			android:name=".WifiViews"
+			android:label="@string/wifiview"/>
+		<activity
+			android:name=".IconPreview"
+			android:theme="@style/AppTheme.Black"
+			android:screenOrientation="portrait"/>
+		<activity
+			android:name=".ImagePreview"
+			android:theme="@style/AppTheme.Black"/>
+		<activity
+			android:name=".ShowWebImage"
+			android:theme="@style/AppTheme.Black"
+			android:screenOrientation="portrait"/>
+		<activity
+			android:name=".Donate"
+			android:label="@string/donate"
+			android:screenOrientation="portrait"/>
+		<activity
+			android:name=".Decord"
+			android:label="@string/decord"
+			android:screenOrientation="portrait"/>
+		<activity
+			android:name=".SmsBomb"
+			android:label="@string/smsplugin"
+			android:screenOrientation="portrait"
+			android:windowSoftInputMode="adjustPan"/>
+		<activity
+			android:name="cn.bmob.v3.update.UpdateDialogActivity"
+			android:theme="@style/Theme.AppCompat.Light.Dialog"/>
+		<activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="behind"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+		<activity
+			android:name="com.tencent.tauth.AuthActivity"
+			android:noHistory="true"
+			android:launchMode="singleTask" >
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="tencent1101326556" />
+			</intent-filter>
+		</activity>
+		<activity
+			android:name="com.qq.e.ads.ADActivity"
+			android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
+		<provider
+			android:name="com.tencent.mid.api.MidProvider"
+			android:authorities="com.vbea.java21.TENCENT.MID.V3"
+			android:exported="true" >
+		</provider>
+		<meta-data 
+			android:name="TA_APPKEY"
+			android:value="A1M46EZRJ7WI"/>
+		<meta-data
+			android:name="InstallChannel"
+			android:value="java21"/>
+		<meta-data
+			android:name="android.max_aspect"
+			android:value="2.1"/>
+    </application>
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+	<uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="android.permission.GET_TASKS"/>
+</manifest>

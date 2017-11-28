@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical">
+	<include layout="@layout/java_tool"/>
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:padding="5dp"
+		android:textSize="16sp"
+		android:text="@string/donateinfo"
+		android:textIsSelectable="true"
+		android:textColor="?attr/textPrimary"/>
+	<TableRow
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="top|center_horizontal">
+		<ImageView
+			android:id="@+id/img_donate1"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:scaleType="fitCenter"
+			android:adjustViewBounds="true"
+			android:src="@mipmap/donate_alipay"/>
+		<ImageView
+			android:id="@+id/img_donate2"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:scaleType="fitCenter"
+			android:adjustViewBounds="true"
+			android:src="@mipmap/donate_wechat"/>
+	</TableRow>
+	<TableRow
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="20dp">
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:textSize="14sp"
+			android:textColor="?attr/textPrimary"
+			android:text="支付宝"
+			android:gravity="center_horizontal"/>
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:textSize="14sp"
+			android:textColor="?attr/textPrimary"
+			android:text="微信"
+			android:gravity="center_horizontal"/>
+	</TableRow>
+</LinearLayout>
+

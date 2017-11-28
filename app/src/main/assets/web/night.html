@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Author" content="VBE">
+    <meta name="Keywords" content="邠心,邠心工作室">
+    <meta name="Description" content="邠心工作室-21天学通Java-代码编辑器">
+    <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="css/common.css" rel="stylesheet" />
+    <link href="css/ace.css" rel="stylesheet" />
+    <link href="css/vbea_night.css" rel="stylesheet" />
+    <title>Code Editor</title>
+</head>
+<body ontouchstart>
+    <div id="headBar" class="container">
+        <span id="lang" class="title"></span>
+        <!--<a href="javascript:save()" style="margin-right:10px">
+            <img src="image/ic_save.png" />
+        </a>-->
+        <span style="width:10px; float:right;">&nbsp;</span>
+        <a href="javascript:exec(this, 'find', 'Ctrl-F')">
+            <img src="image/ic_search.png" />
+        </a>
+        <a href="javascript:exec(this, 'redo','Ctrl-Y')">
+            <img src="image/ic_redo.png" />
+        </a>
+        <a href="javascript:exec(this, 'undo','Ctrl-Z')">
+            <img src="image/ic_undo.png" />
+        </a>
+        <a href="javascript:exec(this, 'selectall', 'Ctrl-A')">
+            <img src="image/ic_selectall.png" />
+        </a>
+        <a href="javascript:exec(this, 'del', 'Delete')">
+            <img src="image/ic_delete.png" />
+        </a>
+    </div>
+    <pre id="vbeditor"></pre>
+    <div id="statusBar" class="container">
+        <a href="javascript:exec(this, 'indent','Tab')">
+            <img src="image/ic_tab.png" />
+        </a>
+        <!--<a href="javascript:exec(this, 'blockoutdent', 'Ctrl-[');">
+            <img src="image/ic_shtab.png" />
+        </a>-->
+        <a href="javascript:exec(this, 'gotoleft', 'Left');">
+            <img src="image/ic_left.png" />
+        </a>
+        <a href="javascript:exec(this, 'gotoright', 'Left');">
+            <img src="image/ic_right.png" />
+        </a>
+        <a href="javascript:exec(this, 'golineup', 'Up');">
+            <img src="image/ic_up.png" />
+        </a>
+        <a href="javascript:exec(this, 'golinedown', 'Down');">
+            <img src="image/ic_down.png" />
+        </a>
+        <a href="javascript:exec(this, 'togglecomment', 'Ctrl-/');">
+            <img src="image/ic_comment.png" />
+        </a>
+        <a href="javascript:exec(this, 'toggleBlockComment', 'Ctrl-Shift-/');">
+            <img src="image/ic_comments.png" />
+        </a>
+    </div>
+    <script src="src/ace.js" type="text/javascript" charset="utf-8"></script>
+    <script src="src/ext-language_tools.js"></script>
+    <script src="src/ext-searchbox.js"></script>
+    <script src="src/ext-statusbar.js"></script>
+    <script src="src/ext-chromevox.js"></script>
+    <script type="text/javascript">
+        var editor;
+        window.onload = function () {
+            ace.require("ace/ext/chromevox");
+            var language = getLanguage();//设置语言
+            editor = ace.edit("vbeditor");
+            var StatusBar = ace.require("ace/ext/statusbar").StatusBar;
+            var statusBar = new StatusBar(editor, document.getElementById("statusBar"));
+            editor.setTheme("");
+            editor.session.setMode("ace/mode/" + language);
+            //editor.session.setUseSoftTabs(true);
+            editor.setShowPrintMargin(false);
+            //editor.session.setUseWrapMode(true);
+            editor.focus();
+            ace.require("ace/ext/language_tools");
+            editor.setOptions({
+                enableBasicAutocompletion: true,
+                enableSnippets: false,
+                enableLiveAutocompletion: true
+            });
+            editor.$blockScrolling = "Infinity";
+            var a = document.getElementsByTagName("a");
+            if (a.length > 0) {
+                for (i = 0; i < a.length; i++) {
+                    a[i].onclick = function () {
+                        var btn = this;
+                        btn.className = "disa";
+                        var t = setTimeout(function () { remove(btn) }, 300);
+                    }
+                }
+            }
+        };
+        function getLanguage() {
+            var title = document.getElementById("lang");
+            var url = location.search;
+            var theRequest = new Object();
+            if (url.indexOf("?") != -1) {
+                var str = url.substr(1).split("=");
+                title.innerText = str[0];
+                return str[1];
+            }
+            title.innerText = "Java";
+            return "java";
+        }
+
+        function exec(obj, name, args) {
+            editor.execCommand(name, args);
+            editor.focus();
+        }
+
+        function save() {
+            window.EditorManage.save(editor.getValue());
+        }
+
+        function openFile(text) {
+            editor.setValue(text);
+            editor.selection.clearSelection();
+        }
+
+        function remove(obj) {
+            obj.removeAttribute("class");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	android:id="@+id/txtreplaceRelativeLayout"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_height="match_parent"
+	android:layout_width="match_parent"
+	android:orientation="vertical"
+	android:clipToPadding="true"
+	android:paddingBottom="8dp">
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="vertical">
+		<include layout="@layout/java_tool"/>
+	<EditText
+		android:id="@+id/edt_replace"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_marginBottom="60dp"
+		android:background="@null"
+		android:textSize="16sp"
+		android:textColor="?attr/colorAccent"
+		android:padding="8dp"
+		android:gravity="start"
+		android:hint="将准备替换的文字粘贴到此，然后点替换按钮进行操作"/>
+	</LinearLayout>
+	<Button
+		android:id="@+id/btn_replace"
+		android:layout_width="fill_parent"
+		android:layout_height="50dp"
+		android:layout_alignParentBottom="true"
+		android:background="@drawable/btn_button"
+		android:layout_margin="10dp"
+		android:elevation="2dp"
+		android:textColor="@color/snow"
+		android:textSize="18sp"
+		android:text="替换"/>
+</RelativeLayout>
+

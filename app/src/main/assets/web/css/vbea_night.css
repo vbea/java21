@@ -1,0 +1,225 @@
+﻿body {
+    overflow: hidden;
+    background-color: black;
+}
+
+span {
+    color: #EEE;
+}
+
+.title {
+    color: #EFEFEF;
+}
+
+.container {
+    background-color: #444444;
+}
+
+.ace_search {
+    background-color: #444444 !important;
+}
+
+    .ace_search input {
+        background-color: black !important;
+        color: #AAA;
+    }
+
+    .ace_search span {
+        background-color: #444 !important;
+    }
+
+.ace_status-indicator {
+    color: #AAA;
+    font-size: 0.6em;
+    float: right;
+    margin-right: 10px;
+}
+
+/*自定义主题开始*/
+.ace-vbes {
+    background-color: #333;
+    color: black;
+}
+
+    .ace-vbes .ace_gutter { /*沟槽*/
+        background-color: #353535;
+        border-right: 1px solid #000;
+        color: #AAA;
+    }
+
+    .ace-vbes .ace_print-margin { /*打印线*/
+        width: 1px;
+        background-color: black;
+    }
+
+    .ace-vbes .ace_identifier { /*一般文字*/
+        color: #EEE;
+    }
+
+    .ace-vbes .ace_cursor { /*光标*/
+        color: white;
+    }
+
+    .ace-vbes .ace_keyword { /*关键字*/
+        color: #2C82C8;
+        font-weight: bold;
+    }
+
+    .ace-vbes .ace_storage,
+    .ace-vbes .ace_variable { /*定义*/
+        color: #2C82C8;
+    }
+
+    .ace-vbes .ace_operator { /*运算符*/
+        color: #009B00;
+    }
+
+    .ace-vbes .ace_constant.ace_numeric { /*数字*/
+        color: #EC0000;
+    }
+
+    .ace-vbes .ace_constant.ace_boolean {
+        color: #EC0000;
+    }
+
+    .ace-vbes .ace_constant.ace_buildin {
+        color: rgb(88, 72, 246);
+    }
+
+    .ace-vbes .ace_constant.ace_library {
+        color: rgb(6, 150, 14);
+    }
+
+    .ace-vbes .ace_function { /*方法*/
+        color: #AAA;
+    }
+
+    .ace-vbes .ace_punctuation,
+    .ace-vbes .ace_paren { /*括号，分号，逗号，点*/
+        color: #0096FF;
+    }
+
+    .ace-vbes .ace_string { /*字符串*/
+        color: #EC0000;
+    }
+
+    .ace-vbes .ace_comment { /*注释*/
+        color: #666;
+    }
+
+        .ace-vbes .ace_comment.ace_doc { /*文档注释*/
+            color: #666;
+        }
+
+            .ace-vbes .ace_comment.ace_doc.ace_tag { /*标签文档注释*/
+                color: #666;
+            }
+
+    .ace-vbes .ace_cjk { /*注释内容*/
+        color: #666;
+    }
+
+    .ace-vbes .ace_tag { /*标签*/
+        color: #0096FF;
+    }
+
+    .ace-vbes .ace_constant { /*常数*/
+        color: #0096FF;
+    }
+
+    .ace-vbes .ace_type { /*类型*/
+        color: #0096FF;
+    }
+
+    .ace-vbes .ace_support.ace_type { /*CSS属性*/
+        color: #0096FF;
+    }
+
+    .ace-vbes .ace_support.ace_constant { /*CSS属性*/
+        color: #EC0000;
+    }
+
+    .ace-vbes .ace_support.ace_function {
+        color: #0096FF;
+    }
+
+    .ace-vbes .ace_xml-pe { /*Doctype*/
+        color: #666;
+    }
+
+    .ace-vbes .ace_marker-layer .ace_selection { /*选中文本*/
+        background: rgba(251, 251, 251, 0.30);
+        border-radius: 0px;
+    }
+
+    .ace-vbes .ace_marker-layer .ace_bracket {
+        padding: 1px;
+        /*border: 1px solid rgb(192, 192, 192);*/
+        background-color: #EEE;
+    }
+
+    .ace-vbes .ace_meta .ace_tag {
+        color: #0096FF;
+    }
+
+    .ace-vbes .ace_attribute-equals { /*标签属性*/
+        color: #AAA;
+    }
+
+    .ace-vbes .ace_invisible {
+        color: #ddd;
+    }
+
+    .ace-vbes .ace_entity.ace_other.ace_attribute-name { /*标签属性名称*/
+        color: #AAA;
+    }
+
+    .ace-vbes .ace_unit { /*单位*/
+        color: #EC0000;
+    }
+
+    .ace-vbes .ace_marker-layer .ace_step {
+        background: rgb(255, 255, 0);
+    }
+
+    /*选中行*/
+    .ace-vbes .ace_active-line {
+        background-color: black;
+    }
+
+    .ace-vbes .ace_gutter-active-line {
+        background-color: black;
+    }
+
+    .ace-vbes .ace_marker-layer .ace_selected-word {
+        border: 1px solid rgb(181, 213, 255);
+    }
+
+    .ace-vbes .ace_indent-guide {
+        /*background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==") right repeat-y;*/
+    }
+    /*全局默认*/
+    .ace-vbes .ace_line {
+        color: #666;
+    }
+
+        .ace-vbes .ace_line.ace_selected {
+            background-color: black;
+        }
+
+    /*自动完成*/
+    .ace-vbes .ace_content {
+        background-color: #444;
+    }
+
+.ace_editor.ace_autocomplete .ace_completion-highlight {
+    color: white !important;
+}
+
+.ace_layer.ace_text-layer {
+    padding: 0px !important;
+}
+
+    .ace_layer.ace_text-layer .ace_line {
+        padding: 0px 4px;
+    }

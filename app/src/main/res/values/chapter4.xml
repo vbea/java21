@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="c4_01">在日常生活中，每个人早上起床后，通常要做洗脸、刷牙等事；如果有好看的电视节目，也会打开电视机进行收看；每一个人都有自己的安排。在Java中，洗脸、刷牙等事就好像代码程序，这些事是由流程控制语句来控制的。在流程控制语句中有一个叫做if的语句，它的作用就是根据条件来执行程序，就好像根据是否有好看的电话节目来决定一样。在Java里控制流程语句主要有条件语句、分支语句、循环语句。下面分别来介绍。通过本章的学习，读者应该能够完成下面的几点目标。\n
+了解if条件语句和掌握各种if条件语句的使用。\n
+了解switch分支语句和掌握switch分支语句的使用。\n
+了解while循环语句和掌握while循环语句的使用。\n
+了解do-while循环语句和掌握do-while循环语句的使用。\n
+了解for循环语句和掌握for循环语句的使用。\n
+	</string>
+	<string name="c4_02">4.1  if 条件语句\n在前面已经提到，如果有好看的电视节目时，就会打开电视进行收看。在Java中if条件语句就是实现这个功能，如果if条件中的条件语句是正确的，就会执行if语句中的程序语句。
+	</string>
+	<string name="c4_03">4.1.1  if语句的语法\nif语句的基本语法为：\n
+if(表达式){方法体}else if(表达式){方法体}else{方法体}\n
+下面用代码来演示。\n
+if (a > 3)\n
+条件成功的方法体\n
+if语句的执行条件是，当表达式为true时，执行方法体的部分。\n
+如果表达式不为false，执行else if的部分或else部分的方法体。\n
+	</string>
+	<string name="c4_04">4.1.2  if语句用法举例\n
+if语句的用法有好几种，下面列举if语句的几种形式。\n
+简写形式：if ...\n
+一般形式：if ... else\n
+完整形式：if ... else if ... else\n
+1. if语句的简写形式\n
+2. if语句的一般形式\n
+3. if语句的完整形式\n
+	</string>
+	<string name="c4_05">4.2  switch分支语句\n
+switch语句和if相似的，它是根据条件表达式的值来判断执行的程序语句。在日常生活中也经常有这样的情况，例如根据星期几来判断是否上课，如果等于星期一到星期五中的一天就上课，如果等于星期六或者星期日就不上课。switch分支语句要比if语句复杂的多。但当判断的条件很多时，switch分支语句要比if语句要方便很多。
+	</string>
+	<string name="c4_06">4.2.1  switch语句的语法\n
+	</string>
+	<string name="c4_07">4.2.2  switch分支语句表达式的使用条件\n
+switch分支语句的表达式的使用有一定的条件，不是什么类型都能使用的。一般能使用的条件是具体的整型数值和一些有顺序的数列。下面先来对整型数值进行讲解。在Java中整数类型包括：byte、char、short、int型。
+	</string>
+	<string name="c4_08">4.2.3  switch分支语句举例\n
+在上一节中介绍了switch分支语句的各个组成部分的使用以及注意事项，下面用一个完整的例子来说明switch语句。
+	</string>
+	<string name="c4_09">4.3  while 循环语句\n
+所谓while循环语句，就是先进行判断再进行循环。通过判断表达式，来决定具体的循环次数。下面先介绍下while循环语句的语法。
+	</string>
+	<string name="c4_10">4.3.1  while语句的语法\n
+通过判断表达式的成功与否，来决定循环的次数。先介绍基本语法：\n
+while(表达式)\n
+{\n
+\t方法体\n
+}\n
+	</string>
+	<string name="c4_11">4.4  do...while循环语句\n
+所谓do...while循环语句，就是先进行循环，再来进行表达式的判断，如果表达式不成立就退出循环。下面先介绍do...while循环语句的语法。
+	</string>
+	<string name="c4_12">4.4.1  do...while语句的语法\n
+do...while循环语句是先进行循环，再进行判断。基本语法为：\n
+do\n
+{\n
+\t方法体\n
+}\n
+while(表达式)；\n
+	</string>
+	<string name="c4_13">4.5  for循环语句\n
+所谓for循环语句，就是明确了循环的次数，进行次数循环的。下面先介绍下for循环语句的语法。
+	</string>
+	<string name="c4_14">4.5.1  for语句的语法\n
+通过判断表达式的成立与否，来决定循环的次数。先介绍下基本语法：\n
+for(变量初始化，表达式，递增表达式)\n
+{\n
+\t方法体\n
+}\n
+	</string>
+	<string name="c4_15">4.6  如何中断和继续语句的执行\n
+在学校中，有时间会发生临时放假的情况，可能会临时放假一天，也可能会一直放假。在Java循环语句中中也有这种情况，可以使用break语句和continue语句来中断程序，就好比中断上课一样。不同的是break语句是一直放假，而continue语句是放假一天。语句的中断和继续就是指在语句的执行过程中，用代码中断语句的执行并退出此代码块。继续和中断类似，中断和继续在Java里用break和continue关键字来表示。
+	</string>
+	<string name="c4_16">4.6.1  break ：中断语句执行\n
+break关键字在前面学习的switch分支语句中已经使用过了，下面直接用代码进行说明。\n
+【范例】下面是使用break来中断for循环的程序。\n
+	</string>
+	<string name="c4_17">4.6.2  continue ：继续语句执行\n
+continue语句表示跳出本循环，继续执行下一次循环，同样还是采用程序来讲解continue语句的知识。\n
+【范例】下面是使用continue语句的程序。\n
+	</string>
+	<string name="c4_18">4.7  综合练习\n1.编写一个求从1到100数中所有的奇数和的程序。\n
+【提示】使用for循环，将循环条件改为i+=2。\n
+01	public class LianXi1\n
+02	{\n
+03	\tpublic static void main(String args[])\n
+04	\t{\n
+05	\t\tint t=0;\n
+06	\t\t//执行for循环，使循环间隔为2，从而之进行奇数操作\n
+07	\t\tfor(int i=1;i&lt;=100;i+=2)\n
+08	\t\t{\n
+09	\t\t\tt+=i;	//每次循环时，为表示总和的变量加上本次循环的变量值\n
+10	\t\t}\n
+11	\t\tSystem.out.println(&quot;从1到100的奇数为：&quot;+t);\n
+12	\t}\n
+13	}\n
+	</string>
+	<string name="c4_19">4.8  小结\n通过本章的学习，可以让读者了解Java是如何控制程序的执行和中断，学好这些知识可以为以后编写代码打下了基础。\n
+本章的重点是for循环语句和if语句的使用。在下一章中将学习数组的创建和操作。
+	</string>
+</resources>

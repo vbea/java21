@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="c3_01">所谓运算符，就好比日常生活中的运算符号“+”、“-”、“*”、“/”，这些符号几乎天天都要用到。在Java中，运算符就和日常生活中的运算符号一样，起到运算的作用，但是不再是这么简单的运算符。在本章中就来介绍这些运算符，通过本章，读者应该完成下面的目标。\n
+\t了解算术运算符的概念和熟练使用算术运算符。\n
+\t了解关系运算符的概念和熟练使用关系运算符。\n
+\t了解逻辑运算符的概念和熟练使用逻辑运算符。\n
+\t了解三元运算符的概念和熟练使用三元运算符。\n
+\t了解位运算符的概念和熟练使用位运算符。\n
+\t了解位移运算符的概念和熟练使用位移运算符。\n
+		\t了解赋值运算符的概念和熟练使用赋值运算符。
+	</string>
+	<string name="c3_02">3.1  算术运算符\n算术运算符是大家最熟悉不过的了，比如“+”、“-”、“*”、“/”。在本节中就先来介绍算术运算符如何应用和有哪些注意事项。\n
+\t+：加法运算符，也可做字符的连接用途。\n
+\t-：减法运算符。\n
+\t*：乘法运算符。\n
+\t/：除法运算符。\n
+\t%：求余运算符。
+	</string>
+	<string name="c3_03">3.1.1  加法运算符\n加法运算符和日常生活中“+”是一样的，都是做两个数值的加法运算。下面举例在Java中的形式。\n
+//申明两个整数\n
+int a = 33;\n
+int b = 44;\n
+//将33和44做加法运算\n
+int c = a + b;\n
+	</string>
+	<string name="c3_04">3.1.2  减法运算符\n减法运算符和日常生活中“-”是一样的，都是做两个数值的减法运算。下面举例在Java中的形式。\n
+//申明两个整数\n
+int a = 66;\n
+int b = 77;\n
+//将66和77做减法运算\n
+int c = a - b;\n
+	</string>
+	<string name="c3_05">3.1.3  乘法运算符\n乘法运算符“*”和日常生活中乘号“×”类似，只是符号不一样而已，都是做两个数值的乘法运算。下面举例在Java中的形式。\n
+//申明两个整数\n
+int a = 6;\n
+int b = 7;\n
+//将6和7做乘法运算\n
+int c = a * b;\n
+	</string>
+	<string name="c3_06">3.1.4  除法运算符\n除法运算符“/”和日常生活中的除号“÷”类似，只是符号不一样而已，都是做两个数值的除法运算。下面举例在Java中的形式。\n
+//申明两个整数\n
+int a = 24;\n
+int b = 2;\n
+//将24和2做除法运算\n
+int c = a / b;\n
+	</string>
+	<string name="c3_07" formatted="false">3.1.5  求余运算符\n求余运算符“%”和日常生活中的除法求余类似。也是求两个数值的除法运算的余数。下面举例在Java中的形式。\n
+//申明两个整数\n
+int a = 24;\n
+int b = 5;\n
+//将24和5做求余运算\n
+int c = a % b;\n\n
+结果为：c=4\n
+	</string>
+	<string name="c3_08">3.2  自增自减运算符\n所谓自增减运算符，就是两个数做加减法运算将运算的结果赋值给做运算的变量。如下所示。\n
+int i = 4;\n
+i++;\n
+int j = 4;\n
+j = j + 1;\n
+以上两种运算结果相同\n
+	</string>
+	<string name="c3_09">3.3  关系运算符\n关系运算符描述的是一种关系，既然描述的是关系那结果就为对或不对。在Java里就表示为真或假。下面看关系运算符的分类。\n
+“==”：表示等于。\n
+“!=”：表示不等于。\n
+“&gt;=”：表示大于等于。\n
+“&lt;=”：表示小于等于。\n
+“&gt;”	：表示大于。\n
+“&lt;”	：表示小于。\n
+关系运算符比较的是基本类型的话，就表示比较的是值是否相等。如果用“==”和“！=”比较的是对象的话就表示比较的是对象引用是否相等。
+	</string>
+	<string name="c3_10">3.3.1  “==”、“！=”\n等于和不等于运算符比较的是运算数的等于和不等于，结果为ture和false。即真和假。例如下面的例子。\n//定义两个整型的变量\n
+int i = 4;\n
+int j = 4;\n
+
+boolean b1 = i == j;\n
+boolean b2 = i != j;\n
+
+//创建两个对象\n
+String s1 = new String ();\n
+String s2 = new String ();\n
+
+boolean b3 = b1 == b2;\n
+boolean b4 = s1 != s2; \n
+3.3.2  “&gt;”、“&lt;”、“&gt;=”、“&lt;=”\n
+大于和小于运算符比较的是运算数的大于和小于，结果为ture和false。即真和假。例如下面是使用这些关系运算符的例子。\n
+//定义两个整型变量\n
+int i = 5;\n
+int j = 4;\n
+
+boolean b1 = i > j;\n
+boolean b2 = i &lt; j;\n
+boolean b3 = i >= j;\n
+boolean b4 = i &lt;= j;\n
+	</string>
+	<string name="c3_11">3.4  逻辑运算符\n逻辑运算符，其实就是比较的二进制数的逻辑关系，运算结果为true、false。逻辑运算符包括如下。\n
+逻辑与：“&amp;&amp;”\n
+逻辑或：“||”\n
+逻辑非：“！”\n
+	</string>
+	<string name="c3_12">3.4.1  “&amp;&amp;” 与运算符\n“&amp;&amp;”运算符比较的是符号两边的表达式的真假。\n
+【范例3-10】通过下面代码说明“&amp;&amp;”运算符。\n
+示例代码3-10\n
+01	//修改上节例子,如下形式\n
+02	public class HelloWorld10\n
+03	{\n
+04	\tpublic static void main(String args[])\n
+05	\t{\n
+06	\t\tboolean n = (4 > 3) &amp;&amp; (2 &lt; 8);\n
+07	\t\tSystem.out.println(n);\n
+08	\t}\n
+09	}\n
+3.4.2  “||” 或运算符\n
+“||”运算符比较的是符号两边的表达式的真假。\n
+【范例3-11】通过下面代码说明“||” 或运算符。\n
+示例代码3-11\n
+01	//修改上节例子,如下形式\n
+02	public class HelloWorld11\n
+03	{\n
+04	\tpublic static void main(String args[])\n
+05	\t{\n
+06	\t\tboolean n = (4 &gt; 3) || (2 &gt; 8);\n
+07	\t\t//打印并显示结果\n
+08  \t\tSystem.out.println(n);\n
+09	\t}\n
+10	}\n
+3.4.3  “!” 非运算符\n
+“!”非运算符是把符号右边的表达式的结果即true、false取反。如为true ，取反为false；如为false，取反为true。\n
+【范例3-12】通过下面代码说明“!” 非运算符。\n
+示例代码3-12\n
+01	//修改上节例子,如下形式\n
+02	public class HelloWorld12\n
+03	{\n
+04	\tpublic static void main(String args[])\n
+05  \t{\n
+06	\t\tboolean n = ！(2 &gt; 8);\n
+07	\t\t//打印并显示结果\n
+08	\t\tSystem.out.println(n);\n
+09  \t}\n
+10	}\n
+3.4.4 总结逻辑运算符\n
+“&amp;&amp;”运算符，符号的两边都为true时，结果为true。只要有一边不为true，结果即为false。\n
+“||”运算符，符号的两边只要有一边为true，结果就为true，如果都为false，结果即为false。\n
+“！”运算符，符号右边为true，结果就为false，符号右边为false，结果就为true。\n
+	</string>
+	<string name="c3_13">3.5  三元运算符\n所谓三元运算符，是对三个表达式进行的集中比较，表达式1的结果为true时，就为第二个表达式，如果为false时，就为第三个表达式。语法是：\n
+\t表达式1？表达式2：表达式3\n
+【范例3-13】通过下面代码说明三元运算符。\n
+示例代码3-13\n
+01	//修改上节例子,如下形式\n
+02	public class HelloWorld13\n
+03	{\n
+04	\tpublic static void main(String args[])\n
+05	\t{\n
+06	\t\t//4 &lt; 3表达式的结果为true和false的其中一个。\n
+07	\t\tboolean n = (4 &lt; 3) ? true : false;\n
+08	\t\t//打印并显示结果\n
+09	\t\tSystem.out.println(n);\n
+10	\t}\n
+11	}\n
+	</string>
+	<string name="c3_14">3.6  位运算符\n所谓位运算符，就是将操作数转换成二进制，然后按位进行比较。\n
+运算符包括：\n
+“&amp;”：按位与运算符。\n
+“|”：按位或运算符。\n
+“^”：按位异或运算符。\n
+	</string>
+	<string name="c3_15">3.6.1  “&amp;” 与运算符\n
+按位与运算符，两个数同位都为1的时候即为1，有一边不是1的话就为0，即结果为false。\n
+【范例3-14】通过下面代码的演示来说明“&amp;”与运算符。\n
+示例代码3-14\n
+01	//修改上节例子,如下形式\n
+02	public class HelloWorld14\n
+03	{\n
+04	\tpublic static void main(String args[])\n
+05	\t{\n
+06	\t\tint n = 4 &amp; 3;\n
+07	\t\t//打印并显示结果\n
+08	\t\tSystem.out.println(n);\n
+09	\t}\n
+10	}\n
+3.6.2  “|” 或运算符\n
+按位或运算符，两个数同位有一个为1的时候即为1。\n
+【范例】通过下面代码的演示来说明“|”或运算符。\n
+示例代码\n
+01	//修改上节例子,如下形式\n
+02	public class HelloWorld15\n
+03	{\n
+04	\tpublic static void main(String args[])\n
+05	\t{\n
+06	\t\tint n = 4 | 3;\n
+07	\t\t//打印并显示结果\n
+08	\t\tSystem.out.println(n);\n
+09	\t}\n
+10	}\n
+3.6.3  “^” 异或运算符\n
+按位异或运算符，两个数同位都为1的时候即为0。有一个为1即为1。\n
+【范例】通过下面代码的演示来说明“^”异或运算符。\n
+示例代码\n
+01	//修改上节例子,如下形式\n
+02	public class HelloWorld16\n
+03	{\n
+04	\tpublic static void main(String args[])\n
+05	\t{\n
+06	\t\tint n = 4 ^ 3;\n
+07	\t\t//打印并显示结果\n
+08	\t\tSystem.out.println(n);\n
+09	\t}\n
+10	}\n
+	</string>
+	<string name="c3_16">3.7  位移运算符\n
+所谓位移运算符，和逻辑运算符一样，都是对表达式进行比较的。位运算符是先把要比较的操作数转换成二进制数，然后向右向左移动相应的位数。位移运算符包括\n
+&gt;&gt;：带符号右移。\n
+&lt;&lt;：带符号左移。\n
+&gt;&gt;&gt;：无符号右移。\n
+	</string>
+	<string name="c3_17">3.7.1  “&gt;&gt;” 右移运算符\n
+右移运算符“&gt;&gt;”是把操作数转换成二进制数向右移动指定的位数。右移运算符是有符号的，如果为正数就补0，如果为负数就补1。\n
+【范例】通过下面代码的演示来说明“&gt;&gt;”右移运算符。\n
+示例代码\n
+01	//修改上节例子,如下形式\n
+02	public class HelloWorld17\n
+03	{\n
+04	\tpublic static void main(String args[])\n
+05	\t{\n
+06	\t\tint n = 7 &gt;&gt; 2;\n
+07	\t\t//打印并显示结果\n
+08	\t\tSystem.out.println(n);\n
+09	\t}\n
+10	}\n
+3.7.2  “&lt;&lt;” 左移运算符\n
+左移运算符“&lt;&lt;”是把操作数转换成二进制数向左移动指定的位数。左移运算符是有符号的，如果为正数就补0，如果为负数就补1。\n
+【范例】通过下面代码的演示来说明“&lt;&lt;”左移运算符。\n
+示例代码\n
+01	//修改上节例子,如下形式\n
+02	public class HelloWorld18\n
+03	{\n
+04	\tpublic static void main(String args[])\n
+05	\t{\n
+06	\t\tint n = 7 &lt;&lt; 2;\n
+07	\t\t//打印并显示结果\n
+08	\t\tSystem.out.println(n);\n
+09	\t}\n
+10	}\n
+3.7.3  “&gt;&gt;&gt;” 无符号右移运算符\n
+无符号右移运算符“&gt;&gt;&gt;”是把操作数转换成二进制数向右移动指定的位数。无符号右移运算符全在最高位上补0。\n
+【范例】通过下面代码的演示来说明“&gt;&gt;&gt;”无符号右移运算符。\n
+示例代码\n
+01	//修改上节例子,如下形式\n
+02	public class HelloWorld19\n
+03	{\n
+04	\tpublic static void main(String args[])\n
+05	\t{\n
+06	\t\tint n = 7 &gt;&gt;&gt; 2 ;\n
+07	\t\t//打印并显示结果\n
+08	\t\tSystem.out.println(n);\n
+09	\t}\n
+10	}\n
+	</string>
+	<string name="c3_18">3.8  赋值运算符\n所谓赋值运算符就好比在日常生活中的a=3,即把3赋值给变量a的意思是一样的，以后就可以用a表示3这个数值了。
+	</string>
+	<string name="c3_19">3.8.1  一般赋值运算符\n一般运算符使用“=”，在编写代码里最常见，也是很容易理解的。如：\n
+\tint n = 3;\n
+这一条代码的含义是把数值3赋值给整型的变量n。\n
+3.8.2  运算赋值运算符\n
+运算赋值运算符和一般赋值运算符很相似，也是赋值用的，但它具有运算的功能。\n
+【范例】通过下面代码的演示来说明运算赋值运算符。\n
+示例代码\n
+01	public class HelloWorld20\n
+02	{\n
+03  \tpublic static void main(String args[])\n
+04	\t{\n
+05	\t\tint n = 7;\n
+06	\t\tint j = 0;\n
+07	\t\tj += n;\n
+08	\t\t//打印并显示结果\n
+09	\t\tSystem.out.println(j);\n
+10	\t}\n
+11	}\n
+	</string>
+	<string name="c3_20">3.9  运算符之间的优先级\n运算符的运算优先级是有一定的顺序的。括号拥有最高的优先级，接下来是一元运算符，最后是二元运算符,如表所示。
+	</string>
+	<string name="c3_21">3.10  小结\n
+通过对本章各种运算符的学习,让读者对基本类型的运算有了新的认识，虽然很简单，但对以后学习有很大帮助。虽然运算符是比较简单的，但其中也是有很多知识需要讲解的。在本章中最常用的运算符是自增自减运算符和赋值运算符，这也是本章的重点。如果想了解更多的关于运算符的内容可以参考电子工业出版社出版的《Java程序设计教程（第五版）（英文版）》一书来进一步学习。在下一章中将继续学习Java基本语法中的流程控制语句。
+	</string>
+</resources>

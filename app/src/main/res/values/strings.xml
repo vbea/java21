@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">欢迎使用21天学通Java!</string>
+    <string name="app_name">21天学通JAVA</string>
+	<string name="abt_book">\n
+		书名：《21天学通JAVA》\n
+		作者：庞永庆、庞丽娟等编著\n
+		出版社：电子工业出版社\n
+		出版时间：2009-1-1\n
+		页数：416页\n
+		开本：16开\n
+		ISBN：9787121078972\n
+		分类：图书&gt;&gt;计算机/程序设计&gt;&gt;Java\n
+		定价：￥49.80元(含DVD光盘1张)</string>
+	<string name="abt_invate">获取密钥请先注册登录并付费加入以下Q群(以下三档根据自己的情况选择一个)：①群
+	</string>
+	<string name="abt_invate0">，②群
+	</string>
+	<string name="abt_invate1">，③群</string>
+	<string name="abt_invate2">(<u>提示：以上任选一个，进群后5分钟内不要退群，密钥私聊群主或管理员获取，请不要忘记查看群文件和群公告，里面有学习资料！</u>)\n软件激活后可享有以下功能：\n
+		\t1.激活后可将激活凭证存入已登录的账户中，重新安装后直接登录即可自动校验凭证并激活；\n
+		\t2.激活后新增在线功能，可学习JavaEE和Android等教程；\n
+		\t3.激活后享受永久技术支持，在线答疑，并提供教学资料；\n
+		\t4.激活后可去除软件广告，还有机会获得VIP会员；
+		\n注：软件激活后可以将密钥保存到登录的云端账户中，以便在其他设备中快速登录并激活，所以请牢记您的用户名和密码。
+	</string>
+	<string name="setheme">主题设置
+	</string>
+	<string name="setimage">背景设置
+	</string>
+	<string name="contacts">Java基础
+	</string>
+	<string name="javaadv">Java进阶
+	</string>
+	<string name="browser">浏览器
+	</string>
+	<string name="browserset">浏览器设置
+	</string>
+	<string name="help">帮助与反馈
+	</string>
+	<string name="helpcenter">帮助中心
+	</string>
+	<string name="about">关于
+	</string>
+	<string name="aboutus">关于我们
+	</string>
+	<string name="apidoc">API文档
+	</string>
+	<string name="settings">设置
+	</string>
+	<string name="more">音乐盛典
+	</string>
+	<string name="textEditor">文本替换器
+	</string>
+	<string name="codeEditor">代码编辑器
+	</string>
+	<string name="piano">钢琴键盘
+	</string>
+	<string name="musictest">音节码测试
+	</string>
+	<string name="musictrans">音节码转换
+	</string>
+	<string name="userinfo">个人中心
+	</string>
+	<string name="prosucees">章节:学习完成：
+	</string>
+	<string name="baodian">Java宝典
+	</string>
+	<string name="knowledge">Java知识点
+	</string>
+	<string name="video">在线视频
+	</string>
+	<string name="favorite">学习资料
+	</string>
+	<string name="useredit">个人设置
+	</string>
+	<string name="feedback">反馈
+	</string>
+	<string name="ch_noregist">请按照章节依次学习，不要偷懒哦！
+	</string>
+	<string name="freekey"><u>免费获取</u>
+	</string>
+	<string name="buyprokey"><u>终极计划</u>
+	</string>
+	<string name="actived">激活软件
+	</string>
+	<string name="complete">完成
+	</string>
+	<string name="inforegist">注册信息
+	</string>
+	<string name="qqmessage">QQ消息生成器
+	</string>
+	<string name="wifiview">Wi-Fi密码查看器
+	</string>
+	<string name="smsplugin">短信轰炸机
+	</string>
+	<string name="changed"><u>更换序列号</u>
+	</string>
+	<string name="cnext"><u>下一章</u>
+	</string>
+	<string name="relogin"><u>重新登录</u>
+	</string>
+	<string name="logintoqq">使用QQ登录
+	</string>
+	<string name="donate">捐赠
+	</string>
+	<string name="comm_hint">我来说两句
+	</string>
+	<string name="announce">发表
+	</string>
+	<string name="decord">二维码</string>
+	<string name="helpinfo">本软件目前有六大功能：Java基础、Java进阶、Java EE、Android基础、Android进阶、实用工具，实用工具有API文档和文本替换器，以后还会添加更多工具。
+	\n本软件需要激活后才能永久使用，如果注册账户还能把激活凭证存入云端，以后在其他设备安装并登录将自动激活。\n关于激活：软件安装后有30天试用期，在试用期中每次进入都会弹出激活页面，此时可选择激活或跳过，也可在主页面打开抽屉进入设置页面激活。注册成功后可以在关于页面查看注册信息，注：在关于页面可以复制自己的密钥。
+	\n背景设置可在抽屉中点击设置中进入，也可直接长按主题设置按钮进入，在背景设置中点击右上角的自定义按钮可以自定义背景，<u>建议不要用太刺眼的图片，以免造成看不清文字。</u>
+	\n抽屉中的“音乐盛典”中的音乐测试功能可以进行DIY弹奏，琴键上的代码就是本软件音乐合成的音节码，可以用本功能进行代码编曲，转换音节码，调试音节码等，本软件提供多个Demo进行试听。您可在设置中选择是否打开此功能，设置完毕后下次启动时生效。
+	\n关于音节码，根据钢琴键盘上的字母标识来识别，中央C就是H，向左音越低，向右越高。编曲时当遇到升降调(黑键)C加数字开头和左右AB加数字开头的音节时，需要用[中括号]括起来，遇到和弦需要用(括号)括起来，遇到停顿用-(长音节)和_(短音节)，同样的原理大写字母为长音节，小写字母为短音节。编曲完成之后需要进行转换才能进行调试，调试功能可以确定乐曲的速度、音准和检查有无错误。(完整音节码对照表请到QQ群下载)
+	\n关于文本替换器的使用：您需要先把要替换的文本复制并粘贴到编辑器中，然后点击替换按钮，在弹出的窗口中输入源字符和目标字符，点击确定进行替换，如果因为失误替换了不该替换的，请及时点击撤销按钮。
+	\n如果您遇到任何使用的问题过您对我们有意见请点击右上角的反馈按钮给我们反馈。
+	</string>
+	<string name="donateinfo">您可以通过支付宝转账、微信转账，或者付费加入Q群222876252或49321718，也可以加入邠心工作室开发组QQ群135482843。您的支持给我们提供了动力，是对我们最大的鼓励！
+		\n（加入邠心工作室开发组Q群(135482843)的作为回报我们将送出5.2.1版本源码一份以及自学大礼包，包括文字教程、视频、源码实例等）\n二维码见下面，点击可放大
+	</string>
+	<string name="version">V 6.7.0 Build 900
+	</string>
+	<string name="update">6.7.0(900)
+	</string>
+	<integer name="versionCode">900</integer>
+	<string name="abt_ver">1.新增代码编辑器，支持26种语言，支持代码高亮，语法提示，自动缩进，符号匹配，代码折叠等
+		\n2.教程评论优化，UI美化
+		\n3.激活流程更新
+		\n4.在线教程新增图片查看，可双指放大缩小
+		\n5.欢迎页更新
+		\n6.修复未激活用户每次打开需要手动登录的问题
+		\n7.其他细节及体验优化
+	</string>
+	<string name="shared">share_image</string>
+	<string name="about_us">关于我们：\n2013年5月20日，邠心工作室成立，至今已有四年时间，目前工作室就邠心一人，邠心于2012年自学Java并开始开发Android程序，并于2014年做出此APP帮助那些也想自学Java的朋友。
+	</string>
+	<string name="about_join">加入我们：\n邮箱：vbea@foxmail.com
+		\nQ  Q：248104237\nQ 群：222876252
+		\n官网：http://vbea.wicp.net\n微博：腾讯微博(@邠心工作室)\n
+		\t新浪微博(@邠心工作室)\n贴吧：邠心吧、邠心工作室吧\n地址：四川省成都市"
+	</string>
+	<string name="about_mark">邠心工作室邀您加入我们参与Android应用的开发和设计，一起学习Android软件开发技术，有意请联系我们，谢谢！
+	</string>
+	<string name="copyright">邠心工作室 版权所有\nCopyright © 2014-2017 VbeStudio. All Rights Reserved
+	</string>
+	<string name="number_mobile">134,135,136,137,138,139,147,150,151,152,157,158,159,182,183,184,187,188,174,178
+	</string>
+	<string name="number_unicom">130,131,132,145,155,156,176,185,186
+	</string>
+	<string name="number_telcom">133,153,180,181,189
+	</string>
+	<string name="pc_ua">Mozilla/5.0 (Linux; U; AppleWebKit/537.36 (KHTML, like Gecko)Version/4.0 Chrome/60.0.0.0 Safari/537.36</string>
+	<string name="default_encoding">text/plain</string>
+	<string name="codejson">{"array_codepath":[{"name":"ABAP","mode":"ABAP","path":"abap"},{"name":"ActionScript","mode":"ActionScript","path":"as"},{"name":"ADA","mode":"ADA","path":"ada|adb"},{"name":"Config","mode":"INI","path":"ini|conf|cfg|prefs"},{"name":"Config Text","mode":"Apache_Conf","path":"htaccess|htgroups|htpasswd|htaccess|htgroups|htpasswd"},{"name":"A语言","mode":"Assembly_x86","path":"asm|a"},{"name":"ASP.NET","mode":"HTML_Elixir","path":"aspx"},{"name":"BacthScript","mode":"BatchFile","path":"bat|cmd"},{"name":"C&amp;C++","mode":"C_Cpp","path":"cpp|c|cc|cxx|h|hh|hpp|ino"},{"name":"Clojure Lisp","mode":"Clojure","path":"clj|cljs"},{"name":"Cobol","mode":"Cobol","path":"cbl|cob"},{"name":"Coffee","mode":"coffee","path":"coffee|cf|cson|Cakefile"},{"name":"C#","mode":"CSharp","path":"cs"},{"name":"CSS","mode":"CSS","path":"css"},{"name":"D语言","mode":"D","path":"d|di"},{"name":"Diff","mode":"Diff","path":"diff|patch"},{"name":"EJS","mode":"EJS","path":"ejs"},{"name":"Erlang","mode":"Erlang","path":"erl|hrl"},{"name":"Forth","mode":"Forth","path":"frt|fs|ldr|fth|4th"},{"name":"G码","mode":"Gcode","path":"gcode"},{"name":"Gitignore","mode":"Gitignore","path":"gitignore"},{"name":"GLSL","mode":"Glsl","path":"glsl|frag|vert"},{"name":"GO语言","mode":"golang","path":"go"},{"name":"Groovy","mode":"Groovy","path":"go|gradle"},{"name":"HAML","mode":"HAML","path":"haml"},{"name":"Handlebars","mode":"Handlebars","path":"hbs|handlebars|tpl|mustache"},{"name":"Haskell","mode":"Haskell","path":"hs"},{"name":"Haskell Cabal","mode":"Haskell_Cabal","path":"cabal"},{"name":"HaXe","mode":"haXe","path":"cabal"},{"name":"Hjson","mode":"Hjson","path":"hjson"},{"name":"HTML","mode":"HTML","path":"html|htm|xhtml|vue|we|wpy"},{"name":"HTML Elixir","mode":"HTML_Elixir","path":"eex"},{"name":"HTML Ruby","mode":"HTML_Ruby","path":"erb|rhtml"},{"name":"Java","mode":"Java","path":"java|class"},{"name":"JavaScript","mode":"JavaScript","path":"js|jsm|jsx"},{"name":"JSON","mode":"JSON","path":"json"},{"name":"JSP","mode":"JSP","path":"jsp"},{"name":"JSX","mode":"JSX","path":"jsx"},{"name":"Kotlin","mode":"Kotlin","path":"kt|kts"},{"name":"LESS","mode":"LESS","path":"less"},{"name":"LISP","mode":"Lisp","path":"lisp"},{"name":"LiveScript","mode":"LiveScript","path":"ls"},{"name":"LSL","mode":"LSL","path":"lsl"},{"name":"Lua","mode":"Lua","path":"lua"},{"name":"LuaPage","mode":"LuaPage","path":"lp"},{"name":"Makefile","mode":"Makefile","path":"makefile|gnumakefile|makefile|ocamlmakefile|make"},{"name":"Markdown","mode":"Markdown","path":"md|markdown"},{"name":"MEL","mode":"MEL","path":"mel"},{"name":"MySQL","mode":"MySQL","path":"mysql"},{"name":"Objective-C","mode":"ObjectiveC","path":"m|mm"},{"name":"OCaml","mode":"OCaml","path":"ml|mli"},{"name":"Pascal","mode":"Pascal","path":"pas|p"},{"name":"Perl","mode":"Perl","path":"pl|pm"},{"name":"pgSQL","mode":"pgSQL","path":"pgsql"},{"name":"PHP","mode":"PHP","path":"php|phtml|shtml|php3|php4|php5|phps|phpt|aw|ctp|module"},{"name":"Powershell","mode":"Powershell","path":"ps1"},{"name":"Properties","mode":"Properties","path":"properties"},{"name":"Protobuf","mode":"Protobuf","path":"proto"},{"name":"Python","mode":"Python","path":"py"},{"name":"R语言","mode":"R","path":"r"},{"name":"Razor","mode":"Razor","path":"cshtml|asp"},{"name":"RHTML","mode":"RHTML","path":"rhtml"},{"name":"Ruby","mode":"Ruby","path":"rb|ru|gemspec|rake|guardfile|rakefile|gemfile"},{"name":"SASS","mode":"SASS","path":"sass"},{"name":"Scala","mode":"Scala","path":"scala"},{"name":"Scheme","mode":"Scheme","path":"scm|sm|rkt|oak|scheme"},{"name":"SCSS","mode":"SCSS","path":"scss"},{"name":"SH","mode":"SH","path":"sh|bash|bashrc"},{"name":"Space","mode":"Space","path":"space"},{"name":"SQL","mode":"SQL","path":"sql"},{"name":"SQLServer","mode":"SQLServer","path":"sqlserver"},{"name":"SVG","mode":"SVG","path":"svg"},{"name":"Swift","mode":"Swift","path":"swift"},{"name":"Tex","mode":"Tex","path":"tex"},{"name":"Textile","mode":"Textile","path":"textile"},{"name":"TypeScript","mode":"Typescript","path":"ts|typescript|str"},{"name":"VBScript","mode":"VBScript","path":"vbs|vb|vbe"},{"name":"XML","mode":"XML","path":"xml|rdf|rss|wsdl|xslt|atom|mathml|mml|xul|xbl|xaml|config"},{"name":"XQuery","mode":"XQuery","path":"xq"},{"name":"热键脚本","mode":"AutoHotKey","path":"ahk"},{"name":"纯文本","mode":"Text","path":"txt|"}]}
+	</string>
+</resources>

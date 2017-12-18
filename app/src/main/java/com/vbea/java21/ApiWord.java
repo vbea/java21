@@ -42,7 +42,7 @@ public class ApiWord extends AppCompatActivity
 	private final String api8Url = "http://docs.oracle.com/javase/8/docs/api/overview-summary.html";
 	private final String api7Url = "http://docs.oracle.com/javase/7/docs/api/overview-summary.html";
 	private final String api6Url = "http://docs.oracle.com/javase/6/docs/api/overview-summary.html";
-	private final String apiUrlCH = "http://download.java.net/jdk/jdk-api-localizations/jdk-api-zh-cn/publish/1.6.0/html/zh_CN/api/overview-summary.html";
+	//private final String apiUrlCH = "http://download.java.net/jdk/jdk-api-localizations/jdk-api-zh-cn/publish/1.6.0/html/zh_CN/api/overview-summary.html";
 	private final String apiAndroid = "http://androiddoc.qiniudn.com/reference/packages.html";
 	private final String sub = "API文档";
 	private BottomSheetDialog mBSDialog;
@@ -75,7 +75,7 @@ public class ApiWord extends AppCompatActivity
 		{
 			public void run()
 			{
-				myweb.loadUrl(apiUrlCH);
+				myweb.loadUrl(api6Url);
 			}
 		}, 500);
 		/*myweb.setFocusable(true);
@@ -158,9 +158,9 @@ public class ApiWord extends AppCompatActivity
 			case R.id.item_share:
 				doShare();
 				break;
-			case R.id.item_apiCN:
+			/*case R.id.item_apiCN:
 				myweb.loadUrl(apiUrlCH);
-				break;
+				break;*/
 			case R.id.item_api6:
 				myweb.loadUrl(api6Url);
 				break;

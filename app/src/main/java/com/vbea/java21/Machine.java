@@ -40,7 +40,7 @@ public class Machine extends AppCompatActivity
 	private SharedPreferences spf;
 	private EditText edtKey;
 	private ProgressDialog mDialog;
-	private final String PDATE = "2017-10-22";
+	private final String PDATE = "2017-12-22";
 	//private boolean START = false;
 	//private int DATED = 0;
 	@Override

@@ -4,6 +4,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+button {
+    height: 30px;
+    width: 30px;
+    border: none;
+}
+
 #vbeditor {
     margin: 0;
     position: absolute;
@@ -17,7 +24,7 @@
     max-width: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding-left:10px;
+    padding-left: 10px;
     display: inline-block;
 }
 
@@ -32,23 +39,24 @@
     padding: 0px 5px;
 }
 
-    #statusBar img {
+    #statusBar a {
         color: black;
         text-decoration: none;
         display: inline-block;
         padding: 0px 1px;
-        height: 30px;
         -webkit-tap-highlight-color: transparent;
     }
 
-#headBar img {
-    color: black;
-    text-decoration: none;
+    #statusBar img {
+        height: 30px;
+    }
+
+#headBar div {
     display: inline-block;
-    padding: 0px 1px;
+}
+
+#headBar img {
     height: 30px;
-    -webkit-tap-highlight-color: transparent;
-    float: right;
 }
 
 #headBar {
@@ -63,5 +71,11 @@
 }
 
 .disa {
-    pointer-events:none;
+    pointer-events: none;
+}
+
+.title:after {
+    content:"*";
+    position: absolute;
+    top: -2px;
 }

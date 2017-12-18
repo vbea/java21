@@ -33,7 +33,8 @@ public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.MyViewHolder>
 	public void setList(List<WifiItem> list)
 	{
 		mList = list;
-		Collections.sort(mList);
+		if (mList != null)
+			Collections.sort(mList);
 	}
 	
 	@Override

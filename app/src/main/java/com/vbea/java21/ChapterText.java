@@ -80,6 +80,7 @@ public class ChapterText extends AppCompatActivity
 		{
 			public void onClick(View v)
 			{
+				btnNext.setVisibility(View.GONE);
 				supportFinishAfterTransition();
 			}
 		});
@@ -194,6 +195,15 @@ public class ChapterText extends AppCompatActivity
 		bannerLayout.addView(bannerView);
 		bannerView.loadAD();
 	}
+
+	@Override
+	public void onBackPressed()
+	{
+		btnNext.setVisibility(View.GONE);
+		supportFinishAfterTransition();
+	}
+	
+	
 	
 	@Override
 	protected void onResume()

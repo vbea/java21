@@ -52,7 +52,8 @@ public class WifiManage
 					dataOutputStream.close();
 				if (dataInputStream != null)
 					dataInputStream.close();
-				process.destroy();
+				if (process != null)
+					process.destroy();
 			}
 			catch (Exception e)
 			{

@@ -23,6 +23,14 @@
 			android:gravity="start"
 			android:hint="代码请见钢琴键盘和内置音乐，也可长按更多页面中的音乐按钮，格式:A,B,C1,H,I,C"
 			android:background="@null"/>
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textSize="12sp"
+			android:textColor="?attr/colorAccent"
+			android:text="音符速度调节(点击滑块两边的文字可微调)"
+			android:paddingLeft="10dp"
+			android:paddingTop="5dp"/>
 		<TableRow
 			android:id="@+id/testMusic_tb1"
 			android:layout_width="fill_parent"
@@ -36,7 +44,7 @@
 				android:layout_height="fill_parent"
 				android:gravity="center_vertical"
 				android:textSize="12sp"
-				android:text="慢速"/>
+				android:text="四分"/>
 			<SeekBar
 				android:id="@+id/seekVelocity"
 				android:layout_width="wrap_content"
@@ -66,7 +74,7 @@
 				android:layout_height="fill_parent"
 				android:gravity="center_vertical"
 				android:textSize="12sp"
-				android:text="快速"/>
+				android:text="二分"/>
 			<SeekBar
 				android:id="@+id/seekVelocity2"
 				android:layout_width="wrap_content"

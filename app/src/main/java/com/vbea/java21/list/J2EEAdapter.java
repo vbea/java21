@@ -21,6 +21,7 @@ public class J2EEAdapter extends RecyclerView.Adapter<J2EEAdapter.MyViewHolder>
 	private OnItemClickListener onItemClickListener;
 	private List<JavaEE> mList;
 	private boolean isEnd = false;
+	private String server = "";
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup p1, int p2)
 	{
@@ -42,6 +43,7 @@ public class J2EEAdapter extends RecyclerView.Adapter<J2EEAdapter.MyViewHolder>
 				holder.sub.setText(item.title);
 			else
 				holder.sub.setText(item.prefix + " " + item.title);
+			holder.layout.setClickable(false);
 			holder.layout.setBackgroundResource(R.color.android_disable);
 		}
 		else
@@ -52,23 +54,24 @@ public class J2EEAdapter extends RecyclerView.Adapter<J2EEAdapter.MyViewHolder>
 				holder.title.setText(item.title);
 			else
 				holder.title.setText(item.prefix + " " + item.title);
+			holder.layout.setClickable(true);
 			holder.layout.setBackgroundResource(R.drawable.btn_menu);
+			holder.layout.setOnClickListener(new View.OnClickListener()
+			{
+				public void onClick(View v)
+				{
+					if(onItemClickListener != null)
+					{
+						onItemClickListener.onItemClick(item.getObjectId(), item.title, item.title, server + item.url);
+					}
+				}
+			});
 		}
 		if (isEnd && p == mList.size() - 1)
 			holder.end.setVisibility(View.VISIBLE);
 		else
 			holder.end.setVisibility(View.GONE);
 		holder.read.setVisibility(Common.READ_J2EE.contains(item.getObjectId()) ? View.VISIBLE : View.GONE);
-		holder.layout.setOnClickListener(new View.OnClickListener()
-		{
-			public void onClick(View v)
-			{
-				if(onItemClickListener != null)
-				{
-					onItemClickListener.onItemClick(item.getObjectId(), item.title, item.title, item.url, item.isTitle);
-				}
-			}
-		});
 	}
 
 	@Override
@@ -79,16 +82,14 @@ public class J2EEAdapter extends RecyclerView.Adapter<J2EEAdapter.MyViewHolder>
 		return 0;
 	}
 
-	public J2EEAdapter (List<JavaEE> list)
-	{
-		mList = list;
-		isEnd = false;
-	}
-
 	public void setList(List<JavaEE> list)
 	{
 		mList = list;
 		isEnd = false;
+		if (mList.get(0).order == -1) {
+			server = mList.get(0).url;
+			mList.remove(0);
+		}
 	}
 
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
@@ -133,6 +134,6 @@ public class J2EEAdapter extends RecyclerView.Adapter<J2EEAdapter.MyViewHolder>
 
 	public interface OnItemClickListener
 	{
-        void onItemClick(String id, String title, String sub, String url, boolean t);
+        void onItemClick(String id, String title, String sub, String url);
     }
 }

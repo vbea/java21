@@ -15,21 +15,26 @@
 		android:orientation="vertical"
 		android:background="?attr/divider">
 		<include layout="@layout/java_tool"/>
-		<android.support.v7.widget.RecyclerView
-			android:id="@+id/com_recyclerView"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:visibility="gone"/>
-		<TextView
-			android:id="@+id/comment_emptyview"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:textSize="15sp"
-			android:textColor="@color/gray"
-			android:text="精彩评论虚位以待"
-			android:gravity="center"/>
+		<android.support.v4.widget.SwipeRefreshLayout
+			android:id="@+id/comm_refresh"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent">
+			<android.support.v7.widget.RecyclerView
+				android:id="@+id/com_recyclerView"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:visibility="gone"/>
+		</android.support.v4.widget.SwipeRefreshLayout>
 	</LinearLayout>
+	<TextView
+		android:id="@+id/comment_emptyview"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_centerInParent="true"
+		android:textSize="15sp"
+		android:textColor="@color/gray"
+		android:text="精彩评论虚位以待"
+		android:gravity="center"/>
 	<TableRow
 		android:layout_width="match_parent"
 		android:layout_height="53dp"
@@ -43,7 +48,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="50dp"
 			android:layout_weight="1"
-			android:maxLength="50"
+			android:maxLength="100"
 			android:textSize="14sp"
 			android:hint="@string/comm_hint"/>
 		<Button

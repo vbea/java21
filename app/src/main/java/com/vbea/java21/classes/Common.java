@@ -70,11 +70,12 @@ public class Common
 	public static int JAVA_TEXT_SIZE = 2;
 	public static AudioService audioService;
 	private static final String defaultKey = "JAVA8-APP-KEY21-APK-VBEST";
-	public static String LocalPath = Environment.getExternalStorageDirectory()+"/ZDApp/";
+	public static String LocalPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/ZDApp/";
 	public static String IconPath = LocalPath + "Cache/";
 	public static String DrawImagePath = IconPath + "back.jpg";
 	public static List<Tips> mTips = null;
 	public static List<String> READ_Android, READ_J2EE, READ_AndroidAdvance;
+	public static InboxManager myInbox;
 	public static void start(Context context)
 	{
 		startBmob(context);
@@ -106,7 +107,7 @@ public class Common
 		editor.commit();
 		init(spf);
 		SocialShare.onStart(context);
-		if (mTips == null && isNet(context))
+		if (TIPS && isNet(context))
 			getTips();
 	}
 	
@@ -231,6 +232,13 @@ public class Common
 		}
 	}
 	
+	public static InboxManager getInbox()
+	{
+		if (myInbox == null)
+			myInbox = new InboxManager();
+		return myInbox;
+	}
+	
 	public static void addAndroidRead(String num)
 	{
 		AUDIO_STUDY_STATE+=1;
@@ -304,6 +312,13 @@ public class Common
 		return false;
 	}
 	
+	public static boolean isAdminUser()
+	{
+		if (mUser != null)
+			return mUser.roles.equals("管理员");
+		return false;
+	}
+	
 	public static void qqLogin(final Context context, String openId)
 	{
 		BmobQuery<Users> sql = new BmobQuery<Users>();
@@ -326,7 +341,7 @@ public class Common
 						editor.putInt("loginmode", 2);
 						USERID = mUser.name;
 						KEY = mUser.key;
-						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 						editor.putString("key", KEY);
 						if (!IS_ACTIVE)
 						{
@@ -391,7 +406,7 @@ public class Common
 							USERID = username;
 							if (!IS_ACTIVE)//自动激活
 							{
-								SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+								SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 								if (regist(KEY))
 								{
 									IS_ACTIVE = true;
@@ -429,6 +444,11 @@ public class Common
 		mUser = null;
 		onLogin = 0;
 		IsChangeICON = true;
+		if (myInbox != null)
+		{
+			myInbox.logout();
+			myInbox = null;
+		}
 	}
 	
 	public static void Logout(Context context)
@@ -462,7 +482,7 @@ public class Common
 	
 	public static boolean isNotLogin()
 	{
-		if ((onLogin == 0 || onLogin == 2 || onLogin == 1) && mUser == null)
+		if (onLogin != 4 || mUser == null)
 			return true;
 		return false;
 	}
@@ -633,11 +653,27 @@ public class Common
 	
 	public static boolean isMyUser(String name)
 	{
-		if (mUser != null)
+		if (mUser != null && !Util.isNullOrEmpty(name))
 		{
 			return mUser.name.equals(name);
 		}
 		return false;
+	}
+	
+	public static boolean isContainsUser(String nameList)
+	{
+		if (mUser != null && !Util.isNullOrEmpty(nameList))
+		{
+			return nameList.contains(mUser.name);
+		}
+		return false;
+	}
+	
+	public static String getUsername()
+	{
+		if (mUser != null)
+			return mUser.name;
+		return "";
 	}
 	
 	public static void getTips()

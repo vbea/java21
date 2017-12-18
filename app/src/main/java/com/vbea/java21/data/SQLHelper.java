@@ -5,7 +5,11 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.Cursor;
+import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
 
+import com.vbea.java21.R;
 import com.vbea.java21.classes.ExceptionHandler;
 
 public class SQLHelper extends SQLiteOpenHelper
@@ -13,9 +17,11 @@ public class SQLHelper extends SQLiteOpenHelper
 	public static final String DATABASE_NAME = "CodeModeList.db";
 	public static final int DATA_VERSION = 1;
 	public static final String TABLE_NAME = "tb_code";
-	public SQLHelper(Context context)
+	private Context context;
+	public SQLHelper(Context c)
 	{
-		super(context, DATABASE_NAME, null, DATA_VERSION);
+		super(c, DATABASE_NAME, null, DATA_VERSION);
+		context = c;
 	}
 	
 	@Override
@@ -45,6 +51,42 @@ public class SQLHelper extends SQLiteOpenHelper
 		}
 	}
 	
+	public void initJsonData(Callback back)
+	{
+		try
+		{
+			JSONArray jsa = new JSONArray(context.getString(R.string.codejson));
+			if (jsa != null && jsa.length() > 0)
+			{
+				for (int i = 0; i < jsa.length(); i++)
+				{
+					JSONObject code = jsa.getJSONObject(i);
+					if (code != null)
+					{
+						String name = code.getString("name");
+						String mode = code.getString("mode").toLowerCase();
+						String[] paths = code.getString("path").split("\\|");
+						if (paths != null && paths.length > 0)
+						{
+							for (String path : paths)
+							{
+								insert(name, mode, path);
+							}
+						}
+					}
+				}
+				if (back != null)
+					back.onSuccess();
+			}
+		}
+		catch (JSONException e)
+		{
+			ExceptionHandler.log("json_error", e.toString());
+			if (back != null)
+				back.onFailure();
+		}
+	}
+	
 	public long insert(String name, String mode, String path)
 	{
 		SQLiteDatabase db = getWritableDatabase();
@@ -67,20 +109,26 @@ public class SQLHelper extends SQLiteOpenHelper
 		return 0;
 	}
 	
-	public Cursor select(String where, String...wheres)
+	public Cursor select(String where, String...wheres) throws Exception
 	{
 		SQLiteDatabase db = getReadableDatabase();
 		return db.query(TABLE_NAME, new String[] {"id", "name", "mode", "path" }, where, wheres, null, null, "id");
 	}
 	
-	public CodeMode findModeByPath(String fileType)
+	public Cursor select()
+	{
+		SQLiteDatabase db = getReadableDatabase();
+		return db.query(true, TABLE_NAME, new String[] { "name","mode" }, null, null, "name,mode", null, "name", null);
+	}
+	
+	public CodeMode findModeByType(String fileType)
 	{
 		try
 		{
 			Cursor cur = select("path=?", fileType);
 			if (cur != null && cur.getCount() > 0)
 			{
-				if (cur.moveToNext())
+				if (cur.moveToFirst())
 					return getData(cur);
 			}
 		}
@@ -99,5 +147,11 @@ public class SQLHelper extends SQLiteOpenHelper
 		mode.setMode(cur.getString(cur.getColumnIndex("mode")));
 		mode.setPath(cur.getString(cur.getColumnIndex("path")));
 		return mode;
+	}
+	
+	public interface Callback
+	{
+		void onSuccess();
+		void onFailure();
 	}
 }

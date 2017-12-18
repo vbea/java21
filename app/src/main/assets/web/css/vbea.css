@@ -4,7 +4,7 @@
 
 .ace_status-indicator {
     color: #000;
-    font-size:0.6em;
+    font-size:0.8em;
     float: right;
     margin-right: 10px;
 }
@@ -13,6 +13,7 @@
 .ace-vbes {
     background-color: #FFFFFF;
     color: black;
+	font-size:1em
 }
 
     .ace-vbes .ace_gutter { /*沟槽*/
@@ -46,6 +47,7 @@
 
     .ace-vbes .ace_operator { /*运算符*/
         color: #009B00;
+		font-weight: normal;
     }
 
     .ace-vbes .ace_constant.ace_numeric { /*数字*/

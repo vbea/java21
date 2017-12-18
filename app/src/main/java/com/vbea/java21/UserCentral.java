@@ -3,7 +3,6 @@ package com.vbea.java21;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-import android.app.AlertDialog;
 import android.os.Handler;
 import android.os.Bundle;
 import android.os.Message;
@@ -32,6 +31,7 @@ import android.support.v7.widget.Toolbar;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.SocialShare;
+import com.vbea.java21.classes.AlertDialog;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.data.Users;
 import com.tencent.tauth.Tencent;
@@ -212,7 +212,7 @@ public class UserCentral extends AppCompatActivity
 	
 	private void qqDialog()
 	{
-		AlertDialog.Builder dialogBuild = new AlertDialog.Builder(this);
+		AlertDialog dialogBuild = new AlertDialog(this);
 		dialogBuild.setTitle("绑定QQ");
 		dialogBuild.setItems(new String[] {"换绑","取消绑定"}, new DialogInterface.OnClickListener()
 		{
@@ -247,7 +247,7 @@ public class UserCentral extends AppCompatActivity
 	
 	private void mobileDialog()
 	{
-		AlertDialog.Builder dialogBuild = new AlertDialog.Builder(this);
+		AlertDialog dialogBuild = new AlertDialog(this);
 		dialogBuild.setTitle("绑定手机");
 		dialogBuild.setItems(new String[] {"换绑","取消绑定"}, new DialogInterface.OnClickListener()
 		{

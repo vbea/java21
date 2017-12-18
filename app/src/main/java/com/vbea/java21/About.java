@@ -35,6 +35,7 @@ public class About extends AppCompatActivity
 		sign = (TextView) findViewById(R.id.about_sign);
 		status = (TextView) findViewById(R.id.about_status);
 		setSupportActionBar(tool);
+		BmobUpdateAgent.forceUpdate(About.this);
 		tool.setNavigationOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -68,7 +69,6 @@ public class About extends AppCompatActivity
 			sign.setText(Util.AuthKey(this) ? "验证通过" : "验证不通过");
 		}
 		catch (Exception e) {}
-		BmobUpdateAgent.forceUpdate(About.this);
 		if (Common.IS_ACTIVE)
 		{
 			actLayout.setVisibility(View.VISIBLE);

@@ -41,7 +41,8 @@
 					<ImageView
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:src="@mipmap/ic_ab_drawer"/>
+						android:layout_marginLeft="2dp"
+						android:src="@mipmap/ic_menu"/>
 				</LinearLayout>
 				<ImageView
 					android:id="@+id/item_use"

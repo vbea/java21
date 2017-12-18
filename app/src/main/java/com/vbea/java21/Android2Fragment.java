@@ -42,7 +42,7 @@ public class Android2Fragment extends Fragment
 	private List<AndroidAdvance> mList;
 	private View rootView;
 	private int mCount = 0;
-	private ProgressDialog mPdialog;
+	//private ProgressDialog mPdialog;
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -58,7 +58,7 @@ public class Android2Fragment extends Fragment
 		if (recyclerView == null)
 		{
 			mList = new ArrayList<AndroidAdvance>();
-			mAdapter = new Android2Adapter(mList);
+			mAdapter = new Android2Adapter();
 			errorText = (TextView) view.findViewById(R.id.txt_andError);
         	recyclerView = (RecyclerView) view.findViewById(R.id.cpt_recyclerView);
 			refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swp_refresh);
@@ -81,19 +81,11 @@ public class Android2Fragment extends Fragment
 			mAdapter.setOnItemClickListener(new Android2Adapter.OnItemClickListener()
 			{
 				@Override
-				public void onItemClick(String id, String title, String sub, String url, boolean isTitle)
+				public void onItemClick(String id, String title, String sub, String url)
 				{
 					//更新数据
-					//update();
-					//if (true)return;
-					if (isTitle)
-						return;
-					/*if (!Common.IS_ACTIVE)
-					{
-						//Util.toastShortMessage(getContext(), "该功能需要激活后才能使用");
-						Common.startActivityOptions(getActivity(), Machine.class);
-						return;
-					}*/
+					/*update();
+					if (true)return;*/
 					Common.addAndroid2Read(id);
 					Intent intent = new Intent(getActivity(), AndroidWeb.class);
 					intent.putExtra("id", id);
@@ -272,14 +264,14 @@ public class Android2Fragment extends Fragment
 					if (refreshLayout.isRefreshing())
 						refreshLayout.setRefreshing(false);
 					break;
-				case 4:
+				/*case 4:
 					Util.toastShortMessage(getActivity(), "更新成功");
 					mPdialog.dismiss();
 					break;
 				case 5:
 					Util.toastShortMessage(getActivity(), "更新失败");
 					mPdialog.dismiss();
-					break;
+					break;*/
 			}
 			super.handleMessage(msg);
 		}
@@ -297,7 +289,7 @@ public class Android2Fragment extends Fragment
 		super.onResume();
 	}
 	
-	public void update()
+	/*public void update()
 	{
 		Util.showConfirmCancelDialog(getActivity(), "数据更新", "你确定要更新数据吗", new DialogInterface.OnClickListener()
 		{
@@ -307,7 +299,7 @@ public class Android2Fragment extends Fragment
 				new UpdateThread().start();
 			}
 		});
-	}
+	}*/
 	
 	class UpdateThread extends Thread implements Runnable
 	{
@@ -319,7 +311,7 @@ public class Android2Fragment extends Fragment
 				{
 					if (item.isTitle)
 						continue;
-					item.url = item.url.replace("coderboy.cn", "vbea.wicp.net");
+					item.url = item.url.replace("http://vbea.wicp.net/","");
 					item.update(new UpdateListener()
 					{
 						public void done(BmobException e)

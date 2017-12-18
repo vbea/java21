@@ -3,7 +3,6 @@ package com.vbea.java21;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import android.app.AlertDialog.Builder;
 import android.os.Bundle;
 import android.view.View;
 import android.view.LayoutInflater;
@@ -16,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.Snackbar;
 
+import com.vbea.java21.classes.AlertDialog;
 import com.vbea.java21.classes.Common;
 
 public class TextReplace extends AppCompatActivity
@@ -67,7 +67,7 @@ public class TextReplace extends AppCompatActivity
 		final CheckBox cased = (CheckBox) view.findViewById(R.id.chkIgnoeCase);
 		edt1.setText(oldValue);
 		edt2.setText(newValue);
-		Builder builder = new Builder(TextReplace.this);
+		AlertDialog builder = new AlertDialog(TextReplace.this);
 		builder.setTitle("替换选项");
 		builder.setView(view);
 		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()

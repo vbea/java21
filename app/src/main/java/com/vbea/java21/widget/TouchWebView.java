@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 
 public class TouchWebView extends WebView
 {
-	private long lastTime = 0l;
+	//private long lastTime = 0l;
 	public TouchWebView(Context context)
 	{
         super(context);
@@ -25,9 +25,9 @@ public class TouchWebView extends WebView
         super(context, attrs, defStyleAttr);
     }
 	
-	public boolean onTouchEvent(MotionEvent event)
+	/*public boolean onTouchEvent(MotionEvent event)
 	{
-        if (event.getAction() ==  MotionEvent.ACTION_DOWN)
+        if (event.getAction() == MotionEvent.ACTION_UP)
 		{
 			long currentTime = System.currentTimeMillis();
 			long time = currentTime - lastTime;
@@ -40,5 +40,5 @@ public class TouchWebView extends WebView
 				lastTime = currentTime;
         }
         return super.onTouchEvent(event);
-    }
+    }*/
 }

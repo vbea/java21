@@ -8,15 +8,9 @@ import java.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.RelativeLayout;
-import android.widget.LinearLayout;
 import android.widget.Button; 
 import android.widget.TextView;
-import android.widget.ImageView;
 import android.widget.EditText;
-import android.widget.CheckBox;
-import android.widget.RadioButton;
-import android.widget.CompoundButton;
 import android.view.View;
 import android.view.KeyEvent;
 import android.view.inputmethod.InputMethodManager;
@@ -30,6 +24,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
@@ -41,10 +36,15 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.exception.BmobException;
-import org.json.JSONObject;
+//import org.json.JSONObject;
 
 public class Comment extends AppCompatActivity
 {
+	/**
+	* 邠心工作室
+	* 21天学通Java
+	* 评论页面
+	*/
 	String resId, title, reference, url, reply;
 	Integer type;
 	TextView emptyView;
@@ -55,6 +55,7 @@ public class Comment extends AppCompatActivity
 	CommentAdapter mAdapter;
 	SimpleDateFormat dateformat;
 	InputMethodManager imm;
+	private SwipeRefreshLayout refreshLayout;
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -66,17 +67,19 @@ public class Comment extends AppCompatActivity
 		edtComment = (EditText) findViewById(R.id.edt_comment);
 		btnComment = (Button) findViewById(R.id.btnComment);
 		emptyView = (TextView) findViewById(R.id.comment_emptyview);
+		refreshLayout = (SwipeRefreshLayout) findViewById(R.id.comm_refresh);
 		title = getIntent().getStringExtra("title");
 		resId = getIntent().getStringExtra("id");
 		url = getIntent().getStringExtra("url");
 		type = getIntent().getIntExtra("type", 0);
+		refreshLayout.setColorSchemeResources(MyThemes.getColorPrimary(), MyThemes.getColorAccent());
 		if (resId == null || type == 0)
 		{
 			Util.toastShortMessage(this, "不支持的参数");
 			supportFinishAfterTransition();
 		}
 		else
-			getData();
+			getData(true);
 		if (title != null)
 			tool.setTitle(title + " 的评论");
 		reference = "";
@@ -84,7 +87,7 @@ public class Comment extends AppCompatActivity
 		imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 		dateformat = new SimpleDateFormat("M-d HH:mm");
 		mList = new ArrayList<Comments>();
-		mAdapter = new CommentAdapter(mList);
+		mAdapter = new CommentAdapter(mList, this);
 		recyclerView.setAdapter(mAdapter);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -112,7 +115,7 @@ public class Comment extends AppCompatActivity
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count)
 			{
-				btnComment.setEnabled(count > 0);
+				btnComment.setEnabled(s.toString().trim().length() > 0);
 			}
 
 			@Override
@@ -132,6 +135,18 @@ public class Comment extends AppCompatActivity
 			}
 		});
 		
+		refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
+		{
+			@Override
+			public void onRefresh()
+			{
+				if (Common.isNet(Comment.this))
+					getData(false);
+				else
+					Util.toastShortMessage(getApplicationContext(), "咦，网络去哪儿了？");
+			}
+		});
+		
 		mAdapter.setOnItemClickListener(new CommentAdapter.OnItemClickListener()
 		{
 			@Override
@@ -146,22 +161,48 @@ public class Comment extends AppCompatActivity
 			}
 
 			@Override
-			public void onDelete(final String id, final int position)
+			public void onDelete(final Comments comm, final int position)
 			{
 				deleteDialog(new DialogInterface.OnClickListener()
 				{
 					@Override
 					public void onClick(DialogInterface p1, int p2)
 					{
-						deleteComment(id, position);
+						deleteComment(comm, position);
 					}
 				});
+			}
+			
+			@Override
+			public void onEndorse(Comments comm, int p, boolean ed)
+			{
+				if (comm.endorse == null)
+					comm.endorse = "";
+				if (ed || !ed && !comm.endorse.contains(Common.getUsername()))
+				{
+					comm.endorse = addOrRemoveUserAction(comm.endorse, !ed);
+					updateComment(comm);
+				}
+			}
+
+			@Override
+			public void onOppose(Comments comm, int p, boolean ed)
+			{
+				if (comm.oppose == null)
+					comm.oppose = "";
+				if (ed || !ed && !comm.oppose.contains(Common.getUsername()))
+				{
+					comm.oppose = addOrRemoveUserAction(comm.oppose, !ed);
+					updateComment(comm);
+				}
 			}
 		});
 	}
 	
 	private void init()
 	{
+		if (refreshLayout.isRefreshing())
+			refreshLayout.setRefreshing(false);
 		imm.hideSoftInputFromWindow(edtComment.getWindowToken(), 0);
 		if (reference.length() > 0)
 			clear();
@@ -180,14 +221,15 @@ public class Comment extends AppCompatActivity
 		}
 	}
 	
-	private void getData()
+	private void getData(boolean cache)
 	{
 		emptyView.setText("请稍候...");
 		BmobQuery<Comments> sql = new BmobQuery<Comments>();
 		sql.addWhereEqualTo("id", resId);
 		sql.addWhereEqualTo("type", type);
 		sql.order("-createdAt");
-		sql.setCachePolicy(BmobQuery.CachePolicy.CACHE_THEN_NETWORK);
+		if (cache)
+			sql.setCachePolicy(BmobQuery.CachePolicy.CACHE_THEN_NETWORK);
 		sql.findObjects(new FindListener<Comments>()
 		{
 			@Override
@@ -198,8 +240,41 @@ public class Comment extends AppCompatActivity
 					mList = list;
 					mHandler.sendEmptyMessage(1);
 				}
+				else
+					mHandler.sendEmptyMessage(6);
 			}
 		});
+	}
+	
+	private String addOrRemoveUserAction(String old, boolean add)
+	{
+		StringBuilder newStr = new StringBuilder("");
+		if (!Util.isNullOrEmpty(old))
+		{
+			if (add)
+			{
+				newStr.append(old);
+				newStr.append(",");
+				newStr.append(Common.getUsername());
+			}
+			else
+			{
+				if (old.indexOf(Common.getUsername()+",") >= 0)
+					newStr.append(old.replace(Common.getUsername()+",", ""));
+				else if (old.indexOf(Common.getUsername()) >= 0)
+					newStr.append(old.replace(Common.getUsername(), ""));
+			}
+		}
+		else if (add)
+		{
+			newStr.append(Common.getUsername());
+		}
+		return Util.removeEmptyItem(newStr.toString().split(","));
+	}
+	
+	private void deleteDialog(DialogInterface.OnClickListener lis)
+	{
+		Util.showConfirmCancelDialog(this, android.R.string.dialog_alert_title, "您确定要删除此评论？", lis);
 	}
 	
 	private void addComment(String text)
@@ -211,9 +286,8 @@ public class Comment extends AppCompatActivity
 		coms.id = resId;
 		coms.type = type;
 		coms.title = title;
-		coms.url = url;
 		coms.comment = text;
-		coms.reply = reply;
+		coms.device = Util.getDeviceModel();
 		coms.reference = reference;
 		coms.date = dateformat.format(new Date());
 		coms.save(new SaveListener<String>()
@@ -222,31 +296,49 @@ public class Comment extends AppCompatActivity
 			public void done(String p1, BmobException e)
 			{
 				//if (e == null)
-					//mHandler.sendEmptyMessage(2);
+				//mHandler.sendEmptyMessage(2);
 			}
 		});
+		if (!Util.isNullOrEmpty(reply))
+		{
+			Common.myInbox.addMessage(resId, reply, Common.mUser.nickname + "回复了你的评论：" + text, title, url, type);
+		}
 		mList.add(0, coms);
 		mHandler.sendEmptyMessage(1);
 	}
 	
-	private void deleteDialog(DialogInterface.OnClickListener lis)
+	private void updateComment(Comments com)
 	{
-		Util.showConfirmCancelDialog(this, android.R.string.dialog_alert_title, "您确定要删除此评论？", lis);
-	}
-	
-	private void deleteComment(String id, int p)
-	{
-		Comments com = mList.get(p);
-		if (com.getObjectId() == id)
+		if (com.getObjectId() != null)
 		{
-			mList.remove(p);
-			com.delete(id, new UpdateListener()
+			com.update(com.getObjectId(), new UpdateListener()
 			{
 				@Override
 				public void done(BmobException p1)
 				{
-					if (p1 == null)
+					if (p1 != null)
+						ExceptionHandler.log("CommUpdate", p1.toString());
+					mHandler.sendEmptyMessage(5);
+				}
+			});
+		}
+	}
+	
+	private void deleteComment(Comments com, final int p)
+	{
+		if (com.getObjectId() != null)
+		{
+			com.delete(com.getObjectId(), new UpdateListener()
+			{
+				@Override
+				public void done(BmobException p1)
+				{
+					if (p1 == null) {
+						mList.remove(p);
 						mHandler.sendEmptyMessage(3);
+					}
+					else
+						mHandler.sendEmptyMessage(4);
 				}
 			});
 		}
@@ -257,6 +349,14 @@ public class Comment extends AppCompatActivity
 		reference = "";
 		reply = "";
 		edtComment.setHint(R.string.comm_hint);
+	}
+
+	@Override
+	protected void onResume()
+	{
+		if (refreshLayout.isRefreshing())
+			refreshLayout.setRefreshing(false);
+		super.onResume();
 	}
 	
 	Handler mHandler = new Handler()
@@ -275,6 +375,18 @@ public class Comment extends AppCompatActivity
 				case 3:
 					init();
 					Util.toastShortMessage(getApplicationContext(), "删除成功");
+					break;
+				case 4:
+					Util.toastShortMessage(getApplicationContext(), "删除失败");
+					break;
+				case 5:
+					mAdapter.unLock();
+					init();
+					break;
+				case 6:
+					emptyView.setVisibility(View.VISIBLE);
+					emptyView.setText("加载失败\n请检查你的网络连接");
+					recyclerView.setVisibility(View.GONE);
 					break;
 			}
 			super.handleMessage(msg);

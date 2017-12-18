@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 import android.app.Activity;
 import android.app.SearchManager;
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.webkit.WebView;
@@ -51,6 +50,7 @@ import com.vbea.java21.widget.MyWebView;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.SocialShare;
+import com.vbea.java21.classes.AlertDialog;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.tencent.connect.common.Constants;
 import com.tencent.connect.share.QQShare;
@@ -70,7 +70,7 @@ public class HtmlViewer extends AppCompatActivity
 	private BottomSheetDialog mBSDialog;
 	private LinearLayout share_qq, share_qzone, share_wx, share_wxpy;
 	private LinearLayout share_sina, share_web, share_link, share_more;
-	private String SH_html,SH_htmlUrl, SH_url = "", SH_home, UA_Default, Image_Path;
+	private String SH_html, SH_url = "", SH_home, UA_Default, Image_Path;
 	private int SH_search = 0, SH_UA = 0;
 	private Uri cameraUri;
 	private String[] Searchs, UAurls;
@@ -123,8 +123,9 @@ public class HtmlViewer extends AppCompatActivity
 		wset.setAppCacheMaxSize(1024*1024*10);
 		wset.setAllowFileAccess(true);
 		wset.setRenderPriority(WebSettings.RenderPriority.HIGH);
+		wset.setGeolocationEnabled(true);
 		wset.setJavaScriptCanOpenWindowsAutomatically(true);
-		//webView.addJavascriptInterface(new JavaScriptShowCode(), "showcode");
+		webView.addJavascriptInterface(new JavaScriptShowCode(), "showcode");
 		onSetting();
 		Intent intent = getIntent();
 		/*if (!SH_url.equals(""))
@@ -141,7 +142,7 @@ public class HtmlViewer extends AppCompatActivity
 		}
 		else
 		{
-			if (isValidHome())
+			if (!Util.isNullOrEmpty(SH_home))
 				loadUrls(SH_home);
 		}
 		webView.setWebChromeClient(new MyWebChromeClient());
@@ -184,6 +185,7 @@ public class HtmlViewer extends AppCompatActivity
 			
 			public void onPageStarted(WebView v, String url, Bitmap icon)
 			{
+				SH_url = url;
 				if (searchItem != null)
 					searchItem.collapseActionView();
 				super.onPageStarted(v, url, icon);
@@ -193,7 +195,7 @@ public class HtmlViewer extends AppCompatActivity
 			public void onPageFinished(WebView view, String url)
 			{
 				SH_url = url;
-				//view.loadUrl("javascript:window.showcode.show(return location.assign(location.href));");
+				view.loadUrl("javascript:window.showcode.show(document.getElementsByTagName('html')[0].outerHTML);");
 				tool.setTitle(view.getTitle());
 				super.onPageFinished(view, url);
 			}
@@ -263,8 +265,12 @@ public class HtmlViewer extends AppCompatActivity
 		if (Util.isNullOrEmpty(url))
 			return;
 		if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0 || url.indexOf("ftp://") == 0 || url.indexOf("file://") == 0)
-			webView.loadUrl(url);
-		else if (url.indexOf("vbea://") == 0)
+		{
+			if (isUrl(url))
+				webView.loadUrl(url);
+			else
+				loadUrlsSearch(url);
+		} else if (url.indexOf("vbea://") == 0)
 			webView.loadUrl(url.replace("vbea:", "http:"));
 		else if (url.indexOf(".") > 0)
 		{
@@ -285,7 +291,7 @@ public class HtmlViewer extends AppCompatActivity
 	
 	public boolean isUrl(String url)
 	{
-		Pattern pat = Pattern.compile("[http|https]+[://]+[0-9A-Za-z:/[-]_#[?][=][.][&]]*");
+		Pattern pat = Pattern.compile("(http|https|file|ftp)+[://]+(\\S+\\.)+[\\w-]+(/[\\w-./?%&=]*)?");
 		Matcher mat = pat.matcher(url);
 		return mat.matches();
 	}
@@ -310,12 +316,17 @@ public class HtmlViewer extends AppCompatActivity
 		getMenuInflater().inflate(R.menu.web_menu, menu);
 		searchItem = menu.findItem(R.id.item_urls);
 		searchView = (SearchView) searchItem.getActionView();
-		
 		searchItem.setActionView(searchView);
-		/*TextView text = (TextView) searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-		text.setTextColor(R.color.white);
-		text.setHighlightColor(R.color.white);
-		text.setHintTextColor(R.color.red);*/
+		searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener()
+		{
+			@Override
+			public void onFocusChange(View p1, boolean p2)
+			{
+				webView.setNestedScrollingEnabled(!p2);
+				if (!p2)
+					searchItem.collapseActionView();
+			}
+		});
 		ImageView image = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
 		image.setVisibility(View.GONE);
 		searchItem.setVisible(false);
@@ -446,17 +457,15 @@ public class HtmlViewer extends AppCompatActivity
 				goPage();
 			else
 			{
-				ISSOURCE = true;
-				souceView.setVisibility(View.VISIBLE);
-				webView.setVisibility(View.GONE);
-				if (SH_url.equals(SH_htmlUrl))
+				if (!Util.isNullOrEmpty(SH_html))
 				{
+					ISSOURCE = true;
+					souceView.setVisibility(View.VISIBLE);
+					webView.setVisibility(View.GONE);
 					souceView.loadData(SH_html, "text/plain; charset=UTF-8", null);
 					tool.setTitle("view-source:"+webView.getUrl());
 					searchView.setQuery(webView.getUrl(), false);
 				}
-				else
-					showHtmlCode();
 			}
 		}
 		else if (item.getItemId() == R.id.item_setting)
@@ -522,10 +531,10 @@ public class HtmlViewer extends AppCompatActivity
 		return disposition;
 	}
 	
-	public void showHtmlCode()
+	/*public void showHtmlCode()
 	{
 		SH_htmlUrl = SH_url;
-	}
+	}*/
 	
 	private void onSetting()
 	{
@@ -574,7 +583,7 @@ public class HtmlViewer extends AppCompatActivity
 	
 	public void selectImage()
 	{
-		AlertDialog.Builder dialogBuild = new AlertDialog.Builder(HtmlViewer.this);
+		AlertDialog dialogBuild = new AlertDialog(HtmlViewer.this);
 		dialogBuild.setItems(headItems, new DialogInterface.OnClickListener()
 		{
 			public void onClick(DialogInterface dialog, int item)
@@ -701,6 +710,17 @@ public class HtmlViewer extends AppCompatActivity
 		{
 			update.updateQuota(5 * 1024 * 1024);
 		}
+		
+		public void onGeolocationPermissionsShowPrompt(final String origin, final android.webkit.GeolocationPermissions.Callback callback)
+		{
+			Util.showConfirmCancelDialog(HtmlViewer.this, "提示", "来自"+origin+"的网页正在请求定位，请确认是否允许？", new DialogInterface.OnClickListener()
+			{
+				public void onClick(DialogInterface d, int s)
+				{
+					callback.invoke(origin, true, false);
+				}
+			});
+		}
 
 		// For Android 3.0-
 		public void openFileChooser(ValueCallback<Uri> uploadMsg)
@@ -754,6 +774,15 @@ public class HtmlViewer extends AppCompatActivity
 				startActivityForResult(Intent.createChooser(i, "文件上传"), FILECHOOSER_RESULTCODE);
 			}
 			return true;
+		}
+	}
+	
+	class JavaScriptShowCode
+	{
+		@JavascriptInterface
+		public void show(String html)
+		{
+			SH_html = "<!DOCTYPE html>"+html;
 		}
 	}
 }

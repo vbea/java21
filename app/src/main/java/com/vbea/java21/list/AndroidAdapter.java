@@ -22,6 +22,7 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.MyViewHo
 	private OnItemClickListener onItemClickListener;
 	private List<AndroidHtml> mList;
 	private boolean isEnd = false;
+	private String server = "";
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup p1, int p2)
 	{
@@ -43,27 +44,29 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.MyViewHo
 		{
 			holder.sub.setVisibility(View.GONE);
 			holder.layout.setBackgroundResource(R.color.android_disable);
+			holder.layout.setClickable(false);
 		}
 		else
 		{
 			holder.sub.setVisibility(View.VISIBLE);
 			holder.layout.setBackgroundResource(R.drawable.btn_menu);
+			holder.layout.setClickable(true);
+			holder.layout.setOnClickListener(new View.OnClickListener()
+			{
+				public void onClick(View v)
+				{
+					if(onItemClickListener != null)
+					{
+						onItemClickListener.onItemClick(item.getObjectId(), item.title, item.remark, server + item.url);
+					}
+				}
+			});
 		}
 		if (isEnd && p == mList.size() - 1)
 			holder.end.setVisibility(View.VISIBLE);
 		else
 			holder.end.setVisibility(View.GONE);
 		holder.read.setVisibility(Common.READ_Android.contains(item.getObjectId()) ? View.VISIBLE : View.GONE);
-		holder.layout.setOnClickListener(new View.OnClickListener()
-		{
-			public void onClick(View v)
-			{
-				if(onItemClickListener != null)
-				{
-					onItemClickListener.onItemClick(item.getObjectId(), item.title, item.remark, item.url, item.isTitle);
-				}
-			}
-		});
 	}
 
 	@Override
@@ -74,16 +77,14 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.MyViewHo
 		return 0;
 	}
 	
-	public AndroidAdapter (List<AndroidHtml> list)
-	{
-		mList = list;
-		isEnd = false;
-	}
-	
 	public void setList(List<AndroidHtml> list)
 	{
 		mList = list;
 		isEnd = false;
+		if (mList.get(0).order == -1) {
+			server = mList.get(0).url;
+			mList.remove(0);
+		}
 	}
 	
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
@@ -128,6 +129,6 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.MyViewHo
 	
 	public interface OnItemClickListener
 	{
-        void onItemClick(String id, String title, String sub, String url, boolean t);
+        void onItemClick(String id, String title, String sub, String url);
     }
 }

@@ -14,7 +14,7 @@
 		android:orientation="vertical"
 		android:background="?attr/divider">
 		<include layout="@layout/java_tool"/>
-		<com.vbea.java21.widget.TouchWebView
+		<WebView
 			android:id="@+id/codeWebView"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"

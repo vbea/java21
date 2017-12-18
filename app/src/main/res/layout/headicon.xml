@@ -10,7 +10,7 @@
 		android:layout_height="40dp"
 		android:layout_alignParentEnd="true"
 		android:layout_margin="10dp"
-		android:src="@mipmap/ic_setting"/>
+		android:src="@mipmap/ic_picture"/>
 	<ImageView
 		android:id="@+id/img_headicon"
 		android:layout_width="match_parent"

@@ -2,12 +2,12 @@ package com.vbea.java21;
 
 import java.util.ArrayList;
 
-import android.app.AlertDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +50,8 @@ import com.vbea.java21.list.FragmentAdapter;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.AdvConfig;
+import com.vbea.java21.classes.InboxManager;
+import com.vbea.java21.classes.AlertDialog;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.widget.CustomTextView;
 import com.vbea.java21.audio.SoundLoad;
@@ -73,6 +75,7 @@ public class Main extends AppCompatActivity
 	private SoundThread soundThread;
 	private ViewGroup bannerLayout;
 	private BannerView bannerView;
+	private InboxCallback myCallback;
     @Override
     protected void onCreate(Bundle savedInstanceState)
 	{
@@ -176,13 +179,14 @@ public class Main extends AppCompatActivity
 				if (Common.isLogin())
 				{
 					Common.startActivityOptions(Main.this, new Intent(Main.this, UserCentral.class),
-						(Pair<View,String>)Pair.create(drawUser, "share_user"),					
-						(Pair<View,String>)Pair.create(mImgHead, "icon_pre"),
-						(Pair<View,String>)Pair.create(txtUserName, "share_nick"));
+						(Pair<View,String>)Pair.create(drawUser, "share_user")		
+						/*(Pair<View,String>)Pair.create(mImgHead, "icon_pre"),
+						(Pair<View,String>)Pair.create(txtUserName, "share_nick")*/);
 				}
 			}
 		});
 		setHead();
+		myCallback = new InboxCallback();
 		if (START)
 		{
 			BmobUpdateAgent.update(getApplicationContext());
@@ -376,11 +380,12 @@ public class Main extends AppCompatActivity
 			finishAndRemoveTask();
 		else
 			finish();
+		ActivityManager.getInstance().FinishAllActivities();
 	}
 	
 	private void onAudioDialog()
 	{
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		AlertDialog builder = new AlertDialog(this);
 		builder.setTitle("提示");
 		builder.setCancelable(false);
 		builder.setMessage("学累了吧，要不要听听音乐放松下？");
@@ -405,6 +410,38 @@ public class Main extends AppCompatActivity
 	public void closeDrawered()
 	{
 		mDrawerLayout.closeDrawer(Gravity.START);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		getMenuInflater().inflate(R.menu.main_menu, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu)
+	{
+		if (Common.getInbox().getCount() > 0)
+		{
+			menu.findItem(R.id.item_newmsg).setVisible(true);
+			menu.findItem(R.id.item_msg).setVisible(false);
+		}
+		else
+		{
+			menu.findItem(R.id.item_newmsg).setVisible(false);
+			menu.findItem(R.id.item_msg).setVisible(true);
+		}
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		//Common.myInbox.refreshMessage();
+		if (Common.isLogin())
+			Common.startActivityOptions(this, MyInbox.class);
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -514,19 +551,19 @@ public class Main extends AppCompatActivity
 		bannerView = new BannerView(this, ADSize.BANNER, AdvConfig.APPID, AdvConfig.Banner2);
 		bannerView.setRefresh(30);
 		bannerView.setADListener(new AbstractBannerADListener()
+		{
+			@Override
+			public void onNoAD(AdError e)
 			{
-				@Override
-				public void onNoAD(AdError e)
-				{
-					ExceptionHandler.log("ad:"+e.getErrorCode(), e.getErrorMsg());
-				}
+				ExceptionHandler.log("ad:"+e.getErrorCode(), e.getErrorMsg());
+			}
 
-				@Override
-				public void onADReceiv()
-				{
+			@Override
+			public void onADReceiv()
+			{
 
-				}
-			});
+			}
+		});
 		bannerLayout.addView(bannerView);
 		bannerView.loadAD();
 	}
@@ -612,6 +649,17 @@ public class Main extends AppCompatActivity
 		}
 	}
 	
+	class InboxCallback implements InboxManager.InboxCallback
+	{
+		@Override
+		public void onSuccess()
+		{
+			invalidateOptionsMenu();
+		}
+		@Override
+		public void onFailure(){}
+	}
+	
 	Handler mHandler = new Handler()
 	{
 		@Override
@@ -635,6 +683,7 @@ public class Main extends AppCompatActivity
 					{
 						txtUserName.setText(Common.mUser.nickname);
 						txtSignature.setText(Common.mUser.mark);
+						Common.getInbox().getMyInbox(System.currentTimeMillis(), myCallback);
 					}
 					else
 					{
@@ -717,10 +766,12 @@ public class Main extends AppCompatActivity
 	
 	private void onExit()
 	{
-		if (Common.isSupportMD())
+		Intent home = new Intent(Intent.ACTION_MAIN);
+		home.addCategory(Intent.CATEGORY_HOME);
+		startActivity(home);
+		/*if (Common.isSupportMD())
 			finishAndRemoveTask();
 		else
-			finish();
-		ActivityManager.getInstance().FinishAllActivities();
+			finish();*/
 	}
 }

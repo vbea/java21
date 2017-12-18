@@ -11,55 +11,28 @@
     <link href="css/vbea.css" rel="stylesheet" />
     <title>Code Editor</title>
 </head>
-<body ontouchstart>
+<body>
     <div id="headBar">
-        <span id="lang"></span>
-        <!--<a href="javascript:save()" style="margin-right:10px">
-            <img src="image/ic_save.png" />
-        </a>-->
-        <span style="width:10px; float:right;">&nbsp;</span>
-        <a href="javascript:exec(this, 'find', 'Ctrl-F')">
-            <img src="image/ic_search.png" />
-        </a>
-        <a href="javascript:exec(this, 'redo','Ctrl-Y')">
-            <img src="image/ic_redo.png" />
-        </a>
-        <a href="javascript:exec(this, 'undo','Ctrl-Z')">
-            <img src="image/ic_undo.png" />
-        </a>
-        <a href="javascript:exec(this, 'selectall', 'Ctrl-A')">
-            <img src="image/ic_selectall.png" />
-        </a>
-        <a href="javascript:exec(this, 'del', 'Delete')">
-            <img src="image/ic_delete.png" />
-        </a>
+        <div id="headTitle">
+            <span id="lang"></span>
+        </div>
+        <div id="headBtns" style="width:170px;">
+            <img onclick="javascript:exec(true, 'del', 'Delete')" src="image/ic_delete.png" />
+            <img onclick="javascript:exec(false, 'selectall', 'Ctrl-A')" src="image/ic_selectall.png" />
+            <img onclick="javascript:exec(false, 'undo','Ctrl-Z')" src="image/ic_undo.png" />
+            <img onclick="javascript:exec(false, 'redo','Ctrl-Y')" src="image/ic_redo.png" />
+            <img onclick="javascript:exec(false, 'find', 'Ctrl-F')" src="image/ic_search.png" />
+        </div>
     </div>
     <pre id="vbeditor"></pre>
     <div id="statusBar">
-        <a href="javascript:exec(this, 'indent','Tab')">
-            <img src="image/ic_tab.png" />
-        </a>
-        <!--<a href="javascript:exec(this, 'blockoutdent', 'Ctrl-[');">
-            <img src="image/ic_shtab.png" />
-        </a>-->
-        <a href="javascript:exec(this, 'gotoleft', 'Left');">
-            <img src="image/ic_left.png" />
-        </a>
-        <a href="javascript:exec(this, 'gotoright', 'Left');">
-            <img src="image/ic_right.png" />
-        </a>
-        <a href="javascript:exec(this, 'golineup', 'Up');">
-            <img src="image/ic_up.png" />
-        </a>
-        <a href="javascript:exec(this, 'golinedown', 'Down');">
-            <img src="image/ic_down.png" />
-        </a>
-        <a href="javascript:exec(this, 'togglecomment', 'Ctrl-/');">
-            <img src="image/ic_comment.png" />
-        </a>
-        <a href="javascript:exec(this, 'toggleBlockComment', 'Ctrl-Shift-/');">
-            <img src="image/ic_comments.png" />
-        </a>
+        <img onclick="javascript:exec(true, 'indent','Tab')" src="image/ic_tab.png" />
+        <img onclick="javascript:exec(true, 'gotoleft', 'Left');" src="image/ic_left.png" />
+        <img onclick="javascript:exec(true, 'gotoright', 'Left');" src="image/ic_right.png" />
+        <img onclick="javascript:exec(true, 'golineup', 'Up');" src="image/ic_up.png" />
+        <img onclick="javascript:exec(true, 'golinedown', 'Down');" src="image/ic_down.png" />
+        <img onclick="javascript:exec(true, 'togglecomment', 'Ctrl-/');" src="image/ic_comment.png" />
+        <img onclick="javascript:exec(true, 'toggleBlockComment', 'Ctrl-Shift-/');" src="image/ic_comments.png" />
     </div>
     <script src="src/ace.js" type="text/javascript" charset="utf-8"></script>
     <script src="src/ext-language_tools.js"></script>
@@ -67,10 +40,19 @@
     <script src="src/ext-statusbar.js"></script>
     <script src="src/ext-chromevox.js"></script>
     <script type="text/javascript">
-        var editor;
+        var editor, hasEdit, language;
         window.onload = function () {
             ace.require("ace/ext/chromevox");
-            var language = getLanguage();//设置语言
+            language = getLanguage();//设置语言
+            init();
+        };
+        function init() {
+            var lang = getId("lang");
+            var title = getId("headTitle");
+            var bar = getId("headBtns");
+            var width = (window.innerWidth - bar.offsetWidth - 10);
+            title.style.width = width + "px";
+            lang.style.maxWidth = (width - 25) + "px";
             editor = ace.edit("vbeditor");
             var StatusBar = ace.require("ace/ext/statusbar").StatusBar;
             var statusBar = new StatusBar(editor, document.getElementById("statusBar"));
@@ -88,22 +70,16 @@
                 enableLiveAutocompletion: true
             });
             editor.$blockScrolling = "Infinity";
-            var a = document.getElementsByTagName("a");
-            if (a.length > 0) {
-                for (i = 0; i < a.length; i++) {
-                    a[i].onclick = function () {
-                        var btn = this;
-                        btn.className = "disa";
-                        var t = setTimeout(function () { remove(btn) }, 300);
-                    }
-                }
-            }
-        };
+            editor.session.on("change", function () {
+                hasEdit = true;
+                getId("headTitle").className = "title";
+            });
+        }
         function getLanguage() {
-            var title = document.getElementById("lang");
+            var title = getId("lang");
             var url = location.search;
             var theRequest = new Object();
-            if (url.indexOf("?") != -1) {
+            if (url.indexOf("?") >= 0) {
                 var str = url.substr(1).split("=");
                 title.innerText = str[0];
                 return str[1];
@@ -112,13 +88,22 @@
             return "java";
         }
 
+        function getId(id) {
+            return document.getElementById(id);
+        }
+
         function exec(obj, name, args) {
             editor.execCommand(name, args);
-            editor.focus();
+            if (obj)
+                editor.focus();
         }
 
         function save() {
-            window.EditorManage.save(editor.getValue());
+            if (hasEdit == true) {
+                hasEdit = false;
+                getId("headTitle").className = "";
+                window.EditorManage.save(editor.getValue());
+            }
         }
 
         function openFile(text) {

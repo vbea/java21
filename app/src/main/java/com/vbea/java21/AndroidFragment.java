@@ -55,7 +55,7 @@ public class AndroidFragment extends Fragment
 		if (recyclerView == null)
 		{
 			mList = new ArrayList<AndroidHtml>();
-			mAdapter = new AndroidAdapter(mList);
+			mAdapter = new AndroidAdapter();
 			errorText = (TextView) view.findViewById(R.id.txt_andError);
         	recyclerView = (RecyclerView) view.findViewById(R.id.cpt_recyclerView);
 			refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swp_refresh);
@@ -78,18 +78,10 @@ public class AndroidFragment extends Fragment
 			mAdapter.setOnItemClickListener(new AndroidAdapter.OnItemClickListener()
 			{
 				@Override
-				public void onItemClick(String id, String title, String sub, String url, boolean isTitle)
+				public void onItemClick(String id, String title, String sub, String url)
 				{
 					//update();
 					//if (true)return;
-					if (isTitle)
-						return;
-					/*if (!Common.IS_ACTIVE)
-					{
-						//Util.toastShortMessage(getContext(), "该功能需要激活后才能使用");
-						Common.startActivityOptions(getActivity(), Machine.class);
-						return;
-					}*/
 					Common.addAndroidRead(id);
 					Intent intent = new Intent(getActivity(), AndroidWeb.class);
 					intent.putExtra("id", id);

@@ -21,7 +21,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AlertDialog;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.AdvConfig;
@@ -50,7 +49,8 @@ public class MainActivity extends AppCompatActivity
 		ExceptionHandler exc = ExceptionHandler.getInstance();
 		exc.init(MainActivity.this);
 		Common.start(getApplicationContext());
-		setTheme(MyThemes.getHomeTheme());
+		setTheme(MyThemes.getTheme());
+		getWindow().setFlags(1024, 1024);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome);
 		based = findViewById(R.id.welLayout);
@@ -92,13 +92,18 @@ public class MainActivity extends AppCompatActivity
 		}
 		if (Common.isWeladv())
 		{
-			if (Build.VERSION.SDK_INT > 23)
+			if (Build.VERSION.SDK_INT >= 23)
 				checkAndRequestPermission();
 			else
 				fetchSplashAD();
 		}
 		else
 		{
+			if (Build.VERSION.SDK_INT >= 23)
+			{
+				if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
+					requestPermissions(new String[] { Manifest.permission.READ_EXTERNAL_STORAGE }, 100);
+			}
 			new MainThread().start();
 		}
 		/*try

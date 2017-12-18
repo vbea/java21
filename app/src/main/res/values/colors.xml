@@ -21,6 +21,7 @@
 	<color name="fuchsia">#ff00ff</color><!--紫红色 --> 
 	<color name="magenta">#ff00ff</color><!--红紫色 --> 
 	<color name="red">#ff0000</color><!--红色 -->  
+	<color name="alred">#EE0000</color><!--阿绫红-->
 	<color name="skyblue">#87ceeb</color><!--天蓝色 --> 
 	<color name="lightBlue">#00FFFF</color><!--靓蓝-->
 	<color name="gray">#999999</color><!--灰色 --> 
@@ -35,11 +36,12 @@
 	<color name="green">#4D8000</color><!--绿色 --> 
 	<color name="black">#000000</color><!--黑色 --> 
 	<color name="cyan">#00CCFF</color><!--青蓝色 -->
-	<color name="cyan2">#66CCFF</color><!--浅青蓝色-->
+	<color name="lty">#66CCFF</color><!--天依蓝-->
 	<color name="trans">#00FFFFFF</color><!--透明色-->
 	<color name="eyeshield">#C7EDCC</color>
 	<color name="nightback">#424242</color><!--暗宝石绿-->
 	<color name="android_disable">#4FCCCCCC</color>
+	<color name="transparent">#00000000</color>
 	<!--标题色-->
 	<color name="title1">#2C7FC4</color><!--标题蓝默认-->
 	<color name="title2">#2196F3</color><!--科技蓝默认-->
@@ -47,7 +49,7 @@
 	<color name="title4">#3F51B5</color><!--深蓝色-->
 	<color name="title5">#009688</color><!--油绿色-->
 	<color name="title6">#88B04B</color><!--草地绿-->
-	<color name="title7">#259B24</color><!--森林绿-->
+	<color name="title7">#4CAF50</color><!--森林绿-->
 	<color name="title8">#FF9800</color><!--妖艳橘-->
 	<color name="title9">#FFC107</color><!--琥珀色-->
 	<color name="title10">#FF5722</color><!--深橘色-->
@@ -61,6 +63,25 @@
 	<color name="title18">#607D8B</color><!--蓝灰色-->
 	<color name="title19">#282828</color><!--深灰色(夜间)-->
 	<color name="title20">#000000</color><!--夜间模式-->
+	<!--状态栏色-->
+	<color name="title1_dark">#246AA3</color><!--标题蓝默认-->
+	<color name="title2_dark">#1D80D1</color><!--科技蓝默认-->
+	<color name="title3_dark">#4B68DB</color><!--科技蓝-->
+	<color name="title4_dark">#283593</color><!--深蓝色-->
+	<color name="title5_dark">#00695C</color><!--油绿色-->
+	<color name="title6_dark">#6E8F3D</color><!--草地绿-->
+	<color name="title7_dark">#2E7D32</color><!--森林绿-->
+	<color name="title8_dark">#EF6C00</color><!--妖艳橘-->
+	<color name="title9_dark">#FF8F00</color><!--琥珀色-->
+	<color name="title10_dark">#D84315</color><!--深橘色-->
+	<color name="title11_dark">#DE1B21</color><!--中国红-->
+	<color name="title12_dark">#C62828</color><!--媚惑红-->
+	<color name="title13_dark">#AD1457</color><!--浪漫粉-->
+	<color name="title14_dark">#6A1B9A</color><!--风铃紫-->
+	<color name="title15_dark">#4527A0</color><!--葡萄紫-->
+	<color name="title16_dark">#424242</color><!--浅灰色-->
+	<color name="title17_dark">#4E342E</color><!--深棕色-->
+	<color name="title18_dark">#37474F</color><!--蓝灰色-->
 	<!--主题配色300-->
 	<color name="title1_3">#2299FF</color><!--标题蓝默认-->
 	<color name="title2_3">#448AFF</color><!--科技蓝默认-->

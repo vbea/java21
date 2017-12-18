@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+	<item
+		android:id="@+id/item_msg"
+		android:title="消息"
+		android:icon="@mipmap/ic_msg"
+		app:showAsAction="always"/>
+	<item
+		android:id="@+id/item_newmsg"
+		android:title="消息"
+		android:icon="@mipmap/ic_newmsg"
+		app:showAsAction="always"/>
+</menu>

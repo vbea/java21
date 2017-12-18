@@ -67,12 +67,11 @@
         android:layout_margin="16dp"
         android:clickable="true"
         android:src="@mipmap/ic_next"
-		android:elevation="6dp"
-		android:foreground="@drawable/btn_button"
+		android:visibility="visible"
 		app:fabSize="normal"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end"
-		app:backgroundTint="?attr/colorAccent"
-		app:rippleColor="#CCCCCC"
-		app:elevation="6dp"/>
+		app:elevation="6dp"
+		app:borderWidth="0dp"
+		app:pressedTranslationZ="12dp"/>
 </android.support.design.widget.CoordinatorLayout>

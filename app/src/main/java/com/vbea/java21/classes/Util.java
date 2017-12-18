@@ -15,7 +15,6 @@ import java.util.List;
 import java.math.BigDecimal;
 import junit.framework.Assert;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -305,6 +304,18 @@ public class Util
             return null;
         }
     }
+	
+	public static String getDeviceModel()
+	{
+		try
+		{
+			return Build.MODEL;
+		}
+		catch (Exception e)
+		{
+			return "";
+		}
+	}
 
     private static final int MAX_DECODE_PICTURE_SIZE = 1920 * 1440;
 	public static Bitmap extractThumbNail(final String path, final int height, final int width, final boolean crop)
@@ -383,18 +394,18 @@ public class Util
 	{
 		if(msg == null) return;
 		//String rmsg = msg.replace(",", "\n");
-		new AlertDialog.Builder(context).setTitle(title).setMessage(msg).setNegativeButton("知道了", lis).create().show();
+		new AlertDialog(context).setTitle(title).setMessage(msg).setNegativeButton("知道了", lis).create().show();
 	}
 	
 	public static void showConfirmCancelDialog(Context context, String title, String message, DialogInterface.OnClickListener posListener)
 	{
-		AlertDialog.Builder dlg = new AlertDialog.Builder(context);
-		dlg.setTitle(title);
-		dlg.setMessage(message);
-		dlg.setPositiveButton(android.R.string.ok, posListener);
-		dlg.setNegativeButton(android.R.string.cancel, null).create();
-		//dlg.create().setCanceledOnTouchOutside(false);
-		dlg.show();
+		AlertDialog dialog = new AlertDialog(context);
+		dialog.setTitle(title);
+		dialog.setMessage(message);
+		dialog.setPositiveButton(android.R.string.ok, posListener);
+		dialog.setNegativeButton(android.R.string.cancel, null).create();
+		//dialog.create().setCanceledOnTouchOutside(false);
+		dialog.show();
 	}
 	
 	public static void showConfirmCancelDialog(Context context, String message, DialogInterface.OnClickListener posListener)
@@ -404,24 +415,24 @@ public class Util
 	
 	public static void showConfirmCancelDialog(Context context, int title, String message, DialogInterface.OnClickListener posListener)
 	{
-		AlertDialog.Builder dlg = new AlertDialog.Builder(context);
-		dlg.setTitle(title);
-		dlg.setMessage(message);
-		dlg.setPositiveButton(android.R.string.ok, posListener);
-		dlg.setNegativeButton(android.R.string.cancel, null).create();
-		//dlg.create().setCanceledOnTouchOutside(false);
-		dlg.show();
+		AlertDialog dialog = new AlertDialog(context);
+		dialog.setTitle(title);
+		dialog.setMessage(message);
+		dialog.setPositiveButton(android.R.string.ok, posListener);
+		dialog.setNegativeButton(android.R.string.cancel, null).create();
+		//dialog.create().setCanceledOnTouchOutside(false);
+		dialog.show();
 	}
 	
 	public static void showConfirmCancelDialog(Context context, String ok, String message, String cacel, DialogInterface.OnClickListener posListener)
 	{
-		AlertDialog.Builder dlg = new AlertDialog.Builder(context);
-		dlg.setTitle(android.R.string.dialog_alert_title);
-		dlg.setMessage(message);
-		dlg.setPositiveButton(ok, posListener);
-		dlg.setNegativeButton(cacel, null).create();
-		//dlg.create().setCanceledOnTouchOutside(false);
-		dlg.show();
+		AlertDialog dialog = new AlertDialog(context);
+		dialog.setTitle(android.R.string.dialog_alert_title);
+		dialog.setMessage(message);
+		dialog.setPositiveButton(ok, posListener);
+		dialog.setNegativeButton(cacel, null).create();
+		//dialog.create().setCanceledOnTouchOutside(false);
+		dialog.show();
 	}
 	
 	public static String Join(String splitter, String[] strs)
@@ -728,9 +739,32 @@ public class Util
 		return filename;
 	}
 	
+	public static String getFileTypeName(String filename)
+	{
+		if (filename.indexOf(".") >= 0)
+			return filename.substring(filename.lastIndexOf(".")+1);
+		return filename;
+	}
+	
 	public static boolean isImageFile(String path)
 	{
 		String p = path.toLowerCase();
 		return p.endsWith(".jpg") || p.endsWith(".png") || p.endsWith(".gif") || p.endsWith(".bmp");
+	}
+	
+	public static String removeEmptyItem(String[] list)
+	{
+		if (list.length == 1)
+			return list[0];
+		StringBuilder sb = new StringBuilder();
+		for (String s : list)
+		{
+			if (!isNullOrEmpty(s))
+			{
+				sb.append(",");
+				sb.append(s);
+			}
+		}
+		return sb.toString().substring(1);
 	}
 }

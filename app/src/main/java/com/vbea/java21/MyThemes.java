@@ -9,6 +9,7 @@ import android.support.v7.graphics.Palette;
 import android.support.v7.app.AppCompatDelegate;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
+import android.graphics.*;
 
 public class MyThemes
 {
@@ -65,7 +66,7 @@ public class MyThemes
 		R.style.AppTheme27,R.style.AppTheme28
 	};
 	
-	static final int[] styleHome = {
+	/*static final int[] styleHome = {
 		R.style.AppThemeHome1,R.style.AppThemeHome2,
 		R.style.AppThemeHome3,R.style.AppThemeHome4,
 		R.style.AppThemeHome5,R.style.AppThemeHome6,
@@ -78,9 +79,8 @@ public class MyThemes
 		R.style.AppThemeHome19,R.style.AppThemeHome20,
 		R.style.AppThemeHome21,R.style.AppThemeHome22,
 		R.style.AppThemeHome23,R.style.AppThemeHome24,
-		R.style.AppThemeHome25,R.style.AppThemeHome26,
-		R.style.AppThemeHome27,R.style.AppThemeHome28
-	};
+		R.style.AppThemeHome25,R.style.AppThemeHome26
+	};*/
 	public static int[] drawerImages = {
 		R.mipmap.bg_java,
 		R.mipmap.background01,
@@ -157,11 +157,11 @@ public class MyThemes
 		return style[Common.APP_THEME_ID];
 	}
 	
-	public static int getHomeTheme()
+	/*public static int getHomeTheme()
 	{
 		checkThemeId();
 		return styleHome[Common.APP_THEME_ID];
-	}
+	}*/
 	
 	public static int getDrawerBack()
 	{
@@ -205,18 +205,28 @@ public class MyThemes
 	
 	public static int getColorPrimary()
 	{
-		if (Common.APP_THEME_ID < colorPrimary.length)
-			return colorPrimary[Common.APP_THEME_ID];
-		else
-			return colorPrimary[0];
+		return getColorPrimary(Common.APP_THEME_ID);
 	}
 	
 	public static int getColorAccent()
 	{
+		return getColorAccent(Common.APP_THEME_ID);
+	}
+	
+	public static int getColorAccent(Context context)
+	{
 		if (Common.APP_THEME_ID < colorAccent.length)
-			return colorAccent[Common.APP_THEME_ID];
+			return context.getResources().getColor(colorAccent[Common.APP_THEME_ID]);
 		else
 			return colorAccent[0];
+	}
+	
+	public static int getColorPrimary(Context context)
+	{
+		if (Common.APP_THEME_ID < colorAccent.length)
+			return context.getResources().getColor(colorPrimary[Common.APP_THEME_ID]);
+		else
+			return colorPrimary[0];
 	}
 	
 	public static int getColorPrimary(int id)

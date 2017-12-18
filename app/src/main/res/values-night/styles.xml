@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-		<item name="colorPrimary">@color/title19</item>
+		<item name="colorPrimary">@color/title20</item>
 		<item name="colorPrimaryDark">@color/title19</item>
 		<item name="colorAccent">@color/title19_3</item>
 		<item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
 		<item name="textPrimary">@color/grey3</item>
 		<item name="textSecondary">@color/grey2</item>
 		<item name="titleColor">@color/nightback</item>
+		<item name="android:navigationBarColor">@color/nightback</item>
 		<item name="actionStyle">@style/ThemeOverlay.AppCompat.ActionBar</item>
 		<item name="popupStyle">@style/ThemeOverlay.AppCompat</item>
 		<item name="javaTextSize">@dimen/text_middle</item>
@@ -15,7 +16,7 @@
 		<item name="btnColor">#4CB5B5B5</item>
 	</style>
 	<style name="AppTheme25" parent="AppTheme.TranStatusBar">
-		<item name="colorPrimary">@color/title19</item>
+		<item name="colorPrimary">@color/title20</item>
         <item name="colorPrimaryDark">@color/title19</item>
 		<item name="colorAccent">@color/title19_3</item>
 	</style>
@@ -26,34 +27,11 @@
 	</style>
 	
 	<style name="AppTheme27" parent="AppTheme.TranStatusBar">
-		<item name="colorPrimary">@color/title4</item>
+		<item name="colorPrimary">@color/title4_dark</item>
         <item name="colorPrimaryDark">@color/title4</item>
 		<item name="colorAccent">@color/title19</item>
 	</style>
 	<style name="AppTheme28" parent="AppTheme.TranStatusBar">
-		<item name="colorPrimary">@color/title20</item>
-        <item name="colorPrimaryDark">@color/title20</item>
-		<item name="colorAccent">@color/title19</item>
-	</style>
-	
-	<!--Welcome Theme-->
-	<style name="AppThemeHome25" parent="AppTheme">
-		<item name="colorPrimary">@color/title19</item>
-        <item name="colorPrimaryDark">@color/title19</item>
-		<item name="colorAccent">@color/title19_3</item>
-	</style>
-	<style name="AppThemeHome26" parent="AppTheme">
-		<item name="colorPrimary">@color/title20</item>
-        <item name="colorPrimaryDark">@color/title20</item>
-		<item name="colorAccent">@color/title20_3</item>
-	</style>
-	
-	<style name="AppThemeHome27" parent="AppTheme">
-		<item name="colorPrimary">@color/title4</item>
-        <item name="colorPrimaryDark">@color/title4</item>
-		<item name="colorAccent">@color/title19</item>
-	</style>
-	<style name="AppThemeHome28" parent="AppTheme">
 		<item name="colorPrimary">@color/title20</item>
         <item name="colorPrimaryDark">@color/title20</item>
 		<item name="colorAccent">@color/title19</item>

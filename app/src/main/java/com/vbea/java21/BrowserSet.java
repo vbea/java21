@@ -1,6 +1,5 @@
 package com.vbea.java21;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.LayoutInflater;
@@ -15,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
+import com.vbea.java21.classes.AlertDialog;
 
 public class BrowserSet extends AppCompatActivity
 {
@@ -52,8 +52,8 @@ public class BrowserSet extends AppCompatActivity
 			{
 				View view = LayoutInflater.from(BrowserSet.this).inflate(R.layout.webhome, null);
 				final EditText edt = (EditText) view.findViewById(R.id.edt_webhome);
-				edt.setText(SH_home);
-				AlertDialog.Builder dialog = new AlertDialog.Builder(BrowserSet.this);
+				edt.setText(Util.isNullOrEmpty(SH_home) ? "http://" : SH_home);
+				AlertDialog dialog = new AlertDialog(BrowserSet.this);
 				dialog.setTitle("设置主页");
 				dialog.setView(view);
 				dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
@@ -61,8 +61,8 @@ public class BrowserSet extends AppCompatActivity
 					public void onClick(DialogInterface d, int s)
 					{
 						SH_home = edt.getText().toString();
-						/*if (!SH_home.startsWith("http://") || !SH_home.startsWith("https://"))
-							SH_home = "http://" + SH_home;*/
+						if (SH_home.equalsIgnoreCase("http://") || SH_home.equalsIgnoreCase("https://"))
+							SH_home = "";
 					}
 				});
 				dialog.setNegativeButton(android.R.string.cancel, null);
@@ -73,7 +73,7 @@ public class BrowserSet extends AppCompatActivity
 		{
 			public void onClick(View v)
 			{
-				AlertDialog.Builder dialog = new AlertDialog.Builder(BrowserSet.this);
+				AlertDialog dialog = new AlertDialog(BrowserSet.this);
 				dialog.setTitle("设置搜索引擎");
 				dialog.setSingleChoiceItems(Searchs, SH_search, new DialogInterface.OnClickListener()
 				{
@@ -91,7 +91,7 @@ public class BrowserSet extends AppCompatActivity
 		{
 			public void onClick(View v)
 			{
-				AlertDialog.Builder dialog = new AlertDialog.Builder(BrowserSet.this);
+				AlertDialog dialog = new AlertDialog(BrowserSet.this);
 				dialog.setTitle("浏览器UA标识");
 				dialog.setSingleChoiceItems(UserAgents, SH_UA, new DialogInterface.OnClickListener()
 				{

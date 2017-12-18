@@ -210,7 +210,7 @@ public class UserEdit extends AppCompatActivity
 				}
 				isNewPass = true;
 				NewPass = MD5Util.getMD5(querpass.getText().toString());
-				Util.toastLongMessage(getApplicationContext(), "新的密码已提交至内存中，点击保存即可修改成功，如返回则放弃此次修改");
+				Util.toastLongMessage(getApplicationContext(), "已提交密码修改请求，点击保存按钮即可修改成功，点击返回则放弃本次修改");
 				dialog.cancel();
 			}
 		});
@@ -229,7 +229,21 @@ public class UserEdit extends AppCompatActivity
 				dialog.dismiss();
 			}
 		});
-		builder.show();
+		final AlertDialog passDialog = builder.create();
+		passDialog.setOnShowListener(new DialogInterface.OnShowListener()
+		{
+			public void onShow(DialogInterface dialog)
+			{
+				int color = MyThemes.getColorAccent(UserEdit.this);
+				Button negative = passDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+				if (negative != null)
+					negative.setTextColor(color);
+				Button positive = passDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+				if (positive != null)
+					positive.setTextColor(color);
+			}
+		});
+		passDialog.show();
 	}
 	
 	private boolean isEmpty(EditText view, String tip)

@@ -10,11 +10,18 @@ public class TimeAgo
 	private final long day = 24 * hour;// 1天
 	private final long month = 31 * day;// 月
 	private final long year = 12 * month;// 年
-	private SimpleDateFormat fom;
+	private SimpleDateFormat fom,fom2;
 	public TimeAgo()
 	{
 		fom = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	}
+	
+	public TimeAgo(SimpleDateFormat f)
+	{
+		this();
+		fom2 = f;
+	}
+	
 	public String getTimeAgo(String time, String def)
 	{
 		try
@@ -28,6 +35,27 @@ public class TimeAgo
 		{
 			return getTimeFormatText(null, def);
 		}
+	}
+	public String getTimeAgo(String time)
+	{
+		if (fom2 == null)
+			return time;
+		try
+		{
+			if (time != null)
+				return getTimeFormatText(fom.parse(time));
+			else
+				return getTimeFormatText(null, "刚刚");
+		}
+		catch (Exception e)
+		{
+		}
+		return time;
+	}
+	
+	private String getTimeFormatText(Date date)
+	{
+		return getTimeFormatText(date, fom2.format(date));
 	}
     /**
      * 返回文字描述的日期

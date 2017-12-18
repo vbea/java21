@@ -12,9 +12,9 @@
 		android:title="刷新"
 		android:icon="@mipmap/ic_refresh"
 		app:showAsAction="ifRoom"/>
-    <item
+    <!--item
         android:id="@+id/item_apiCN"
-        android:title="Java6中文"/>
+        android:title="Java6中文"/-->
 	<item
         android:id="@+id/item_api6"
         android:title="Java6"/>

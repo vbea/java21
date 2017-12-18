@@ -38,10 +38,6 @@
 			android:name=".ApiWord"
 			android:label="@string/apidoc"
 			android:windowSoftInputMode="adjustPan">
-			<intent-filter>
-				<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
 		</activity>
     	<activity
 			android:name=".TextReplace"
@@ -50,7 +46,14 @@
 			android:name=".CodeEditor"
 			android:screenOrientation="portrait"
 			android:label="@string/codeEditor"
-			android:windowSoftInputMode="stateHidden|adjustResize"/>
+			android:windowSoftInputMode="stateHidden|adjustResize">
+			<intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+				<data android:scheme="file" />
+				<data android:mimeType="*/*" />
+            </intent-filter>
+		</activity>
 		<activity
 			android:name=".ChapterText"/>
 		<activity
@@ -63,14 +66,18 @@
 		<activity
 			android:name=".AndroidWeb"
 			android:windowSoftInputMode="adjustPan">
-			<intent-filter>
-				<action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
 		</activity>
+		<activity
+			android:name=".FileSelect"
+			android:label="@string/fileselect"
+			android:screenOrientation="portrait"/>
 		<activity
 			android:name=".Machine"
 			android:label="@string/actived"/>
+		<activity
+			android:name=".Modelist"
+			android:label="@string/modelist"
+			android:screenOrientation="portrait"/>
 		<activity
 			android:name=".Setting"
 			android:label="@string/settings"/>
@@ -109,7 +116,12 @@
 			android:label="@string/musictrans"
 			android:screenOrientation="portrait"/>
 		<activity
+			android:name=".MyInbox"
+			android:label="@string/myinbox"
+			android:screenOrientation="portrait"/>
+		<activity
 			android:name=".HtmlViewer"
+			android:label="@string/browser"
 			android:configChanges="orientation|screenSize"
 			android:windowSoftInputMode="stateHidden|adjustResize">
 			<intent-filter>

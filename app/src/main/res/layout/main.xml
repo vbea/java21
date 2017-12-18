@@ -30,7 +30,7 @@
 						android:background="?attr/colorPrimary"
 						app:layout_scrollFlags="scroll|enterAlways"
 						android:transitionName="@string/shared"
-						app:navigationIcon="@mipmap/ic_ab_drawer"
+						app:navigationIcon="@mipmap/ic_menu"
 						app:theme="?attr/actionStyle"
 						app:popupTheme="?attr/popupStyle"/>
 					<android.support.design.widget.TabLayout
@@ -90,5 +90,5 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"/>
 	</LinearLayout>
-	<include layout="@layout/include_home_drawer" />
+	<include layout="@layout/home_drawer" />
 </android.support.v4.widget.DrawerLayout>

@@ -29,6 +29,7 @@ import com.vbea.java21.audio.SoundLoad;
 import com.vbea.java21.audio.AudioService;
 import com.vbea.java21.data.Users;
 import com.vbea.java21.data.Tips;
+import com.vbea.java21.data.Copys;
 import com.vbea.java21.MyThemes;
 import com.vbea.secret.*;
 import cn.bmob.v3.Bmob;
@@ -48,11 +49,11 @@ public class Common
 	public static int APP_BACK_ID = 0;//背景图片
 	public static int VERSION_CODE = 0;//版本号
 	public static int AUTO_LOGIN_MODE = 0;//自动登录类型，1为普通，2为QQ
-	public static String SDATE = "";//激活凭证
-	public static String KEY = "";//密钥
-	public static String SID = "";//激活时间
-	public static String USERID = "";//用户名
-	public static String USERPASS = "";//加密密码
+	public static String SDATE;//激活凭证
+	public static String KEY;//密钥
+	public static String SID;//激活时间
+	public static String USERID;//用户名
+	public static String USERPASS;//加密密码
 	public static boolean IS_ACTIVE = false;//是否注册
 	public static boolean NO_ADV = false;//去广告
 	public static boolean WEL_ADV = true;//欢迎页广告
@@ -70,12 +71,13 @@ public class Common
 	public static int JAVA_TEXT_SIZE = 2;
 	public static AudioService audioService;
 	private static final String defaultKey = "JAVA8-APP-KEY21-APK-VBEST";
-	public static String LocalPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/ZDApp/";
-	public static String IconPath = LocalPath + "Cache/";
-	public static String DrawImagePath = IconPath + "back.jpg";
+	public static String FileProvider;
+	public static final String LocalPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/ZDApp/";
 	public static List<Tips> mTips = null;
 	public static List<String> READ_Android, READ_J2EE, READ_AndroidAdvance;
 	public static InboxManager myInbox;
+	private static long lastTipsTime;
+	private static String clipString;
 	public static void start(Context context)
 	{
 		startBmob(context);
@@ -85,6 +87,7 @@ public class Common
 		SharedPreferences spf = context.getSharedPreferences("java21", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = spf.edit();
 		init(spf);
+		FileProvider = context.getApplicationContext().getPackageName() + ".FileProvider";
 		if (spf.getString("key", "").trim().equals("") || spf.getString("date","").trim().equals(""))
 		{
 			IS_ACTIVE = false;
@@ -107,7 +110,7 @@ public class Common
 		editor.commit();
 		init(spf);
 		SocialShare.onStart(context);
-		if (TIPS && isNet(context))
+		if (isNet(context))
 			getTips();
 	}
 	
@@ -319,6 +322,21 @@ public class Common
 		return false;
 	}
 	
+	public static void saveUserIconByName(String name)
+	{
+		BmobQuery<Users> sql = new BmobQuery<Users>();
+		sql.addWhereEqualTo("name", name);
+		sql.findObjects(new FindListener<Users>()
+		{
+			@Override
+			public void done(List<Users> list, BmobException e)
+			{
+				if (e == null && list.size() > 0)
+					saveIcon(list.get(0));
+			}
+		});
+	}
+	
 	public static void qqLogin(final Context context, String openId)
 	{
 		BmobQuery<Users> sql = new BmobQuery<Users>();
@@ -343,7 +361,9 @@ public class Common
 						KEY = mUser.key;
 						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 						editor.putString("key", KEY);
-						if (!IS_ACTIVE)
+						if (!isVipUser())
+							editor.putBoolean("weladv", true);
+						if (!IS_ACTIVE)//自动激活
 						{
 							if (regist(KEY))
 							{
@@ -422,6 +442,8 @@ public class Common
 							mUser = null;
 							return;
 						}
+						if (!isVipUser())
+							editor.putBoolean("weladv", true);
 						editor.putString("key", KEY);
 						editor.commit();
 						onLogin = 4;
@@ -530,16 +552,31 @@ public class Common
 		return false;
 	}
 	
+	public static String getCachePath()
+	{
+		return LocalPath + "Cache/";
+	}
+	
+	public static String getIconPath()
+	{
+		return LocalPath + "Portrait/";
+	}
+	
+	public static String getDrawImagePath()
+	{
+		return getIconPath() + "back.jpg";
+	}
+	
 	public static Bitmap getIcon()
 	{
 		if (mUser.icon != null)
 		{
-			File path = new File(IconPath);
+			File path = new File(getIconPath());
 			if (!path.exists())
 			{
 				path.mkdirs();
 			}
-			File file = new File(IconPath + mUser.icon.getFilename());
+			File file = new File(path, mUser.icon.getFilename());
 			if (file.exists())
 				return BitmapFactory.decodeFile(file.getAbsolutePath());
 			else
@@ -570,16 +607,60 @@ public class Common
 		return null;
 	}
 	
+	public static Bitmap getIcon(String username)
+	{
+		File file = new File(getCachePath(), username + ".png");
+		if (file.exists())
+			return BitmapFactory.decodeFile(file.getAbsolutePath());
+		else
+			saveUserIconByName(username);
+		return null;
+	}
+	
+	public static void saveIcon(Users user)
+	{
+		if (user.icon == null)
+			return;
+		File path = new File(getCachePath());
+		if (!path.exists())
+			path.mkdirs();
+		File file = new File(path, user.name + ".png");
+		if (!file.exists())
+		{
+			try
+			{
+				user.icon.download(file, new DownloadFileListener()
+				{
+					@Override
+					public void done(String p1, BmobException p2)
+					{
+
+					}
+
+					@Override
+					public void onProgress(Integer p1, long p2)
+					{
+
+					}
+				});
+			}
+			catch (Exception e)
+			{
+				ExceptionHandler.log("saveIcon", e.toString());
+			}
+		}
+	}
+	
 	public static void setIcon(final ImageView v, final Context context, boolean downed)
 	{
 		if (!downed)
 			v.setImageDrawable(getRoundedIconDrawable(context, BitmapFactory.decodeResource(context.getResources(), R.mipmap.head)));
 		if (mUser != null && mUser.icon != null)
 		{
-			File path = new File(IconPath);
+			File path = new File(getIconPath());
 			if (!path.exists())
 				path.mkdirs();
-			File file = new File(IconPath + mUser.icon.getFilename());
+			File file = new File(path, mUser.icon.getFilename());
 			if (file.exists())
 				v.setImageDrawable(getRoundedIconDrawable(context, BitmapFactory.decodeFile(file.getAbsolutePath())));
 			else
@@ -608,13 +689,15 @@ public class Common
 		}
 	}
 	
-	public static void setMyIcon(ImageView v, Context context)
+	public static void setMyIcon(ImageView v, Context context, RoundedBitmapDrawable defaultIcon)
 	{
 		if (mUser != null && mUser.icon != null)
 		{
-			File file = new File(IconPath + mUser.icon.getFilename());
+			File file = new File(getIconPath(), mUser.icon.getFilename());
 			if (file.exists())
 				v.setImageDrawable(getRoundedIconDrawable(context, BitmapFactory.decodeFile(file.getAbsolutePath())));
+			else
+				v.setImageDrawable(defaultIcon);
 		}
 	}
 	
@@ -628,12 +711,12 @@ public class Common
 	
 	public static Bitmap getDrawerBack()
 	{
-		File path = new File(IconPath);
+		File path = new File(getIconPath());
 		if (!path.exists())
 		{
 			path.mkdirs();
 		}
-		File file = new File(DrawImagePath);
+		File file = new File(getDrawImagePath());
 		if (file.exists())
 			return BitmapFactory.decodeFile(file.getAbsolutePath());
 		return null;
@@ -676,8 +759,32 @@ public class Common
 		return "";
 	}
 	
+	public static void getTestMsg()
+	{
+		BmobQuery<Copys> sql = new BmobQuery<Copys>();
+		sql.addWhereEqualTo("enable", true);
+		sql.findObjects(new FindListener<Copys>()
+		{
+			@Override
+			public void done(List<Copys> list, BmobException e)
+			{
+				if (e == null && list.size() > 0)
+				{
+					clipString = list.get(0).getMessage();
+				}
+			}
+		});
+	}
+	
+	public static void getCopyMsg(Context c)
+	{
+		if (!Util.isNullOrEmpty(clipString))
+			Util.addClipboard(c, "java21", clipString);
+	}
+	
 	public static void getTips()
 	{
+		lastTipsTime = System.currentTimeMillis();
 		BmobQuery<Tips> sql1 = new BmobQuery<Tips>();
 		sql1.addWhereGreaterThanOrEqualTo("dates", new BmobDate(new Date()));
 		BmobQuery<Tips> sql2 = new BmobQuery<Tips>();
@@ -688,6 +795,8 @@ public class Common
 		BmobQuery<Tips> sql = new BmobQuery<Tips>();
 		sql.or(sqls);
 		sql.addWhereEqualTo("enable", true);
+		if (!TIPS)
+			sql.addWhereEqualTo("openSMS", true);
 		sql.findObjects(new FindListener<Tips>()
 		{
 			@Override
@@ -697,6 +806,8 @@ public class Common
 				{
 					if (list.size() > 0)
 						mTips = list;
+					else
+						mTips.clear();
 				}
 			}
 		});
@@ -704,13 +815,16 @@ public class Common
 	
 	public static Tips getTip()
 	{
-		if (!TIPS)
-			return null;
 		try
 		{
 			if (mTips != null)
 			{
-				if (mTips.size() == 1)
+				if (mTips.size() == 0)
+				{
+					getTips();
+					return null;
+				}
+				else if (System.currentTimeMillis() - lastTipsTime > 60000)
 					getTips();
 				int ma = (int)(Math.random() * (double)(mTips.size()));
 				if (ma >= mTips.size())
@@ -790,5 +904,39 @@ public class Common
 			context.startActivity(intent);
 			ExceptionHandler.log("StartActivityOptionsShare", e.toString());
 		}
+	}
+	
+	public static void gc()
+	{
+		//gc垃圾回收: 恢复到初始化状态
+		IsRun = false;//运行状态
+		AUTO_LOGIN_MODE = 0;//自动登录类型，1为普通，2为QQ
+		SDATE = null;//激活凭证
+		KEY = null;//密钥
+		SID = null;//激活时间
+		USERID = null;//用户名
+		USERPASS = null;//加密密码
+		IS_ACTIVE = false;//是否注册
+		NO_ADV = false;//去广告
+		WEL_ADV = true;//欢迎页广告
+		SOUND = null;//音乐池
+		mUser = null;//登录用户
+		onLogin = 0;//登录状态
+		FileProvider = null;//文件提供者
+		mTips = null;//通知中心
+		READ_Android = null;
+		READ_J2EE = null;
+		READ_AndroidAdvance = null;
+		myInbox = null;//消息中心
+		//停止正在运行的音乐服务
+		if (audioService != null && audioService.isPlay())
+			audioService.Stop();
+		//清空音节码加载池
+		if (SOUND != null)
+		{
+			SOUND.clear();
+			SOUND = null;
+		}
+		System.gc();
 	}
 }

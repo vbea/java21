@@ -261,7 +261,8 @@ public class SoundLoad
 	
 	public String getMusicName(int m)
 	{
-		if (m < MusicNames.length)
+		//ExceptionHandler.log("getMusicName", m + "," + MusicNames);
+		if (MusicNames != null && m >= 0 && m < MusicNames.length)
 			return MusicNames[m];
 		return "";
 	}
@@ -330,8 +331,10 @@ public class SoundLoad
 	
 	public void clear()
 	{
-		if (mSoundPool1 != null)
+		if (mSoundPool1 != null) {
+			mSoundPool1.autoPause();
 			mSoundPool1.release();
+		}
 		/*if (mSoundPool2 != null)
 			mSoundPool2.release();*/
 		//if (mSoundPool3 != null)

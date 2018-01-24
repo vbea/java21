@@ -211,7 +211,7 @@ public class Sign extends AppCompatActivity
 	
 	private boolean isEmail(String email)
 	{
-		String check = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+		String check = "^([a-z0-9A-Z]+[_-\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
 		Pattern regex = Pattern.compile(check);
 		Matcher matcher = regex.matcher(email);
 		return matcher.matches();

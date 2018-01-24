@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.SearchView;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.content.FileProvider;
 import android.support.design.widget.BottomSheetDialog;
 import com.vbea.java21.widget.MyWebView;
 import com.vbea.java21.classes.Common;
@@ -183,6 +185,7 @@ public class HtmlViewer extends AppCompatActivity
 				return false;
 			}
 			
+			@Override
 			public void onPageStarted(WebView v, String url, Bitmap icon)
 			{
 				SH_url = url;
@@ -291,7 +294,7 @@ public class HtmlViewer extends AppCompatActivity
 	
 	public boolean isUrl(String url)
 	{
-		Pattern pat = Pattern.compile("(http|https|file|ftp)+[://]+(\\S+\\.)+[\\w-]+(/[\\w-./?%&=]*)?");
+		Pattern pat = Pattern.compile("(http|https|file|ftp)+[://]+(\\S+\\.)+[\\w-]+(/[\\w-_./?%&=]*)?.*");
 		Matcher mat = pat.matcher(url);
 		return mat.matches();
 	}
@@ -592,12 +595,15 @@ public class HtmlViewer extends AppCompatActivity
 				switch (item)
 				{
 					case 0:
-						Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-						Image_Path = Common.IconPath + "temp" + System.currentTimeMillis() + ".jpg";
-						File file = new File(Image_Path);
-						cameraUri = Uri.fromFile(file);
-						intent1.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri);
-						startActivityForResult(intent1, CHOOSE_CAMERA);
+						if (Util.hasAndroid23())
+						{
+							if (!Util.hasAllPermissions(HtmlViewer.this, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+								Util.requestPermission(HtmlViewer.this, 1001, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+							else
+								startCamera();
+						}
+						else
+							startCamera();
 						break;
 					case 1:
 						Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -627,6 +633,24 @@ public class HtmlViewer extends AppCompatActivity
 			}
 		});
 		dialogBuild.show();
+	}
+	
+	private void startCamera()
+	{
+		Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		Image_Path = Common.getIconPath() + "temp" + System.currentTimeMillis() + ".jpg";
+		File file = new File(Image_Path);
+		cameraUri = FileProvider.getUriForFile(getApplicationContext(), Common.FileProvider, file);
+		intent1.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri);
+		startActivityForResult(intent1, CHOOSE_CAMERA);
+	}
+	
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+	{
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (requestCode == 1001 && Util.hasAllPermissionsGranted(grantResults))
+			startCamera();
 	}
 
 	@Override

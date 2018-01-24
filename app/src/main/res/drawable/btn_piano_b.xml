@@ -7,9 +7,6 @@
 				android:startColor="@color/black" 
 				android:endColor="@color/black"
 				android:angle="270"/>
-			<stroke
-				android:width="1dp"
-				android:color="@color/black"/>
 			<corners
 				android:bottomLeftRadius="6dp"
 				android:bottomRightRadius="6dp"/>
@@ -21,9 +18,6 @@
 				android:startColor="#111111" 
 				android:endColor="#333333"
 				android:angle="270"/>
-			<stroke
-				android:width="1dp"
-				android:color="#888888"/>
 			<corners
 				android:bottomLeftRadius="6dp"
 				android:bottomRightRadius="6dp"/>

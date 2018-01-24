@@ -3,6 +3,7 @@ package com.vbea.java21;
 import android.os.Bundle;
 import android.view.View;
 import android.content.SharedPreferences;
+import android.content.DialogInterface;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
+import com.vbea.java21.classes.AlertDialog;
 import com.vbea.secret.k;
 
 import cn.bmob.v3.update.BmobUpdateAgent;
@@ -55,7 +57,18 @@ public class About extends AppCompatActivity
 		{
 			public void onClick(View v)
 			{
-				Util.showResultDialog(About.this, getString(R.string.abt_ver), "新版特性");
+				AlertDialog dia = new AlertDialog(About.this);
+				dia.setTitle("新版特性");
+				dia.setMessage(R.string.abt_ver);
+				dia.setPositiveButton("知道了", null);
+				dia.setNeutralButton("复制到剪贴板", new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface d, int p)
+					{
+						Util.addClipboard(About.this, getString(R.string.abt_ver));
+					}
+				});
+				dia.show();
 			}
 		});
 	}

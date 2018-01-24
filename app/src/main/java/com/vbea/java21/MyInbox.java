@@ -118,7 +118,7 @@ public class MyInbox extends AppCompatActivity
 					Common.getInbox().updateMessage(msg.makeRead(), null);
 				if (msg.type == 0)
 					Common.startActivityOptions(MyInbox.this, UserCentral.class);
-				else if (msg.type < 4)
+				else if (msg.type < 5)
 				{
 					Intent intent = new Intent(MyInbox.this, AndroidWeb.class);
 					intent.putExtra("id", msg.refId);

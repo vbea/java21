@@ -1,6 +1,7 @@
 package com.vbea.java21.list;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import android.content.Context;
 import android.view.View;
@@ -20,8 +21,15 @@ public class J2EEAdapter extends RecyclerView.Adapter<J2EEAdapter.MyViewHolder>
 {
 	private OnItemClickListener onItemClickListener;
 	private List<JavaEE> mList;
-	private boolean isEnd = false;
+	private boolean isEnd;
 	private String server = "";
+	
+	public J2EEAdapter()
+	{
+		mList = new ArrayList<JavaEE>();
+		isEnd = false;
+	}
+	
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup p1, int p2)
 	{
@@ -84,9 +92,10 @@ public class J2EEAdapter extends RecyclerView.Adapter<J2EEAdapter.MyViewHolder>
 
 	public void setList(List<JavaEE> list)
 	{
-		mList = list;
-		isEnd = false;
-		if (mList.get(0).order == -1) {
+		mList.clear();
+		mList.addAll(list);
+		if (mList.get(0).order == -1)
+		{
 			server = mList.get(0).url;
 			mList.remove(0);
 		}

@@ -130,13 +130,37 @@
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"
-				android:text="清除缓存"
+				android:text="清除网页缓存"
 				android:gravity="start|center_vertical"
 				android:paddingLeft="20dp"
 				android:textColor="?attr/textPrimary"
 				android:textSize="17sp"/>
 				<TextView
 					android:id="@+id/txt_setCacheSize"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginRight="15dp"
+					android:layout_alignParentRight="true"
+					android:layout_centerVertical="true"
+					android:textSize="14sp"
+					android:text="N/A"
+					android:textColor="?attr/colorAccent"/>
+			</RelativeLayout>
+			<RelativeLayout
+				android:id="@+id/btn_setClearCacheImage"
+				android:layout_width="fill_parent"
+				android:layout_height="56dp"
+				android:background="@drawable/btn_menu">
+				<TextView
+					android:layout_width="fill_parent"
+					android:layout_height="fill_parent"
+					android:text="清除图片缓存"
+					android:gravity="start|center_vertical"
+					android:paddingLeft="20dp"
+					android:textColor="?attr/textPrimary"
+					android:textSize="17sp"/>
+				<TextView
+					android:id="@+id/txt_setCacheImageSize"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginRight="15dp"
@@ -230,7 +254,8 @@
 				android:layout_width="fill_parent"
 				android:layout_height="56dp"
 				android:background="@drawable/btn_normal"
-				android:orientation="horizontal">
+				android:orientation="horizontal"
+				android:visibility="gone">
 				<TextView
 					android:layout_width="wrap_content"
 					android:layout_height="fill_parent"

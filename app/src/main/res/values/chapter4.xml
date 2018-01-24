@@ -36,6 +36,7 @@ switch分支语句的表达式的使用有一定的条件，不是什么类型�
 	</string>
 	<string name="c4_08">4.2.3  switch分支语句举例\n
 在上一节中介绍了switch分支语句的各个组成部分的使用以及注意事项，下面用一个完整的例子来说明switch语句。
+\nint i = 4;\nswitch(i) {\n\tcase 4:\n\t\tdosth();\n\t\tbreak;\n}
 	</string>
 	<string name="c4_09">4.3  while 循环语句\n
 所谓while循环语句，就是先进行判断再进行循环。通过判断表达式，来决定具体的循环次数。下面先介绍下while循环语句的语法。

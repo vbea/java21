@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
+
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import com.vbea.java21.classes.ExceptionHandler;
@@ -29,6 +29,7 @@ import com.tencent.stat.StatConfig;
 import com.qq.e.ads.splash.SplashAD;
 import com.qq.e.ads.splash.SplashADListener;
 import com.qq.e.comm.util.AdError;
+import com.vbea.java21.classes.*;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -92,17 +93,17 @@ public class MainActivity extends AppCompatActivity
 		}
 		if (Common.isWeladv())
 		{
-			if (Build.VERSION.SDK_INT >= 23)
+			if (Util.hasAndroid23())
 				checkAndRequestPermission();
 			else
 				fetchSplashAD();
 		}
 		else
 		{
-			if (Build.VERSION.SDK_INT >= 23)
+			if (Util.hasAndroid23())
 			{
-				if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED)
-					requestPermissions(new String[] { Manifest.permission.READ_EXTERNAL_STORAGE }, 100);
+				if (!Util.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE))
+					Util.requestPermission(this, 100, Manifest.permission.READ_EXTERNAL_STORAGE);
 			}
 			new MainThread().start();
 		}
@@ -213,20 +214,10 @@ public class MainActivity extends AppCompatActivity
 	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
 	{
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		if (requestCode == 1024 && hasAllPermissionsGranted(grantResults))
+		if (requestCode == 1024 && Util.hasAllPermissionsGranted(grantResults))
 			fetchSplashAD();
 		else
 			new MainThread().start();
-	}
-	
-	private boolean hasAllPermissionsGranted(int[] grantResults)
-	{
-		for (int grantResult : grantResults)
-		{
-			if (grantResult == PackageManager.PERMISSION_DENIED)
-				return false;
-		}
-		return true;
 	}
 	
 	private void fetchSplashAD()
@@ -238,11 +229,13 @@ public class MainActivity extends AppCompatActivity
 	private void checkAndRequestPermission()
 	{
 		List<String> lackedPermission = new ArrayList<String>();
-		if (!(checkSelfPermission(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED))
+		if (!Util.hasPermission(this, Manifest.permission.READ_PHONE_STATE))
 			lackedPermission.add(Manifest.permission.READ_PHONE_STATE);
-		if (!(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED))
+		if (!Util.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE))
+			lackedPermission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+		if (!Util.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
 			lackedPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-		if (!(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED))
+		if (!Util.hasPermission(this, Manifest.permission.ACCESS_FINE_LOCATION))
 			lackedPermission.add(Manifest.permission.ACCESS_FINE_LOCATION);
     	// 权限都已经有了，那么直接调用SDK
 		if (lackedPermission.size() == 0)

@@ -248,7 +248,16 @@
 			android:authorities="com.vbea.java21.TENCENT.MID.V3"
 			android:exported="true" >
 		</provider>
-		<meta-data 
+		<provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.vbea.java21.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+		<meta-data
 			android:name="TA_APPKEY"
 			android:value="A1M46EZRJ7WI"/>
 		<meta-data
@@ -261,6 +270,7 @@
 	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 	<uses-permission android:name="android.permission.INTERNET"/>
 	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+	<uses-permission android:name="android.permission.CAMERA"/>
 	<uses-permission android:name="android.permission.WRITE_SETTINGS"/>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>

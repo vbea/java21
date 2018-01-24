@@ -17,7 +17,8 @@
 	<string name="abt_invate0">，②群
 	</string>
 	<string name="abt_invate1">，③群</string>
-	<string name="abt_invate2">(<u>提示：以上任选一个，进群后5分钟内不要退群，密钥私聊群主或管理员获取，请不要忘记查看群文件和群公告，里面有学习资料！</u>)\n软件激活后可享有以下功能：\n
+	<string name="abt_invate2">，VIP群</string>
+	<string name="abt_invate3">(<u>提示：以上任选一个，进群后5分钟内不要退群，密钥私聊群主或管理员获取，请不要忘记查看群文件和群公告，里面有学习资料！</u>加入VIP群的除了密钥之外还可以获得VIP会员帐号资格和本APP源码一份，详细请联系群主获取。)\n软件激活后可享有以下功能：\n
 		\t1.激活后可将激活凭证存入已登录的账户中，重新安装后直接登录即可自动校验凭证并激活；\n
 		\t2.激活后新增在线功能，可学习JavaEE和Android等教程；\n
 		\t3.激活后享受永久技术支持，在线答疑，并提供教学资料；\n
@@ -124,22 +125,18 @@
 	<string name="donateinfo">您可以通过支付宝转账、微信转账，或者付费加入Q群222876252或49321718，也可以加入邠心工作室开发组QQ群135482843。您的支持给我们提供了动力，是对我们最大的鼓励！
 		\n（加入邠心工作室开发组Q群(135482843)的作为回报我们将送出5.2.1版本源码一份以及自学大礼包，包括文字教程、视频、源码实例等）\n二维码见下面，点击可放大
 	</string>
-	<string name="version">V 6.7.0 Build 920
+	<string name="version">V 6.7.5 Build 990
 	</string>
-	<string name="update">6.7.0(920)
+	<string name="update">6.7.5(990)
 	</string>
-	<integer name="versionCode">920</integer>
-	<string name="abt_ver">1.代码编辑器改版，新增保存文件功能，新增支持100多种语言，支持代码高亮，语法提示，自动缩进，符号匹配，代码折叠等功能
-		\n2.教程评论优化，新增赞、踩功能，新增头像和VIP图标显示
-		\n3.浏览器更新，修复已知BUG，算法优化
-		\n4.新增消息中心
-		\n5.适配全面屏、MIUI和安卓7.0
-		\n6.API文档更新
-		\n7.部分UI优化，图标优化
-		\n8.其他细节及体验优化
+	<integer name="versionCode">990</integer>
+	<string name="abt_ver">1.修复无法上传头像的BUG
+		\n2.优化头像上传，更新头像路径
+		\n3.修复音乐盛典遗留问题
+		\n4.其他细节及体验优化
 	</string>
 	<string name="shared">share_image</string>
-	<string name="about_us">关于我们：\n2013年5月20日，邠心工作室成立，至今已有四年时间，目前工作室就邠心一人，邠心于2012年自学Java并开始开发Android程序，并于2014年做出此APP帮助那些也想自学Java的朋友。
+	<string name="about_us">作者的话：\n2013年5月20日，邠心工作室成立，至今已有五年时间，目前团队就我一人，我是在2012年(高中)开始自学Java，花了21天学完基础知识之后开始研究开发Android程序，并于2014年发布此APP，帮助那些也想要自学Java的朋友。
 	</string>
 	<string name="about_join">加入我们：\n邮箱：vbea@foxmail.com
 		\nQ  Q：248104237\nQ 群：222876252
@@ -148,7 +145,7 @@
 	</string>
 	<string name="about_mark">邠心工作室邀您加入我们参与Android应用的开发和设计，一起学习Android软件开发技术，有意请联系我们，谢谢！
 	</string>
-	<string name="copyright">邠心工作室 版权所有\nCopyright © 2014-2017 VbeStudio. All Rights Reserved
+	<string name="copyright">邠心工作室 版权所有\nCopyright © 2014-2018 VbeStudio. All Rights Reserved
 	</string>
 	<string name="number_mobile">134,135,136,137,138,139,147,150,151,152,157,158,159,182,183,184,187,188,174,178
 	</string>
@@ -159,4 +156,5 @@
 	<string name="pc_ua">Mozilla/5.0 (Linux; U; AppleWebKit/537.36 (KHTML, like Gecko)Version/4.0 Chrome/60.0.0.0 Safari/537.36</string>
 	<string name="default_encoding">text/plain</string>
 	<string name="codejson">[{\"name\":\"ABAP\",\"mode\":\"ABAP\",\"path\":\"abap\"},{\"name\":\"ActionScript\",\"mode\":\"ActionScript\",\"path\":\"as\"},{\"name\":\"ADA\",\"mode\":\"ADA\",\"path\":\"ada|adb\"},{\"name\":\"Config\",\"mode\":\"INI\",\"path\":\"ini|conf|cfg|prefs\"},{\"name\":\"Config Text\",\"mode\":\"Apache_Conf\",\"path\":\"htaccess|htgroups|htpasswd|htaccess|htgroups|htpasswd\"},{\"name\":\"A\u8BED\u8A00\",\"mode\":\"Assembly_x86\",\"path\":\"asm|a\"},{\"name\":\"ASP.NET\",\"mode\":\"HTML_Elixir\",\"path\":\"asp|aspx\"},{\"name\":\"BacthScript\",\"mode\":\"BatchFile\",\"path\":\"bat|cmd\"},{\"name\":\"C&amp;C++\",\"mode\":\"C_Cpp\",\"path\":\"cpp|c|cc|cxx|h|hh|hpp|ino\"},{\"name\":\"Clojure Lisp\",\"mode\":\"Clojure\",\"path\":\"clj|cljs\"},{\"name\":\"Cobol\",\"mode\":\"Cobol\",\"path\":\"cbl|cob\"},{\"name\":\"Coffee\",\"mode\":\"coffee\",\"path\":\"coffee|cf|cson|Cakefile\"},{\"name\":\"C#\",\"mode\":\"CSharp\",\"path\":\"cs\"},{\"name\":\"CSS\",\"mode\":\"CSS\",\"path\":\"css\"},{\"name\":\"D\u8BED\u8A00\",\"mode\":\"D\",\"path\":\"d|di\"},{\"name\":\"Diff\",\"mode\":\"Diff\",\"path\":\"diff|patch\"},{\"name\":\"EJS\",\"mode\":\"EJS\",\"path\":\"ejs\"},{\"name\":\"Erlang\",\"mode\":\"Erlang\",\"path\":\"erl|hrl\"},{\"name\":\"Forth\",\"mode\":\"Forth\",\"path\":\"frt|fs|ldr|fth|4th\"},{\"name\":\"G\u7801\",\"mode\":\"Gcode\",\"path\":\"gcode\"},{\"name\":\"Gitignore\",\"mode\":\"Gitignore\",\"path\":\"gitignore\"},{\"name\":\"GLSL\",\"mode\":\"Glsl\",\"path\":\"glsl|frag|vert\"},{\"name\":\"GO\u8BED\u8A00\",\"mode\":\"golang\",\"path\":\"go\"},{\"name\":\"Groovy\",\"mode\":\"Groovy\",\"path\":\"go|gradle\"},{\"name\":\"HAML\",\"mode\":\"HAML\",\"path\":\"haml\"},{\"name\":\"Handlebars\",\"mode\":\"Handlebars\",\"path\":\"hbs|handlebars|tpl|mustache\"},{\"name\":\"Haskell\",\"mode\":\"Haskell\",\"path\":\"hs\"},{\"name\":\"Haskell Cabal\",\"mode\":\"Haskell_Cabal\",\"path\":\"cabal\"},{\"name\":\"HaXe\",\"mode\":\"haXe\",\"path\":\"cabal\"},{\"name\":\"Hjson\",\"mode\":\"Hjson\",\"path\":\"hjson\"},{\"name\":\"HTML\",\"mode\":\"HTML\",\"path\":\"html|htm|xhtml|vue|we|wpy\"},{\"name\":\"HTML Elixir\",\"mode\":\"HTML_Elixir\",\"path\":\"eex\"},{\"name\":\"HTML Ruby\",\"mode\":\"HTML_Ruby\",\"path\":\"erb|rhtml\"},{\"name\":\"Java\",\"mode\":\"Java\",\"path\":\"java|class\"},{\"name\":\"JavaScript\",\"mode\":\"JavaScript\",\"path\":\"js|jsm|jsx\"},{\"name\":\"JSON\",\"mode\":\"JSON\",\"path\":\"json\"},{\"name\":\"JSP\",\"mode\":\"JSP\",\"path\":\"jsp\"},{\"name\":\"JSX\",\"mode\":\"JSX\",\"path\":\"jsx\"},{\"name\":\"Kotlin\",\"mode\":\"Kotlin\",\"path\":\"kt|kts\"},{\"name\":\"LESS\",\"mode\":\"LESS\",\"path\":\"less\"},{\"name\":\"LISP\",\"mode\":\"Lisp\",\"path\":\"lisp\"},{\"name\":\"LiveScript\",\"mode\":\"LiveScript\",\"path\":\"ls\"},{\"name\":\"LSL\",\"mode\":\"LSL\",\"path\":\"lsl\"},{\"name\":\"Lua\",\"mode\":\"Lua\",\"path\":\"lua\"},{\"name\":\"LuaPage\",\"mode\":\"LuaPage\",\"path\":\"lp\"},{\"name\":\"Makefile\",\"mode\":\"Makefile\",\"path\":\"makefile|gnumakefile|makefile|ocamlmakefile|make\"},{\"name\":\"Markdown\",\"mode\":\"Markdown\",\"path\":\"md|markdown\"},{\"name\":\"MEL\",\"mode\":\"MEL\",\"path\":\"mel\"},{\"name\":\"MySQL\",\"mode\":\"MySQL\",\"path\":\"mysql\"},{\"name\":\"Objective-C\",\"mode\":\"ObjectiveC\",\"path\":\"m|mm\"},{\"name\":\"OCaml\",\"mode\":\"OCaml\",\"path\":\"ml|mli\"},{\"name\":\"Pascal\",\"mode\":\"Pascal\",\"path\":\"pas|p\"},{\"name\":\"Perl\",\"mode\":\"Perl\",\"path\":\"pl|pm\"},{\"name\":\"pgSQL\",\"mode\":\"pgSQL\",\"path\":\"pgsql\"},{\"name\":\"PHP\",\"mode\":\"PHP\",\"path\":\"php|phtml|shtml|php3|php4|php5|phps|phpt|aw|ctp|module\"},{\"name\":\"Powershell\",\"mode\":\"Powershell\",\"path\":\"ps1\"},{\"name\":\"Properties\",\"mode\":\"Properties\",\"path\":\"properties\"},{\"name\":\"Protobuf\",\"mode\":\"Protobuf\",\"path\":\"proto\"},{\"name\":\"Python\",\"mode\":\"Python\",\"path\":\"py\"},{\"name\":\"R\u8BED\u8A00\",\"mode\":\"R\",\"path\":\"r\"},{\"name\":\"Razor\",\"mode\":\"Razor\",\"path\":\"cshtml|asp\"},{\"name\":\"RHTML\",\"mode\":\"RHTML\",\"path\":\"rhtml\"},{\"name\":\"Ruby\",\"mode\":\"Ruby\",\"path\":\"rb|ru|gemspec|rake|guardfile|rakefile|gemfile\"},{\"name\":\"SASS\",\"mode\":\"SASS\",\"path\":\"sass\"},{\"name\":\"Scala\",\"mode\":\"Scala\",\"path\":\"scala\"},{\"name\":\"Scheme\",\"mode\":\"Scheme\",\"path\":\"scm|sm|rkt|oak|scheme\"},{\"name\":\"SCSS\",\"mode\":\"SCSS\",\"path\":\"scss\"},{\"name\":\"SH\",\"mode\":\"SH\",\"path\":\"sh|bash|bashrc\"},{\"name\":\"Space\",\"mode\":\"Space\",\"path\":\"space\"},{\"name\":\"SQL\",\"mode\":\"SQL\",\"path\":\"sql\"},{\"name\":\"SQLServer\",\"mode\":\"SQLServer\",\"path\":\"sqlserver\"},{\"name\":\"SVG\",\"mode\":\"SVG\",\"path\":\"svg\"},{\"name\":\"Swift\",\"mode\":\"Swift\",\"path\":\"swift\"},{\"name\":\"Tex\",\"mode\":\"Tex\",\"path\":\"tex\"},{\"name\":\"Textile\",\"mode\":\"Textile\",\"path\":\"textile\"},{\"name\":\"TypeScript\",\"mode\":\"Typescript\",\"path\":\"ts|typescript|str\"},{\"name\":\"VBScript\",\"mode\":\"VBScript\",\"path\":\"vbs|vb|vbe\"},{\"name\":\"XML\",\"mode\":\"XML\",\"path\":\"xml|rdf|rss|wsdl|xslt|atom|mathml|mml|xul|xbl|xaml|config|pom\"},{\"name\":\"XQuery\",\"mode\":\"XQuery\",\"path\":\"xq\"},{\"name\":\"\u70ED\u952E\u811A\u672C\",\"mode\":\"AutoHotKey\",\"path\":\"ahk\"},{\"name\":\"\u7EAF\u6587\u672C\",\"mode\":\"Text\",\"path\":\"txt|text|log|settings|\"}]</string>
+	<string name="pianojson">[{\"count\":3,\"key\":\"A1,A2\",\"tone\":\"C1\"},{\"count\":5,\"key\":\"A3,A4,A5\",\"tone\":\"C2,C3\"},{\"count\":7,\"key\":\"A6,A7,A8,A9\",\"tone\":\"C4,C5,C6\"},{\"count\":5,\"key\":\"A10,A11,A12\",\"tone\":\"C7,C8\"},{\"count\":7,\"key\":\"A13,A14,A15,A16\",\"tone\":\"C9,C10,C11\"},{\"count\":5,\"key\":\"A,B,C\",\"tone\":\"C12,C13\"},{\"count\":7,\"key\":\"D,E,F,G\",\"tone\":\"C14,C15,C16\"},{\"count\":5,\"key\":\"H,I,J\",\"tone\":\"C17,C18\"},{\"count\":7,\"key\":\"K,L,M,N\",\"tone\":\"C19,C20,C21\"},{\"count\":5,\"key\":\"O,P,Q\",\"tone\":\"C22,C23\"},{\"count\":7,\"key\":\"R,S,T,U\",\"tone\":\"C24,C25,C26\"},{\"count\":5,\"key\":\"V,W,X\",\"tone\":\"C27,C28\"},{\"count\":7,\"key\":\"Y,Z,B1,B2\",\"tone\":\"C29,C30,C31\"},{\"count\":5,\"key\":\"B3,B4,B5\",\"tone\":\"C32,C33\"},{\"count\":7,\"key\":\"B6,B7,B8,B9\",\"tone\":\"C34,C35,C36\"},{\"count\":1,\"key\":\"B10\",\"tone\":\"\"}]</string>
 </resources>

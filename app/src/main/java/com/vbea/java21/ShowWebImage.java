@@ -32,9 +32,16 @@ public class ShowWebImage extends AppCompatActivity
 		TouchImageView img = (TouchImageView) findViewById(R.id.imgTouch);
 		img.setImageResource(R.mipmap.img_default);
 		//ExceptionHandler.log("Util.toastShortMessage", imagePath);
-		LoadImageAsyncTask task = new LoadImageAsyncTask();
-		task.setImageView(img); 
-		task.execute(this.imagePath);
+		try
+		{
+			LoadImageAsyncTask task = new LoadImageAsyncTask();
+			task.setImageView(img); 
+			task.execute(this.imagePath);
+		}
+		catch (Exception e)
+		{
+			Util.toastShortMessage(getApplicationContext(), "加载失败");
+		}
 	}
 	
 	public static Drawable loadImageFromUrl(String url) throws IOException

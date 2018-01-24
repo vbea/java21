@@ -14,10 +14,13 @@ import java.net.URLConnection;
 import java.util.List;
 import java.math.BigDecimal;
 import junit.framework.Assert;
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -766,5 +769,53 @@ public class Util
 			}
 		}
 		return sb.toString().substring(1);
+	}
+	
+	public static boolean hasAndroid23()
+	{
+		return (Build.VERSION.SDK_INT >= 23);
+	}
+	
+	public static boolean hasPermission(Context c, String p)
+	{
+		//ExceptionHandler.log(p, "permission:"+ (c.checkSelfPermission(p) == PackageManager.PERMISSION_GRANTED));
+		return c.checkSelfPermission(p) == PackageManager.PERMISSION_GRANTED;
+	}
+	
+	public static boolean hasAllPermissions(Context c, String...p)
+	{
+		for (String s:p)
+		{
+			if (!hasPermission(c, s))
+				return false;
+		}
+		return true;
+	}
+	
+	public static void requestPermission(Activity a, int code, String...permissions)
+	{
+		a.requestPermissions(permissions, code);
+	}
+	
+	public static boolean hasAllPermissionsGranted(int[] grantResults)
+	{
+		for (int grantResult : grantResults)
+		{
+			if (grantResult == PackageManager.PERMISSION_DENIED)
+				return false;
+		}
+		return true;
+	}
+	
+	public static void addClipboard(Context c, String lebel, String msg)
+	{
+		ClipboardManager cbm = (ClipboardManager) c.getSystemService(Context.CLIPBOARD_SERVICE);
+		cbm.setPrimaryClip(ClipData.newPlainText(lebel, msg));
+	}
+	
+	public static void addClipboard(Context c, String msg)
+	{
+		ClipboardManager cbm = (ClipboardManager) c.getSystemService(Context.CLIPBOARD_SERVICE);
+		cbm.setText(msg);
 	}
 }

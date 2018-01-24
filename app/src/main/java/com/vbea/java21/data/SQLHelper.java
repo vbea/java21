@@ -81,7 +81,7 @@ public class SQLHelper extends SQLiteOpenHelper
 		}
 		catch (JSONException e)
 		{
-			ExceptionHandler.log("json_error", e.toString());
+			ExceptionHandler.log("sql_json_error", e.toString());
 			if (back != null)
 				back.onFailure();
 		}

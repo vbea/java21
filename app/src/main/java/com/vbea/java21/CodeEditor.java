@@ -7,13 +7,16 @@ import java.io.IOException;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.ActivityOptions;
+import android.app.Instrumentation;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.util.AttributeSet;
-import android.webkit.WebView;
+/*import android.webkit.WebView;
 import android.webkit.WebSettings;
+import android.webkit.WebStorage;
 import android.webkit.WebViewClient;
-import android.webkit.WebChromeClient;
+import android.webkit.WebChromeClient;*/
 import android.webkit.JavascriptInterface;
 import android.widget.TextView;
 import android.widget.EditText;
@@ -25,14 +28,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuInflater;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.InputDevice;
 import android.content.Intent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-//import com.vbea.java21.widget.TouchWebView;
+import com.vbea.java21.widget.TouchWebView;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.AlertDialog;
@@ -41,10 +47,11 @@ import com.vbea.java21.data.SQLHelper;
 import com.vbea.java21.data.CodeMode;
 
 import org.apache.commons.io.FileUtils;
-/*import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebStorage;
 import com.tencent.smtt.sdk.WebViewClient;
-import com.tencent.smtt.sdk.WebChromeClient;*/
+import com.tencent.smtt.sdk.WebChromeClient;
 
 public class CodeEditor extends AppCompatActivity
 {
@@ -74,6 +81,8 @@ public class CodeEditor extends AppCompatActivity
 		setSupportActionBar(tool);
 		strTitle = getResources().getStringArray(R.array.array_codename);
 		strCode = getResources().getStringArray(R.array.array_codemode);
+		//myweb.addActionList("选择复制");
+		//myweb.linkJSInterface();
 		WebSettings set = myweb.getSettings();
 		//XWalkSettings set = myweb.getSettings();
 		set.setJavaScriptEnabled(true);
@@ -88,17 +97,39 @@ public class CodeEditor extends AppCompatActivity
 		set.setSupportZoom(true);
 		set.setDomStorageEnabled(true);
 		//set.setTextSize(WebSettings.TextSize.LARGER);
-		//set.setUserAgentString(getString(R.string.pc_ua));
+		set.setUserAgentString(getString(R.string.pc_ua));
 		//set.setTextSize(WebSettings.TextSize.LARGER);
 		myweb.addJavascriptInterface(new EditorInterface(), "EditorManage");
 		myweb.setWebViewClient(new WebViewClient()
 		{
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView v, String url)
+			{
+				v.loadUrl(url);
+				return true;
+			}
+			
+			@Override
+			public void onPageStarted(WebView v, String url, Bitmap icon)
+			{
+				super.onPageStarted(v, url, icon);
+			}
+			
+			@Override
 			public void onPageFinished(WebView v, String url)
 			{
 				isReady = true;
+				super.onPageFinished(v, url);
 			}
 		});
-		myweb.setWebChromeClient(new WebChromeClient());
+		myweb.setWebChromeClient(new WebChromeClient()
+		{
+			@Override
+			public void onExceededDatabaseQuota(String url, String databasein, long quota, long estime, long totalq, WebStorage.QuotaUpdater update)
+			{
+				update.updateQuota(5 * 1024 * 1024);
+			}
+		});
 		SharedPreferences spf = getSharedPreferences("java21", MODE_PRIVATE);
 		if (spf.getBoolean("needData", true))
 			initData(spf.edit());
@@ -128,6 +159,44 @@ public class CodeEditor extends AppCompatActivity
 				supportFinishAfterTransition();
 			}
 		});
+		/*myweb.setActionSelectListener(new TouchWebView.ActionSelectListener()
+		{
+			@Override
+			public void onClick(String title, String text)
+			{
+				Util.toastShortMessage(getApplicationContext(), "title:" + title + "\ntext:" + text);
+			}
+		});*/
+		/*myweb.setOnTouchListener(new View.OnTouchListener()
+		{
+			float lastX,lastY;
+			long lastDownTime;
+			boolean isLongpress;
+			@Override
+			public boolean onTouch(View p1, MotionEvent e)
+			{
+				switch (e.getAction())
+				{
+					case MotionEvent.ACTION_DOWN:
+						lastX = e.getRawX();
+						lastY = e.getRawY();
+						lastDownTime = System.currentTimeMillis();
+						Util.toastShortMessage(getApplicationContext(), "x:" + lastX + ",y:"+lastY);
+						break;
+					case MotionEvent.ACTION_MOVE:
+						float x = e.getRawX();
+						float y = e.getRawY();
+						if (isLongPressed(lastX, lastY, x, y, lastDownTime, System.currentTimeMillis(), 300))
+						{
+							Util.toastShortMessage(getApplicationContext(), "longPressed");
+							new Thread(new TouchEventRunnable(e.getX(), e.getY(), true)).start();
+							return true;
+						}
+						break;
+				}
+				return false;
+			}
+		});*/
 	}
 
 	private void getUrl(String language, String mode)
@@ -347,4 +416,81 @@ public class CodeEditor extends AppCompatActivity
 			savaFile(text);
         }
     }
+	
+	public class TouchEventRunnable implements Runnable
+	{
+		private float x;
+		private float y;
+		private boolean isLongPress;
+		
+		public TouchEventRunnable(float x, float y)
+		{
+			this.x = x;
+			this.y = y;
+		}
+		
+		public TouchEventRunnable(float x, float y, boolean isLongPress)
+		{
+			this.x = x;
+			this.y = y;
+			this.isLongPress = isLongPress;
+		}
+		
+		@Override
+		public void run()
+		{
+			if(isLongPress)
+				longClickOnScreen(x,y);
+			else
+				onClick();
+		}
+	
+		private void longClickOnScreen(float x, float y)
+		{
+			final Instrumentation inst = new Instrumentation();  
+			try
+			{
+				long downTime = SystemClock.uptimeMillis();
+				long eventTime = SystemClock.uptimeMillis();
+				final MotionEvent eventDown = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_DOWN, x, y, 0);
+				eventDown.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+				final MotionEvent eventMove = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_MOVE, x, y+1, 0);
+				eventMove.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+				final MotionEvent eventUp = MotionEvent.obtain(downTime, eventTime, MotionEvent.ACTION_UP, x, y, 0);
+				eventUp.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+				inst.sendPointerSync(eventDown);
+				inst.sendPointerSync(eventMove);
+				try
+				{  
+					Thread.sleep(300);  
+				}
+				catch (InterruptedException e)
+				{  
+					e.printStackTrace();  
+				}
+				inst.sendPointerSync(eventUp);  
+			}
+			catch (NullPointerException e)
+			{  
+				ExceptionHandler.log("code:ontouch-null", e.toString());
+			}  
+		}
+
+		private void onClick()
+		{
+			Instrumentation inst = new Instrumentation();  
+			inst.sendPointerSync(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, x, y, 0));  
+			inst.sendPointerSync(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, x, y, 0));  
+		}
+	}
+
+	private boolean isLongPressed(float lastX, float lastY, float thisX, float thisY, long lastDownTime, long thisEventTime, long longPressTime)
+	{
+		float offsetX = Math.abs(thisX - lastX);
+		float offsetY = Math.abs(thisY - lastY);
+		long intervalTime = thisEventTime - lastDownTime;
+		if (offsetX <= 10 && offsetY <= 10 && intervalTime >= longPressTime)
+			return true;
+		return false;
+	}
 }

@@ -26,10 +26,11 @@ button {
     text-overflow: ellipsis;
     padding-left: 10px;
     display: inline-block;
+	user-select: none;
 }
 
 #statusBar {
-    position: fixed;
+    position: absolute;
     z-index: 10;
     bottom: 0px;
     width: 100%;
@@ -37,6 +38,7 @@ button {
     line-height: 30px;
     margin-left: -10px;
     padding: 0px 5px;
+	user-select: none;
 }
 
     #statusBar a {
@@ -60,7 +62,7 @@ button {
 }
 
 #headBar {
-    position: fixed;
+    position: absolute;
     z-index: 10;
     top: 0px;
     width: 100%;
@@ -68,6 +70,7 @@ button {
     line-height: 30px;
     margin-left: -10px;
     padding: 0px 5px;
+	user-select: none;
 }
 
 .disa {
@@ -78,4 +81,8 @@ button {
     content:"*";
     position: absolute;
     top: -2px;
+}
+
+.ace-vbes .ace_line {
+    user-select: text;
 }

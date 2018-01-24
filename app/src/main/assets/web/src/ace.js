@@ -1893,7 +1893,7 @@ var TextInput = function(parentNode, host) {
     var text = dom.createElement("textarea");
     text.className = useragent.isIOS ? "ace_text-input ace_text-input-ios" : "ace_text-input";
 
-    if (useragent.isTouchPad)
+    //if (useragent.isTouchPad)
         text.setAttribute("x-palm-disable-auto-cap", true);
 
     text.setAttribute("wrap", "off");
@@ -4230,7 +4230,7 @@ var MouseHandler = function(editor) {
         editor.renderer.scrollBarH && editor.renderer.scrollBarH.inner,
         editor.textInput && editor.textInput.getElement()
     ].filter(Boolean), [400, 300, 250], this, "onMouseEvent");
-    event.addMouseWheelListener(editor.container, this.onMouseWheel.bind(this, "mousewheel"));
+    //event.addMouseWheelListener(editor.container, this.onMouseWheel.bind(this, "mousewheel"));
     event.addTouchMoveListener(editor.container, this.onTouchMove.bind(this, "touchmove"));
 
     var gutterEl = editor.renderer.$gutter;

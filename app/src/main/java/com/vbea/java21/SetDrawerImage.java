@@ -1,5 +1,7 @@
 package com.vbea.java21;
 
+import java.io.File;
+import android.Manifest;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,11 +16,13 @@ import android.content.res.Configuration;
 import android.provider.MediaStore;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.GridLayoutManager;
 import com.vbea.java21.list.DrawerAdapter;
+import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
 
@@ -27,9 +31,9 @@ public class SetDrawerImage extends AppCompatActivity
 	private DrawerAdapter adapter;
 	private SharedPreferences spf;
 	private SharedPreferences.Editor edt;
-	private String diyImagePath = "";
-	private Uri imageUri = Uri.parse("file:///" + Common.DrawImagePath);
-	private String[] headItems = {"拍照","从手机相册选择","从图库选择"};
+	//private String diyImagePath = "";
+	private Uri imageUri;
+	private String[] headItems = {"拍照","相册"};
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -47,7 +51,7 @@ public class SetDrawerImage extends AppCompatActivity
 		recyclerView.setAdapter(adapter);
 		spf = getSharedPreferences("java21", MODE_PRIVATE);
 		edt = spf.edit();
-
+		imageUri = FileProvider.getUriForFile(getApplicationContext(), Common.FileProvider, new File(Common.getDrawImagePath()));
 		tool.setNavigationOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -103,17 +107,23 @@ public class SetDrawerImage extends AppCompatActivity
 					switch (item)
 					{
 						case 0:
-							Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-							intent1.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-							startActivityForResult(intent1, 10);
+							if (Util.hasAndroid23())
+							{
+								if (!Util.hasAllPermissions(SetDrawerImage.this, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+									Util.requestPermission(SetDrawerImage.this, 1001, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+								else
+									startCamera();
+							}
+							else
+								startCamera();
 							break;
-						case 1:
+						/*case 1:
 							Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 							intent.setType("image/*");
 							intent.addCategory(Intent.CATEGORY_OPENABLE);
 							startActivityForResult(intent, 1);
-							break;
-						case 2:
+							break;*/
+						case 1:
 							Intent intent2 = new Intent(Intent.ACTION_PICK);
 							intent2.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*");
 							startActivityForResult(intent2, 1);
@@ -130,7 +140,8 @@ public class SetDrawerImage extends AppCompatActivity
 	{    
 		if(uri==null)
 			return;
-		Intent intent = new Intent("com.android.camera.action.CROP");    
+		Intent intent = new Intent("com.android.camera.action.CROP");
+		intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 		intent.setDataAndType(uri, "image/*");    
 		// 设置裁剪    
 		intent.putExtra("crop", "true");    
@@ -142,10 +153,17 @@ public class SetDrawerImage extends AppCompatActivity
 		intent.putExtra("outputY", 400);    
 		intent.putExtra("scale", true);
 		intent.putExtra("return-data", false); 
-		intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File(Common.getDrawImagePath())));
 		intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 		intent.putExtra("noFaceDetection", true);
 		startActivityForResult(intent, 11);    
+	}
+	
+	private void startCamera()
+	{
+		Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		intent1.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+		startActivityForResult(intent1, 10);
 	}
 
 	@Override
@@ -190,5 +208,13 @@ public class SetDrawerImage extends AppCompatActivity
 				break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+	{
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (requestCode == 1001 && Util.hasAllPermissionsGranted(grantResults))
+			startCamera();
 	}
 }

@@ -122,9 +122,11 @@ public class Machine extends AppCompatActivity
 		String g1 = "222876252";
 		String g2 = "49321718";
 		String g3 = "63492019";
+		String g4 = "135482843";
 		final String g1k = "SqNsfqwYaq_UjKM9SKHvSnQGUMdXPh5g";
 		final String g2k = "RfeoDQnuCW9LiWhpb6bdCq5xtZU8KbS-";
 		final String g3k = "wLSipl8_yReFcb9yp9a2WeEQYueaSdLm";
+		final String g4k = "w5mru7iovlDM0jhLutgQ-ptgn6p93808";
 		SpannableStringBuilder ssb = new SpannableStringBuilder();
 		ssb.append(getString(R.string.abt_invate));
 		ssb.append(g1, new ClickableSpan()
@@ -151,6 +153,14 @@ public class Machine extends AppCompatActivity
 			}
 		}, 0);
 		ssb.append(getString(R.string.abt_invate2));
+		ssb.append(g4, new ClickableSpan()
+		{
+			public void onClick(View v)
+			{
+				SocialShare.mTencent.joinQQGroup(Machine.this, g4k);
+			}
+		}, 0);
+		ssb.append(getString(R.string.abt_invate3));
 		return ssb;
 	}
 	

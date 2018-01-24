@@ -1,11 +1,14 @@
 package com.vbea.java21.classes;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;
 import java.math.BigInteger;
 
 import android.content.Context;
 import android.content.pm.Signature;
+import android.graphics.Bitmap;
 
 public class MD5Util
 {
@@ -21,20 +24,47 @@ public class MD5Util
 		}
 		return sb.toString(); 
 	}
+	
 	public static String getMD5(String s)
+	{
+		return getMD5(s.getBytes(), "vbes");
+	}
+	
+	public static String getMD5(Bitmap bitmap, String def)
+	{
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		try
+		{
+			if (bitmap.compress(Bitmap.CompressFormat.JPEG, 20, out))
+			{
+				out.flush();
+				out.close();
+				return getMD5(out.toByteArray(), def).toLowerCase().substring(0, 16);
+			}
+		}
+		catch (Exception e)
+		{
+			ExceptionHandler.log("getMD5(bitmap)", e.toString());
+		}
+		return def;
+	}
+	
+	public static String getMD5(byte[] s, String def)
 	{
 		try
 		{
+			if (s == null)
+				return def;
 			// Create MD5 Hash
 			MessageDigest digest = MessageDigest.getInstance("MD5");
-			digest.update(s.getBytes());
+			digest.update(s);
 			byte messageDigest[] = digest.digest();
-			
 			return toHexString(messageDigest);
 		}
 		catch (Exception e)
 		{
-			return "vbes";
+			ExceptionHandler.log("getMD5(byte[])", e.toString());
+			return def;
 		}
 	}
 	
@@ -75,4 +105,65 @@ public class MD5Util
 			return "";
 		}
 	}*/
+	
+
+	//获取单个文件的MD5值！
+	public static String getFileMD5(String defat,File file)
+	{
+		if (!file.isFile() || !file.canRead())
+		{
+			return defat;
+		}
+		MessageDigest digest = null;
+		FileInputStream in = null;
+		byte buffer[] = new byte[1024];
+		int len;
+		try
+		{
+			digest = MessageDigest.getInstance("MD5");
+			in = new FileInputStream(file);
+			while ((len = in.read(buffer, 0, 1024)) != -1)
+			{
+				digest.update(buffer, 0, len);
+			}
+			in.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return defat;
+		}
+		BigInteger bigInt = new BigInteger(1, digest.digest());
+		return bigInt.toString(16);
+	}
+
+	//获取单个文件的SHA1值！
+	public static String getFileSHA1(String defat,File file)
+	{
+		if (!file.isFile() || !file.canRead())
+		{
+			return defat;
+		}
+		MessageDigest digest = null;
+		FileInputStream in = null;
+		byte buffer[] = new byte[1024];
+		int len;
+		try
+		{
+			digest = MessageDigest.getInstance("SHA1");
+			in = new FileInputStream(file);
+			while ((len = in.read(buffer, 0, 1024)) != -1)
+			{
+				digest.update(buffer, 0, len);
+			}
+			in.close();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return defat;
+		}
+		BigInteger bigInt = new BigInteger(1, digest.digest());
+		return bigInt.toString(16);
+	}
 }

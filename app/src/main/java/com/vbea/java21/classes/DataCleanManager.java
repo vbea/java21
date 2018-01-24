@@ -143,7 +143,7 @@ public class DataCleanManager {
      * @return 
      */  
     public static void deleteFolderFile(String filePath, boolean deleteThisPath) {  
-        if (!TextUtils.isEmpty(filePath)) {  
+        if (!Util.isNullOrEmpty(filePath)) {  
             try {  
                 File file = new File(filePath);  
                 if (file.isDirectory()) {// 如果下面还有文件  
@@ -206,8 +206,13 @@ public class DataCleanManager {
     }  
       
       
-    public static String getCacheSize(Context context) throws Exception {  
+    public static String getCacheSize(Context context) throws Exception
+	{  
         return getFormatSize(getFolderSize(context.getCacheDir()));  
-    }  
-      
+    } 
+    
+	public static String getFolderSize(String path) throws Exception
+	{
+		return getFormatSize(getFolderSize(new File(path)));
+	}
 } 

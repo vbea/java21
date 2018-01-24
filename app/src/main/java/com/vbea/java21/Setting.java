@@ -26,12 +26,11 @@ public class Setting extends AppCompatActivity
 {
 	//private Switch sldGift,sldSkip,sldAdver,sldEyes;
 	private SharedPreferences spf;
-	private TextView txtCacheSize;//, txtState;
+	private TextView txtCacheSize, txtImageSize;
 	private TextView btnSetheme, btnSetimg, btnScore,btnJoin,btnFeed, btnDonate, btnHistory, btnTextsize;
 	private LinearLayout btnAdver, btnWelAdv, btnUpdate, btnMusic, btnTips;
 	private Switch swiMusic, swiTips, swiAdv, swiWelAdv;
-	private RelativeLayout btnCache;
-	
+	private boolean isTipsChange = false;
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -50,7 +49,8 @@ public class Setting extends AppCompatActivity
 		btnDonate = (TextView) findViewById(R.id.btn_setDonate);
 		btnTextsize = (TextView) findViewById(R.id.btn_setTextsize);
 		btnUpdate = (LinearLayout) findViewById(R.id.btnUpdate);
-		btnCache = (RelativeLayout) findViewById(R.id.btn_setClearCache);
+		RelativeLayout btnCache = (RelativeLayout) findViewById(R.id.btn_setClearCache);
+		RelativeLayout btnImageCache = (RelativeLayout) findViewById(R.id.btn_setClearCacheImage);
 		btnMusic = (LinearLayout) findViewById(R.id.btnSetmusic);
 		btnTips = (LinearLayout) findViewById(R.id.btnSettips);
 		btnWelAdv = (LinearLayout) findViewById(R.id.btnSetadvwel);
@@ -63,7 +63,7 @@ public class Setting extends AppCompatActivity
 		sldSkip = (SlidButton) findViewById(R.id.slid_skip);
 		sldEyes = (SlidButton) findViewById(R.id.slid_eyes);*/
 		txtCacheSize = (TextView) findViewById(R.id.txt_setCacheSize);
-		//txtState = (TextView) findViewById(R.id.txt_setState);
+		txtImageSize = (TextView) findViewById(R.id.txt_setCacheImageSize);
 		spf = getSharedPreferences("java21", MODE_PRIVATE);
 
 		tool.setNavigationOnClickListener(new View.OnClickListener()
@@ -106,6 +106,7 @@ public class Setting extends AppCompatActivity
 			public void onCheckedChanged(CompoundButton p1, boolean p2)
 			{
 				Common.TIPS = p2;
+				isTipsChange = true;
 			}
 		});
 		
@@ -141,7 +142,10 @@ public class Setting extends AppCompatActivity
 				if (!p2 || Common.IS_ACTIVE)
 				{
 					Common.NO_ADV = p2;
-					btnWelAdv.setVisibility(p2 ? View.VISIBLE : View.GONE);
+					if (p2 && Common.isVipUser())
+						btnWelAdv.setVisibility(View.VISIBLE);
+					else
+						btnWelAdv.setVisibility(View.GONE);
 					swiWelAdv.setChecked(true);
 				}
 				else
@@ -163,7 +167,7 @@ public class Setting extends AppCompatActivity
 				}
 				else
 				{
-					Util.toastShortMessage(getApplicationContext(), "此功能仅限VIP用户使用");
+					//Util.toastShortMessage(getApplicationContext(), "此功能仅限VIP用户使用");
 					swiWelAdv.setChecked(true);
 				}
 			}
@@ -302,12 +306,47 @@ public class Setting extends AppCompatActivity
 				});
 			}
 		});
+		
+		btnImageCache.setOnClickListener(new View.OnClickListener()
+		{
+			public void onClick(View v)
+			{
+				if (txtImageSize.getText().toString().equals("0.0B"))
+				{
+					Util.toastShortMessage(getApplicationContext(), "已经很干净了，不需要再清咯");
+						return;
+				}
+				Util.showConfirmCancelDialog(Setting.this, android.R.string.dialog_alert_title, "您确定要清除图片缓存？此操作将清空教程评论页面缓存的其他用户头像。",
+					new DialogInterface.OnClickListener()
+					{
+						public void onClick(DialogInterface d, int s)
+						{
+							try
+							{
+								cleanImage();
+								Util.toastShortMessage(getApplicationContext(), "操作成功");
+							}
+							catch (Exception e)
+							{
+								Util.toastShortMessage(getApplicationContext(), "操作失败");
+							}
+						}
+					});
+			}
+		});
+		init();
 	}
 	
 	private void clean() throws Exception
 	{
 		DataCleanManager.cleanInternalCache(Setting.this);
 		txtCacheSize.setText(DataCleanManager.getCacheSize(getApplicationContext()));
+	}
+	
+	private void cleanImage() throws Exception
+	{
+		DataCleanManager.cleanCustomCache(Common.getCachePath());
+		txtImageSize.setText(DataCleanManager.getFolderSize(Common.getCachePath()));
 	}
 	
 	private void init()
@@ -319,17 +358,21 @@ public class Setting extends AppCompatActivity
 			swiAdv.setChecked(spf.getBoolean("noadv", false));
 			swiWelAdv.setChecked(spf.getBoolean("weladv", true));
 			txtCacheSize.setText(DataCleanManager.getCacheSize(this));
-			if (!swiAdv.isChecked())
-				btnWelAdv.setVisibility(View.GONE);
+			txtImageSize.setText(DataCleanManager.getFolderSize(Common.getCachePath()));
+			if (Common.isNoadv() && Common.isVipUser())
+				btnWelAdv.setVisibility(View.VISIBLE);
 		}
 		catch (Exception e)
 		{
 			txtCacheSize.setText("N/A");
+			txtImageSize.setText("N/A");
 		}
 	}
 	
 	public boolean saveState(boolean clear)
 	{
+		if (isTipsChange)
+			Common.getTips();
 		SharedPreferences.Editor edt = spf.edit();
 		edt = spf.edit();
 		edt.putBoolean("music",swiMusic.isChecked());
@@ -349,7 +392,6 @@ public class Setting extends AppCompatActivity
 	@Override
 	protected void onResume()
 	{
-		init();
 		super.onResume();
 	}
 	

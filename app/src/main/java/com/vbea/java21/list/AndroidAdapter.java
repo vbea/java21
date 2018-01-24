@@ -1,6 +1,7 @@
 package com.vbea.java21.list;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import android.content.Context;
 import android.view.View;
@@ -23,6 +24,12 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.MyViewHo
 	private List<AndroidHtml> mList;
 	private boolean isEnd = false;
 	private String server = "";
+	
+	public AndroidAdapter()
+	{
+		mList = new ArrayList<AndroidHtml>();
+	}
+	
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup p1, int p2)
 	{
@@ -79,7 +86,8 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.MyViewHo
 	
 	public void setList(List<AndroidHtml> list)
 	{
-		mList = list;
+		mList.clear();
+		mList.addAll(list);
 		isEnd = false;
 		if (mList.get(0).order == -1) {
 			server = mList.get(0).url;

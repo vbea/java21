@@ -124,6 +124,7 @@ public class Main extends AppCompatActivity
 			fa.addItem(new JavaFragment(), "J2EE");
 			fa.addItem(new AndroidFragment(), "安卓基础");
 			fa.addItem(new Android2Fragment(), "安卓进阶");
+			fa.addItem(new AideFragment(), "AIDE");
 		}
         viewpager.setAdapter(fa);
         tabLayout.setupWithViewPager(viewpager);
@@ -188,10 +189,7 @@ public class Main extends AppCompatActivity
 		setHead();
 		myCallback = new InboxCallback();
 		if (START)
-		{
-			BmobUpdateAgent.update(getApplicationContext());
-			QbSdk.initX5Environment(this, null);
-		}
+			mHandler.sendEmptyMessageDelayed(10, 500);
     }
 	
 	private void setHead()
@@ -249,8 +247,8 @@ public class Main extends AppCompatActivity
 	
 	public void closeTip()
 	{
-		if (layoutTips.getVisibility() != View.GONE)
-			layoutTips.setVisibility(View.GONE);
+		//if (layoutTips.getVisibility() != View.GONE)
+		layoutTips.setVisibility(View.GONE);
 	}
 	
 	public void setTip(Tips tip)
@@ -264,10 +262,7 @@ public class Main extends AppCompatActivity
 			txtCotation.start();
 		}
 		else
-		{
-			//drawSms.setVisibility(View.GONE);
-			layoutTips.setVisibility(View.GONE);
-		}
+			closeTip();
 	}
 
 	//抽屉
@@ -362,21 +357,22 @@ public class Main extends AppCompatActivity
 		if (Common.mUser != null)
 		{
 			drawSms.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
-			drawWifi.setVisibility(Common.IS_ACTIVE ? View.VISIBLE : View.GONE);
-			drawCodeEditor.setVisibility(Common.IS_ACTIVE ? View.VISIBLE : View.GONE);
+			drawWifi.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
+			//drawCodeEditor.setVisibility(Common.IS_ACTIVE ? View.VISIBLE : View.GONE);
 		}
 		else
 		{
-			drawSms.setVisibility(View.VISIBLE);
+			drawSms.setVisibility(View.GONE);
 			drawWifi.setVisibility(View.VISIBLE);
-			drawCodeEditor.setVisibility(View.VISIBLE);
+			//drawCodeEditor.setVisibility(View.VISIBLE);
 		}
 	}
 	
 	public void goBack(View v)
 	{
+		Common.getCopyMsg(this);
+		Common.gc();
 		if (Common.isSupportMD())
-		//Common.Logout(this);
 			finishAndRemoveTask();
 		else
 			finish();
@@ -467,6 +463,7 @@ public class Main extends AppCompatActivity
 	{
 		/*if (Common.isCanUploadUserSetting())
 			Common.updateUser();*/
+		Common.getCopyMsg(this);
 		SharedPreferences spf = getSharedPreferences("java21", MODE_PRIVATE);
 		SharedPreferences.Editor editor = spf.edit();
 		editor.putString("read_android", Util.Join(",", Common.READ_Android));
@@ -530,6 +527,8 @@ public class Main extends AppCompatActivity
 			if (bannerView == null)
 				initBanner();
 		}
+		if (Common.isNet(this))
+			Common.getTestMsg();
 		StatService.onResume(this);
 		super.onResume();
 	}
@@ -720,6 +719,10 @@ public class Main extends AppCompatActivity
 					break;
 				case 9:
 					txtAudioCode.setText("");
+					break;
+				case 10:
+					BmobUpdateAgent.update(getApplicationContext());
+					QbSdk.initX5Environment(Main.this, null);
 					break;
 			}
 			super.handleMessage(msg);

@@ -16,7 +16,7 @@ public class AudioService extends Service
 	private boolean isPlaying = false, isPlay = false;
 	public boolean loop = false;
 	public boolean order = false;
-	public int what = 0, max = 0,current = 0;//, result = 0;
+	public int what = -1, max = 0,current = 0;//, result = 0;
 	//public SoundLoad.Music music;
 	private musicThread mThread;
 	private String[] strmusic;
@@ -82,7 +82,8 @@ public class AudioService extends Service
 	public void Stop()
 	{
 		isPlay = isPlaying = false;
-		current = what = max = 0;
+		current = max = 0;
+		what = -1;
 		mThread = null;
 	}
 	
@@ -198,10 +199,15 @@ public class AudioService extends Service
 							}
 							else if (order)
 							{
-								what+=1;
-								sleep(500);
-								init();
-								sleep(500);
+								if (Common.SOUND.isValid(what+1))
+								{
+									what+=1;
+									sleep(500);
+									init();
+									sleep(500);
+								}
+								else
+									isPlay = false;
 							}
 							else
 								isPlay = false;
@@ -224,7 +230,7 @@ public class AudioService extends Service
 		public void stoped()
 		{
 			isPlay = isPlaying = false;
-			what = 0;
+			what = -1;
 			zero();
 			Stop();
 		}

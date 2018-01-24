@@ -14,10 +14,11 @@
 		android:orientation="vertical"
 		android:background="?attr/divider">
 		<include layout="@layout/java_tool"/>
-		<WebView
+		<com.tencent.smtt.sdk.WebView
 			android:id="@+id/codeWebView"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
+			android:scrollbars="none"
 			android:paddingLeft="1dp"
 			android:paddingRight="1dp"/>
 	</LinearLayout>

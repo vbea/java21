@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,27 +13,29 @@ import android.widget.RelativeLayout;
 import android.view.LayoutInflater;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import com.vbea.java21.data.AndroidAdvance;
+import com.vbea.java21.data.AndroidIDE;
 import com.vbea.java21.R;
 import com.vbea.java21.classes.Common;
+import com.vbea.java21.classes.ExceptionHandler;
 
-public class Android2Adapter extends RecyclerView.Adapter<Android2Adapter.MyViewHolder>
+public class AideAdapter extends RecyclerView.Adapter<AideAdapter.MyViewHolder>
 {
 	private OnItemClickListener onItemClickListener;
-	private List<AndroidAdvance> mList;
-	private boolean isEnd = false;
+	private List<AndroidIDE> mList;
+	private boolean isEnd;
 	private String server = "";
 	
-	public Android2Adapter()
+	public AideAdapter()
 	{
-		mList = new ArrayList<AndroidAdvance>();
+		mList = new ArrayList<AndroidIDE>();
+		isEnd = false;
 	}
 	
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup p1, int p2)
 	{
 		LayoutInflater inflate = LayoutInflater.from(p1.getContext());
-		View v = inflate.inflate(R.layout.java6, p1, false);
+		View v = inflate.inflate(R.layout.java7, p1, false);
 		MyViewHolder holder = new MyViewHolder(v);
 		return holder;
 	}
@@ -42,29 +43,35 @@ public class Android2Adapter extends RecyclerView.Adapter<Android2Adapter.MyView
 	@Override
 	public void onBindViewHolder(MyViewHolder holder, int p)
 	{
-		final AndroidAdvance item = mList.get(p);
-		if (item.prefix == null || item.prefix.equals(""))
-			item.prefix = "┗ ";
-		holder.title.setText(item.prefix + " " + item.title);
-		holder.sub.setText(item.remark);
+		final AndroidIDE item = mList.get(p);
 		if (item.isTitle)
 		{
-			holder.sub.setVisibility(View.GONE);
-			holder.layout.setBackgroundResource(R.color.android_disable);
+			holder.sub.setVisibility(View.VISIBLE);
+			holder.title.setVisibility(View.GONE);
+			if (item.prefix == null || item.prefix.equals(""))
+				holder.sub.setText(item.title);
+			else
+				holder.sub.setText(item.prefix + " " + item.title);
 			holder.layout.setClickable(false);
+			holder.layout.setBackgroundResource(R.color.android_disable);
 		}
 		else
 		{
-			holder.sub.setVisibility(View.VISIBLE);
-			holder.layout.setBackgroundResource(R.drawable.btn_menu);
+			holder.sub.setVisibility(View.GONE);
+			holder.title.setVisibility(View.VISIBLE);
+			if (item.prefix == null || item.prefix.equals(""))
+				holder.title.setText(item.title);
+			else
+				holder.title.setText(item.prefix + " " + item.title);
 			holder.layout.setClickable(true);
+			holder.layout.setBackgroundResource(R.drawable.btn_menu);
 			holder.layout.setOnClickListener(new View.OnClickListener()
 			{
 				public void onClick(View v)
 				{
 					if(onItemClickListener != null)
 					{
-						onItemClickListener.onItemClick(item.getObjectId(), item.title, item.remark, server + item.url);
+						onItemClickListener.onItemClick(item.getObjectId(), item.title, item.title, server + item.url);
 					}
 				}
 			});
@@ -73,7 +80,7 @@ public class Android2Adapter extends RecyclerView.Adapter<Android2Adapter.MyView
 			holder.end.setVisibility(View.VISIBLE);
 		else
 			holder.end.setVisibility(View.GONE);
-		holder.read.setVisibility(Common.READ_AndroidAdvance.contains(item.getObjectId()) ? View.VISIBLE : View.GONE);
+		//holder.read.setVisibility(Common.READ_J2EE.contains(item.getObjectId()) ? View.VISIBLE : View.GONE);
 	}
 
 	@Override
@@ -83,35 +90,35 @@ public class Android2Adapter extends RecyclerView.Adapter<Android2Adapter.MyView
 			return mList.size();
 		return 0;
 	}
-	
-	public void setList(List<AndroidAdvance> list)
+
+	public void setList(List<AndroidIDE> list)
 	{
 		mList.clear();
 		mList.addAll(list);
-		isEnd = false;
-		if (mList.get(0).order == -1) {
+		if (mList.get(0).order == -1)
+		{
 			server = mList.get(0).url;
 			mList.remove(0);
 		}
 	}
-	
+
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
 	{
         this.onItemClickListener = onItemClickListener;
     }
-	
+
 	@Override
 	public long getItemId(int p1)
 	{
 		return 0;
 	}
-	
+
 	public void clear()
 	{
 		if (mList != null)
 			mList.clear();
 	}
-	
+
 	public void setEnd(boolean end)
 	{
 		isEnd = end;
@@ -134,7 +141,7 @@ public class Android2Adapter extends RecyclerView.Adapter<Android2Adapter.MyView
 			end = (RelativeLayout) v.findViewById(R.id.item_end);
 		}
 	}
-	
+
 	public interface OnItemClickListener
 	{
         void onItemClick(String id, String title, String sub, String url);

@@ -36,6 +36,7 @@ public class More extends AppCompatActivity
 	private ProgressBar proMusic;
 	private SoundLoad soundLoad = null;
 	private PlayThread mThread = null;
+	private String MusicName;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -113,7 +114,7 @@ public class More extends AppCompatActivity
 		{
 			public void onClick(View v)
 			{
-				Common.startActivityOptions(More.this, Piano.class);
+				startActivity(new Intent(More.this, Piano.class));
 			}
 		});
 		
@@ -167,7 +168,6 @@ public class More extends AppCompatActivity
 				{*/
 					if (Common.audioService != null)
 					{
-						//showMusicName();
 						Common.audioService.play(music);
 						if (mThread == null)
 						{
@@ -200,6 +200,7 @@ public class More extends AppCompatActivity
 	
 	private void init()
 	{
+		MusicName = "";
 		if (Common.audioService == null)
 		{
 			if (Common.SOUND != null)
@@ -241,6 +242,7 @@ public class More extends AppCompatActivity
 				{
 					if (Common.audioService != null)
 					{
+						mHandler.sendEmptyMessage(3);
 						while(true)
 						{
 							if (Common.audioService.isPlay())
@@ -258,7 +260,6 @@ public class More extends AppCompatActivity
 				}
 				catch (Exception e)
 				{
-					
 				}
 			}
 		}
@@ -275,13 +276,20 @@ public class More extends AppCompatActivity
 					proMusic.setMax(Common.audioService.max);
 					proMusic.setProgress(Common.audioService.current);
 					txtCode.setText(Common.audioService.mid);
+					if (Common.audioService.current == 0)
+						MusicName = "";
 					if (Common.audioService.current < 5)
 						showMusicName();
 					break;
 				case 2:
 					proMusic.setProgress(0);
+					MusicName = "";
 					txtCode.setText("");
 					txtName.setText("");
+					break;
+				case 3:
+					MusicName = Common.audioService.getMusicName();
+					showMusicName();
 					break;
 			}
 			super.handleMessage(msg);
@@ -290,7 +298,10 @@ public class More extends AppCompatActivity
 	
 	private void showMusicName()
 	{
-		txtName.setText(Common.audioService.getMusicName());
+		if (Util.isNullOrEmpty(MusicName))
+			mHandler.sendEmptyMessage(3);
+		else
+			txtName.setText(MusicName);
 	}
 	
 	private void CopyMusic(String music)

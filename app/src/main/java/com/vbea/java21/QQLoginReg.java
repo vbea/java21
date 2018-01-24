@@ -420,12 +420,11 @@ public class QQLoginReg extends AppCompatActivity
 	
 	public File getIconFile() throws Exception
 	{
-		SimpleDateFormat sim = new SimpleDateFormat("yyyyMMddHHmmss");
-		String filename = mUser.name + sim.format(new Date()) + ".png";
-		File dir = new File(Common.IconPath);
+		String filename = MD5Util.getMD5(btIcon, mUser.name) + ".png";
+		File dir = new File(Common.getIconPath());
 		if (!dir.exists())
 			dir.mkdirs();
-		File file = new File(Common.IconPath + filename);
+		File file = new File(dir, filename);
 		saveFile(btIcon, file);
 		return file;
 	}

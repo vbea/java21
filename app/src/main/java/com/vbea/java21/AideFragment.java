@@ -20,8 +20,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.DividerItemDecoration;
-import com.vbea.java21.data.JavaEE;
-import com.vbea.java21.list.J2EEAdapter;
+import com.vbea.java21.data.AndroidIDE;
+import com.vbea.java21.list.AideAdapter;
 import com.vbea.java21.list.MyDecoration;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
@@ -32,13 +32,13 @@ import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.exception.BmobException;
 
-public class JavaFragment extends Fragment
+public class AideFragment extends Fragment
 {
 	private SwipeRefreshLayout refreshLayout;
 	private RecyclerView recyclerView;
 	private TextView errorText;
-	private J2EEAdapter mAdapter;
-	private List<JavaEE> mList;
+	private AideAdapter mAdapter;
+	private List<AndroidIDE> mList;
 	private View rootView;
 	private int mCount = -1;
 	//private ProgressDialog mPdialog;
@@ -56,8 +56,8 @@ public class JavaFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
 		if (recyclerView == null)
 		{
-			mList = new ArrayList<JavaEE>();
-			mAdapter = new J2EEAdapter();
+			mList = new ArrayList<AndroidIDE>();
+			mAdapter = new AideAdapter();
 			errorText = (TextView) view.findViewById(R.id.txt_andError);
         	recyclerView = (RecyclerView) view.findViewById(R.id.cpt_recyclerView);
 			refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swp_refresh);
@@ -77,21 +77,22 @@ public class JavaFragment extends Fragment
 				errorText.setVisibility(View.VISIBLE);
 				errorText.setText("请登录后下拉刷新获取章节列表");
 			}
-			mAdapter.setOnItemClickListener(new J2EEAdapter.OnItemClickListener()
+			
+			mAdapter.setOnItemClickListener(new AideAdapter.OnItemClickListener()
 			{
 				@Override
 				public void onItemClick(String id, String title, String sub, String url)
 				{
 					//更新数据
 					/*update();
-					if (true)return;*/
-					Common.addJavaEeRead(id);
+					 if (true)return;*/
+					//Common.addJavaEeRead(id);
 					Intent intent = new Intent(getActivity(), AndroidWeb.class);
 					intent.putExtra("id", id);
 					intent.putExtra("url", url);
 					intent.putExtra("title", title);
 					intent.putExtra("sub", sub);
-					intent.putExtra("type", 3);
+					intent.putExtra("type", 4);
 					Common.startActivityOptions(getActivity(), intent);
 					mAdapter.notifyDataSetChanged();
 				}
@@ -135,9 +136,9 @@ public class JavaFragment extends Fragment
 			init();
 			return;
 		}
-		BmobQuery<JavaEE> query = new BmobQuery<JavaEE>();
+		BmobQuery<AndroidIDE> query = new BmobQuery<AndroidIDE>();
 		query.addWhereEqualTo("enable", true);
-		query.count(JavaEE.class, new CountListener()
+		query.count(AndroidIDE.class, new CountListener()
 		{
 			@Override
 			public void done(Integer count, BmobException e)
@@ -157,18 +158,18 @@ public class JavaFragment extends Fragment
 			}
 		});
 	}
-	
+
 	/*public void update()
-	{
-		Util.showConfirmCancelDialog(getActivity(), "数据更新", "你确定要更新数据吗", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface d, int s)
-			{
-				mPdialog = ProgressDialog.show(getActivity(), null, "请稍候...");
-				new UpdateThread().start();
-			}
-		});
-	}*/
+	 {
+	 Util.showConfirmCancelDialog(getActivity(), "数据更新", "你确定要更新数据吗", new DialogInterface.OnClickListener()
+	 {
+	 public void onClick(DialogInterface d, int s)
+	 {
+	 mPdialog = ProgressDialog.show(getActivity(), null, "请稍候...");
+	 new UpdateThread().start();
+	 }
+	 });
+	 }*/
 
 	private void refresh()
 	{
@@ -182,14 +183,14 @@ public class JavaFragment extends Fragment
 			errorText.setVisibility(View.VISIBLE);
 			errorText.setText("正在加载，请稍候");
 		}
-		BmobQuery<JavaEE> query = new BmobQuery<JavaEE>();
+		BmobQuery<AndroidIDE> query = new BmobQuery<AndroidIDE>();
 		query.addWhereEqualTo("enable", true);
 		query.order("order");
 		query.setLimit(15);
-		query.findObjects(new FindListener<JavaEE>()
+		query.findObjects(new FindListener<AndroidIDE>()
 		{
 			@Override
-			public void done(List<JavaEE> list, BmobException e)
+			public void done(List<AndroidIDE> list, BmobException e)
 			{
 				if (e == null)
 				{
@@ -208,15 +209,15 @@ public class JavaFragment extends Fragment
 	{
 		if (mCount > mList.size())
 		{
-			BmobQuery<JavaEE> query = new BmobQuery<JavaEE>();
+			BmobQuery<AndroidIDE> query = new BmobQuery<AndroidIDE>();
 			query.addWhereEqualTo("enable", true);
 			query.order("order");
 			query.setLimit(15);
 			query.setSkip(mList.size());
-			query.findObjects(new FindListener<JavaEE>()
+			query.findObjects(new FindListener<AndroidIDE>()
 			{
 				@Override
-				public void done(List<JavaEE> list, BmobException e)
+				public void done(List<AndroidIDE> list, BmobException e)
 				{
 					if (e == null)
 					{
@@ -271,13 +272,13 @@ public class JavaFragment extends Fragment
 						refreshLayout.setRefreshing(false);
 					break;
 				/*case 4:
-					Util.toastShortMessage(getActivity(), "更新成功");
-					mPdialog.dismiss();
-					break;
-				case 5:
-					Util.toastShortMessage(getActivity(), "更新失败");
-					mPdialog.dismiss();
-					break;*/
+					 Util.toastShortMessage(getActivity(), "更新成功");
+					 mPdialog.dismiss();
+					 break;
+				 case 5:
+					 Util.toastShortMessage(getActivity(), "更新失败");
+					 mPdialog.dismiss();
+					 break;*/
 			}
 			super.handleMessage(msg);
 		}
@@ -294,14 +295,14 @@ public class JavaFragment extends Fragment
 			refreshLayout.setRefreshing(false);
 		super.onResume();
 	}
-	
+
 	class UpdateThread extends Thread implements Runnable
 	{
 		public void run()
 		{
 			try
 			{
-				for (JavaEE item : mList)
+				for (AndroidIDE item : mList)
 				{
 					if (item.isTitle)
 						continue;

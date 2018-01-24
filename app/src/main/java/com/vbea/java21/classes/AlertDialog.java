@@ -1,9 +1,9 @@
 package com.vbea.java21.classes;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.widget.Button;
-import android.support.v7.app.AlertDialog;
 import android.content.DialogInterface;
+import android.widget.Button;
 import com.vbea.java21.MyThemes;
 
 public class AlertDialog extends AlertDialog.Builder

@@ -22,8 +22,8 @@ android {
         applicationId "com.vbea.java21"
         minSdkVersion 21
         targetSdkVersion 24
-        versionCode 920
-        versionName "6.7.0"
+        versionCode 990
+        versionName "6.7.5"
     }
     buildTypes {
         release {

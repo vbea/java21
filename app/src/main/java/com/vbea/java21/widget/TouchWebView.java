@@ -1,44 +1,178 @@
 package com.vbea.java21.widget;
 
-import android.content.Context;
-import android.webkit.WebView;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
+import java.util.ArrayList;
+import java.util.List;
 
-//import com.tencent.smtt.sdk.WebView;
+import android.content.Context;
+import android.os.Build;
+import android.util.AttributeSet;
+import android.view.ActionMode;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
 
 public class TouchWebView extends WebView
 {
-	//private long lastTime = 0l;
-	public TouchWebView(Context context)
+    static String TAG = "CustomActionWebView";
+
+    ActionMode mActionMode;
+
+    List<String> mActionList = new ArrayList<>();
+
+    ActionSelectListener mActionSelectListener;
+
+    public TouchWebView(Context context)
 	{
         super(context);
     }
- 
-    public TouchWebView(Context context, AttributeSet attrs)
+
+	public TouchWebView(Context context, AttributeSet attrs)
 	{
         super(context, attrs);
     }
- 
+
     public TouchWebView(Context context, AttributeSet attrs, int defStyleAttr)
 	{
         super(context, attrs, defStyleAttr);
     }
-	
-	/*public boolean onTouchEvent(MotionEvent event)
+
+    /**
+     * 处理item，处理点击
+     * @param actionMode
+     */
+    private ActionMode resolveActionMode(ActionMode actionMode)
 	{
-        if (event.getAction() == MotionEvent.ACTION_UP)
+        if (actionMode != null)
 		{
-			long currentTime = System.currentTimeMillis();
-			long time = currentTime - lastTime;
-			if (time < 300)
+            final Menu menu = actionMode.getMenu();
+            mActionMode = actionMode;
+            menu.clear();
+            for (int i = 0; i < mActionList.size(); i++)
 			{
-				lastTime = currentTime;
-				return true;
-			}
-			else
-				lastTime = currentTime;
+                menu.add(mActionList.get(i));
+            }
+            for (int i = 0; i < menu.size(); i++)
+			{
+                MenuItem menuItem = menu.getItem(i);
+                menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener()
+				{
+					@Override
+					public boolean onMenuItemClick(MenuItem item)
+					{
+						getSelectedData((String) item.getTitle());
+						releaseAction();
+						return true;
+					}
+				});
+            }
         }
-        return super.onTouchEvent(event);
-    }*/
+        mActionMode = actionMode;
+        return actionMode;
+    }
+
+    @Override
+    public ActionMode startActionMode(ActionMode.Callback callback) {
+        ActionMode actionMode = super.startActionMode(callback);
+        return resolveActionMode(actionMode);
+    }
+
+    @Override
+    public ActionMode startActionMode(ActionMode.Callback callback, int type) {
+        ActionMode actionMode = super.startActionMode(callback, type);
+        return resolveActionMode(actionMode);
+    }
+
+    private void releaseAction()
+	{
+        if (mActionMode != null)
+		{
+            mActionMode.finish();
+            mActionMode = null;
+        }
+    }
+
+    /**
+     * 点击的时候，获取网页中选择的文本，回掉到原生中的js接口
+     * @param title 传入点击的item文本，一起通过js返回给原生接口
+     */
+    private void getSelectedData(String title) {
+
+        String js = "(function getSelectedText() {" +
+			"var txt;" +
+			"var title = \"" + title + "\";" +
+			"if (window.getSelection) {" +
+			"txt = window.getSelection().toString();" +
+			"} else if (window.document.getSelection) {" +
+			"txt = window.document.getSelection().toString();" +
+			"} else if (window.document.selection) {" +
+			"txt = window.document.selection.createRange().text;" +
+			"}" +
+			"JSInterface.callback(txt,title);" +
+			"})()";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            evaluateJavascript("javascript:" + js, null);
+        } else {
+            loadUrl("javascript:" + js);
+        }
+    }
+
+    public void linkJSInterface() {
+        addJavascriptInterface(new ActionSelectInterface(this), "JSInterface");
+    }
+
+    /**
+     * 设置弹出action列表
+     * @param actionList
+     */
+    public void setActionList(List<String> actionList)
+	{
+        mActionList = actionList;
+    }
+	
+	public void addActionList(String actionTitle)
+	{
+		mActionList.add(actionTitle);
+	}
+
+    /**
+     * 设置点击回调
+     * @param actionSelectListener
+     */
+    public void setActionSelectListener(ActionSelectListener actionSelectListener) {
+        this.mActionSelectListener = actionSelectListener;
+    }
+
+    /**
+     * 隐藏消失Action
+     */
+    public void dismissAction() {
+        releaseAction();
+    }
+
+
+    /**
+     * js选中的回调接口
+     */
+    private class ActionSelectInterface
+	{
+        TouchWebView mContext;
+
+        ActionSelectInterface(TouchWebView c)
+		{
+            mContext = c;
+        }
+
+        @JavascriptInterface
+        public void callback(final String value, final String title)
+		{
+            if(mActionSelectListener != null)
+                mActionSelectListener.onClick(title, value);
+        }
+    }
+	
+	public interface ActionSelectListener
+	{
+		void onClick(String title, String text);
+	}
 }

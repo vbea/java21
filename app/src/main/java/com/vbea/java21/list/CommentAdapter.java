@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TableRow;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -62,17 +63,23 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 		holder.date.setText(timeAgo.getTimeAgo(item.getCreatedAt(), item.date));
 		holder.comment.setText(item.comment);
 		boolean isMy = Common.isMyUser(item.user);
-		holder.endorse.setEnabled(!isMy);
-		holder.oppose.setEnabled(!isMy);
+		//holder.endorse.setEnabled(!isMy);
+		//holder.oppose.setEnabled(!isMy);
 		holder.img_vip.setVisibility(item.isVip ? View.VISIBLE : View.GONE);
 		holder.reply.setVisibility(isMy?View.GONE:View.VISIBLE);
 		holder.delete.setVisibility(isMy || Common.isAdminUser() ? View.VISIBLE : View.GONE);
 		getActcount(item.endorse, holder.txt_endorse, holder.img_endorse);
 		getActcount(item.oppose, holder.txt_oppose, holder.img_oppose);
 		if (isMy)
-			Common.setMyIcon(holder.icon, context);
+			Common.setMyIcon(holder.icon, context, defalteIcon);
 		else
-			holder.icon.setImageDrawable(defalteIcon);
+		{
+			Bitmap icon = Common.getIcon(item.user);
+			if (icon != null)
+				holder.icon.setImageDrawable(Common.getRoundedIconDrawable(context, icon));
+			else
+				holder.icon.setImageDrawable(defalteIcon);
+		}
 		if (mList.size() > 5 && p == mList.size() - 1)
 			holder.end.setVisibility(View.VISIBLE);
 		else

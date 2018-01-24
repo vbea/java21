@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.FileOutputStream;
 import java.io.BufferedOutputStream;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.View;
@@ -25,11 +26,12 @@ import com.vbea.java21.classes.ExceptionHandler;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.UploadFileListener;
 import cn.bmob.v3.exception.BmobException;
+import com.vbea.java21.classes.*;
 
 public class IconPreview extends AppCompatActivity
 {
 	private ImageView img_icon;
-	private String[] headItems = {"拍照","从手机相册选择","从图库选择"};
+	private String[] headItems = {"拍照","相册"};
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -65,16 +67,23 @@ public class IconPreview extends AppCompatActivity
 						switch (item)
 						{
 							case 0:
-								Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-								startActivityForResult(intent1, 10);
+								if (Util.hasAndroid23())
+								{
+									if (!Util.hasAllPermissions(IconPreview.this, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+										Util.requestPermission(IconPreview.this, 1001, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+									else
+										startCamera();
+								}
+								else
+									startCamera();
 								break;
-							case 1:
+							/*case 1:
 								Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 								intent.setType("image/*");
 								intent.addCategory(Intent.CATEGORY_OPENABLE);
 								startActivityForResult(intent, 1);
-								break;
-							case 2:
+								break;*/
+							case 1:
 								Intent intent2 = new Intent(Intent.ACTION_PICK);
 								//intent2.setType("image/*");
 								//intent2.addCategory(Intent.CATEGORY_OPENABLE);
@@ -87,6 +96,11 @@ public class IconPreview extends AppCompatActivity
 				dialogBuild.show();
 			}
 		});
+	}
+	
+	private void startCamera()
+	{
+		startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), 10);
 	}
 	
 	public void startPhotoZoom(Uri uri)
@@ -171,11 +185,11 @@ public class IconPreview extends AppCompatActivity
 					if (bitmap != null)
 					{
 						setIcon(bitmap);
-						String filename = Common.mUser.name + ".png";
-						File dir = new File(Common.IconPath);
+						String filename = MD5Util.getMD5(bitmap, Common.mUser.name) + ".png";
+						File dir = new File(Common.getIconPath());
 						if (!dir.exists())
 							dir.mkdirs();
-						File file = new File(Common.IconPath + filename);
+						File file = new File(dir, filename);
 						saveFile(bitmap, file);
 						Common.IsChangeICON = true;
 						if (file.exists())
@@ -194,7 +208,7 @@ public class IconPreview extends AppCompatActivity
 	public void saveFile(Bitmap bm, File file) throws IOException
 	{
         BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
-        bm.compress(Bitmap.CompressFormat.PNG, 100, bos);
+        bm.compress(Bitmap.CompressFormat.PNG, 80, bos);
         bos.flush();
         bos.close();
     }
@@ -224,5 +238,13 @@ public class IconPreview extends AppCompatActivity
 	{
 		if (src != null)
 			img_icon.setImageBitmap(src);
+	}
+	
+	@Override
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
+	{
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (requestCode == 1001 && Util.hasAllPermissionsGranted(grantResults))
+			startCamera();
 	}
 }

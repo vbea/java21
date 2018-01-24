@@ -40,14 +40,7 @@ android {
             proguardFiles 'proguard-rules.pro'
         }
     }
-	signingConfigs {
-        debug {
-            storeFile file('debug.keystore')
-            storePassword "w19942010"
-            keyAlias "vbea"
-            keyPassword "w19942010"
-        }
-    }
+	
 	lintOptions {
 		abortOnError false
 	}

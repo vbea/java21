@@ -818,4 +818,23 @@ public class Util
 		ClipboardManager cbm = (ClipboardManager) c.getSystemService(Context.CLIPBOARD_SERVICE);
 		cbm.setText(msg);
 	}
+	
+	public static String ReadFileToString(InputStream is) throws IOException
+	{
+		try
+		{
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			int i = -1;
+			while((i=is.read())!=-1)
+			{
+				baos.write(i);
+			}
+			baos.close();
+			return baos.toString();
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
+	}
 }

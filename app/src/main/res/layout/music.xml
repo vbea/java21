@@ -6,23 +6,37 @@
 	android:layout_height="56dp"
 	android:gravity="center_vertical"
 	android:background="@drawable/btn_menu">
-	<TextView
-		android:id="@+id/music_txtMusicName"
+	<LinearLayout
 		android:layout_width="wrap_content"
-		android:layout_height="match_parent"
+		android:layout_height="wrap_content"
 		android:layout_weight="1"
-		android:text="送别"
-		android:gravity="left|center_vertical"
 		android:paddingLeft="20dp"
-		android:textColor="?attr/colorAccent"
-		android:textSize="16sp"/>
+		android:orientation="vertical">
+		<TextView
+			android:id="@+id/music_txtMusicName"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="送别"
+			android:gravity="left|center_vertical"
+			android:textColor="?attr/textPrimary"
+			android:textSize="16sp"/>
+		<TextView
+			android:id="@+id/music_playing"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textColor="?attr/colorAccent"
+			android:singleLine="true"
+			android:textSize="10sp"
+			android:text="正在播放"
+			android:visibility="invisible"/>
+	</LinearLayout>
 	<TextView
 		android:id="@+id/music_txtMusicVolet"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:text="200/150"
-		android:gravity="left|center_vertical"
-		android:paddingRight="10dp"
+		android:gravity="left"
+		android:paddingEnd="10dp"
 		android:textColor="?attr/divider"
 		android:textSize="12sp"/>
 </TableRow>

@@ -56,6 +56,30 @@
 				android:textColor="?attr/textPrimary"
 				android:textSize="17sp"/>
 			<RelativeLayout
+				android:id="@+id/btn_setPianSize"
+				android:layout_width="fill_parent"
+				android:layout_height="56dp"
+				android:background="@drawable/btn_menu">
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:text="键盘大小"
+					android:gravity="left|center_vertical"
+					android:paddingLeft="20dp"
+					android:textColor="?attr/textPrimary"
+					android:textSize="17sp"/>
+				<TextView
+					android:id="@+id/txt_pianoSize"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginRight="15dp"
+					android:layout_alignParentRight="true"
+					android:layout_centerVertical="true"
+					android:textSize="14sp"
+					android:text="大"
+					android:textColor="?attr/colorAccent"/>
+			</RelativeLayout>
+			<RelativeLayout
 				android:id="@+id/btn_setLoop"
 				android:layout_width="fill_parent"
 				android:layout_height="56dp"
@@ -97,35 +121,58 @@
 					android:gravity="center"
 					android:layout_alignParentRight="true"/>
 			</RelativeLayout>
-			<LinearLayout
+			<TextView
+				android:id="@+id/btn_musicList"
 				android:layout_width="fill_parent"
-				android:layout_height="fill_parent"
-				android:background="?attr/titleColor"
-				android:orientation="vertical">
-				<TextView
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:text="精选音乐(点击播放，长按复制代码，戴上耳机更佳)"
-					android:gravity="left|center_vertical"
-					android:padding="5dp"
-					android:textColor="?attr/colorPrimary"
-					android:textSize="12sp"/>
-				<LinearLayout
-					android:id="@+id/more_musicLayout"
-					android:layout_width="fill_parent"
-					android:layout_height="fill_parent"
-					android:orientation="vertical"
-					android:divider="@drawable/ic_divider"
-					android:showDividers="middle">
-				</LinearLayout>
-			</LinearLayout>
+				android:layout_height="56dp"
+				android:text="@string/morelist"
+				android:background="@drawable/btn_menu"
+				android:gravity="left|center_vertical"
+				android:paddingLeft="20dp"
+				android:paddingRight="15dp"
+				android:textColor="?attr/textPrimary"
+				android:textSize="17sp"/>
 		</LinearLayout>
 	</ScrollView>
 	<LinearLayout
 		android:layout_width="fill_parent"
-		android:layout_height="5dp"
+		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
 		android:orientation="vertical">
+		<TableRow
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingLeft="10dp"
+				android:textColor="?attr/colorPrimary"
+				android:text="正在播放："
+				android:textSize="12sp"/>
+			<TextView
+				android:id="@+id/more_musicName"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:singleLine="true"
+				android:ellipsize="end"
+				android:paddingRight="10dp"
+				android:textColor="?attr/colorPrimary"
+				android:textSize="12sp"/>
+		</TableRow>
+		<TableRow
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+			<TextView
+				android:id="@+id/more_musicCode"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_alignParentEnd="true"
+				android:layout_alignParentBottom="true"
+				android:layout_marginRight="5dp"
+				android:textColor="?attr/colorPrimary"
+				android:textSize="12sp"/>
+		</TableRow>
 		<ProgressBar
 			android:id="@+id/pro_micMore"
 			style="?android:attr/progressBarStyleHorizontal"
@@ -134,23 +181,5 @@
 			android:progressDrawable="@drawable/web_progress"
 			android:max="100"/>
 	</LinearLayout>
-		<TextView
-			android:id="@+id/more_musicName"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignParentLeft="true"
-			android:layout_alignParentBottom="true"
-			android:layout_marginRight="5dp"
-			android:textColor="?attr/colorPrimary"
-			android:textSize="12sp"/>
-		<TextView
-			android:id="@+id/more_musicCode"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignParentEnd="true"
-			android:layout_alignParentBottom="true"
-			android:layout_marginRight="5dp"
-			android:textColor="?attr/colorPrimary"
-			android:textSize="12sp"/>
 	</RelativeLayout>
 </LinearLayout>

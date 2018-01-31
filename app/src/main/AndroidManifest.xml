@@ -68,6 +68,10 @@
 			android:windowSoftInputMode="adjustPan">
 		</activity>
 		<activity
+			android:name=".Alipay"
+			android:label="@string/getalipay"
+			android:screenOrientation="portrait"/>
+		<activity
 			android:name=".FileSelect"
 			android:label="@string/fileselect"
 			android:screenOrientation="portrait"/>
@@ -251,6 +255,7 @@
 		<provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.vbea.java21.FileProvider"
+			android:authorities="cn.bmob.update.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

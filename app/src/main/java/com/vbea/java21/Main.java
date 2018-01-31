@@ -57,6 +57,8 @@ import com.vbea.java21.widget.CustomTextView;
 import com.vbea.java21.audio.SoundLoad;
 import com.vbea.java21.data.Tips;
 import com.tencent.smtt.sdk.QbSdk;
+import android.net.*;
+import android.webkit.*;
 
 public class Main extends AppCompatActivity
 {
@@ -67,7 +69,7 @@ public class Main extends AppCompatActivity
     private Toolbar toolbar;
 	private TabLayout tabLayout;
 	private long exitTime = 0;
-	private LinearLayout drawMuic, drawTheme, drawSms, drawWifi, drawCodeEditor, layoutTips;
+	private LinearLayout drawMuic, drawTheme, /*drawSms,*/ drawWifi, drawCodeEditor, layoutTips;
 	private RelativeLayout drawUser;
 	private TextView txtUserName, txtSignature, txtAudioCode; //btnTips;
 	private CustomTextView txtCotation;
@@ -93,7 +95,7 @@ public class Main extends AppCompatActivity
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 		drawMuic = (LinearLayout) findViewById(R.id.drawer_music);
 		drawTheme = (LinearLayout) findViewById(R.id.draw_item1);
-		drawSms = (LinearLayout) findViewById(R.id.drawer_smsLayout);
+		//drawSms = (LinearLayout) findViewById(R.id.drawer_smsLayout);
 		drawWifi = (LinearLayout) findViewById(R.id.drawer_wifiLayout);
 		drawCodeEditor = (LinearLayout) findViewById(R.id.drawer_codeEditor);
 		drawUser = (RelativeLayout) findViewById(R.id.draw_user);
@@ -356,13 +358,13 @@ public class Main extends AppCompatActivity
 	{
 		if (Common.mUser != null)
 		{
-			drawSms.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
+			//drawSms.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
 			drawWifi.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
 			//drawCodeEditor.setVisibility(Common.IS_ACTIVE ? View.VISIBLE : View.GONE);
 		}
 		else
 		{
-			drawSms.setVisibility(View.GONE);
+			//drawSms.setVisibility(View.GONE);
 			drawWifi.setVisibility(View.VISIBLE);
 			//drawCodeEditor.setVisibility(View.VISIBLE);
 		}
@@ -435,8 +437,33 @@ public class Main extends AppCompatActivity
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		//Common.myInbox.refreshMessage();
-		if (Common.isLogin())
-			Common.startActivityOptions(this, MyInbox.class);
+		switch (item.getItemId())
+		{
+			case R.id.item_msg:
+				if (Common.isLogin()) Common.startActivityOptions(this, MyInbox.class);
+				break;
+			case R.id.item_about:
+				Common.startActivityOptions(Main.this, About.class);
+				break;
+			case R.id.item_alipay:
+				try
+				{
+					Intent intent = new Intent(Intent.ACTION_VIEW);
+					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+					intent.setData(Uri.parse("alipays://platformapi/startapp?saId=10000007&clientVersion=3.7.0.0718&qrcode=https://qr.alipay.com/c1x079614vvcisqv4cxi19c?_s=web-other"));
+					startActivity(intent);
+					Util.toastShortMessage(getApplicationContext(), "感谢你的支持");
+				}
+				catch (Exception e)
+				{
+					Util.toastShortMessage(getApplicationContext(), "未安装支付宝");
+				}
+				/*WebView view = new WebView(Main.this);
+				view.getSettings().setJavaScriptEnabled(true);
+				view.setWebViewClient(new WebViewClient());
+				view.loadUrl("https://qr.alipay.com/c1x079614vvcisqv4cxi19c");*/
+				break;
+		}
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -463,7 +490,7 @@ public class Main extends AppCompatActivity
 	{
 		/*if (Common.isCanUploadUserSetting())
 			Common.updateUser();*/
-		Common.getCopyMsg(this);
+		//Common.getCopyMsg(this);
 		SharedPreferences spf = getSharedPreferences("java21", MODE_PRIVATE);
 		SharedPreferences.Editor editor = spf.edit();
 		editor.putString("read_android", Util.Join(",", Common.READ_Android));
@@ -721,8 +748,9 @@ public class Main extends AppCompatActivity
 					txtAudioCode.setText("");
 					break;
 				case 10:
+					BmobUpdateAgent.setUpdateOnlyWifi(false);
 					BmobUpdateAgent.update(getApplicationContext());
-					QbSdk.initX5Environment(Main.this, null);
+					//QbSdk.initX5Environment(Main.this, null);
 					break;
 			}
 			super.handleMessage(msg);

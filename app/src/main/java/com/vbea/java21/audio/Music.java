@@ -5,17 +5,23 @@ public class Music
 	public String name;
 	public int max;
 	public int min;
-	public int length;
-	private String[] keys;
+	public boolean isTop;
+	private String key;
 
-	public void setKeys(String[] k)
+	public String getName()
 	{
-		keys = k;
-		length = k.length;
+		return name;
 	}
 
 	public String[] getKeys()
 	{
-		return keys;
+		try
+		{
+			return key.split(",");
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
 	}
 }

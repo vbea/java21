@@ -30,7 +30,6 @@ import com.vbea.java21.audio.AudioService;
 
 public class More extends AppCompatActivity
 {
-	private LinearLayout layoutMusic;
 	private TextView txtCode, txtName;
 	private Switch swtLoop, swtOrder;
 	private ProgressBar proMusic;
@@ -51,7 +50,6 @@ public class More extends AppCompatActivity
 		TextView btnPiano = (TextView) findViewById(R.id.btn_musicPiano);
 		TextView btnTest = (TextView) findViewById(R.id.btn_musicTest);
 		TextView btnTrans = (TextView) findViewById(R.id.btn_musicTrans);
-		layoutMusic = (LinearLayout) findViewById(R.id.more_musicLayout);
 		txtCode = (TextView) findViewById(R.id.more_musicCode);
 		txtName = (TextView) findViewById(R.id.more_musicName);
 		proMusic = (ProgressBar) findViewById(R.id.pro_micMore);
@@ -126,26 +124,11 @@ public class More extends AppCompatActivity
 			}
 		});
 		soundLoad = Common.SOUND;
-		if (soundLoad != null)
-			generiteMusic();
+		//if (soundLoad != null)
+			//generiteMusic();
 	}
 	
-	public void generiteMusic()
-	{
-		LayoutInflater inf = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-		for (int i = 0; i < soundLoad.getMusicCout(); i++)
-		{
-			View t = inf.inflate(R.layout.music, layoutMusic, false);
-			TableRow row = (TableRow) t.findViewById(R.id.musicTableRow);
-			TextView text = (TextView) t.findViewById(R.id.music_txtMusicName);
-			TextView velo = (TextView) t.findViewById(R.id.music_txtMusicVolet);
-			text.setText(soundLoad.getMusicName(i));
-			velo.setText(getMusicVelot(i));
-			row.setOnClickListener(new MusicPlayerClick(i));
-			row.setOnLongClickListener(new MusicPlayerLongClick(i));
-			layoutMusic.addView(row);
-		}
-	}
+	
 	
 	class MusicPlayerClick implements View.OnClickListener
 	{
@@ -180,21 +163,6 @@ public class More extends AppCompatActivity
 					//Util.toastLongMessage(getApplicationContext(), "max:"+Common.SOUND.getMusicMax(music) + "\nmin:" + Common.SOUND.getMusicMin(music));
 				
 			}
-		}
-	}
-	
-	class MusicPlayerLongClick implements View.OnLongClickListener
-	{
-		int music;
-		public MusicPlayerLongClick(int mu)
-		{
-			music = mu;
-		}
-		@Override
-		public boolean onLongClick(View v)
-		{
-			CopyMusic(soundLoad.getMusic(music));
-			return true;
 		}
 	}
 	
@@ -306,17 +274,10 @@ public class More extends AppCompatActivity
 	
 	private void CopyMusic(String music)
 	{
-		ClipboardManager cbm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-		cbm.setPrimaryClip(ClipData.newPlainText("music", music));
+		Util.addClipboard(this, "music", music);
 		Util.toastShortMessage(getApplicationContext(), "已复制代码到剪贴板");
 	}
 	
-	private String getMusicVelot(int i)
-	{
-		if (Common.mUser != null && Common.mUser.roles.equals("管理员"))
-			return soundLoad.getMusicMax(i) + "/" + soundLoad.getMusicMin(i);
-		return (100 - (soundLoad.getMusicMax(i) / 5)) + "/" + (90 - (soundLoad.getMusicMin(i) / 5));
-	}
 	private ServiceConnection sconn = new ServiceConnection()
 	{
 		@Override

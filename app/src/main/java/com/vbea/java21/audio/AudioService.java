@@ -17,7 +17,7 @@ public class AudioService extends Service
 	public boolean loop = false;
 	public boolean order = false;
 	public int what = -1, max = 0,current = 0;//, result = 0;
-	//public SoundLoad.Music music;
+	public Music music;
 	private musicThread mThread;
 	private String[] strmusic;
 	public String mid = "";
@@ -108,7 +108,7 @@ public class AudioService extends Service
 	
 	public String getMusicName()
 	{
-		return Common.SOUND.getMusicName(what);
+		return music.getName();
 	}
 	
 	public class AudioBinder extends Binder
@@ -134,11 +134,12 @@ public class AudioService extends Service
 			{
 				if (Common.SOUND.isValid(what))
 				{
-					strmusic = Common.SOUND.getMusicArray(what);
-					if (strmusic != null)
+					music = Common.SOUND.getMusic(what);
+					if (music != null)
 					{
-						longs = Common.SOUND.getMusicMax(what);
-						shortx = Common.SOUND.getMusicMin(what);
+						strmusic = music.getKeys();
+						longs = music.max;
+						shortx = music.min;
 						zero();
 						isPlay = max > 0;
 						return;
@@ -237,7 +238,10 @@ public class AudioService extends Service
 		
 		private void zero()
 		{
-			max = strmusic.length;
+			if (strmusic != null)
+				max = strmusic.length;
+			else
+				max = 0;
 			current = 0;
 			mid = "";
 		}

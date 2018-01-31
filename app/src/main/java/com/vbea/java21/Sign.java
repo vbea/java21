@@ -211,10 +211,18 @@ public class Sign extends AppCompatActivity
 	
 	private boolean isEmail(String email)
 	{
-		String check = "^([a-z0-9A-Z]+[_-\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
-		Pattern regex = Pattern.compile(check);
-		Matcher matcher = regex.matcher(email);
-		return matcher.matches();
+		try
+		{
+			String check = "^([0-9A-z]+[_|-|\\.]?)+[0-9A-z]?@([0-9A-z]+\\.)+[A-z]{2,}$";
+			Pattern regex = Pattern.compile(check);
+			Matcher matcher = regex.matcher(email);
+			return matcher.matches();
+		}
+		catch (Exception e)
+		{
+			ExceptionHandler.log("isEmail", e.toString());
+			return false;
+		}
 	}
 	
 	private boolean isEmpty(EditText view, boolean trim, String tip)

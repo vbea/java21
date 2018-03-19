@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import com.vbea.java21.R;
 import com.vbea.java21.audio.Music;
+import com.vbea.java21.classes.Common;
 
 public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder>
 {
@@ -39,17 +40,18 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
 	}
 
 	@Override
-	public void onBindViewHolder(MyViewHolder holder, int p)
+	public void onBindViewHolder(MyViewHolder holder, final int p)
 	{
 		final Music m = mList.get(p);
 		holder.name.setText(m.getName());
 		holder.velo.setText(getMusicVelot(m.max, m.min));
+		holder.sub.setText(getStatus(p, m.isTop));
 		holder.row.setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View v)
 			{
 				if(onItemClickListener != null)
-					onItemClickListener.onItemClick(m);
+					onItemClickListener.onItemClick(p);
 			}
 		});
 		holder.row.setOnLongClickListener(new View.OnLongClickListener()
@@ -57,7 +59,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
 			public boolean onLongClick(View v)
 			{
 				if(onItemClickListener != null)
-					onItemClickListener.onItemClick(m);
+					onItemClickListener.onLongClick(m.key);
 				return true;
 			}
 		});
@@ -82,6 +84,20 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
 			return max + "/" + min;
 		return (100 - (max / 5)) + "/" + (90 - (min / 5));
 	}
+	
+	private String getStatus(int p, boolean top)
+	{
+		String status = "";
+		if (top)
+		{
+			status = "精选";
+			if (Common.audioService.what == p)
+				status += ", 正在播放";
+		}
+		else if (Common.audioService.what == p)
+			status = "正在播放";
+		return status;
+	}
 
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
 	{
@@ -91,7 +107,7 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
 	public class MyViewHolder extends ViewHolder
 	{
 		TableRow row;
-		TextView name, velo;
+		TextView name, velo, sub;
 		
 		public MyViewHolder(View v)
 		{
@@ -99,12 +115,13 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
 			row = (TableRow) v.findViewById(R.id.musicTableRow);
 			name = (TextView) v.findViewById(R.id.music_txtMusicName);
 			velo = (TextView) v.findViewById(R.id.music_txtMusicVolet);
+			sub = (TextView) v.findViewById(R.id.music_playing);
 		}
 	}
 
 	public interface OnItemClickListener
 	{
-        void onItemClick(Music m);
+        void onItemClick(int m);
 		void onLongClick(String key);
     }
 }

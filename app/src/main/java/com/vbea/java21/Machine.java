@@ -261,7 +261,7 @@ public class Machine extends AppCompatActivity
 			switch (msg.what)
 			{
 				case 1:
-					Toast.makeText(getApplicationContext(), "已应用该密钥", Toast.LENGTH_SHORT).show();
+					Util.toastShortMessage(getApplicationContext(), "已应用该密钥");
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					Common.IS_ACTIVE = true;
 					if (Common.isLogin())
@@ -279,24 +279,21 @@ public class Machine extends AppCompatActivity
 					closePage();
 					break;
 				case 2:
-					Toast.makeText(getApplicationContext(), "此密钥不适合此程序，请重试", Toast.LENGTH_SHORT).show();
+					Util.toastShortMessage(getApplicationContext(), "此密钥不适合此产品，请重试");
 					break;
 				case 3:
-					Toast.makeText(getApplicationContext(), "抱歉，该注册码次数已用完，无法继续注册", Toast.LENGTH_SHORT).show();
+					Util.toastShortMessage(getApplicationContext(), "抱歉，该注册码次数已用完，无法继续注册");
 					break;
 				case 4:
-					Toast.makeText(getApplicationContext(), "密钥不正确", Toast.LENGTH_LONG).show();
+					Util.toastShortMessage(getApplicationContext(), "密钥不正确");
 					break;
 				case 5:
-					Toast.makeText(getApplicationContext(), "抱歉，该密钥已过期", Toast.LENGTH_LONG).show();
+					Util.toastShortMessage(getApplicationContext(), "抱歉，该密钥已过期");
 					break;
 				case 8:
-					Toast.makeText(getApplicationContext(), "连接失败", Toast.LENGTH_LONG).show();
+					Util.toastShortMessage(getApplicationContext(), "服务器连接失败");
 					break;
 				case 9:
-					Toast.makeText(getApplicationContext(), "你已经注册了专业版，不能再注册标准版", Toast.LENGTH_LONG).show();
-					break;
-				case 10:
 					finish();
 					break;
 			}

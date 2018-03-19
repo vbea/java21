@@ -3,14 +3,14 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/musicTableRow"
 	android:layout_width="match_parent"
-	android:layout_height="56dp"
+	android:layout_height="wrap_content"
 	android:gravity="center_vertical"
+	android:padding="10dp"
 	android:background="@drawable/btn_menu">
 	<LinearLayout
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_weight="1"
-		android:paddingLeft="20dp"
 		android:orientation="vertical">
 		<TextView
 			android:id="@+id/music_txtMusicName"
@@ -19,16 +19,16 @@
 			android:text="送别"
 			android:gravity="left|center_vertical"
 			android:textColor="?attr/textPrimary"
-			android:textSize="16sp"/>
+			android:textSize="17sp"
+			android:singleLine="true"/>
 		<TextView
 			android:id="@+id/music_playing"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:layout_marginTop="1dp"
 			android:textColor="?attr/colorAccent"
 			android:singleLine="true"
-			android:textSize="10sp"
-			android:text="正在播放"
-			android:visibility="invisible"/>
+			android:textSize="12sp"/>
 	</LinearLayout>
 	<TextView
 		android:id="@+id/music_txtMusicVolet"

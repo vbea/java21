@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import com.vbea.java21.data.AndroidAdvance;
 import com.vbea.java21.R;
+import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 
 public class Android2Adapter extends RecyclerView.Adapter<Android2Adapter.MyViewHolder>
@@ -43,7 +44,7 @@ public class Android2Adapter extends RecyclerView.Adapter<Android2Adapter.MyView
 	public void onBindViewHolder(MyViewHolder holder, int p)
 	{
 		final AndroidAdvance item = mList.get(p);
-		if (item.prefix == null || item.prefix.equals(""))
+		if (Util.isNullOrEmpty(item.prefix))
 			item.prefix = "┗ ";
 		holder.title.setText(item.prefix + " " + item.title);
 		holder.sub.setText(item.remark);

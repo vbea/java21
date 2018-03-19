@@ -77,7 +77,7 @@ public class Common
 	public static List<String> READ_Android, READ_J2EE, READ_AndroidAdvance;
 	public static InboxManager myInbox;
 	private static long lastTipsTime;
-	private static String clipString;
+	private static Copys copyMsg;
 	public static void start(Context context)
 	{
 		startBmob(context);
@@ -87,7 +87,7 @@ public class Common
 		SharedPreferences spf = context.getSharedPreferences("java21", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = spf.edit();
 		init(spf);
-		FileProvider = context.getApplicationContext().getPackageName() + ".FileProvider";
+		FileProvider = context.getApplicationContext().getPackageName() + ".fileprovider";
 		if (spf.getString("key", "").trim().equals("") || spf.getString("date","").trim().equals(""))
 		{
 			IS_ACTIVE = false;
@@ -567,6 +567,11 @@ public class Common
 		return getIconPath() + "back.jpg";
 	}
 	
+	public static String getTempImagePath()
+	{
+		return getCachePath() + "temp.jpg";
+	}
+	
 	public static Bitmap getIcon()
 	{
 		if (mUser.icon != null)
@@ -770,16 +775,15 @@ public class Common
 			{
 				if (e == null && list.size() > 0)
 				{
-					clipString = list.get(0).getMessage();
+					copyMsg = list.get(0);
 				}
 			}
 		});
 	}
 	
-	public static void getCopyMsg(Context c)
+	public static Copys getCopyMsg()
 	{
-		if (!Util.isNullOrEmpty(clipString))
-			Util.addClipboard(c, "java21", clipString);
+		return copyMsg;
 	}
 	
 	public static void getTips()
@@ -906,7 +910,7 @@ public class Common
 		}
 	}
 	
-	public static void gc()
+	public static void gc(Context c)
 	{
 		//gc垃圾回收: 恢复到初始化状态
 		IsRun = false;//运行状态
@@ -928,9 +932,14 @@ public class Common
 		READ_J2EE = null;
 		READ_AndroidAdvance = null;
 		myInbox = null;//消息中心
+		copyMsg = null;
 		//停止正在运行的音乐服务
-		if (audioService != null && audioService.isPlay())
-			audioService.Stop();
+		if (audioService != null)
+		{
+			if (audioService.isPlay())
+				audioService.Stop();
+			c.stopService(new Intent(c, AudioService.class));
+		}
 		//清空音节码加载池
 		if (SOUND != null)
 		{

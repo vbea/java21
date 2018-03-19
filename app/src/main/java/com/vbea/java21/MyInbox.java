@@ -185,7 +185,7 @@ public class MyInbox extends AppCompatActivity
 	@Override
 	protected void onDestroy()
 	{
-		Common.getInbox().refreshMessage();
+		//Common.getInbox().refreshMessage();
 		super.onDestroy();
 	}
 

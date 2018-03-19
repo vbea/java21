@@ -10,9 +10,10 @@
 	<item
 		android:id="@+id/item_androidshare"
 		android:icon="@drawable/abc_ic_menu_share_mtrl_alpha"
-		android:title="分享"/>
-	<item
+		android:title="分享"
+		app:showAsAction="ifRoom"/>
+	<!--item
 		android:id="@+id/item_androidcomment"
 		android:icon="@drawable/abc_ic_menu_share_mtrl_alpha"
-		android:title="评论"/>
+		android:title="评论"/-->
 </menu>

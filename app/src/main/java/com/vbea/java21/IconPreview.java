@@ -22,16 +22,17 @@ import android.support.v7.app.AppCompatActivity;
 import com.vbea.java21.data.Users;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
+import com.vbea.java21.classes.MD5Util;
 import com.vbea.java21.classes.ExceptionHandler;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.UploadFileListener;
 import cn.bmob.v3.exception.BmobException;
-import com.vbea.java21.classes.*;
 
 public class IconPreview extends AppCompatActivity
 {
 	private ImageView img_icon;
 	private String[] headItems = {"拍照","相册"};
+	private Uri TEMP_URI;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -67,7 +68,7 @@ public class IconPreview extends AppCompatActivity
 						switch (item)
 						{
 							case 0:
-								if (Util.hasAndroid23())
+								if (Util.hasAndroidN())
 								{
 									if (!Util.hasAllPermissions(IconPreview.this, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
 										Util.requestPermission(IconPreview.this, 1001, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -100,15 +101,27 @@ public class IconPreview extends AppCompatActivity
 	
 	private void startCamera()
 	{
-		startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), 10);
+		try
+		{
+			Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			File file = new File(Common.getTempImagePath());
+			TEMP_URI = MyFileProvider.getUriForFile(getApplicationContext(), Common.FileProvider, file);
+			intent1.putExtra(MediaStore.EXTRA_OUTPUT, TEMP_URI);
+			startActivityForResult(intent1, 10);
+		}
+		catch (Exception e)
+		{
+			ExceptionHandler.log("startCamera_2", e.toString());
+		}
 	}
 	
 	public void startPhotoZoom(Uri uri)
 	{    
-		if(uri==null){  
+		if (uri == null)
 			return;
-		}  
-		Intent intent = new Intent("com.android.camera.action.CROP");    
+		Intent intent = new Intent("com.android.camera.action.CROP");
+		if (Util.hasAndroidN())
+			intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 		intent.setDataAndType(uri, "image/*");    
 		// 设置裁剪    
 		intent.putExtra("crop", "true");    
@@ -122,9 +135,11 @@ public class IconPreview extends AppCompatActivity
 		startActivityForResult(intent, 11);    
 	}
 	
-	private void startPhotoZoom(Intent data)
+	/*private void startPhotoZoom(Intent data)
 	{
 		Intent intent = new Intent("com.android.camera.action.CROP");
+		if (Util.hasAndroidN())
+			intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 		if (data.getData() != null)
 			intent.setData(data.getData());
 		intent.setType("image/*");
@@ -140,7 +155,7 @@ public class IconPreview extends AppCompatActivity
 		//intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
 		//intent.putExtra("noFaceDetection", true);
 		startActivityForResult(intent, 11);
-	}
+	}*/
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
@@ -163,7 +178,7 @@ public class IconPreview extends AppCompatActivity
 				//ContentResolver cr = getContentResolver();
 				try
 				{
-					startPhotoZoom(data);
+					startPhotoZoom(TEMP_URI);
 				}
 				catch (Exception e)
 				{

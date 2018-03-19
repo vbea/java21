@@ -15,6 +15,7 @@ import android.content.pm.PackageInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.vbea.java21.classes.Util;
 import com.vbea.java21.data.Feedbacks;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.exception.BmobException;
@@ -53,12 +54,12 @@ public class Feedback extends AppCompatActivity
 			{
 				if (txtFeedback.getText().toString().trim().length() <= 0)
 				{
-					Toast.makeText(getApplicationContext(), "写点什么吧(ಥ_ಥ)", Toast.LENGTH_SHORT).show();
+					Util.toastShortMessage(getApplicationContext(), "写点什么吧(ಥ_ಥ)");
 					return;
 				}
 				if (!Common.isNet(Feedback.this))
 				{
-					Toast.makeText(getApplicationContext(), "网络开小差了，无法提交", Toast.LENGTH_SHORT).show();
+					Util.toastShortMessage(getApplicationContext(), "网络开小差了，无法提交");
 					return;
 				}
 				btnFeed.setEnabled(false);
@@ -98,7 +99,6 @@ public class Feedback extends AppCompatActivity
 						}
 					}
 				}.start();
-				//Toast.makeText(getApplicationContext(), device, Toast.LENGTH_LONG).show();
 			}
 		});
 	}
@@ -111,14 +111,14 @@ public class Feedback extends AppCompatActivity
 			switch (msg.what)
 			{
 				case 1:
-					Toast.makeText(getApplicationContext(), "提交成功，感谢你的反馈！", Toast.LENGTH_SHORT).show();
+					Util.toastShortMessage(getApplicationContext(), "提交成功，感谢你的反馈！");
 					supportFinishAfterTransition();
 					break;
 				case 2:
-					Toast.makeText(getApplicationContext(), "提交失败，你可以再试一次", Toast.LENGTH_SHORT).show();
+					Util.toastShortMessage(getApplicationContext(), "提交失败，请重试");
 					break;
 				case 3:
-					Toast.makeText(getApplicationContext(), "提交失败，可能是网络问题", Toast.LENGTH_SHORT).show();
+					Util.toastShortMessage(getApplicationContext(), "提交失败，可能是网络问题，请稍后再试");
 					break;
 			}
 			btnFeed.setEnabled(true);

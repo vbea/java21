@@ -6,7 +6,7 @@ public class Music
 	public int max;
 	public int min;
 	public boolean isTop;
-	private String key;
+	public String key;
 
 	public String getName()
 	{

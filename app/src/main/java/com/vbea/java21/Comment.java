@@ -131,7 +131,7 @@ public class Comment extends AppCompatActivity
 			{
 				addComment(edtComment.getText().toString().trim());
 				edtComment.setText("");
-				edtComment.clearFocus();
+				hideInput();
 			}
 		});
 		
@@ -156,8 +156,7 @@ public class Comment extends AppCompatActivity
 				reply = user;
 				edtComment.setHint(reat);
 				reference = reat + comment;
-				edtComment.requestFocus();
-				imm.showSoftInput(edtComment, InputMethodManager.SHOW_FORCED);
+				showInput();
 			}
 
 			@Override
@@ -197,13 +196,13 @@ public class Comment extends AppCompatActivity
 				}
 			}
 		});
+		showInput();
 	}
 	
 	private void init()
 	{
 		if (refreshLayout.isRefreshing())
 			refreshLayout.setRefreshing(false);
-		imm.hideSoftInputFromWindow(edtComment.getWindowToken(), 0);
 		if (reference.length() > 0)
 			clear();
 		if (mList.size() > 0)
@@ -275,6 +274,18 @@ public class Comment extends AppCompatActivity
 	private void deleteDialog(DialogInterface.OnClickListener lis)
 	{
 		Util.showConfirmCancelDialog(this, android.R.string.dialog_alert_title, "您确定要删除此评论？", lis);
+	}
+	
+	private void showInput()
+	{
+		edtComment.requestFocus();
+		imm.showSoftInput(edtComment, InputMethodManager.SHOW_FORCED);
+	}
+	
+	private void hideInput()
+	{
+		edtComment.clearFocus();
+		imm.hideSoftInputFromWindow(edtComment.getWindowToken(), 0);
 	}
 	
 	private void addComment(String text)

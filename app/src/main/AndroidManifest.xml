@@ -59,7 +59,7 @@
 		<activity
 			android:name=".Comment"
 			android:screenOrientation="portrait"
-			android:windowSoftInputMode="adjustResize|stateHidden"/>
+			android:windowSoftInputMode="adjustResize"/>
 		<activity
 			android:name=".Knowledge"
 			android:windowSoftInputMode="adjustPan"/>
@@ -68,8 +68,8 @@
 			android:windowSoftInputMode="adjustPan">
 		</activity>
 		<activity
-			android:name=".Alipay"
-			android:label="@string/getalipay"
+			android:name=".MusicList"
+			android:label="@string/morelist"
 			android:screenOrientation="portrait"/>
 		<activity
 			android:name=".FileSelect"
@@ -105,7 +105,8 @@
 			android:label="@string/useredit"/>
 		<activity
 			android:name=".More"
-			android:label="@string/more"/>
+			android:label="@string/more"
+			android:launchMode="singleTask"/>
 		<activity
 			android:name=".Piano"
 			android:label="@string/piano"
@@ -170,10 +171,18 @@
 			</intent-filter>
 		</activity>
 		<activity
+			android:name=".Bookmark"
+			android:label="@string/bookmark"
+			android:screenOrientation="portrait"/>
+		<activity
 			android:name=".BrowserSet"
 			android:label="@string/browserset"
 			android:screenOrientation="portrait"
 			android:windowSoftInputMode="adjustPan"/>
+		<activity
+			android:name=".History"
+			android:label="@string/history"
+			android:screenOrientation="portrait"/>
 		<activity
 			android:name=".Feedback"
 			android:label="@string/feedback"/>
@@ -253,9 +262,17 @@
 			android:exported="true" >
 		</provider>
 		<provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.vbea.java21.FileProvider"
-			android:authorities="cn.bmob.update.fileprovider"
+			android:name="android.support.v4.content.FileProvider"
+            android:authorities="cn.bmob.update.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/xml_paths" />
+        </provider>
+		<provider
+            android:name="${applicationId}.MyFileProvider"
+            android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

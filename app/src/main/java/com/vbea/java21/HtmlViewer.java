@@ -15,6 +15,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
 import android.webkit.WebStorage;
+import android.webkit.URLUtil;
 import android.webkit.ValueCallback;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
@@ -46,7 +47,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.SearchView;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.content.FileProvider;
 import android.support.design.widget.BottomSheetDialog;
 import com.vbea.java21.widget.MyWebView;
 import com.vbea.java21.classes.Common;
@@ -72,7 +72,7 @@ public class HtmlViewer extends AppCompatActivity
 	private BottomSheetDialog mBSDialog;
 	private LinearLayout share_qq, share_qzone, share_wx, share_wxpy;
 	private LinearLayout share_sina, share_web, share_link, share_more;
-	private String SH_html, SH_url = "", SH_home, UA_Default, Image_Path;
+	private String SH_html, SH_url = "", SH_home, UA_Default;
 	private int SH_search = 0, SH_UA = 0;
 	private Uri cameraUri;
 	private String[] Searchs, UAurls;
@@ -129,24 +129,13 @@ public class HtmlViewer extends AppCompatActivity
 		wset.setJavaScriptCanOpenWindowsAutomatically(true);
 		webView.addJavascriptInterface(new JavaScriptShowCode(), "showcode");
 		onSetting();
-		Intent intent = getIntent();
-		/*if (!SH_url.equals(""))
-			webView.loadUrl(SH_url);
-		else */
-		if (intent != null && intent.getAction() != null)
+		new Handler().postDelayed(new Runnable()
 		{
-			if (intent.getAction().equals(Intent.ACTION_VIEW))
-				loadUrls(intent.getDataString());
-			else if (intent.getAction().equals(Intent.ACTION_SEND))
-				loadUrls(intent.getStringExtra(Intent.EXTRA_TEXT));
-			else if (intent.getAction().equals(intent.ACTION_WEB_SEARCH))
-				loadUrlsSearch(intent.getStringExtra(SearchManager.QUERY));
-		}
-		else
-		{
-			if (!Util.isNullOrEmpty(SH_home))
-				loadUrls(SH_home);
-		}
+			public void run()
+			{
+				init();
+			}
+		}, 300);
 		webView.setWebChromeClient(new MyWebChromeClient());
 		
 		webView.setWebViewClient(new WebViewClient()
@@ -154,33 +143,40 @@ public class HtmlViewer extends AppCompatActivity
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView v, final String url)
 			{
-				SH_url = url;
-				if (url.toLowerCase().startsWith("vbea://"))
+				if (!URLUtil.isValidUrl(url))
 				{
-					SH_url = url.replace("vbea://", "http://");
-					loadUrls(url);
-				}
-				else if (!url.toLowerCase().startsWith("http"))
-				{
-					Util.showConfirmCancelDialog(HtmlViewer.this, "提示", "网页想要打开第三方应用，是否继续？", new DialogInterface.OnClickListener()
+					if (url.toLowerCase().startsWith("vbea://"))
 					{
-						public void onClick(DialogInterface d, int s)
+						SH_url = url.replace("vbea://", "http://");
+						loadUrls(url);
+					}
+					else
+					{
+						Util.showConfirmCancelDialog(HtmlViewer.this, "提示", "网页想要打开第三方应用，是否继续？", new DialogInterface.OnClickListener()
 						{
-							try
+							public void onClick(DialogInterface d, int s)
 							{
-								Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-								intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-								startActivity(intent);
+								try
+								{
+									Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+									intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+									startActivity(intent);
+								}
+								catch (Exception e)
+								{
+									Util.toastShortMessage(getApplicationContext(), "未安装该应用");
+									//ExceptionHandler.log("HtmlDialog", e.toString());
+								}
 							}
-							catch (Exception e)
-							{
-								Util.toastShortMessage(getApplicationContext(), "未安装该应用");
-								//ExceptionHandler.log("HtmlDialog", e.toString());
-							}
-						}
-					});
-					return true;
-					//return super.shouldOverrideUrlLoading(v, url);
+						});
+						return true;
+						//return super.shouldOverrideUrlLoading(v, url);
+					}
+				}
+				else if (SH_url != url)
+				{
+					SH_url = url;
+					v.loadUrl(url);
 				}
 				return false;
 			}
@@ -200,6 +196,7 @@ public class HtmlViewer extends AppCompatActivity
 				SH_url = url;
 				view.loadUrl("javascript:window.showcode.show(document.getElementsByTagName('html')[0].outerHTML);");
 				tool.setTitle(view.getTitle());
+				//view.loadUrl("javascript:close_adtip();");
 				super.onPageFinished(view, url);
 			}
 		});
@@ -253,6 +250,35 @@ public class HtmlViewer extends AppCompatActivity
 		});
 	}
 	
+	private void init()
+	{
+		Intent intent = getIntent();
+		if (intent != null && intent.getAction() != null)
+		{
+			if (intent.getAction().equals(Intent.ACTION_VIEW))
+				loadUrls(intent.getDataString());
+			else if (intent.getAction().equals(Intent.ACTION_SEND))
+			{
+				String share = intent.getStringExtra(Intent.EXTRA_TEXT);
+				if (!Util.isNullOrEmpty(share))
+				{
+					if (share.indexOf("http") > 0)
+						loadUrls(share.substring(share.indexOf("http")));
+					else
+						loadUrls(share);
+				}
+				
+			}
+			else if (intent.getAction().equals(intent.ACTION_WEB_SEARCH))
+				loadUrlsSearch(intent.getStringExtra(SearchManager.QUERY));
+		}
+		else
+		{
+			if (!Util.isNullOrEmpty(SH_home))
+				loadUrls(SH_home);
+		}
+	}
+	
 	private Bitmap getShareBitmap()
 	{
 		View v = webView;
@@ -267,21 +293,18 @@ public class HtmlViewer extends AppCompatActivity
 		//SH_url = url;
 		if (Util.isNullOrEmpty(url))
 			return;
-		if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0 || url.indexOf("ftp://") == 0 || url.indexOf("file://") == 0)
-		{
-			if (isUrl(url))
-				webView.loadUrl(url);
-			else
-				loadUrlsSearch(url);
-		} else if (url.indexOf("vbea://") == 0)
+		//if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0 || url.indexOf("ftp://") == 0 || url.indexOf("file://") == 0)
+		if (URLUtil.isValidUrl(url))
+			webView.loadUrl(url);
+		else if (url.indexOf("vbea://") == 0)
 			webView.loadUrl(url.replace("vbea:", "http:"));
 		else if (url.indexOf(".") > 0)
 		{
-			url = "http://" + url;
-			if (isUrl(url))
-				webView.loadUrl(url);
+			String s = "http://" + url;
+			if (URLUtil.isValidUrl(s) && isUrl(s))
+				webView.loadUrl(s);
 			else
-				loadUrlsSearch(url.replace("http://", ""));
+				loadUrlsSearch(url);
 		}
 		else
 			loadUrlsSearch(url);
@@ -595,7 +618,7 @@ public class HtmlViewer extends AppCompatActivity
 				switch (item)
 				{
 					case 0:
-						if (Util.hasAndroid23())
+						if (Util.hasAndroidN())
 						{
 							if (!Util.hasAllPermissions(HtmlViewer.this, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
 								Util.requestPermission(HtmlViewer.this, 1001, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -637,12 +660,18 @@ public class HtmlViewer extends AppCompatActivity
 	
 	private void startCamera()
 	{
-		Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		Image_Path = Common.getIconPath() + "temp" + System.currentTimeMillis() + ".jpg";
-		File file = new File(Image_Path);
-		cameraUri = FileProvider.getUriForFile(getApplicationContext(), Common.FileProvider, file);
-		intent1.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri);
-		startActivityForResult(intent1, CHOOSE_CAMERA);
+		try
+		{
+			Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			File file = new File(Common.getTempImagePath());
+			cameraUri = MyFileProvider.getUriForFile(getApplicationContext(), Common.FileProvider, file);
+			intent1.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri);
+			startActivityForResult(intent1, CHOOSE_CAMERA);
+		}
+		catch (Exception e)
+		{
+			ExceptionHandler.log("startCamera_1", e.toString());
+		}
 	}
 	
 	@Override
@@ -685,7 +714,7 @@ public class HtmlViewer extends AppCompatActivity
 			switch (requestCode)
 			{
 				case CHOOSE_CAMERA:
-					File f = new File(Image_Path);
+					File f = new File(Common.getTempImagePath());
 					if (!f.exists())
 						cameraUri = Uri.parse("");
 					else
@@ -727,7 +756,7 @@ public class HtmlViewer extends AppCompatActivity
 		public void onProgressChanged(WebView view, int newProgress)
 		{
 			webProgress.setProgress(newProgress);
-			webProgress.setVisibility(newProgress == 100 ? View.INVISIBLE : View.VISIBLE);
+			webProgress.setVisibility(newProgress >= 100 ? View.INVISIBLE : View.VISIBLE);
 		}
 
 		public void onExceededDatabaseQuota(String url, String databasein, long quota, long estime, long totalq, WebStorage.QuotaUpdater update)

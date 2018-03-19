@@ -171,12 +171,13 @@
 				android:layout_alignParentBottom="true"
 				android:layout_marginRight="5dp"
 				android:textColor="?attr/colorPrimary"
+				android:paddingLeft="10dp"
 				android:textSize="12sp"/>
 		</TableRow>
 		<ProgressBar
 			android:id="@+id/pro_micMore"
 			style="?android:attr/progressBarStyleHorizontal"
-			android:layout_height="fill_parent"
+			android:layout_height="3dp"
 			android:layout_width="fill_parent"
 			android:progressDrawable="@drawable/web_progress"
 			android:max="100"/>

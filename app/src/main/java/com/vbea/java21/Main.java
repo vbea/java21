@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import android.view.KeyEvent;
 import android.view.WindowManager;
+import android.net.Uri;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -55,10 +56,9 @@ import com.vbea.java21.classes.AlertDialog;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.widget.CustomTextView;
 import com.vbea.java21.audio.SoundLoad;
+import com.vbea.java21.data.Copys;
 import com.vbea.java21.data.Tips;
-import com.tencent.smtt.sdk.QbSdk;
-import android.net.*;
-import android.webkit.*;
+//import com.tencent.smtt.sdk.QbSdk;
 
 public class Main extends AppCompatActivity
 {
@@ -121,7 +121,7 @@ public class Main extends AppCompatActivity
 		FragmentAdapter fa = new FragmentAdapter(getSupportFragmentManager());
 		fa.addItem(new ChapterFragment(), getString(R.string.contacts));
 		fa.addItem(new KnowFragment(), getString(R.string.javaadv));
-		if (!Common.HULUXIA || Common.IS_ACTIVE)
+		if (Common.IS_ACTIVE)
 		{
 			fa.addItem(new JavaFragment(), "J2EE");
 			fa.addItem(new AndroidFragment(), "安卓基础");
@@ -372,8 +372,10 @@ public class Main extends AppCompatActivity
 	
 	public void goBack(View v)
 	{
-		Common.getCopyMsg(this);
-		Common.gc();
+		Copys msg = Common.getCopyMsg();
+		if (msg != null)
+			Util.addClipboard(this, "java21", msg.getMessage());
+		Common.gc(this);
 		if (Common.isSupportMD())
 			finishAndRemoveTask();
 		else
@@ -420,6 +422,14 @@ public class Main extends AppCompatActivity
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu)
 	{
+		Copys msg = Common.getCopyMsg();
+		if (msg != null)
+		{
+			menu.findItem(R.id.item_alipay).setVisible(true);
+			menu.findItem(R.id.item_alipay).setTitle(msg.getTitle());
+		}
+		else
+			menu.findItem(R.id.item_alipay).setVisible(false);
 		if (Common.getInbox().getCount() > 0)
 		{
 			menu.findItem(R.id.item_newmsg).setVisible(true);
@@ -440,7 +450,13 @@ public class Main extends AppCompatActivity
 		switch (item.getItemId())
 		{
 			case R.id.item_msg:
-				if (Common.isLogin()) Common.startActivityOptions(this, MyInbox.class);
+			case R.id.item_newmsg:
+				if (Common.isLogin())
+				{
+					Common.startActivityOptions(this, MyInbox.class);
+					Common.getInbox().clearCount();
+					invalidateOptionsMenu();
+				}
 				break;
 			case R.id.item_about:
 				Common.startActivityOptions(Main.this, About.class);
@@ -450,9 +466,9 @@ public class Main extends AppCompatActivity
 				{
 					Intent intent = new Intent(Intent.ACTION_VIEW);
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-					intent.setData(Uri.parse("alipays://platformapi/startapp?saId=10000007&clientVersion=3.7.0.0718&qrcode=https://qr.alipay.com/c1x079614vvcisqv4cxi19c?_s=web-other"));
+					intent.setData(Uri.parse(Common.getCopyMsg().getUrl()));
 					startActivity(intent);
-					Util.toastShortMessage(getApplicationContext(), "感谢你的支持");
+					Util.toastLongMessage(getApplicationContext(), "感谢您的支持，领取后请记得使用哦！");
 				}
 				catch (Exception e)
 				{

@@ -50,6 +50,7 @@ public class More extends AppCompatActivity
 		TextView btnPiano = (TextView) findViewById(R.id.btn_musicPiano);
 		TextView btnTest = (TextView) findViewById(R.id.btn_musicTest);
 		TextView btnTrans = (TextView) findViewById(R.id.btn_musicTrans);
+		TextView btnList = (TextView) findViewById(R.id.btn_musicList);
 		txtCode = (TextView) findViewById(R.id.more_musicCode);
 		txtName = (TextView) findViewById(R.id.more_musicName);
 		proMusic = (ProgressBar) findViewById(R.id.pro_micMore);
@@ -116,6 +117,14 @@ public class More extends AppCompatActivity
 			}
 		});
 		
+		btnList.setOnClickListener(new View.OnClickListener()
+		{
+			public void onClick(View v)
+			{
+				Common.startActivityOptions(More.this, MusicList.class);
+			}
+		});
+		
 		btnTest.setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View v)
@@ -126,9 +135,8 @@ public class More extends AppCompatActivity
 		soundLoad = Common.SOUND;
 		//if (soundLoad != null)
 			//generiteMusic();
+		//createNotification();
 	}
-	
-	
 	
 	class MusicPlayerClick implements View.OnClickListener
 	{

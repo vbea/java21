@@ -40,7 +40,7 @@ public class ExceptionHandler extends Application implements UncaughtExceptionHa
 		//ActivityManager am = (ActivityManager)getSystemService(Context.ACTIVITY_SERVICE);
 		//ComponentName cnm = am.getRunningTasks(1).get(0).topActivity;
 		String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-		String temp = "\ntime:" + time + "\nthread:" + thread.toString() + "\nthrows:"+able.toString() + "\nmessage:" + able.toString() + "\n";
+		String temp = "\ntime:" + time + "\nthread:" + thread.toString() + "\nmessage:" + able.toString() + "\n";
 		if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
 		{
 			try
@@ -53,7 +53,7 @@ public class ExceptionHandler extends Application implements UncaughtExceptionHa
 				FileOutputStream fos = new FileOutputStream(file+"/java21.log",true);
 				fos.write(temp.getBytes());//写入信息
 				fos.close();
-				Toast.makeText(mContext,"Android Exception: Runing Error!",Toast.LENGTH_SHORT).show();
+				//Toast.makeText(mContext,"Android Exception: Runing Error!",Toast.LENGTH_SHORT).show();
 			}
 			catch (IOException e)
 			{

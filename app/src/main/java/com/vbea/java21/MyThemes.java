@@ -151,6 +151,33 @@ public class MyThemes
 		}
 	}
 	
+	public static void initBackColor(Context context, Bitmap bitmap)
+	{
+		ISCHANGED = true;
+		if (bitmap != null)
+		{
+			try
+			{
+				//changed on 20180201
+				homeTextShadow = context.getResources().getColor(R.color.black);
+				Palette p1 = Palette.generate(bitmap, 8);
+				Palette.Swatch sw = p1.getLightVibrantSwatch();
+				if (sw != null)
+				{
+					homeTextColor = sw.getRgb();
+				}
+				else
+					homeTextColor = context.getResources().getColor(R.color.white);
+			}
+			catch (Exception e)
+			{
+				ExceptionHandler.log("Mytheme_init2", e.toString());
+			}
+		}
+		else
+			Common.APP_BACK_ID = 0;
+	}
+	
 	public static int getTheme()
 	{
 		checkThemeId();

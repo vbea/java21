@@ -17,6 +17,7 @@ import android.support.design.widget.Snackbar;
 
 import com.vbea.java21.classes.AlertDialog;
 import com.vbea.java21.classes.Common;
+import com.vbea.java21.classes.Util;
 
 public class TextReplace extends AppCompatActivity
 {
@@ -50,7 +51,7 @@ public class TextReplace extends AppCompatActivity
 			{
 				if (edit.getText().toString().trim().length() <= 0)
 				{
-					Toast.makeText(getApplicationContext(), "请输入要替换的文本", Toast.LENGTH_SHORT).show();
+					Util.toastShortMessage(getApplicationContext(), "请输入要替换的文本");
 					return;
 				}
 				shDialog();
@@ -113,7 +114,7 @@ public class TextReplace extends AppCompatActivity
 			public void onClick(View v)
 			{
 				edit.setText(old);
-				Toast.makeText(getApplicationContext(), "已撤销本次操作", Toast.LENGTH_SHORT).show();
+				Util.toastShortMessage(getApplicationContext(), "已撤销本次操作");
 			}
 		}).show();
 	}

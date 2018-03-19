@@ -29,16 +29,34 @@
 			android:layout_margin="5dp"
 			android:transitionName="icon_pre"
 			android:src="@mipmap/head"/>
-		<TextView
-			android:id="@+id/draw_txtName"
+		<TableRow
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:singleLine="true"
-			android:paddingTop="3dp"
-			android:transitionName="share_nick"
-			android:textColor="@color/white"
-			android:textSize="16sp"
-			android:text="请登录"/>
+			android:gravity="center_vertical"
+			android:paddingTop="3dp">
+			<TextView
+				android:id="@+id/draw_isVIP"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginRight="3dp"
+				android:layout_marginTop="1dp"
+				android:background="@drawable/ic_bg_vip"
+				android:singleLine="true"
+				android:textColor="@color/white"
+				android:textSize="9sp"
+				android:paddingLeft="1dp"
+				android:paddingRight="1dp"
+				android:text=" VIP "/>
+			<TextView
+				android:id="@+id/draw_txtName"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:singleLine="true"
+				android:transitionName="share_nick"
+				android:textColor="@color/white"
+				android:textSize="16sp"
+				android:text="请登录"/>
+		</TableRow>
 		</LinearLayout>
 		<TextView
 			android:id="@+id/draw_txtMark"

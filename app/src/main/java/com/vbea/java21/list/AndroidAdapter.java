@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import com.vbea.java21.data.AndroidHtml;
 import com.vbea.java21.R;
+import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 
 public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.MyViewHolder>
@@ -43,7 +44,7 @@ public class AndroidAdapter extends RecyclerView.Adapter<AndroidAdapter.MyViewHo
 	public void onBindViewHolder(MyViewHolder holder, int p)
 	{
 		final AndroidHtml item = mList.get(p);
-		if (item.prefix == null || item.prefix.equals(""))
+		if (Util.isNullOrEmpty(item.prefix))
 			item.prefix = "┗ ";
 		holder.title.setText(item.prefix + " " + item.title);
 		holder.sub.setText(item.remark);

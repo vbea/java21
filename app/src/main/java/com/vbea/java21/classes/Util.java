@@ -771,9 +771,9 @@ public class Util
 		return sb.toString().substring(1);
 	}
 	
-	public static boolean hasAndroid23()
+	public static boolean hasAndroidN()
 	{
-		return (Build.VERSION.SDK_INT >= 23);
+		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N);
 	}
 	
 	public static boolean hasPermission(Context c, String p)

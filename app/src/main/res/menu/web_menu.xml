@@ -32,4 +32,7 @@
 	<item
 		android:id="@+id/item_setting"
 		android:title="设置"/>
+	<item
+		android:id="@+id/item_addbook"
+		android:title="添加到书签"/>
 </menu>

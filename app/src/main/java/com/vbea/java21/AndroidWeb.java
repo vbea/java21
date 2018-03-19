@@ -8,9 +8,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
 import android.webkit.JavascriptInterface;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TableRow;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
@@ -55,25 +57,29 @@ public class AndroidWeb extends AppCompatActivity
 	private ProgressBar proGro;
 	private String id, title, sub, url;
 	private BottomSheetDialog mBSDialog;
-	private TextView NightView;
+	private TextView NightView, CommentView;
 	private LinearLayout share_qq, share_qzone, share_wx, share_wxpy;
 	private LinearLayout share_sina, share_web, share_link, share_more;
 	private BannerView bannerView;
 	private ViewGroup bannerLayout;
 	private int type = 0;//Android
-	private int CommentCount = 0;
+	//private int CommentCount = 0;
+	private final String template = "已有%1s条评论";
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		setTheme(MyThemes.getTheme());
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.apiword);
+		setContentView(R.layout.article);
 
-		proGro = (ProgressBar) findViewById(R.id.apiProgress);
-		myweb = (WebView) findViewById(R.id.WebViewApi);
+		proGro = (ProgressBar) findViewById(R.id.artProgress);
+		myweb = (WebView) findViewById(R.id.artWebView);
 		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
-		NightView = (TextView) findViewById(R.id.api_nightView);
+		NightView = (TextView) findViewById(R.id.art_nightView);
+		CommentView = (TextView) findViewById(R.id.art_comment);
 		bannerLayout = (ViewGroup) findViewById(R.id.webBanner);
+		TableRow btnComment = (TableRow) findViewById(R.id.art_editbtn);
+		EditText edtComment = (EditText) findViewById(R.id.art_editText);
 		if (MyThemes.isNightTheme()) NightView.setVisibility(View.VISIBLE);
 		url = getIntent().getExtras().getString("url", "");
 		title = getIntent().getExtras().getString("title", "");
@@ -151,6 +157,23 @@ public class AndroidWeb extends AppCompatActivity
 				supportFinishAfterTransition();
 			}
 		});
+		
+		edtComment.setOnFocusChangeListener(new View.OnFocusChangeListener()
+		{
+			public void onFocusChange(View v, boolean s)
+			{
+				if (s) goComment();
+			}
+		});
+		
+		btnComment.setOnClickListener(new View.OnClickListener()
+		{
+			public void onClick(View v)
+			{
+				goComment();
+			}
+		});
+		//android.R.attr.
 		applyTips();
 		if (!Common.isNoadv())
 			initBanner();
@@ -186,6 +209,16 @@ public class AndroidWeb extends AppCompatActivity
 		return Bitmap.createScaledBitmap(v.getDrawingCache(), 120, 120, true);
 	}
 	
+	private void goComment()
+	{
+		Intent intent = new Intent(this, Comment.class);
+		intent.putExtra("title", title);
+		intent.putExtra("id", id);
+		intent.putExtra("type", type);
+		intent.putExtra("url", url);
+		Common.startActivityOptions(this, intent);
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
@@ -193,25 +226,17 @@ public class AndroidWeb extends AppCompatActivity
 		return super.onCreateOptionsMenu(menu);
 	}
 
-	@Override
+	/*@Override
 	public boolean onPrepareOptionsMenu(Menu menu)
 	{
 		menu.findItem(R.id.item_androidcomment).setTitle("评论" + (CommentCount > 0 ? "(" + CommentCount + ")" : ""));
 		return super.onPrepareOptionsMenu(menu);
-	}
+	}*/
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
-		if (item.getItemId() == R.id.item_androidcomment)
-		{
-			Intent intent = new Intent(this, Comment.class);
-			intent.putExtra("title", title);
-			intent.putExtra("id", id);
-			intent.putExtra("type", type);
-			intent.putExtra("url", url);
-			Common.startActivityOptions(this, intent);
-		}
+		//if (item.getItemId() == R.id.item_androidcomment)
 		if (item.getItemId() == R.id.item_flush)
 		{
 			if (Common.isNet(this))
@@ -320,7 +345,7 @@ public class AndroidWeb extends AppCompatActivity
 			public void done(Integer p1, BmobException p2)
 			{
 				if (p2 == null)
-					CommentCount = p1;
+					CommentView.setText(String.format(template, p1));
 			}
 		});
 	}
@@ -412,6 +437,7 @@ public class AndroidWeb extends AppCompatActivity
 	@Override
 	protected void onResume()
 	{
+		myweb.requestFocus();
 		getCommentCount();
 		if (mBSDialog != null)
 			mBSDialog.dismiss();

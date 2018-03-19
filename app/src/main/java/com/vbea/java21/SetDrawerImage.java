@@ -1,6 +1,9 @@
 package com.vbea.java21;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.FileOutputStream;
+import java.io.BufferedOutputStream;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -16,7 +19,6 @@ import android.content.res.Configuration;
 import android.provider.MediaStore;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.RecyclerView;
@@ -31,9 +33,8 @@ public class SetDrawerImage extends AppCompatActivity
 	private DrawerAdapter adapter;
 	private SharedPreferences spf;
 	private SharedPreferences.Editor edt;
-	//private String diyImagePath = "";
-	private Uri imageUri;
 	private String[] headItems = {"拍照","相册"};
+	private Uri TEMP_URI;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -51,7 +52,6 @@ public class SetDrawerImage extends AppCompatActivity
 		recyclerView.setAdapter(adapter);
 		spf = getSharedPreferences("java21", MODE_PRIVATE);
 		edt = spf.edit();
-		imageUri = FileProvider.getUriForFile(getApplicationContext(), Common.FileProvider, new File(Common.getDrawImagePath()));
 		tool.setNavigationOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -107,7 +107,7 @@ public class SetDrawerImage extends AppCompatActivity
 					switch (item)
 					{
 						case 0:
-							if (Util.hasAndroid23())
+							if (Util.hasAndroidN())
 							{
 								if (!Util.hasAllPermissions(SetDrawerImage.this, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
 									Util.requestPermission(SetDrawerImage.this, 1001, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -161,9 +161,18 @@ public class SetDrawerImage extends AppCompatActivity
 	
 	private void startCamera()
 	{
-		Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		intent1.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-		startActivityForResult(intent1, 10);
+		try
+		{
+			Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+			File file = new File(Common.getDrawImagePath());
+			TEMP_URI = MyFileProvider.getUriForFile(getApplicationContext(), Common.FileProvider, file);
+			intent1.putExtra(MediaStore.EXTRA_OUTPUT, TEMP_URI);
+			startActivityForResult(intent1, 10);
+		}
+		catch (Exception e)
+		{
+			ExceptionHandler.log("startCamera", e.toString());
+		}
 	}
 
 	@Override
@@ -187,7 +196,7 @@ public class SetDrawerImage extends AppCompatActivity
 				//ContentResolver cr = getContentResolver();
 				try
 				{
-					startPhotoZoom(imageUri);
+					startPhotoZoom(TEMP_URI);
 				}
 				catch (Exception e)
 				{
@@ -198,6 +207,7 @@ public class SetDrawerImage extends AppCompatActivity
 				try
 				{
 					Common.APP_BACK_ID = 100;
+					Common.IsChangeICON = true;
 					adapter.notifyDataSetChanged();
 					MyThemes.initBackColor(SetDrawerImage.this);
 				}
@@ -217,4 +227,12 @@ public class SetDrawerImage extends AppCompatActivity
 		if (requestCode == 1001 && Util.hasAllPermissionsGranted(grantResults))
 			startCamera();
 	}
+	
+	public void saveFile(Bitmap bm, File file) throws IOException
+	{
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+        bm.compress(Bitmap.CompressFormat.PNG, 80, bos);
+        bos.flush();
+        bos.close();
+    }
 }

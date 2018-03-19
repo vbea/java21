@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.data.Users;
+import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.MD5Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.AlertDialog;
@@ -42,7 +43,7 @@ public class ResetPassword extends AppCompatActivity
 		objectId = getIntent().getExtras().getString("oid", "");
 		if (objectId.equals(""))
 		{
-			Toast.makeText(getApplicationContext(), "获取用户信息失败，请重试", Toast.LENGTH_SHORT).show();
+			Util.toastShortMessage(getApplicationContext(), "获取用户信息失败，请重试");
 			reset.setEnabled(false);
 		}
 		tool.setNavigationOnClickListener(new View.OnClickListener()
@@ -78,7 +79,7 @@ public class ResetPassword extends AppCompatActivity
 				}
 				if (!Common.isNet(ResetPassword.this))
 				{
-					Toast.makeText(getApplicationContext(), "请检查你的网络连接", Toast.LENGTH_SHORT).show();
+					Util.toastShortMessage(getApplicationContext(), "请检查你的网络连接");
 					return;
 				}
 				reset.setText("请稍候...");
@@ -138,11 +139,11 @@ public class ResetPassword extends AppCompatActivity
 			switch (msg.what)
 			{
 				case 1:
-					Toast.makeText(getApplicationContext(), "密码重置成功，你现在可以使用新密码来登录了", Toast.LENGTH_SHORT).show();
+					Util.toastShortMessage(getApplicationContext(), "密码重置成功，你现在可以使用新密码登录了");
 					supportFinishAfterTransition();
 					break;
 				case 2:
-					Toast.makeText(getApplicationContext(), "操作失败，请重试", Toast.LENGTH_SHORT).show();
+					Util.toastShortMessage(getApplicationContext(), "操作失败，请重试");
 					reset.setEnabled(true);
 					reset.setText(R.string.resetpsd);
 					break;

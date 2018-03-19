@@ -22,7 +22,7 @@ public class BrowserSet extends AppCompatActivity
 	private String SH_home;
 	private String[] Searchs, UserAgents;
 	private int SH_UA, SH_search;
-	private TextView btnHome, txtUserAgent, txtSearch;
+	private TextView btnHome, btnBookmark, btnHistory, txtUserAgent, txtSearch;
 	private LinearLayout btnUserAgent, btnSearch;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -37,6 +37,8 @@ public class BrowserSet extends AppCompatActivity
 		btnHome = (TextView) findViewById(R.id.btnSetHome);
 		btnSearch = (LinearLayout) findViewById(R.id.btnSetSearch);
 		btnUserAgent = (LinearLayout) findViewById(R.id.btnSetUa);
+		btnBookmark = (TextView) findViewById(R.id.btnSetBookmark);
+		btnHistory = (TextView) findViewById(R.id.btnSetHistory);
 		tool.setNavigationOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -103,6 +105,20 @@ public class BrowserSet extends AppCompatActivity
 					}
 				});
 				dialog.show();
+			}
+		});
+		btnBookmark.setOnClickListener(new View.OnClickListener()
+		{
+			public void onClick(View v)
+			{
+				Common.startActivityOptions(BrowserSet.this, Bookmark.class);
+			}
+		});
+		btnHistory.setOnClickListener(new View.OnClickListener()
+		{
+			public void onClick(View v)
+			{
+				Common.startActivityOptions(BrowserSet.this, History.class);
 			}
 		});
 		onSettings();

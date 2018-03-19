@@ -27,15 +27,16 @@ import com.vbea.java21.classes.Common;
 import org.apache.commons.io.FileUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.*;
+import com.google.gson.JsonParser;
 
 
 public class SoundLoad
 {
 	private SoundPool mSoundPool1;//,mSoundPool2;//,mSoundPool3;
 	private AssetManager am;
-	private List<Music> musicTop, musicAll;
+	public List<Music> musicTop;
 	private String[] sound_alpha = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};//常用音源26
 	private String[] sound_bass = {"A1","A2","A3","A4","A5","A6","A7","A8","A9","A10","A11","A12","A13","A14","A15","A16"};//低音16
 	private String[] sound_pitch = {"B1","B2","B3","B4","B5","B6","B7","B8","B9","B10"};//高音10
@@ -51,7 +52,7 @@ public class SoundLoad
 		//start new Auduo 20170810
 		mSoundPool1 = getSoundPool();
 		hash_music = new HashMap<String, Integer>(88);
-		musicAll = new ArrayList<Music>();
+		//musicAll = new ArrayList<Music>();
 		musicTop = new ArrayList<Music>();
 		//hash_music2 = new HashMap<String, Integer>(88);
 	}
@@ -70,6 +71,7 @@ public class SoundLoad
 	
 	public void load()
 	{
+		synaxMusic();
 		load1();
 	}
 	//正常音节码解析
@@ -183,6 +185,7 @@ public class SoundLoad
 				for (JsonElement obj : jArray)
 				{
 					Music music = gson.fromJson(obj, Music.class);
+					music.isTop = true;
 					musicTop.add(music);
 				}
 			}
@@ -190,6 +193,34 @@ public class SoundLoad
 		catch (Exception e)
 		{
 			ExceptionHandler.log("synaxMusic", e.toString());
+		}
+		finally
+		{
+			synaxMusic2();
+		}
+	}
+	
+	public void synaxMusic2()
+	{
+		try
+		{
+			String json = Util.ReadFileToString(am.open("music/music_all.json"));
+			if (json != null)
+			{
+				Gson gson = new Gson();
+				JsonParser jsp = new JsonParser();
+				JsonArray jArray = jsp.parse(json).getAsJsonArray();
+				for (JsonElement obj : jArray)
+				{
+					Music music = gson.fromJson(obj, Music.class);
+					music.isTop = false;
+					musicTop.add(music);
+				}
+			}
+		}
+		catch (Exception e)
+		{
+			ExceptionHandler.log("synaxMusic2", e.toString());
 		}
 	}
 	
@@ -214,12 +245,12 @@ public class SoundLoad
 		return null;
 	}
 	
-	public boolean isValid(int m)
+	/*public boolean isValid(int m)
 	{
 		return m < musicTop.size();
-	}
+	}*/
 	
-	public int getMusicCout()
+	public int getMusicCount()
 	{
 		return musicTop.size();
 	}
@@ -231,6 +262,7 @@ public class SoundLoad
 			mSoundPool1.autoPause();
 			mSoundPool1.release();
 		}
+		
 	}
 	
 	/*public void unZIP(Context context) throws IOException

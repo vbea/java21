@@ -1,23 +1,27 @@
 package com.vbea.java21.data;
 
-public class Copys
-{
-	String message;
-	Boolean enable;
+import cn.bmob.v3.BmobObject;
 
-	public void setEnable(Boolean enable)
+public class Copys extends BmobObject
+{
+	private String title;
+	private String message;
+	private String url;
+	private Boolean enable;
+
+	public String getUrl()
 	{
-		this.enable = enable;
+		return url;
+	}
+
+	public String getTitle()
+	{
+		return title;
 	}
 
 	public Boolean isEnable()
 	{
 		return enable;
-	}
-	
-	public void setMessage(String msg)
-	{
-		this.message = msg;
 	}
 
 	public String getMessage()

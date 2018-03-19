@@ -47,6 +47,11 @@ public class InboxManager
 		}
 	}
 	
+	public void clearCount()
+	{
+		unreadCount = 0;
+	}
+	
 	public int getCount()
 	{
 		return unreadCount;

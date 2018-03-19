@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import com.vbea.java21.data.JavaEE;
 import com.vbea.java21.R;
+import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 
 public class J2EEAdapter extends RecyclerView.Adapter<J2EEAdapter.MyViewHolder>
@@ -45,23 +46,23 @@ public class J2EEAdapter extends RecyclerView.Adapter<J2EEAdapter.MyViewHolder>
 		final JavaEE item = mList.get(p);
 		if (item.isTitle)
 		{
-			holder.sub.setVisibility(View.VISIBLE);
-			holder.title.setVisibility(View.GONE);
-			if (item.prefix == null || item.prefix.equals(""))
+			if (Util.isNullOrEmpty(item.prefix))
 				holder.sub.setText(item.title);
 			else
 				holder.sub.setText(item.prefix + " " + item.title);
+			holder.sub.setVisibility(View.VISIBLE);
+			holder.title.setVisibility(View.GONE);
 			holder.layout.setClickable(false);
 			holder.layout.setBackgroundResource(R.color.android_disable);
 		}
 		else
 		{
-			holder.sub.setVisibility(View.GONE);
-			holder.title.setVisibility(View.VISIBLE);
-			if (item.prefix == null || item.prefix.equals(""))
+			if (Util.isNullOrEmpty(item.prefix))
 				holder.title.setText(item.title);
 			else
 				holder.title.setText(item.prefix + " " + item.title);
+			holder.sub.setVisibility(View.GONE);
+			holder.title.setVisibility(View.VISIBLE);
 			holder.layout.setClickable(true);
 			holder.layout.setBackgroundResource(R.drawable.btn_menu);
 			holder.layout.setOnClickListener(new View.OnClickListener()

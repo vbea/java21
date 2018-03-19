@@ -23,6 +23,7 @@ import android.text.TextWatcher;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.MD5Util;
 import com.vbea.java21.classes.ExceptionHandler;
@@ -145,7 +146,7 @@ public class Sign extends AppCompatActivity
 					return;
 				if (!Common.isNet(Sign.this))
 				{
-					Toast.makeText(getApplicationContext(), "请检查你的网络连接", Toast.LENGTH_SHORT).show();
+					Util.toastShortMessage(getApplicationContext(), "请检查你的网络连接");
 					return;
 				}
 				canGoback = false;
@@ -323,14 +324,14 @@ public class Sign extends AppCompatActivity
 			{
 				case 1:
 					Common.USERID = "";
-					Toast.makeText(getApplicationContext(), "注册成功", Toast.LENGTH_LONG).show();
+					Util.toastShortMessage(getApplicationContext(), "注册成功");
 					supportFinishAfterTransition();
 					break;
 				case 2:
-					Toast.makeText(getApplicationContext(), "注册失败", Toast.LENGTH_LONG).show();
+					Util.toastShortMessage(getApplicationContext(), "注册失败");
 					break;
 				case 9:
-					Toast.makeText(getApplicationContext(), "namec&email:" + isNameExist + "," + isEmailExist, Toast.LENGTH_SHORT).show();
+					Util.toastShortMessage(getApplicationContext(), "namec&email:" + isNameExist + "," + isEmailExist);
 					break;
 				case 10:
 					edtUsername.requestFocus();

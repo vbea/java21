@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.data.Users;
@@ -70,7 +71,7 @@ public class ForgetPassword extends AppCompatActivity
 				}
 				if (!Common.isNet(ForgetPassword.this))
 				{
-					Toast.makeText(getApplicationContext(), "请检查你的网络连接", Toast.LENGTH_SHORT).show();
+					Util.toastShortMessage(getApplicationContext(), "请检查你的网络连接");
 					return;
 				}
 				btnForget.setText("请稍候...");
@@ -83,7 +84,7 @@ public class ForgetPassword extends AppCompatActivity
 	
 	public void bandQuery()
 	{
-		Toast.makeText(getApplicationContext(), "输入信息有错，请检查后重新输入", Toast.LENGTH_SHORT).show();
+		Util.toastShortMessage(getApplicationContext(), "输入信息有错，请检查后重新输入");
 		btnForget.setText(R.string.forgetpsd);
 		btnForget.setEnabled(true);
 	}

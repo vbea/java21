@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MenuInflater;
@@ -28,11 +29,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.BottomSheetDialog;
 import com.vbea.java21.classes.Util;
+import com.vbea.java21.classes.Common;
+import com.vbea.java21.classes.AdvConfig;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.SocialShare;
 import com.tencent.connect.share.QQShare;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
+import com.qq.e.ads.banner.ADSize;
+import com.qq.e.ads.banner.BannerView;
+import com.qq.e.ads.banner.AbstractBannerADListener;
+import com.qq.e.comm.util.AdError;
 
 public class ApiWord extends AppCompatActivity
 {
@@ -48,6 +55,8 @@ public class ApiWord extends AppCompatActivity
 	private BottomSheetDialog mBSDialog;
 	private LinearLayout share_qq, share_qzone, share_wx, share_wxpy;
 	private LinearLayout share_sina, share_web, share_link, share_more;
+	private ViewGroup bannerLayout;
+	private BannerView bannerView;
 	//private final String apiUrl = "http://www.yq1021.com/api/overview-summary.html";
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -60,6 +69,7 @@ public class ApiWord extends AppCompatActivity
 		myweb = (WebView) findViewById(R.id.WebViewApi);
 		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
 		NightView = (TextView) findViewById(R.id.api_nightView);
+		bannerLayout = (ViewGroup) findViewById(R.id.webBanner);
 		if (MyThemes.isNightTheme()) NightView.setVisibility(View.VISIBLE);
 		setSupportActionBar(tool);
 		WebSettings set = myweb.getSettings();
@@ -110,6 +120,8 @@ public class ApiWord extends AppCompatActivity
 				popwin.dismiss();
 			}
 		});*/
+		if (!Common.isNoadv())
+			initBanner();
 	}
 
 	@Override
@@ -306,5 +318,27 @@ public class ApiWord extends AppCompatActivity
 		if (mBSDialog != null)
 			mBSDialog.dismiss();
 		super.onResume();
+	}
+	
+	private void initBanner()
+	{
+		bannerView = new BannerView(this, ADSize.BANNER, AdvConfig.APPID, AdvConfig.Banner2);
+		bannerView.setRefresh(30);
+		bannerView.setADListener(new AbstractBannerADListener()
+		{
+			@Override
+			public void onNoAD(AdError e)
+			{
+				ExceptionHandler.log("ad:"+e.getErrorCode(), e.getErrorMsg());
+			}
+
+			@Override
+			public void onADReceiv()
+			{
+
+			}
+		});
+		bannerLayout.addView(bannerView);
+		bannerView.loadAD();
 	}
 }

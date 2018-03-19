@@ -12,7 +12,8 @@
 		<android.support.v7.widget.RecyclerView
 			android:id="@+id/file_recyclerView"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"/>
+			android:layout_height="match_parent"
+			android:background="?attr/divider"/>
 	</LinearLayout>
 	<android.support.design.widget.FloatingActionButton
 		xmlns:app="http://schemas.android.com/apk/res-auto"

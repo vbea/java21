@@ -13,13 +13,13 @@
     <style type="text/css">
         .div
         {
-            padding: 0 1%;
+            padding: 0 5px;
         }
     </style>
 </head>
 <body>
-<div style="width: 320px; background-color: #FFF; margin: 0 auto;">
-<div style="width: 100%; text-align: center; font-size: 1.1em;">Java 面试题（二）</div><br />
+<div style="width: 100%; background-color: #FFF; margin: 0 auto;">
+<h1 style="width: 100%; text-align: center; font-size: 1.1em;">Java 面试题（二）</h1>
 <div class="div">
 31、EJB包括（SessionBean,EntityBean）说出他们的生命周期，及如何管理事务的？<br />
 SessionBean：Stateless Session Bean 的生命周期是由容器决定的，当客户机发出请求要建立一个Bean的实例时，EJB容器不一定要创建一个新的Bean的实例供客户机调用，而是随便找一个现有的实例提供给客户机。当客户机第一次调用一个Stateful Session Bean 时，容器必须立即在服务器中创建一个新的Bean实例，并关联到客户机上，以后此客户机调用Stateful Session Bean 的方法时容器会把调用分派到与此客户机相关联的Bean实例。<br />

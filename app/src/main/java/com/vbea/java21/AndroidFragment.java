@@ -20,7 +20,7 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.DividerItemDecoration;
 import com.vbea.java21.data.AndroidHtml;
 import com.vbea.java21.list.AndroidAdapter;
-import com.vbea.java21.list.MyDecoration;
+import com.vbea.java21.list.MyDividerDecoration;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
@@ -60,8 +60,8 @@ public class AndroidFragment extends Fragment
         	recyclerView = (RecyclerView) view.findViewById(R.id.cpt_recyclerView);
 			refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swp_refresh);
 			
-			DividerItemDecoration decoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-			decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
+			MyDividerDecoration decoration = new MyDividerDecoration(getContext());
+			//decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
 			recyclerView.addItemDecoration(decoration);
 			recyclerView.setAdapter(mAdapter);
 			recyclerView.setHasFixedSize(true);
@@ -99,7 +99,7 @@ public class AndroidFragment extends Fragment
 				@Override
 				public void onRefresh()
 				{
-					if (Common.isNotLogin())
+					if (!Common.isLogin())
 					{
 						recyclerView.setVisibility(View.GONE);
 						errorText.setVisibility(View.VISIBLE);
@@ -319,7 +319,7 @@ public class AndroidFragment extends Fragment
 	@Override
 	public void onResume()
 	{
-		if (Common.isNotLogin())
+		if (!Common.isLogin())
 		{
 			recyclerView.setVisibility(View.GONE);
 		}

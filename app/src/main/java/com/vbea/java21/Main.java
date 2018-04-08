@@ -121,13 +121,13 @@ public class Main extends AppCompatActivity
 		FragmentAdapter fa = new FragmentAdapter(getSupportFragmentManager());
 		fa.addItem(new ChapterFragment(), getString(R.string.contacts));
 		fa.addItem(new KnowFragment(), getString(R.string.javaadv));
-		if (Common.IS_ACTIVE)
-		{
+		/*if (Common.IS_ACTIVE)
+		{*/
 			fa.addItem(new JavaFragment(), "J2EE");
 			fa.addItem(new AndroidFragment(), "安卓基础");
 			fa.addItem(new Android2Fragment(), "安卓进阶");
 			fa.addItem(new AideFragment(), "AIDE");
-		}
+		//}
         viewpager.setAdapter(fa);
         tabLayout.setupWithViewPager(viewpager);
 		tabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.gray2));
@@ -174,11 +174,6 @@ public class Main extends AppCompatActivity
 		{
 			public void onClick(View v)
 			{
-				if (Common.isNotLogin())
-				{
-					Common.startActivityOptions(Main.this, Login.class);
-					mHandler.sendEmptyMessageDelayed(1, 500);
-				}
 				if (Common.isLogin())
 				{
 					Common.startActivityOptions(Main.this, new Intent(Main.this, UserCentral.class),
@@ -186,18 +181,23 @@ public class Main extends AppCompatActivity
 						/*(Pair<View,String>)Pair.create(mImgHead, "icon_pre"),
 						(Pair<View,String>)Pair.create(txtUserName, "share_nick")*/);
 				}
+				else
+				{
+					Common.startActivityOptions(Main.this, Login.class);
+					mHandler.sendEmptyMessageDelayed(1, 500);
+				}
 			}
 		});
 		setHead();
 		myCallback = new InboxCallback();
 		if (START)
-			mHandler.sendEmptyMessageDelayed(10, 500);
+			mHandler.sendEmptyMessageDelayed(6, 500);
     }
 	
 	private void setHead()
 	{
-		if (Common.mUser == null && Common.isNet(this) && Common.canLogin())
-			new LoginThread().start();
+		if (Common.isNet(this) && Common.canLogin())
+			onAutoLogin();
 		setIcon();
 		//设置菜单图标
 		/*if (!Common.isSupportMD())
@@ -300,7 +300,7 @@ public class Main extends AppCompatActivity
 	
 	public void goEditor(View v)
 	{
-		if (Common.isNotLogin())
+		if (!Common.isLogin())
 		{
 			Util.toastShortMessage(getApplicationContext(), "请先登录！");
 			return;
@@ -311,7 +311,7 @@ public class Main extends AppCompatActivity
 	
 	public void goCodeEditor(View v)
 	{
-		if (Common.isNotLogin())
+		if (!Common.isLogin())
 		{
 			Util.toastShortMessage(getApplicationContext(), "请先登录！");
 			return;
@@ -322,7 +322,7 @@ public class Main extends AppCompatActivity
 	
 	public void goQQMessage(View v)
 	{
-		if (Common.isNotLogin())
+		if (!Common.isLogin())
 		{
 			Util.toastShortMessage(getApplicationContext(), "请先登录！");
 			return;
@@ -339,7 +339,7 @@ public class Main extends AppCompatActivity
 	
 	public void goSms(View v)
 	{
-		if (Common.isNotLogin())
+		if (!Common.isLogin())
 		{
 			Util.toastShortMessage(getApplicationContext(), "请先登录！");
 			return;
@@ -385,6 +385,7 @@ public class Main extends AppCompatActivity
 	
 	private void onAudioDialog()
 	{
+		if (Common.isAudio() && Common.AUDIO_STUDY_STATE >= 10) {
 		AlertDialog builder = new AlertDialog(this);
 		builder.setTitle("提示");
 		builder.setCancelable(false);
@@ -405,6 +406,7 @@ public class Main extends AppCompatActivity
 			}
 		});
 		builder.show();
+		}
 	}
 	
 	public void closeDrawered()
@@ -474,10 +476,6 @@ public class Main extends AppCompatActivity
 				{
 					Util.toastShortMessage(getApplicationContext(), "未安装支付宝");
 				}
-				/*WebView view = new WebView(Main.this);
-				view.getSettings().setJavaScriptEnabled(true);
-				view.setWebViewClient(new WebViewClient());
-				view.loadUrl("https://qr.alipay.com/c1x079614vvcisqv4cxi19c");*/
 				break;
 		}
 		return super.onOptionsItemSelected(item);
@@ -514,20 +512,9 @@ public class Main extends AppCompatActivity
 		editor.putString("read_javaee", Util.Join(",", Common.READ_J2EE));
 		return editor.commit();
 	}
-
-	@Override
-	protected void onResume()
+	
+	private void showDrawerImage()
 	{
-		mHandler.sendEmptyMessage(3);
-		mHandler.sendEmptyMessage(5);
-		if (Common.MUSIC)
-		{
-			if (soundThread == null || !soundThread.RUN)
-			{
-				soundThread = new SoundThread();
-				soundThread.start();
-			}
-		}
 		if (MyThemes.ISCHANGED)
 		{
 			MyThemes.ISCHANGED = false;
@@ -547,29 +534,25 @@ public class Main extends AppCompatActivity
 				txtUserName.setShadowLayer(2f, 2f, 2f, MyThemes.homeTextShadow);
 				txtSignature.setShadowLayer(2f, 2f, 2f, MyThemes.homeTextShadow);
 			}
-			//Toast.makeText(getApplicationContext(), MyThemes.homeTextColor + "|" + MyThemes.homeTextShadow, Toast.LENGTH_SHORT).show();
 		}
-		if (Common.IsChangeICON)
+	}
+
+	@Override
+	protected void onResume()
+	{
+		showUserInfo();
+		mHandler.sendEmptyMessage(5);
+		if (Common.MUSIC)
 		{
-			Common.IsChangeICON = false;
-			setIcon();
-		}
-		if (Common.isAudio() && Common.AUDIO_STUDY_STATE >= 10)
-			onAudioDialog();
-		if (Common.isNoadv())
-		{
-			if (bannerView != null)
+			if (soundThread == null || !soundThread.RUN)
 			{
-				bannerLayout.removeAllViews();
-				bannerView.destroy();
-				bannerView = null;
+				soundThread = new SoundThread();
+				soundThread.start();
 			}
 		}
-		else
-		{
-			if (bannerView == null)
-				initBanner();
-		}
+		showDrawerImage();
+		onAudioDialog();
+		showBanner();
 		if (Common.isNet(this))
 			Common.getTestMsg();
 		StatService.onResume(this);
@@ -610,6 +593,24 @@ public class Main extends AppCompatActivity
 		bannerView.loadAD();
 	}
 	
+	private void showBanner()
+	{
+		if (Common.isNoadv())
+		{
+			if (bannerView != null)
+			{
+				bannerLayout.removeAllViews();
+				bannerView.destroy();
+				bannerView = null;
+			}
+		}
+		else
+		{
+			if (bannerView == null)
+				initBanner();
+		}
+	}
+	
 	class SoundThread extends Thread implements Runnable
 	{
 		public boolean RUN = false;
@@ -630,15 +631,15 @@ public class Main extends AppCompatActivity
 					while (Common.audioService.isPlay())
 					{
 						Thread.sleep(10);
-						mHandler.sendEmptyMessage(8);
+						mHandler.sendEmptyMessage(3);
 					}
-					mHandler.sendEmptyMessage(9);
+					mHandler.sendEmptyMessage(4);
 				}
 			}
 			catch (Exception er)
 			{
 				ExceptionHandler.log("Main.SoundThread", er.toString());
-				mHandler.sendEmptyMessage(9);
+				mHandler.sendEmptyMessage(4);
 			}
 			finally
 			{
@@ -648,47 +649,78 @@ public class Main extends AppCompatActivity
 		}
 	}
 	
-	class LoginThread extends Thread implements Runnable
+	public void onAutoLogin()
 	{
-		public void run()
+		try
 		{
-			try
+			if (Common.canLogin())
 			{
-				/*ExceptionHandler.KeyLog log = new ExceptionHandler.KeyLog("LOGIN");
-				log.add("LoginMode", Common.AUTO_LOGIN_MODE);
-				log.add("UserId", Common.USERID);
-				log.add("UserPass", Common.USERPASS);
-				log.add("CanLogin", Common.canLogin());
-				log.toLog();*/
-				if (Common.canLogin())
+				txtUserName.setText("正在登录...");
+				if (Common.mUser == null)
 				{
-					mHandler.sendEmptyMessage(4);
-					if (Common.mUser == null)
+					Common.Login(Main.this, new Common.LoginListener()
 					{
-						Common.onLogin = 3;
-						Common.Login(Main.this);
-						while (Common.onLogin == 3)
+						@Override
+						public void onLogin(int code)
 						{
-							Thread.sleep(500);
+							if (code == 1)
+							{
+								if (!Common.OldSerialNo.equals(Util.getSerialNo(Main.this)))
+								{
+									Util.toastShortMessage(Main.this, "帐号在其他设备登录，您的登录态已失效，请重新登录");
+									Common.Logout(Main.this);
+								}
+								else
+									Common.IsChangeICON = true;
+								showUserInfo();
+							}	
+							if (code == 0 || code == 2)
+							{
+								toastLoginError("0x000"+code);
+							}
 						}
-						if (Common.onLogin == 2)
-							mHandler.sendEmptyMessage(6);
-					}
-					else
-						Common.onLogin = 0;
+
+						@Override
+						public void onError(String error)
+						{
+							ExceptionHandler.log("mainLogin", error);
+							toastLoginError("0x0001");
+						}
+					});
 				}
 			}
-			catch (Exception er)
-			{
-				ExceptionHandler.log("mainLogin",er.toString());
-				mHandler.sendEmptyMessage(6);
-			}
-			finally
-			{
-				mHandler.sendEmptyMessage(3);
-				mHandler.sendEmptyMessage(7);
-			}
 		}
+		catch (Exception er)
+		{
+			ExceptionHandler.log("mainLogin",er.toString());
+			toastLoginError("0x0001");
+		}
+	}
+	
+	private void showUserInfo()
+	{
+		if (Common.isLogin())
+		{
+			txtUserName.setText(Common.mUser.nickname);
+			txtSignature.setText(Common.mUser.mark);
+			Common.getInbox().getMyInbox(System.currentTimeMillis(), myCallback);
+		}
+		else
+		{
+			txtUserName.setText("请登录");
+			txtSignature.setText("");
+			closeDrawered();
+		}
+		if (Common.IsChangeICON)
+		{
+			Common.IsChangeICON = false;
+			setIcon();
+		}
+	}
+	
+	private void toastLoginError(String code)
+	{
+		Util.toastShortMessage(getApplicationContext(), "登录失败(" + code + ")");
 	}
 	
 	class InboxCallback implements InboxManager.InboxCallback
@@ -721,24 +753,10 @@ public class Main extends AppCompatActivity
 					checkVersion();
 					break;
 				case 3:
-					if (Common.mUser != null)
-					{
-						txtUserName.setText(Common.mUser.nickname);
-						txtSignature.setText(Common.mUser.mark);
-						Common.getInbox().getMyInbox(System.currentTimeMillis(), myCallback);
-					}
-					else
-					{
-						if (Common.isNotLogin())
-						{
-							txtUserName.setText("请登录");
-							txtSignature.setText("");
-							closeDrawered();
-						}
-					}
+					txtAudioCode.setText(Common.audioService.mid);
 					break;
 				case 4:
-					txtUserName.setText("正在登录...");
+					txtAudioCode.setText("");
 					break;
 				case 5:
 					if (Common.AUDIO && Common.MUSIC)
@@ -750,20 +768,6 @@ public class Main extends AppCompatActivity
 					showPlugin();
 					break;
 				case 6:
-					Common.onLogin = 0;
-					Util.toastShortMessage(getApplicationContext(), "登录失败");
-					break;
-				case 7:
-					if (Common.mUser != null)
-						setIcon();
-					break;
-				case 8:
-					txtAudioCode.setText(Common.audioService.mid);
-					break;
-				case 9:
-					txtAudioCode.setText("");
-					break;
-				case 10:
 					BmobUpdateAgent.setUpdateOnlyWifi(false);
 					BmobUpdateAgent.update(getApplicationContext());
 					//QbSdk.initX5Environment(Main.this, null);

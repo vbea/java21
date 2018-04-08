@@ -25,6 +25,7 @@ import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.MD5Util;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.SocialShare;
+import com.vbea.java21.classes.SettingUtil;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.data.Users;
 import cn.bmob.v3.BmobQuery;
@@ -91,7 +92,7 @@ public class Login extends AppCompatActivity
 				btnLogin.setEnabled(false);
 				btnSign.setEnabled(false);
 				btnLogin.setText("登录中...");
-				new LoginThread().start();
+				loginUser();
 			}
 		});
 		
@@ -149,18 +150,14 @@ public class Login extends AppCompatActivity
 	
 	public void reloadLogin()
 	{
-		if (Common.mUser.Set_Theme != null)
-			Common.APP_THEME_ID = Common.mUser.Set_Theme;
-		if (Common.mUser.Set_Backimg != null)
-			Common.APP_BACK_ID = Common.mUser.Set_Backimg;
 		//Common.MUSIC = Common.mUser.Set_Music;
 		SharedPreferences spf = getSharedPreferences("java21", MODE_PRIVATE);
 		SharedPreferences.Editor edt = spf.edit();
 		edt.putInt("theme", Common.APP_THEME_ID);
 		edt.putInt("back", Common.APP_BACK_ID);
-		edt.putBoolean("music", Common.MUSIC);
+		edt.putInt("java_size", Common.JAVA_TEXT_SIZE);
 		edt.commit();
-		Common.reStart(Login.this);
+		//Common.reStart(Login.this);
 	}
 	
 	Handler mHandler = new Handler()
@@ -171,116 +168,123 @@ public class Login extends AppCompatActivity
 			switch (msg.what)
 			{
 				case 0:
-					if (Common.mUser.valid)
+					Util.toastShortMessage(getApplicationContext(), "登录成功");
+					if (Common.checkUpdateSetting(Login.this))
 					{
-						Util.toastShortMessage(getApplicationContext(), "登录成功");
-						if (Common.isCanUploadUserSetting())
-						{
-							if (Common.mUser.Set_Theme == null || Common.mUser.Set_Backimg == null)
-							{
-								reloadLogin();
-								supportFinishAfterTransition();
-							}
-							else
-							{
-								reloadLogin();
-								ActivityManager.getInstance().FinishAllActivities();
-								Common.startActivityOptions(Login.this, Main.class);
-							}
-						}
-						else
-						{
-							Common.reStart(Login.this);
-							supportFinishAfterTransition();
-						}
+						reloadLogin();
+						ActivityManager.getInstance().FinishAllActivities();
+						Common.startActivityOptions(Login.this, Main.class);
 					}
 					else
 					{
-						Util.toastShortMessage(getApplicationContext(), "该帐号已被封禁，无法登录！");
-						Common.Logout();
-						if (mProgressDialog != null)
-							mProgressDialog.dismiss();
+						if (Common.mUser != null)
+						{
+							Common.mUser.settings = Common.getSettingJson(new SettingUtil());
+							Common.updateUser();
+						}
+						//reloadLogin();
+						supportFinishAfterTransition();
 					}
 					break;
 				case 1:
 					Util.toastShortMessage(getApplicationContext(), "登录失败，请重试");
+					resetButton();
 					break;
 				case 2:
-					btnLogin.setEnabled(true);
-					btnSign.setEnabled(true);
-					canGoback = true;
-					btnLogin.setText(R.string.java_login);
+					Util.toastShortMessage(getApplicationContext(), "用户名或密码错误，请重试");
+					resetButton();
 					break;
 				case 3:
-					Util.toastShortMessage(getApplicationContext(), "用户名或密码错误，请重试");
-					break;
-				case 4:
 					if (Common.isNet(Login.this))
 					{
 						Common.startActivityOptions(Login.this, QQLoginReg.class);
 						finish();
 					}
 					break;
+				case 4:
+					Util.toastShortMessage(getApplicationContext(), "该帐号已被封禁，无法登录！");
+					Common.Logout();
+					resetButton();
+					break;
 			}
 			super.handleMessage(msg);
 		}
 	};
 	
-	class LoginThread extends Thread implements Runnable
+	private void resetButton()
 	{
-		public void run()
+		btnLogin.setEnabled(true);
+		btnSign.setEnabled(true);
+		canGoback = true;
+		btnLogin.setText(R.string.java_login);
+		if (mProgressDialog != null)
+			mProgressDialog.dismiss();
+	}
+	
+	private void loginUser()
+	{
+		try
 		{
-			try
+			Common.Login(Login.this, edtUid.getText().toString(), MD5Util.getMD5(edtPass.getText().toString()), chkLogin.isChecked() ? 1 : 0, new Common.LoginListener()
 			{
-				Common.onLogin = 0;
-				Common.Login(Login.this, edtUid.getText().toString(), MD5Util.getMD5(edtPass.getText().toString()), chkLogin.isChecked() ? 1 : 0);
-				while (Common.onLogin == 0) { Thread.sleep(500); }
-				if (Common.mUser != null && Common.onLogin == 4)
+				@Override
+				public void onLogin(int code)
 				{
-					mHandler.sendEmptyMessage(0);
+					if (Common.mUser != null && code == 1)
+						mHandler.sendEmptyMessage(0);
+					else if (code == 0)
+						mHandler.sendEmptyMessage(2);
+					else if (code == 2)
+						mHandler.sendEmptyMessage(4);
 				}
-				else if (Common.onLogin == 1)
-					mHandler.sendEmptyMessage(3);
-				else
+
+				@Override
+				public void onError(String error)
+				{
+					ExceptionHandler.log("Login.LoginUser", error);
 					mHandler.sendEmptyMessage(1);
-			}
-			catch (Exception e)
-			{
-				ExceptionHandler.log("Login.LoginThread", e.toString());
-				mHandler.sendEmptyMessage(1);
-			}
-			finally
-			{
-				mHandler.sendEmptyMessage(2);
-			}
+				}
+			});
+		}
+		catch (Exception e)
+		{
+			ExceptionHandler.log("Login.LoginThread", e.toString());
+			mHandler.sendEmptyMessage(1);
 		}
 	}
 	
-	class QQLoginThread extends Thread implements Runnable
+	public void loginQQUser()
 	{
-		public void run()
+		try
 		{
-			try
+			Common.qqLogin(Login.this, SocialShare.mTencent.getOpenId(), new Common.LoginListener()
 			{
-				Common.onLogin = 0;
-				Common.qqLogin(Login.this, SocialShare.mTencent.getOpenId());
-				while (Common.onLogin == 0) { Thread.sleep(500); }
-				if (Common.mUser != null && Common.onLogin == 4)
-					mHandler.sendEmptyMessage(0);
-				else
-					mHandler.sendEmptyMessage(4);
-			}
-			catch (Exception e)
-			{
-				ExceptionHandler.log("Login.qqLoginThread", e.toString());
-				mHandler.sendEmptyMessage(1);
-			}
-			finally
-			{
-				mHandler.sendEmptyMessage(2);
-			}
+				@Override
+				public void onLogin(int code)
+				{
+					if (Common.mUser != null && code == 1)
+						mHandler.sendEmptyMessage(0);
+					else if (code == 0)
+						mHandler.sendEmptyMessage(3);
+					else if (code == 2)
+						mHandler.sendEmptyMessage(4);
+				}
+
+				@Override
+				public void onError(String error)
+				{
+					ExceptionHandler.log("Login.LoginQQUser", error);
+					mHandler.sendEmptyMessage(1);
+				}
+			});
+		}
+		catch (Exception e)
+		{
+			ExceptionHandler.log("Login.qqLoginThread", e.toString());
+			mHandler.sendEmptyMessage(1);
 		}
 	}
+		
 	
 	class MyIListener implements IUiListener
 	{
@@ -298,7 +302,7 @@ public class Login extends AppCompatActivity
 					String openId = json.getString(Constants.PARAM_OPEN_ID);
 					SocialShare.mTencent.setAccessToken(token, expires);
 					SocialShare.mTencent.setOpenId(openId);
-					new QQLoginThread().start();
+					loginQQUser();
 				}
 			}
 			catch (Exception e)

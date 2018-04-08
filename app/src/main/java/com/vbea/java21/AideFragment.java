@@ -22,7 +22,7 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.DividerItemDecoration;
 import com.vbea.java21.data.AndroidIDE;
 import com.vbea.java21.list.AideAdapter;
-import com.vbea.java21.list.MyDecoration;
+import com.vbea.java21.list.MyDividerDecoration;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
@@ -103,7 +103,7 @@ public class AideFragment extends Fragment
 				@Override
 				public void onRefresh()
 				{
-					if (Common.isNotLogin())
+					if (!Common.isLogin())
 					{
 						recyclerView.setVisibility(View.GONE);
 						errorText.setVisibility(View.VISIBLE);
@@ -287,7 +287,7 @@ public class AideFragment extends Fragment
 	@Override
 	public void onResume()
 	{
-		if (Common.isNotLogin())
+		if (!Common.isLogin())
 		{
 			recyclerView.setVisibility(View.GONE);
 		}

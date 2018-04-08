@@ -30,9 +30,12 @@
 		android:id="@+id/item_code"
 		android:title="查看源"/>
 	<item
+		android:id="@+id/item_addbook"
+		android:title="@string/bookmark"/>
+	<item
+		android:id="@+id/item_history"
+		android:title="@string/history"/>
+	<item
 		android:id="@+id/item_setting"
 		android:title="设置"/>
-	<item
-		android:id="@+id/item_addbook"
-		android:title="添加到书签"/>
 </menu>

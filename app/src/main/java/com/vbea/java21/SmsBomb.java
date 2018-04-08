@@ -47,9 +47,9 @@ public class SmsBomb extends AppCompatActivity
 		scrollView = (ScrollView) findViewById(R.id.scrollView);
 		//webView = (WebView) findViewById(R.id.webView);
 		btnStart = (Button) findViewById(R.id.btnStart);
-		urls_list = getResources().getStringArray(R.array.array_urls);
-		urls_yd = getResources().getStringArray(R.array.array_yd);
-		urls_lt = getResources().getStringArray(R.array.array_lt);
+		//urls_list = getResources().getStringArray(R.array.array_urls);
+		//urls_yd = getResources().getStringArray(R.array.array_yd);
+		//urls_lt = getResources().getStringArray(R.array.array_lt);
 		phone_yd = getResources().getString(R.string.number_mobile).split(",");
 		phone_lt = getResources().getString(R.string.number_unicom).split(",");
 		phone_dx = getResources().getString(R.string.number_telcom).split(",");

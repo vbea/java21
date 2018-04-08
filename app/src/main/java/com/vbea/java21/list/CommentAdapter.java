@@ -40,7 +40,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 		if (defalteIcon == null)
 			defalteIcon = Common.getRoundedIconDrawable(context, BitmapFactory.decodeResource(context.getResources(), R.mipmap.head));
 		if (timeAgo == null)
-			timeAgo = new TimeAgo();
+			timeAgo = new TimeAgo(null);
 		mList = list;
 	}
 	

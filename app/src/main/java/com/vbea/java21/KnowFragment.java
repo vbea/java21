@@ -48,21 +48,25 @@ public class KnowFragment extends Fragment
 			
 			ArrayList<Knowledges> list = new ArrayList<Knowledges>();
 			String[] titles = getResources().getStringArray(R.array.array_shizhan);
+			String[] urls1 = getResources().getStringArray(R.array.url_shizhan);
 			String[] review = getResources().getStringArray(R.array.array_baodian);
-			for (int i=0; i<titles.length; i++)
-			{
-				list.add(new Knowledges(titles[i], "实战"));
-			}
+			String[] urls2 = getResources().getStringArray(R.array.url_baodian);
+			
 			for (int i=0; i<review.length; i++)
 			{
-				list.add(new Knowledges(review[i], "宝典"));
+				list.add(new Knowledges(review[i], "宝典", urls2[i]));
 			}
+			for (int i=0; i<titles.length; i++)
+			{
+				list.add(new Knowledges(titles[i], "实战", urls1[i]));
+			}
+			
 			mAdapter = new KnowledgeAdapter(list);
 			recyclerView.setAdapter(mAdapter);
 			mAdapter.setOnItemClickListener(new KnowledgeAdapter.OnItemClickListener()
 			{
 				@Override
-				public void onItemClick(String title, int id)
+				public void onItemClick(String title, String url)
 				{
 					/*if (Common.isNotLogin())
 					{
@@ -70,7 +74,7 @@ public class KnowFragment extends Fragment
 						return;
 					}*/
 					Intent intent = new Intent(getActivity(), Knowledge.class);
-					intent.putExtra("id", id);
+					intent.putExtra("url", url);
 					intent.putExtra("title", title);
 					Common.startActivityOptions(getActivity(), intent);
 				}

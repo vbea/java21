@@ -12,11 +12,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.AttributeSet;
-/*import android.webkit.WebView;
+import android.webkit.WebView;
 import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebViewClient;
-import android.webkit.WebChromeClient;*/
+import android.webkit.WebChromeClient;
 import android.webkit.JavascriptInterface;
 import android.widget.TextView;
 import android.widget.EditText;
@@ -47,11 +47,11 @@ import com.vbea.java21.data.SQLHelper;
 import com.vbea.java21.data.CodeMode;
 
 import org.apache.commons.io.FileUtils;
-import com.tencent.smtt.sdk.WebView;
+/*import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebStorage;
 import com.tencent.smtt.sdk.WebViewClient;
-import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebChromeClient;*/
 
 public class CodeEditor extends AppCompatActivity
 {

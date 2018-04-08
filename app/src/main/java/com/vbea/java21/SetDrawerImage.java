@@ -27,6 +27,7 @@ import com.vbea.java21.list.DrawerAdapter;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
+import com.vbea.java21.classes.SettingUtil;
 
 public class SetDrawerImage extends AppCompatActivity
 {
@@ -78,8 +79,11 @@ public class SetDrawerImage extends AppCompatActivity
 	@Override
 	protected void onDestroy()
 	{
-		if (Common.isCanUploadUserSetting())
+		if (MyThemes.ISCHANGED)
+		{
+			Common.mUser.settings = Common.getSettingJson(new SettingUtil());
 			Common.updateUser();
+		}
 		edt.putInt("back", Common.APP_BACK_ID);
 		edt.commit();
 		super.onDestroy();

@@ -66,7 +66,6 @@ public class Common
 	public final static boolean HULUXIA = false;//是否葫芦侠特别版
 	public static Users mUser;
 	public static boolean IsChangeICON = false;
-	public static int onLogin = 0;
 	public static int AUDIO_STUDY_STATE = 0;
 	public static int JAVA_TEXT_SIZE = 2;
 	public static AudioService audioService;
@@ -78,6 +77,7 @@ public class Common
 	public static InboxManager myInbox;
 	private static long lastTipsTime;
 	private static Copys copyMsg;
+	public static String OldSerialNo;
 	public static void start(Context context)
 	{
 		startBmob(context);
@@ -158,6 +158,68 @@ public class Common
 		init(spf);
 	}
 	
+	public static String getSettingJson(SettingUtil utils)
+	{
+		utils.addSettings(SettingUtil.SET_THEME, APP_THEME_ID);
+		utils.addSettings(SettingUtil.SET_BACKIMG, APP_BACK_ID);
+		utils.addSettings(SettingUtil.SET_FONTSIZE, JAVA_TEXT_SIZE);
+		return utils.getJsonString();
+	}
+	
+	public static boolean checkUpdateSetting(Context context)
+	{
+		if (!mUser.serialNo.equals(Util.getSerialNo(context)))
+		{
+			try
+			{
+				SettingUtil utils = new SettingUtil();
+				if (!Util.isNullOrEmpty(mUser.settings))
+				{
+					utils.synaxSetting(mUser.settings);
+					APP_BACK_ID = utils.getIntValue(SettingUtil.SET_BACKIMG);
+					APP_THEME_ID = utils.getIntValue(SettingUtil.SET_THEME);
+					JAVA_TEXT_SIZE = utils.getIntValue(SettingUtil.SET_FONTSIZE);
+					return true;
+				}
+			}
+			catch (Exception e)
+			{
+				ExceptionHandler.log("checkUpdateSetting", e);
+			}
+		}
+		return false;
+	}
+	
+	public static void updateUserLogin(Context context)
+	{
+		OldSerialNo = mUser.serialNo;
+		Date now = new Date();
+		if (mUser.lastLogin != null)
+		{
+			mUser.device = Util.getDeviceId(context);
+			mUser.serialNo = Util.getSerialNo(context);
+			Date loginDate = new Date(BmobDate.getTimeStamp(mUser.lastLogin.getDate()));
+			if (loginDate.getDate() != now.getDate())
+			{
+				if (now.getYear() >= loginDate.getYear() || now.getMonth() >= loginDate.getMonth())
+				{
+					if (mUser.dated != null)
+						mUser.dated += 1;
+					else
+						mUser.dated = 1;
+				}
+			}
+			mUser.lastLogin = new BmobDate(now);
+			updateUser();
+		}
+		else
+		{
+			mUser.lastLogin = new BmobDate(now);
+			mUser.dated = 1;
+			updateUser();
+		}
+	}
+	
 	public static void updateUser()
 	{
 		try
@@ -177,9 +239,11 @@ public class Common
 			user.qq = mUser.qq;
 			user.qqId = mUser.qqId;
 			user.mobile = mUser.mobile;
-			user.Set_Backimg = APP_BACK_ID;
-			user.Set_Theme = APP_THEME_ID;
-			//user.Set_Music = MUSIC;
+			user.settings = mUser.settings;
+			user.lastLogin = mUser.lastLogin;
+			user.dated = mUser.dated;
+			user.device = mUser.device;
+			user.serialNo = mUser.serialNo;
 			user.update(new UpdateListener()
 			{
 				public void done(BmobException e)
@@ -280,12 +344,13 @@ public class Common
 		return true;
 	}
 	
-	public static void Login(Context context)
+	//自动登录
+	public static void Login(Context context, LoginListener listener)
 	{
 		if (AUTO_LOGIN_MODE == 1)
-			Login(context, USERID, USERPASS, 3);
+			Login(context, USERID, USERPASS, 3, listener);
 		else if (AUTO_LOGIN_MODE == 2)
-			qqLogin(context, USERPASS);
+			qqLogin(context, USERPASS, listener);
 	}
 	
 	public static boolean isAudio()
@@ -310,15 +375,15 @@ public class Common
 	
 	public static boolean isVipUser()
 	{
-		if (mUser != null && IS_ACTIVE)
-			return mUser.roles.equals("管理员") || Common.mUser.roles.equals("VIP会员");
+		if (mUser != null && mUser.role != null && IS_ACTIVE)
+			return mUser.role >= 10;
 		return false;
 	}
 	
 	public static boolean isAdminUser()
 	{
-		if (mUser != null)
-			return mUser.roles.equals("管理员");
+		if (mUser != null && mUser.role != null)
+			return mUser.role == 10;
 		return false;
 	}
 	
@@ -337,7 +402,7 @@ public class Common
 		});
 	}
 	
-	public static void qqLogin(final Context context, String openId)
+	public static void qqLogin(final Context context, String openId, final LoginListener listener)
 	{
 		BmobQuery<Users> sql = new BmobQuery<Users>();
 		sql.addWhereEqualTo("qqId", openId);
@@ -352,19 +417,25 @@ public class Common
 					if (list.size() > 0)
 					{
 						mUser = list.get(0);
+						if (!mUser.valid)
+						{
+							if (listener != null)
+								listener.onLogin(2);
+							return;
+						}
 						SharedPreferences spf = context.getSharedPreferences("java21", Context.MODE_PRIVATE);
 						SharedPreferences.Editor editor = spf.edit();
 						editor.putString("uid", Common.mUser.name);
 						editor.putString("sid", Common.mUser.qqId);
 						editor.putInt("loginmode", 2);
 						USERID = mUser.name;
-						KEY = mUser.key;
 						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 						editor.putString("key", KEY);
 						if (!isVipUser())
 							editor.putBoolean("weladv", true);
 						if (!IS_ACTIVE)//自动激活
 						{
+							KEY = mUser.key;
 							if (regist(KEY))
 							{
 								IS_ACTIVE = true;
@@ -374,22 +445,27 @@ public class Common
 							}
 						}
 						editor.commit();
-						onLogin = 4;
+						updateUserLogin(context);
+						if (listener != null)
+							listener.onLogin(1);
 						IsChangeICON = true;
 					}
-					else
-						onLogin = 1;
+					else {
+						if (listener != null)
+							listener.onLogin(0);
+					}
 				}
 				else
 				{
 					//ExceptionHandler.log("登录失败:"+e.toString());
-					onLogin = 2;
+					if (listener != null)
+						listener.onError(e.toString());
 				}
 			}
 		});
 	}
 	
-	public static void Login(final Context context, final String username, final String pasdword, final int mode)
+	public static void Login(final Context context, final String username, final String pasdword, final int mode, final LoginListener listener)
 	{
 		BmobQuery<Users> sql1 = new BmobQuery<Users>();
 		sql1.addWhereEqualTo("name", username);
@@ -417,7 +493,6 @@ public class Common
 						Common.mUser = list.get(0);
 						SharedPreferences spf = context.getSharedPreferences("java21", Context.MODE_PRIVATE);
 						SharedPreferences.Editor editor = spf.edit();
-						KEY = mUser.key;
 						if (mode < 3)
 						{
 							editor.putString("uid", mode == 1 ? Common.mUser.name : "");
@@ -426,9 +501,10 @@ public class Common
 							USERID = username;
 							if (!IS_ACTIVE)//自动激活
 							{
-								SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+								KEY = mUser.key;
 								if (regist(KEY))
 								{
+									SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 									IS_ACTIVE = true;
 									editor.putBoolean("autok", true);
 									editor.putString("date", format.format(new Date()));
@@ -438,7 +514,8 @@ public class Common
 						}
 						else if (!mUser.valid)
 						{
-							onLogin = 2;
+							if (listener != null)
+								listener.onLogin(2);
 							mUser = null;
 							return;
 						}
@@ -446,16 +523,22 @@ public class Common
 							editor.putBoolean("weladv", true);
 						editor.putString("key", KEY);
 						editor.commit();
-						onLogin = 4;
+						updateUserLogin(context);
+						if (listener != null)
+							listener.onLogin(1);
 						IsChangeICON = true;
 					}
 					else
-						onLogin = 1;
+					{
+						if (listener != null)
+							listener.onLogin(0);
+					}
 				}
 				else
 				{
 					//ExceptionHandler.log("登录失败:"+e.toString());
-					onLogin = 2;
+					if (listener != null)
+						listener.onError(e.toString());
 				}
 			}
 		});
@@ -464,7 +547,6 @@ public class Common
 	public static void Logout()
 	{
 		mUser = null;
-		onLogin = 0;
 		IsChangeICON = true;
 		if (myInbox != null)
 		{
@@ -476,7 +558,6 @@ public class Common
 	public static void Logout(Context context)
 	{
 		mUser = null;
-		onLogin = 0;
 		IsChangeICON = true;
 		SharedPreferences spf = context.getSharedPreferences("java21", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = spf.edit();
@@ -485,28 +566,9 @@ public class Common
 		AUTO_LOGIN_MODE = 0;
 	}
 	
-	public static boolean isCanUploadUserSetting()
-	{
-		if (mUser != null)
-		{
-			if (mUser.Set_Backimg != null && mUser.Set_Theme != null)
-				return mUser.Set_Backimg != APP_BACK_ID || mUser.Set_Theme != APP_THEME_ID;
-			else
-				return true;
-		}
-		return false;
-	}
-	
 	public static boolean isLogin()
 	{
-		return (onLogin == 4 && mUser != null);
-	}
-	
-	public static boolean isNotLogin()
-	{
-		if (onLogin != 4 || mUser == null)
-			return true;
-		return false;
+		return (mUser != null);
 	}
 	
 	private static boolean regist(String key)
@@ -865,6 +927,11 @@ public class Common
 		startActivityOptions(context, new Intent(context, cls));
 	}
 	
+	public static void startActivityForResult(Activity context, Class<?> cls, int requestCode)
+	{
+		startActivityForResult(requestCode, context, new Intent(context, cls));
+	}
+	
 	public static void startActivityOptions(Activity context, Intent intent, Pair<View,String>...pairs)
 	{
 		try
@@ -885,6 +952,29 @@ public class Common
 		{
 			context.startActivity(intent);
 			ExceptionHandler.log("StartActivityOptionsPair", e.toString());
+		}
+	}
+	
+	public static void startActivityForResult(int requestCode, Activity context, Intent intent, Pair<View,String>...pairs)
+	{
+		try
+		{
+			if (isSupportMD())
+			{
+				ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(context, pairs);
+				context.startActivityForResult(intent, requestCode, options.toBundle());
+			}
+			else
+			{
+				context.startActivityForResult(intent, requestCode);
+				context.overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
+			}
+			ActivityManager.getInstance().startActivity(context);
+		}
+		catch (Exception e)
+		{
+			context.startActivityForResult(intent, requestCode);
+			ExceptionHandler.log("StartActivityForResultPair", e.toString());
 		}
 	}
 	
@@ -910,6 +1000,12 @@ public class Common
 		}
 	}
 	
+	public interface LoginListener
+	{
+		void onLogin(int code);
+		void onError(String error);
+	}
+	
 	public static void gc(Context c)
 	{
 		//gc垃圾回收: 恢复到初始化状态
@@ -925,7 +1021,6 @@ public class Common
 		WEL_ADV = true;//欢迎页广告
 		SOUND = null;//音乐池
 		mUser = null;//登录用户
-		onLogin = 0;//登录状态
 		FileProvider = null;//文件提供者
 		mTips = null;//通知中心
 		READ_Android = null;

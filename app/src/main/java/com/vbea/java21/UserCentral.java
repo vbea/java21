@@ -158,8 +158,6 @@ public class UserCentral extends AppCompatActivity
 		{
 			public void onClick(View v)
 			{
-				if (Common.isCanUploadUserSetting())
-					Common.updateUser();
 				Util.showConfirmCancelDialog(UserCentral.this, "注销", "您确定要退出登录？",
 				new DialogInterface.OnClickListener()
 				{
@@ -290,8 +288,8 @@ public class UserCentral extends AppCompatActivity
 		username.setText(user.name);
 		nickname.setText(user.nickname);
 		titleName.setText(user.nickname);
-		level.setText("Lv " + user.level);
-		roles.setText(user.roles);
+		level.setText(getUserLevel(user.dated));
+		roles.setText(getUserRole(user.role));
 		gender.setText(user.gender ? "男" : "女");
 		birthday.setText(user.birthday);
 		address.setText(user.address);
@@ -330,6 +328,74 @@ public class UserCentral extends AppCompatActivity
 			return str.replaceAll(rep, sb.toString());
 		}
 		return str;
+	}
+	
+	//获取用户等级
+	private String getUserLevel(Integer dated)
+	{
+		if (dated == null)
+			return "见习期";
+		else
+		{
+			if (dated < 10)
+				return "Lv 1";
+			else if (dated < 30)
+				return "Lv 2";
+			else if (dated < 60)
+				return "Lv 3";
+			else if (dated < 100)
+				return "Lv 4";
+			else if (dated < 150)
+				return "Lv 5";
+			else if (dated < 200)
+				return "Lv 6";
+			else if (dated < 250)
+				return "Lv 7";
+			else if (dated < 300)
+				return "Lv 8";
+			else if (dated < 360)
+				return "Lv 9";
+			else if (dated > 500)
+				return "Lv 10";
+		}
+		return "";
+	}
+	
+	//获取用户角色信息
+	private String getUserRole(Integer roles)
+	{
+		String role = "注册用户";
+		if (roles != null)
+		{
+			switch (roles)
+			{
+				case 1:
+					role = "普通用户";
+					break;
+				case 2:
+					role = "QQ用户";
+					break;
+				case 3:
+					role = "三楼用户";
+					break;
+				case 4:
+					role = "版主";
+					break;
+				case 10:
+					role = "管理员";
+					break;
+				case 11:
+					role = "普通会员";
+					break;
+				case 12:
+					role = "超级会员";
+					break;
+				case 0:
+					role = "小黑屋";
+					break;
+			}
+		}
+		return role;
 	}
 
 	@Override

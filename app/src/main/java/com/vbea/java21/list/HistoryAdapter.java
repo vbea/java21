@@ -1,9 +1,9 @@
 package com.vbea.java21.list;
 
+import java.util.List;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.database.Cursor;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,64 +12,58 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import com.vbea.java21.R;
 import com.vbea.java21.classes.ExceptionHandler;
+import com.vbea.java21.data.Histories;
+import com.vbea.java21.data.Histime;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHolder>
 {
-	private Cursor cursor;
+	private List<Histories> mList;
 	private OnItemClickListener onItemClickListener;
-	public HistoryAdapter(Cursor data)
+	/*public HistoryAdapter(List<Histories> list)
 	{
-		cursor = data;
-	}
+		mList = list;
+	}*/
 
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup p1, int p2)
 	{
 		LayoutInflater inflate = LayoutInflater.from(p1.getContext());
-		View v = inflate.inflate(R.layout.java9, p1, false);
+		View v = inflate.inflate(R.layout.historyitem, p1, false);
 		MyViewHolder holder = new MyViewHolder(v);
 		return holder;
+	}
+	
+	public void setData(List<Histories> list)
+	{
+		this.mList = list;
 	}
 
 	@Override
 	public void onBindViewHolder(MyViewHolder holder, int p)
 	{
-		if (cursor.moveToPosition(p))
+		final Histories item = mList.get(p);
+		holder.title.setText(item.getTitle());
+		holder.sub.setText(item.getUrl());
+		holder.layout.setOnClickListener(new View.OnClickListener()
 		{
-			final String url = cursor.getString(cursor.getColumnIndex("url"));
-			holder.title.setText(cursor.getString(cursor.getColumnIndex("name")));
-			holder.sub.setText(url);
-			if (p == getItemCount() - 1)
-				holder.end.setVisibility(View.VISIBLE);
-			else
-				holder.end.setVisibility(View.GONE);
-			holder.layout.setOnClickListener(new View.OnClickListener()
+			public void onClick(View v)
 			{
-				public void onClick(View v)
+				if(onItemClickListener != null)
 				{
-					if(onItemClickListener != null)
-					{
-						onItemClickListener.onItemClick(url);
-					}
+					onItemClickListener.onItemClick(item.getUrl());
 				}
-			});
-		}
+			}
+		});
 	}
 
 	@Override
 	public int getItemCount()
 	{
-		if (cursor != null)
-			return cursor.getCount();
+		if (mList != null)
+			return mList.size();
 		return 0;
 	}
-
-	public void close()
-	{
-		if (cursor != null)
-			cursor.close();
-	}
-
+	
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
 	{
         this.onItemClickListener = onItemClickListener;
@@ -80,14 +74,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 		TextView title;
 		TextView sub;
 		LinearLayout layout;
-		RelativeLayout end;
 		public MyViewHolder(View v)
 		{
 			super(v);
 			title = (TextView) v.findViewById(R.id.item_title);
 			sub = (TextView) v.findViewById(R.id.item_sub);
 			layout = (LinearLayout) v.findViewById(R.id.itemLayout);
-			end = (RelativeLayout) v.findViewById(R.id.item_end);
 		}
 	}
 

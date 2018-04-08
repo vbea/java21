@@ -48,6 +48,7 @@ import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.SearchView;
 import android.support.v4.view.MenuItemCompat;
 import android.support.design.widget.BottomSheetDialog;
+import com.vbea.java21.data.WebHelper;
 import com.vbea.java21.widget.MyWebView;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
@@ -72,13 +73,14 @@ public class HtmlViewer extends AppCompatActivity
 	private BottomSheetDialog mBSDialog;
 	private LinearLayout share_qq, share_qzone, share_wx, share_wxpy;
 	private LinearLayout share_sina, share_web, share_link, share_more;
-	private String SH_html, SH_url = "", SH_home, UA_Default;
+	private String SH_html, SH_url = "", SH_history = "", SH_hisName = "", SH_home, UA_Default;
 	private int SH_search = 0, SH_UA = 0;
 	private Uri cameraUri;
 	private String[] Searchs, UAurls;
 	private boolean ISSOURCE = false;
 	private SharedPreferences spf;
 	private WebSettings wset;
+	private WebHelper webHelper;
 	private static final int FILECHOOSER_RESULTCODE = 1;
 	private static final int CHOOSE_CAMERA = 2;
 	private ValueCallback<Uri> mUploadMessage;
@@ -173,7 +175,7 @@ public class HtmlViewer extends AppCompatActivity
 						//return super.shouldOverrideUrlLoading(v, url);
 					}
 				}
-				else if (SH_url != url)
+				else// if (!SH_url.equals(url))
 				{
 					SH_url = url;
 					v.loadUrl(url);
@@ -194,6 +196,7 @@ public class HtmlViewer extends AppCompatActivity
 			public void onPageFinished(WebView view, String url)
 			{
 				SH_url = url;
+				addHistory();
 				view.loadUrl("javascript:window.showcode.show(document.getElementsByTagName('html')[0].outerHTML);");
 				tool.setTitle(view.getTitle());
 				//view.loadUrl("javascript:close_adtip();");
@@ -387,6 +390,7 @@ public class HtmlViewer extends AppCompatActivity
 		menu.findItem(R.id.item_forward).setVisible(webView.canGoForward() && !ISSOURCE);
 		menu.findItem(R.id.item_androidshare).setVisible(!SH_url.equals(""));
 		menu.findItem(R.id.item_code).setVisible(!SH_url.equals(""));
+		menu.findItem(R.id.item_addbook).setVisible(!SH_url.equals(""));
 		menu.findItem(R.id.item_home).setVisible(isValidHome());
 		menu.findItem(R.id.item_code).setTitle(ISSOURCE ? "返回" : "查看源");
 		return super.onPrepareOptionsMenu(menu);
@@ -406,6 +410,10 @@ public class HtmlViewer extends AppCompatActivity
 			if (Common.isNet(this) && !ISSOURCE)
 				webView.reload();
 		}
+		else if (item.getItemId() == R.id.item_addbook)
+			showBookmark();
+		else if (item.getItemId() == R.id.item_history)
+			Common.startActivityForResult(HtmlViewer.this, History.class, 520);
 		else if (item.getItemId() == R.id.item_androidshare)
 		{
 			mBSDialog = new BottomSheetDialog(this);
@@ -506,6 +514,7 @@ public class HtmlViewer extends AppCompatActivity
 		@Override
         public void onCancel()
 		{
+			Util.toastShortMessage(getApplicationContext(), "分享取消");
         }
         @Override
         public void onComplete(Object response)
@@ -562,6 +571,47 @@ public class HtmlViewer extends AppCompatActivity
 		SH_htmlUrl = SH_url;
 	}*/
 	
+	private void showBookmark()
+	{
+		AlertDialog dialog = new AlertDialog(this);
+		dialog.setTitle(R.string.bookmark);
+		dialog.setItems(R.array.array_bookmark, new DialogInterface.OnClickListener()
+		{
+			@Override
+			public void onClick(DialogInterface p1, int p2)
+			{
+				if (p2 == 0)
+					Common.startActivityForResult(HtmlViewer.this, Bookmark.class, 520);
+				else
+					addBookmark();
+				p1.dismiss();
+			}
+		});
+		dialog.show();
+	}
+	
+	private void addBookmark()
+	{
+		if (webHelper != null)
+		{
+			if (webHelper.addBookmark(webView.getTitle(), webView.getUrl()) > 0)
+				Util.toastShortMessage(this, "添加书签成功");
+			else
+				Util.toastShortMessage(this, "添加失败");
+		}
+	}
+	
+	private void addHistory()
+	{
+		//添加历史记录 静默操作
+		if (webHelper != null && !SH_history.equals(SH_url) && !SH_hisName.equals(webView.getTitle()))
+		{
+			SH_history = SH_url;
+			SH_hisName = webView.getTitle();
+			webHelper.addHistory(SH_hisName, SH_url);
+		}
+	}
+	
 	private void onSetting()
 	{
 		if (spf == null)
@@ -573,6 +623,8 @@ public class HtmlViewer extends AppCompatActivity
 			UAurls = getResources().getStringArray(R.array.array_ua);
 			UAurls[0] = UA_Default;
 		}
+		if (webHelper == null)
+			webHelper = new WebHelper(this);
 		SH_home = spf.getString("web_home", "");
 		SH_search = spf.getInt("web_search", 0);
 		int ua = spf.getInt("web_ua", 0);
@@ -706,32 +758,47 @@ public class HtmlViewer extends AppCompatActivity
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
-		if (mUploadMessage == null && mUploadMessages == null)
-			return;
-		Uri uri = null;
 		if (resultCode == Activity.RESULT_OK)
 		{
 			switch (requestCode)
 			{
 				case CHOOSE_CAMERA:
-					File f = new File(Common.getTempImagePath());
-					if (!f.exists())
-						cameraUri = Uri.parse("");
-					else
+					if (mUploadMessage != null)
 					{
-						ContentValues values = new ContentValues();
-						values.put(MediaStore.Images.Media.DATA, f.getAbsolutePath());
-						values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-						getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+						File f = new File(Common.getTempImagePath());
+						if (!f.exists())
+							cameraUri = Uri.parse("");
+						else
+						{
+							ContentValues values = new ContentValues();
+							values.put(MediaStore.Images.Media.DATA, f.getAbsolutePath());
+							values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+							getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+						}
+						onReceiveValue(cameraUri);
 					}
-					uri = cameraUri;
 					break;
 				case FILECHOOSER_RESULTCODE:
+					if (mUploadMessage != null && data != null)
+						onReceiveValue(data.getData());
+					break;
+				case Constants.REQUEST_QQ_SHARE:
+					Tencent.handleResultData(data, qqShareListener);
+					break;
+				case Constants.REQUEST_QZONE_SHARE:
+					Tencent.handleResultData(data, qqShareListener);
+					break;
+				case 520://History & Bookmark
 					if (data != null)
-						uri = data.getData();
+						webView.loadUrl(data.getDataString());
 					break;
 			}
 		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+	
+	private void onReceiveValue(Uri uri)
+	{
 		if (uri == null)
 			uri = Uri.parse("");
 		if (mUploadMessage != null)
@@ -740,7 +807,6 @@ public class HtmlViewer extends AppCompatActivity
 			mUploadMessages.onReceiveValue(new Uri[]{uri});
 		mUploadMessage = null;
 		mUploadMessages = null;
-		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
 	public class MyWebChromeClient extends WebChromeClient

@@ -177,7 +177,7 @@ public class Machine extends AppCompatActivity
 			}
 			if (Common.isNet(Machine.this))
 			{
-				if (login && Common.isNotLogin())
+				if (login && !Common.isLogin())
 				{
 					Util.showConfirmCancelDialog(this, "仍要激活", "请先注册帐号并登录后再激活，以便于将密钥存入账户，以后可在其他设备同步激活", "返回登录", new DialogInterface.OnClickListener()
 					{

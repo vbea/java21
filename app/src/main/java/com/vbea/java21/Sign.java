@@ -1,5 +1,6 @@
 package com.vbea.java21;
 
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -26,9 +27,11 @@ import android.support.v7.widget.Toolbar;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.MD5Util;
+import com.vbea.java21.classes.SettingUtil;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.data.Users;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.exception.BmobException;
@@ -279,14 +282,13 @@ public class Sign extends AppCompatActivity
 					user.nickname = edtNick.getText().toString().trim();
 					user.gender = rdbMale.isChecked();
 					user.mark = "他很懒，什么也没留下";
-					user.roles = Common.HULUXIA ? "三楼用户" : "普通用户";
-					user.gender = true;
+					user.role = Common.HULUXIA ? 3 : 1;
+					user.gender = rdbMale.isChecked();
 					user.valid = true;
-					user.level = 1;
-					//add on 20170613 -start
-					user.Set_Backimg = Common.APP_BACK_ID;
-					user.Set_Theme = Common.APP_THEME_ID;
-					//user.Set_Music = Common.MUSIC;
+					//add on 20180405 -start
+					user.dated = 0;
+					user.lastLogin = new BmobDate(new Date());
+					user.settings = Common.getSettingJson(new SettingUtil());
 					//-end
 					if (Common.IS_ACTIVE)
 						user.key = Common.KEY;

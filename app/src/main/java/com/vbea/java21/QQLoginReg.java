@@ -38,8 +38,10 @@ import com.vbea.java21.classes.MD5Util;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.SocialShare;
+import com.vbea.java21.classes.SettingUtil;
 import com.vbea.java21.data.Users;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobDate;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.CountListener;
@@ -487,12 +489,12 @@ public class QQLoginReg extends AppCompatActivity
 					}
 					mUser.psd = "";
 					mUser.valid = true;
-					mUser.level = 2;
-					mUser.roles = "QQ用户";
+					mUser.role = 2;
 					mUser.mark = "他很懒，什么也没留下";
-					//add on 20170613 -start
-					mUser.Set_Backimg = Common.APP_BACK_ID;
-					mUser.Set_Theme = Common.APP_THEME_ID;
+					//add on 20180405 -start
+					mUser.dated = 0;
+					mUser.lastLogin = new BmobDate(new Date());
+					mUser.settings = Common.getSettingJson(new SettingUtil());
 					//mUser.Set_Music = Common.MUSIC;
 					//-end
 					if (Common.IS_ACTIVE)
@@ -506,7 +508,6 @@ public class QQLoginReg extends AppCompatActivity
 							if (e == null)
 							{
 								Common.mUser = mUser;
-								Common.onLogin = 4;
 								Common.IsChangeICON = true;
 								mHandler.sendEmptyMessage(2);
 							}
@@ -533,66 +534,72 @@ public class QQLoginReg extends AppCompatActivity
 			try
 			{
 				//绑定老用户
-				Common.onLogin = 0;
-				Common.Login(QQLoginReg.this, edtUserbind.getText().toString(), MD5Util.getMD5(edtPassword.getText().toString()), 1);
-				while (Common.onLogin == 0) { Thread.sleep(500); }
-				if (Common.mUser != null && Common.onLogin == 4)
+				Common.Login(QQLoginReg.this, edtUserbind.getText().toString(), MD5Util.getMD5(edtPassword.getText().toString()), 1, new Common.LoginListener()
 				{
-					if (useQQinfo.isChecked())
+					@Override
+					public void onLogin(int code)
 					{
-						td3 = true;
-						mUser.name = Common.mUser.name;
-						File file = getIconFile();
-						if (file.exists())
+						if (Common.mUser != null && code == 1)
 						{
-							uploadIcon(file);//上传头像
-							while (td3) {sleep(500);}
-						}
-						mUser.setObjectId(Common.mUser.getObjectId());
-						mUser.level = Common.mUser.level + 1;//升级
-						mUser.update(new UpdateListener()
-						{
-							public void done(BmobException e)
+							if (useQQinfo.isChecked())
 							{
-								if (e != null)
-									ExceptionHandler.log("QQreg_qqBind_update", e.toString());
+								mUser.name = Common.mUser.name;
+								try
+								{
+									File file = getIconFile();
+									if (file.exists())
+										uploadIcon(file);//上传头像
+								}
+								catch (Exception e) {}
+								mUser.setObjectId(Common.mUser.getObjectId());
+								mUser.update(new UpdateListener()
+								{
+									public void done(BmobException e)
+									{
+										if (e != null)
+											ExceptionHandler.log("QQreg_qqBind_update", e.toString());
+									}
+								});
+								//同步用户资料
+								Common.mUser.nickname = mUser.nickname;
+								Common.mUser.qq = mUser.qq;
+								Common.mUser.qqId = mUser.qqId;
+								Common.mUser.icon = mUser.icon;
+								if (Common.mUser.address == null || Common.mUser.address.equals(""))
+									Common.mUser.address = mUser.address;
 							}
-						});
-						//同步用户资料
-						Common.mUser.nickname = mUser.nickname;
-						Common.mUser.qq = mUser.qq;
-						Common.mUser.qqId = mUser.qqId;
-						Common.mUser.level = mUser.level;
-						Common.mUser.icon = mUser.icon;
-						if (Common.mUser.address == null || Common.mUser.address.equals(""))
-							Common.mUser.address = mUser.address;
+							else
+							{
+								Users _user = new Users();
+								_user.setObjectId(Common.mUser.getObjectId());
+								_user.qq = mUser.qq;
+								_user.qqId = mUser.qqId;
+								if (Common.mUser.address == null || Common.mUser.address.equals(""))
+									_user.address = mUser.address;
+								_user.update(new UpdateListener()
+								{
+									public void done(BmobException e)
+									{	
+										if (e != null)
+											ExceptionHandler.log("QQreg_qqBind_update2", e.toString());
+									}
+								});
+								//同步用户资料
+								Common.mUser.qq = _user.qq;
+								Common.mUser.qqId = _user.qqId;
+							}
+							mHandler.sendEmptyMessage(2);
+						}
+						else
+							mHandler.sendEmptyMessage(3);
 					}
-					else
+
+					@Override
+					public void onError(String error)
 					{
-						Users _user = new Users();
-						_user.setObjectId(Common.mUser.getObjectId());
-						_user.qq = mUser.qq;
-						_user.qqId = mUser.qqId;
-						_user.level = Common.mUser.level + 1;
-						if (Common.mUser.address == null || Common.mUser.address.equals(""))
-							_user.address = mUser.address;
-						_user.update(new UpdateListener()
-						{
-							public void done(BmobException e)
-							{	
-								if (e != null)
-									ExceptionHandler.log("QQreg_qqBind_update2", e.toString());
-							}
-						});
-						//同步用户资料
-						Common.mUser.qq = _user.qq;
-						Common.mUser.qqId = _user.qqId;
-						Common.mUser.level = _user.level;
+						mHandler.sendEmptyMessage(3);
 					}
-					mHandler.sendEmptyMessage(2);
-				}
-				else
-					mHandler.sendEmptyMessage(3);
+				});
 			}
 			catch (Exception e)
 			{

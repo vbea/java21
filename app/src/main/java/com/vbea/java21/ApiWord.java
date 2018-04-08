@@ -34,7 +34,9 @@ import com.vbea.java21.classes.AdvConfig;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.SocialShare;
 import com.tencent.connect.share.QQShare;
+import com.tencent.connect.common.Constants;
 import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.BannerView;
@@ -285,6 +287,7 @@ public class ApiWord extends AppCompatActivity
 		@Override
         public void onCancel()
 		{
+			Util.toastShortMessage(getApplicationContext(), "分享取消");
         }
         @Override
         public void onComplete(Object response)
@@ -297,6 +300,17 @@ public class ApiWord extends AppCompatActivity
 			//Util.toastShortMessage(getApplicationContext(), "onError: " + e.errorMessage + "e");
 		}
 	};
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		if (resultCode == RESULT_OK && data != null)
+		{
+			if (requestCode == Constants.REQUEST_QQ_SHARE || requestCode == Constants.REQUEST_QZONE_SHARE)
+				Tencent.handleResultData(data, qqShareListener);
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 	
 	class QQShareListener implements View.OnClickListener
 	{

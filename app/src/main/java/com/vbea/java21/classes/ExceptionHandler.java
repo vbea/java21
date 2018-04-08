@@ -63,6 +63,11 @@ public class ExceptionHandler extends Application implements UncaughtExceptionHa
 		android.os.Process.killProcess(android.os.Process.myPid());
 	}
 	
+	public static void log(String name, Exception e)
+	{
+		log(name, e.toString());
+	}
+	
 	public static void log(String name, String msg)
 	{
 		String date = new SimpleDateFormat("yyyyMMdd").format(new Date());

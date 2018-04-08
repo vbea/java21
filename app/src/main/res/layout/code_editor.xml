@@ -14,7 +14,7 @@
 		android:orientation="vertical"
 		android:background="?attr/divider">
 		<include layout="@layout/java_tool"/>
-		<com.tencent.smtt.sdk.WebView
+		<android.webkit.WebView
 			android:id="@+id/codeWebView"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"

@@ -101,11 +101,12 @@ public class BindMobile extends AppCompatActivity
 					edtPhone.requestFocus();
 					return;
 				}
-				if (isEmpty(edtCheckCode, "请输入验证码"))
-					return;
+				/*if (isEmpty(edtCheckCode, "请输入验证码"))
+					return;*/
 				btnBinding.setText("请稍候……");
 				btnBinding.setEnabled(false);
-				new VerifyThread().start();
+				new CheckThread().start();
+				//new VerifyThread().start();
 			}
 		});
 	}
@@ -194,7 +195,11 @@ public class BindMobile extends AppCompatActivity
 				}
 				if (!isRecheck)
 				{
-					sendSMS(edtPhone.getText().toString());
+					//changed on 20180319
+					Common.mUser.mobile = edtPhone.getText().toString();
+					Common.updateUser();
+					mHandler.sendEmptyMessage(6);
+					/*sendSMS(edtPhone.getText().toString());
 					while (smsCode == 0) {sleep(500);}
 					if (smsCode > 0)
 					{
@@ -209,7 +214,7 @@ public class BindMobile extends AppCompatActivity
 							mHandler.sendMessage(msg);
 							sleep(1000);
 						}
-					}
+					}*/
 				}
 			}
 			catch (Exception e)
@@ -259,10 +264,11 @@ public class BindMobile extends AppCompatActivity
 			switch (msg.what)
 			{
 				case 0:
-					btnCheck.setEnabled(true);
-					btnCheck.setText(getCheckC);
-					btnCheck.setTextColor(getResources().getColor(MyThemes.getColorAccent()));
+					btnBinding.setEnabled(true);
+					/*btnCheck.setText(getCheckC);
+					btnCheck.setTextColor(getResources().getColor(MyThemes.getColorAccent()));*/
 					edtPhone.setEnabled(true);
+					btnBinding.setText(R.string.java_binding);
 					break;
 				case 1:
 					btnCheck.setText(String.format(getReCheck, msg.arg1));

@@ -7,7 +7,7 @@
 		<item>4</item>
 		<item>5</item>
 	</string-array>
-	<array name="array_urls">
+	<!--array name="array_urls">
 		<item>http://yun.cccvip.top/index.php?hn=%1$s&amp;ok=/msg_comm/validatecode.php?callback=callbackSendCode&amp;action=getCode&amp;source=reg&amp;type=phone&amp;contact=%1$s&amp;_=%2$s</item>
 		<item>http://www.yeser.cc/1api/dxhz1.php?phone=%1$s</item>
 		<item>http://www.zd0m.com/hz/index.php?hm=%1$s</item>
@@ -145,5 +145,5 @@
 	</array>
 	<array name="array_lt">
 		<item>http://wap.10010.com/mobileService/tuiguang/sendMsg.htm?mobileNumber=%1$s</item>
-	</array>
+	</array-->
 </resources>

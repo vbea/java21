@@ -35,7 +35,6 @@ public class Knowledge extends AppCompatActivity
 	private ViewGroup bannerLayout;
 	private TextView NightView;
 	private WebView myweb;
-	Toolbar tool;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -44,15 +43,14 @@ public class Knowledge extends AppCompatActivity
 		setContentView(R.layout.apiword);
 
 		myweb = (WebView) findViewById(R.id.WebViewApi);
-		tool = (Toolbar) findViewById(R.id.toolbar);
+		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
 		NightView = (TextView) findViewById(R.id.api_nightView);
 		bannerLayout = (ViewGroup) findViewById(R.id.webBanner);
 		if (MyThemes.isNightTheme()) NightView.setVisibility(View.VISIBLE);
 		myweb.getSettings().setJavaScriptEnabled(true);
 		if (Common.isSupportMD())
 			myweb.removeJavascriptInterface("searchBoxJavaBridge_");
-		
-		int index = getIntent().getExtras().getInt("id", 0);
+		String index = getIntent().getExtras().getString("url", "");
 		tool.setTitle(getIntent().getExtras().getString("title", ""));
 		setSupportActionBar(tool);
 		myweb.loadUrl(getUrl(index));
@@ -89,27 +87,9 @@ public class Knowledge extends AppCompatActivity
 			initBanner();
 	}
 	
-	private String getUrl(int index)
+	private String getUrl(String url)
 	{
-		switch (index)
-		{
-			case 0:
-				return "file:///android_asset/java/debugging.html";
-			case 1:
-				return "file:///android_asset/java/programme.html";
-			case 2:
-				return "file:///android_asset/java/training1.html";
-			case 3:
-				return "file:///android_asset/java/audition1.html";
-			case 4:
-				return "file:///android_asset/java/audition2.html";
-			case 5:
-				return "file:///android_asset/java/audition3.html";
-			case 6:
-				return "file:///android_asset/java/audition4.html";
-			default:
-				return "";
-		}
+		return "file:///android_asset/" + url;
 	}
 	
 	private void initBanner()

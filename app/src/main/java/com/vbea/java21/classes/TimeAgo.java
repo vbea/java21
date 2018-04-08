@@ -10,8 +10,10 @@ public class TimeAgo
 	private final long day = 24 * hour;// 1天
 	private final long month = 31 * day;// 月
 	private final long year = 12 * month;// 年
+	private boolean isTime = true;
+	private int afterDay = 5;
 	private SimpleDateFormat fom,fom2;
-	public TimeAgo()
+	private TimeAgo()
 	{
 		fom = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	}
@@ -20,6 +22,30 @@ public class TimeAgo
 	{
 		this();
 		fom2 = f;
+	}
+
+	public void setAfterDay(int afterDay)
+	{
+		this.afterDay = afterDay;
+	}
+	
+	public void setIsTime(boolean isMinutes)
+	{
+		this.isTime = isMinutes;
+	}
+	
+	public String getTimeAgo(long time)
+	{
+		try
+		{
+			Date date = new Date(time);
+			String def = fom2.format(date);
+			return getTimeFormatText(date, def);
+		}
+		catch (Exception e)
+		{
+			return getTimeFormatText(null, "刚刚");
+		}
 	}
 	
 	public String getTimeAgo(String time, String def)
@@ -67,37 +93,46 @@ public class TimeAgo
 	{
         if (date == null)
             return def;
-        long diff = new Date().getTime() - date.getTime();
+		Date now = new Date();
+        long diff = now.getTime() - date.getTime();
         long r = 0;
         if (diff > year)
 		{
 			r = (diff / year);
 			return r + "年前";
 		}
-        if (diff > month)
+        if (diff > month || now.getMonth() - date.getMonth() > 0)
 		{
             /*r = (diff / month);
             return r + "个月前";*/
 			return def;
         }
-        if (diff > day)
+		r = now.getDate() - date.getDate();
+        if (r > 0)
 		{
-			r = (diff / day);
-			if (r < 4)
-            	return r + "天前";
+			if (r == 1)
+				return "昨天";
+			else if (r == 2)
+				return "前天";
+			else if (r < afterDay)
+				return r + "天前";
 			else
 				return def;
         }
-        if (diff > hour)
-		{
-            r = (diff / hour);
-            return r + "小时前";
-        }
-        if (diff > minute)
-		{
-			r = (diff / minute);
-			return r + "分钟前";
+		else if (isTime) {
+			if (diff > hour)
+			{
+            	r = (diff / hour);
+            	return r + "小时前";
+			}
+        	if (diff > minute)
+			{
+				r = (diff / minute);
+				return r + "分钟前";
+			}
+			return "刚刚";
 		}
-        return "刚刚";
+		else
+			return "今天";
 	}
 }

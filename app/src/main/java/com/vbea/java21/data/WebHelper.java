@@ -17,9 +17,13 @@ import com.vbea.java21.classes.ExceptionHandler;
 public class WebHelper extends SQLiteOpenHelper
 {
 	public static final String DATABASE_NAME = "WebView.db";
-	public static final int DATA_VERSION = 1;
+	public static final int DATA_VERSION = 2;
 	public static final String TABLE_BOOK = "bookmark";
 	public static final String TABLE_HISTORY = "history";
+	public static final String COL_ID = "id";
+	public static final String COL_TITLE = "title";
+	public static final String COL_URL = "url";
+	public static final String COL_CREATEON = "createOn";
 	private Context context;
 	public WebHelper(Context c)
 	{
@@ -32,8 +36,10 @@ public class WebHelper extends SQLiteOpenHelper
 	{
 		try
 		{
-			db.execSQL("CREATE TABLE " + TABLE_BOOK + " (id INTEGER DEFAULT '1' NOT NULL PRIMARY KEY AUTOINCREMENT,name TEXT NOT NULL,url TEXT NOT NULL,createOn TEXT NOT NULL)");
-			db.execSQL("CREATE TABLE " + TABLE_HISTORY + " (id INTEGER DEFAULT '1' NOT NULL PRIMARY KEY AUTOINCREMENT,title TEXT NOT NULL,url TEXT NOT NULL,createOn TEXT NOT NULL)");
+			ExceptionHandler.log("web:create-database", "----start----");
+			db.execSQL("CREATE TABLE " + TABLE_BOOK + " (" + COL_ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," + COL_TITLE + " TEXT NULL," + COL_URL + " TEXT NULL,"+ COL_CREATEON + " TEXT NOT NULL)");
+			db.execSQL("CREATE TABLE " + TABLE_HISTORY + " (" + COL_ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," + COL_TITLE + " TEXT NULL," + COL_URL + " TEXT NULL,"+ COL_CREATEON + " TEXT NOT NULL)");
+			//ExceptionHandler.log("sql", "CREATE TABLE " + TABLE_HISTORY + " (" + COL_ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," + COL_TITLE + " TEXT NULL," + COL_URL + " TEXT NULL,"+ COL_CREATEON + " TEXT NOT NULL)");
 		}
 		catch (Exception e)
 		{
@@ -46,6 +52,7 @@ public class WebHelper extends SQLiteOpenHelper
 	{
 		try
 		{
+			ExceptionHandler.log("web:upgrade-database", "----start----");
 			db.execSQL("drop table " + TABLE_BOOK);
 			db.execSQL("drop table " + TABLE_HISTORY);
 			onCreate(db);
@@ -62,9 +69,9 @@ public class WebHelper extends SQLiteOpenHelper
 		try
 		{
 			ContentValues map = new ContentValues();
-			map.put("title", title);
-			map.put("url", url);
-			map.put("createOn", System.currentTimeMillis());
+			map.put(COL_TITLE, title);
+			map.put(COL_URL, url);
+			map.put(COL_CREATEON, System.currentTimeMillis());
 			return db.insert(TABLE_HISTORY, null, map);
 		}
 		catch (Exception e)
@@ -84,10 +91,10 @@ public class WebHelper extends SQLiteOpenHelper
 		try
 		{
 			ContentValues map = new ContentValues();
-			map.put("name", name);
-			map.put("url", url);
-			map.put("createOn", System.currentTimeMillis());
-			return db.insert(TABLE_HISTORY, null, map);
+			map.put(COL_TITLE, name);
+			map.put(COL_URL, url);
+			map.put(COL_CREATEON, System.currentTimeMillis());
+			return db.insert(TABLE_BOOK, null, map);
 		}
 		catch (Exception e)
 		{
@@ -104,14 +111,14 @@ public class WebHelper extends SQLiteOpenHelper
 	public Cursor listHistory() throws Exception
 	{
 		SQLiteDatabase db = getReadableDatabase();
-		return db.query(TABLE_HISTORY, new String[] { "title","url","createOn" }, null, null, null, null, "createOn desc");
+		return db.query(TABLE_HISTORY, new String[] { COL_ID,COL_TITLE,COL_URL,COL_CREATEON }, null, null, null, null, "createOn desc");
 	}
 	
 	//获取所有的书签
 	public Cursor listBookmark() throws Exception
 	{
 		SQLiteDatabase db = getReadableDatabase();
-		return db.query(TABLE_BOOK, new String[] { "name","url","createOn" }, null, null, null, null, "createOn desc");
+		return db.query(TABLE_BOOK, new String[] { COL_ID,COL_TITLE,COL_URL,COL_CREATEON }, null, null, null, null, "createOn desc");
 	}
 	
 	//删除指定的历史记录

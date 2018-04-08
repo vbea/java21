@@ -78,28 +78,6 @@
 					android:textColor="?attr/colorAccent"
 					android:textSize="14sp"/>
 			</LinearLayout>
-			<TextView
-				android:id="@+id/btnSetBookmark"
-				android:layout_width="fill_parent"
-				android:layout_height="56dp"
-				android:text="@string/bookmark"
-				android:background="@drawable/btn_menu"
-				android:gravity="start|center_vertical"
-				android:paddingLeft="20dp"
-				android:paddingRight="15dp"
-				android:textColor="?attr/textPrimary"
-				android:textSize="17sp"/>
-			<TextView
-				android:id="@+id/btnSetHistory"
-				android:layout_width="fill_parent"
-				android:layout_height="56dp"
-				android:text="@string/history"
-				android:background="@drawable/btn_menu"
-				android:gravity="start|center_vertical"
-				android:paddingLeft="20dp"
-				android:paddingRight="15dp"
-				android:textColor="?attr/textPrimary"
-				android:textSize="17sp"/>
 		</LinearLayout>
 	</ScrollView>
 </LinearLayout>

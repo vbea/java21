@@ -33,6 +33,8 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.widget.Toast;
 import android.support.design.widget.Snackbar;
+import android.telephony.TelephonyManager;
+import com.vbea.java21.R;
 
 public class Util
 {
@@ -819,7 +821,7 @@ public class Util
 		cbm.setText(msg);
 	}
 	
-	public static String ReadFileToString(InputStream is) throws IOException
+	public static String ReadFileToString(InputStream is)
 	{
 		try
 		{
@@ -836,5 +838,53 @@ public class Util
 		{
 			return null;
 		}
+	}
+	
+	//获取设备序列号
+	public static String getSerialNo(Context context)
+	{
+		StringBuilder deviceId = new StringBuilder();
+		try
+		{
+			TelephonyManager tm	= (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+			String sn =	tm.getSimSerialNumber();
+			if(!isNullOrEmpty(sn))
+				deviceId.append(sn);
+			else
+				deviceId.append(getDeviceModel());
+			return deviceId.toString();
+		}
+		catch (Exception e)
+		{
+			deviceId.append(getDeviceModel());
+			return deviceId.toString();
+		}
+	}
+	
+	//获取设备标识
+	public static String getDeviceId(Context context)
+	{
+		StringBuilder deviceId = new StringBuilder();
+		try
+		{
+			deviceId.append("version:");
+			deviceId.append(context.getResources().getString(R.string.update));
+			deviceId.append(",model:");
+			deviceId.append(getDeviceModel());
+			//IMEI（imei）
+			TelephonyManager tm	= (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+			String imei	= tm.getDeviceId();
+			if(!isNullOrEmpty(imei))
+			{
+				deviceId.append(",imei:");
+				deviceId.append(imei);
+				return deviceId.toString();
+			}
+		}
+		catch (Exception e)
+		{
+			return deviceId.toString();
+		}
+		return deviceId.toString();
 	}
 }

@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import com.vbea.java21.R;
 import com.vbea.java21.classes.ExceptionHandler;
+import com.vbea.java21.data.WebHelper;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder>
 {
@@ -36,8 +37,9 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder>
 	{
 		if (cursor.moveToPosition(p))
 		{
-			final String url = cursor.getString(cursor.getColumnIndex("url"));
-			holder.title.setText(cursor.getString(cursor.getColumnIndex("title")));
+			final int id = cursor.getInt(cursor.getColumnIndex(WebHelper.COL_ID));
+			final String url = cursor.getString(cursor.getColumnIndex(WebHelper.COL_URL));
+			holder.title.setText(cursor.getString(cursor.getColumnIndex(WebHelper.COL_TITLE)));
 			holder.sub.setText(url);
 			if (p == getItemCount() - 1)
 				holder.end.setVisibility(View.VISIBLE);
@@ -51,6 +53,14 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder>
 					{
 						onItemClickListener.onItemClick(url);
 					}
+				}
+			});
+			holder.layout.setOnLongClickListener(new View.OnLongClickListener()
+			{
+				public boolean onLongClick(View v)
+				{
+					onItemClickListener.onItemLongClick(id);
+					return true;
 				}
 			});
 		}
@@ -94,5 +104,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder>
 	public interface OnItemClickListener
 	{
         void onItemClick(String url);
+		void onItemLongClick(int id);
     }
 }

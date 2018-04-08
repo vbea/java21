@@ -10,4 +10,6 @@
 	<dimen name="text_middle">18sp</dimen>
 	<dimen name="text_nlarge">22sp</dimen>
 	<dimen name="text_large">25sp</dimen>
+	<dimen name="sectioned_top">27dp</dimen>
+	<dimen name="sectioned_alignBottom">8dp</dimen>
 </resources>

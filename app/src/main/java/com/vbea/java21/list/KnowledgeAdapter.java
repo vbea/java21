@@ -38,7 +38,7 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<KnowledgeAdapter.MyVi
 	}
 
 	@Override
-	public void onBindViewHolder(MyViewHolder holder, final int p)
+	public void onBindViewHolder(MyViewHolder holder, int p)
 	{
 		final Knowledges kow = mList.get(p);
 		holder.title.setText(kow.TITLE);
@@ -49,7 +49,7 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<KnowledgeAdapter.MyVi
 			{
 				if(onItemClickListener != null)
 				{
-					onItemClickListener.onItemClick(kow.TITLE, p);
+					onItemClickListener.onItemClick(kow.TITLE, kow.URL);
 				}
 			}
 		});
@@ -93,6 +93,6 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<KnowledgeAdapter.MyVi
 
 	public interface OnItemClickListener
 	{
-        void onItemClick(String title, int id);
+        void onItemClick(String title, String url);
     }
 }

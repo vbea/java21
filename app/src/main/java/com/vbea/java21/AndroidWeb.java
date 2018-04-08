@@ -398,6 +398,7 @@ public class AndroidWeb extends AppCompatActivity
 		@Override
         public void onCancel()
 		{
+			Util.toastShortMessage(getApplicationContext(), "分享取消");
         }
         @Override
         public void onComplete(Object response)
@@ -432,6 +433,17 @@ public class AndroidWeb extends AppCompatActivity
 		{
 			openImageActivity(img);
 		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		if (resultCode == RESULT_OK && data != null)
+		{
+			if (requestCode == Constants.REQUEST_QQ_SHARE || requestCode == Constants.REQUEST_QZONE_SHARE)
+				Tencent.handleResultData(data, qqShareListener);
+		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override

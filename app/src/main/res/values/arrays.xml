@@ -238,4 +238,8 @@
 		<item>打开书签</item>
 		<item>添加当前页面为书签</item>
 	</string-array>
+	<string-array name="array_bookaction">
+		<item>浏览</item>
+		<item>删除</item>
+	</string-array>
 </resources>

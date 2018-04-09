@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Button;
@@ -21,20 +22,20 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.exception.BmobException;
 import com.vbea.java21.data.Users;
+import com.vbea.java21.classes.Util;
+import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
-import cn.bmob.v3.*;
-import cn.bmob.v3.listener.*;
-import com.vbea.java21.classes.*;
 
 public class BindMobile extends AppCompatActivity
 {
-	private EditText edtPhone, edtCheckCode;
+	private EditText edtPhone, edtOldPhone;
+	private TableRow tabOldPhone;
 	private TextView btnCheck;
 	private Button btnBinding;
-	private boolean isNameExist, isRecheck, td;
-	private int smsCode = 0;
-	private String getCheckC = "获取验证码";
-	private String getReCheck = " 重试(%02d) ";
+	private boolean isNameExist, isRecheck, td, needOld = true;
+	//private int smsCode = 0;
+	//private String getCheckC = "获取验证码";
+	//private String getReCheck = " 重试(%02d) ";
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -43,7 +44,8 @@ public class BindMobile extends AppCompatActivity
 		setContentView(R.layout.bdphone);
 		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
 		edtPhone = (EditText) findViewById(R.id.edt_bdphone);
-		edtCheckCode = (EditText) findViewById(R.id.edt_checkcode);
+		edtOldPhone = (EditText) findViewById(R.id.edt_oldphone);
+		tabOldPhone = (TableRow) findViewById(R.id.tab_oldPhone);
 		btnCheck = (TextView) findViewById(R.id.bd_getcheck);
 		btnBinding = (Button) findViewById(R.id.btn_bdingPhone);
 		setSupportActionBar(tool);
@@ -93,12 +95,20 @@ public class BindMobile extends AppCompatActivity
 		{
 			public void onClick(View v)
 			{
+				if (needOld && isEmpty(edtOldPhone, "请输入原手机号码"))
+					return;
 				if (isEmpty(edtPhone, "请输入手机号码"))
 					return;
 				if (!isPhoneNumber(edtPhone.getText().toString()))
 				{
 					edtPhone.setError("请输入正确的手机号码");
 					edtPhone.requestFocus();
+					return;
+				}
+				if (needOld && !Common.mUser.mobile.equals(edtOldPhone.getText().toString()))
+				{
+					edtOldPhone.setError("原手机号码输入错误");
+					edtOldPhone.requestFocus();
 					return;
 				}
 				/*if (isEmpty(edtCheckCode, "请输入验证码"))
@@ -109,6 +119,11 @@ public class BindMobile extends AppCompatActivity
 				//new VerifyThread().start();
 			}
 		});
+		if (Util.isNullOrEmpty(Common.mUser.mobile))
+		{
+			tabOldPhone.setVisibility(View.GONE);
+			needOld = false;
+		}
 	}
 	
 	private boolean isEmpty(EditText view, String tip)
@@ -130,7 +145,7 @@ public class BindMobile extends AppCompatActivity
 		return matcher.matches();
 	}
 	
-	private void sendSMS(String phone)
+	/*private void sendSMS(String phone)
 	{
 		BmobSMS.requestSMSCode(phone, "短信验证码", new QueryListener<Integer>()
 		{
@@ -149,7 +164,7 @@ public class BindMobile extends AppCompatActivity
 				}
 			}
 		});
-	}
+	}*/
 	
 	private void nameExist(String name)
 	{
@@ -228,7 +243,7 @@ public class BindMobile extends AppCompatActivity
 		}
 	}
 	
-	class VerifyThread extends Thread
+	/*class VerifyThread extends Thread
 	{
 		public void run()
 		{
@@ -254,7 +269,7 @@ public class BindMobile extends AppCompatActivity
 				ExceptionHandler.log("bg_verify", e.toString());
 			}
 		}
-	}
+	}*/
 	
 	Handler mHandler = new Handler()
 	{
@@ -271,7 +286,7 @@ public class BindMobile extends AppCompatActivity
 					btnBinding.setText(R.string.java_binding);
 					break;
 				case 1:
-					btnCheck.setText(String.format(getReCheck, msg.arg1));
+					//btnCheck.setText(String.format(getReCheck, msg.arg1));
 					break;
 				case 2:
 					edtPhone.setError("该号码已被使用");

@@ -390,7 +390,6 @@ public class HtmlViewer extends AppCompatActivity
 		menu.findItem(R.id.item_forward).setVisible(webView.canGoForward() && !ISSOURCE);
 		menu.findItem(R.id.item_androidshare).setVisible(!SH_url.equals(""));
 		menu.findItem(R.id.item_code).setVisible(!SH_url.equals(""));
-		menu.findItem(R.id.item_addbook).setVisible(!SH_url.equals(""));
 		menu.findItem(R.id.item_home).setVisible(isValidHome());
 		menu.findItem(R.id.item_code).setTitle(ISSOURCE ? "返回" : "查看源");
 		return super.onPrepareOptionsMenu(menu);
@@ -573,6 +572,11 @@ public class HtmlViewer extends AppCompatActivity
 	
 	private void showBookmark()
 	{
+		if (Util.isNullOrEmpty(SH_url))
+		{
+			Common.startActivityForResult(HtmlViewer.this, Bookmark.class, 520);
+			return;
+		}
 		AlertDialog dialog = new AlertDialog(this);
 		dialog.setTitle(R.string.bookmark);
 		dialog.setItems(R.array.array_bookmark, new DialogInterface.OnClickListener()

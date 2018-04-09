@@ -79,7 +79,7 @@ public class SetDrawerImage extends AppCompatActivity
 	@Override
 	protected void onDestroy()
 	{
-		if (MyThemes.ISCHANGED)
+		if (MyThemes.ISCHANGED && Common.isLogin())
 		{
 			Common.mUser.settings = Common.getSettingJson(new SettingUtil());
 			Common.updateUser();

@@ -59,7 +59,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder>
 			{
 				public boolean onLongClick(View v)
 				{
-					onItemClickListener.onItemLongClick(id);
+					onItemClickListener.onItemLongClick(id, url);
 					return true;
 				}
 			});
@@ -104,6 +104,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder>
 	public interface OnItemClickListener
 	{
         void onItemClick(String url);
-		void onItemLongClick(int id);
+		void onItemLongClick(int id, String url);
     }
 }

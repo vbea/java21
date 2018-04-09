@@ -168,7 +168,7 @@ public class Common
 	
 	public static boolean checkUpdateSetting(Context context)
 	{
-		if (!mUser.serialNo.equals(Util.getSerialNo(context)))
+		if (!mUser.serialNo.equals(OldSerialNo))
 		{
 			try
 			{
@@ -196,6 +196,8 @@ public class Common
 		Date now = new Date();
 		if (mUser.lastLogin != null)
 		{
+			if (mUser.dated == null)
+				mUser.dated = 1;
 			mUser.device = Util.getDeviceId(context);
 			mUser.serialNo = Util.getSerialNo(context);
 			Date loginDate = new Date(BmobDate.getTimeStamp(mUser.lastLogin.getDate()));
@@ -205,8 +207,6 @@ public class Common
 				{
 					if (mUser.dated != null)
 						mUser.dated += 1;
-					else
-						mUser.dated = 1;
 				}
 			}
 			mUser.lastLogin = new BmobDate(now);

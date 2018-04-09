@@ -23,16 +23,17 @@ public class SettingUtil
 		{
 			if (!Util.isNullOrEmpty(json))
 			{
-				Gson gson = new Gson();
+				/*Gson gson = new Gson();
 				mMap = gson.fromJson(json, HashMap.class);
-				/*JsonParser jsp = new JsonParser();
+				*/
+				JsonParser jsp = new JsonParser();
 				JsonObject jobj = jsp.parse(json).getAsJsonObject();
 				if (jobj.has(SET_THEME))
 					mMap.put(SET_THEME, jobj.get(SET_THEME).getAsInt());
 				if (jobj.has(SET_BACKIMG))
 					mMap.put(SET_BACKIMG, jobj.get(SET_BACKIMG).getAsInt());
 				if (jobj.has(SET_FONTSIZE))
-					mMap.put(SET_FONTSIZE, jobj.get(SET_FONTSIZE).getAsInt());*/
+					mMap.put(SET_FONTSIZE, jobj.get(SET_FONTSIZE).getAsInt());
 			}
 		}
 		catch (Exception e)
@@ -56,7 +57,7 @@ public class SettingUtil
 		if (mMap.containsKey(key))
 		{
 			Object obj = mMap.get(key);
-			if (obj instanceof int)
+			if (obj instanceof Integer)
 			{
 				return (int)obj;
 			}

@@ -139,7 +139,8 @@
 		\n2.Java进阶教程排版优化
 		\n3.用户等级和登录体验优化
 		\n4.未激活用户也可访问在线教程
-		\n5.
+		\n5.优化手机绑定流程
+		\n6.修复QQ新用户注册时闪退的问题
 		\n10.修复其他兼容性问题
 	</string>
 	<string name="shared">share_image</string>

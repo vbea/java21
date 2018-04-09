@@ -177,7 +177,7 @@ public class Login extends AppCompatActivity
 					}
 					else
 					{
-						if (Common.mUser != null)
+						if (Common.isLogin())
 						{
 							Common.mUser.settings = Common.getSettingJson(new SettingUtil());
 							Common.updateUser();

@@ -3,6 +3,7 @@ package com.vbea.java21;
 import java.util.List;
 import java.util.ArrayList;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,6 +11,7 @@ import android.os.Environment;
 import android.net.Uri;
 import android.view.View;
 import android.content.Intent;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.RecyclerView;
@@ -26,7 +28,7 @@ public class Bookmark extends AppCompatActivity
 {
 	private RecyclerView recyclerView;
 	private BookAdapter mAdapter;
-
+	private WebHelper query;
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -66,9 +68,41 @@ public class Bookmark extends AppCompatActivity
 			}
 
 			@Override
-			public void onItemLongClick(int id)
+			public void onItemLongClick(final int id, final String url)
 			{
-				
+				new AlertDialog.Builder(Bookmark.this)
+				.setTitle(R.string.bookmark)
+				.setItems(R.array.array_bookaction, new DialogInterface.OnClickListener()
+				{
+					@Override
+					public void onClick(DialogInterface v, int b)
+					{
+						v.dismiss();
+						switch (b)
+						{
+							case 0:
+								Intent intent = new Intent();
+								intent.setData(Uri.parse(url));
+								setResult(RESULT_OK, intent);
+								supportFinishAfterTransition();
+								break;
+							/*case 1:
+								onUpdateBookmark(id);
+								break;*/
+							case 1:
+								Util.showConfirmCancelDialog(Bookmark.this, "删除书签", "确认操作？", new DialogInterface.OnClickListener()
+								{
+									@Override
+									public void onClick(DialogInterface p1, int p2)
+									{
+										Util.toastShortMessage(getApplicationContext(), onDeleteBookmark(String.valueOf(id)) ? "删除成功" : "删除失败");
+										mAdapter.notifyDataSetChanged();
+									}
+								});
+								break;
+						}
+					}
+				}).show();
 			}
 		});
 	}
@@ -77,7 +111,7 @@ public class Bookmark extends AppCompatActivity
 	{
 		try
 		{
-			WebHelper query = new WebHelper(this);
+			query = new WebHelper(this);
 			mAdapter = new BookAdapter(query.listBookmark());
 			//ExceptionHandler.log("bookmark_query", "count=" + mAdapter.getItemCount());
 		}
@@ -85,5 +119,31 @@ public class Bookmark extends AppCompatActivity
 		{
 			ExceptionHandler.log("bookmark_query", e);
 		}
+	}
+	
+	/*private void onUpdateBookmark(int id)
+	{
+	}*/
+	
+	private boolean onDeleteBookmark(String id)
+	{
+		if (query != null)
+		{
+			try
+			{
+				return (query.deleteBookmark(id) > 0);
+			}
+			catch (Exception e)
+			{
+				ExceptionHandler.log("deleteBookmark", e);
+			}
+		}
+		return false;
+	}
+
+	@Override
+	protected void onDestroy()
+	{
+		super.onDestroy();
 	}
 }

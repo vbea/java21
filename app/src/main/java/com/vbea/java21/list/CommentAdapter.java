@@ -188,8 +188,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 
 	public class MyViewHolder extends ViewHolder
 	{
-		TextView name, date, comment, reference, delete, reply, txt_endorse, txt_oppose, device;
-		ImageView icon,img_endorse,img_oppose, img_vip;
+		TextView name, date, comment, reference, delete, reply, txt_endorse, txt_oppose, device, img_vip;
+		ImageView icon,img_endorse,img_oppose;
 		TableRow endorse, oppose;
 		RelativeLayout end;
 		public MyViewHolder(View v)
@@ -210,7 +210,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 			txt_oppose = (TextView) v.findViewById(R.id.txt_oppose);
 			endorse = (TableRow) v.findViewById(R.id.comm_endorse);
 			oppose = (TableRow) v.findViewById(R.id.comm_oppose);
-			img_vip = (ImageView) v.findViewById(R.id.comm_vip);
+			img_vip = (TextView) v.findViewById(R.id.comm_vip);
 		}
 	}
 

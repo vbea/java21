@@ -120,6 +120,22 @@ public class UserEdit extends AppCompatActivity
 				shDialog();
 			}
 		});
+		init(Common.mUser);
+		Common.Login(this, new Common.LoginListener()
+		{
+			@Override
+			public void onLogin(int code)
+			{
+				if (code == 1) //登录成功
+					init(Common.mUser);
+			}
+
+			@Override
+			public void onError(String error)
+			{
+				//登录失败
+			}
+		});
 	}
 	
 	private void init(Users user)
@@ -127,10 +143,13 @@ public class UserEdit extends AppCompatActivity
 		username.setText(user.name);
 		edtNick.setText(user.nickname);
 		edtRemark.setText(toStrings(user.mark));
-		if (user.gender)
-			rdbMale.setChecked(true);
-		else
-			rdbFemale.setChecked(true);
+		if (Common.mUser.gender != null)
+		{
+			if (user.gender)
+				rdbMale.setChecked(true);
+			else
+				rdbFemale.setChecked(true);
+		}
 		birthday.setText(toStrings(user.birthday));
 		edtAddress.setText(toStrings(user.address));
 	}
@@ -275,6 +294,5 @@ public class UserEdit extends AppCompatActivity
 	protected void onResume()
 	{
 		super.onResume();
-		init(Common.mUser);
 	}
 }

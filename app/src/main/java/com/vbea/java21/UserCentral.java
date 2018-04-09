@@ -52,6 +52,7 @@ public class UserCentral extends AppCompatActivity
 	private AppBarLayout appbar;
 	private AlphaAnimation appears, disappears;
 	private TextView titleName, username, nickname, level, gender, mobile, email, qq, birthday, address, mark, roles;
+	private StringBuilder sb;
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -79,6 +80,7 @@ public class UserCentral extends AppCompatActivity
 		Button logout = (Button) findViewById(R.id.btn_logout);
 		TableRow btnMobile = (TableRow) findViewById(R.id.btn_info_mobile);
 		TableRow btnQQ = (TableRow) findViewById(R.id.btn_info_qq);
+		TableRow btnInfo = (TableRow) findViewById(R.id.btn_info_user);
 		titleName.setText(Common.mUser.nickname);
 		ViewGroup.LayoutParams para = appbar.getLayoutParams();
 		para.height = (int)(getWindowManager().getDefaultDisplay().getWidth() / 1.4);
@@ -133,11 +135,18 @@ public class UserCentral extends AppCompatActivity
 				Common.startActivityOption(UserCentral.this, new Intent(UserCentral.this, IconPreview.class), icon, "icon_pre");
 			}
 		});
+		btnInfo.setOnClickListener(new View.OnClickListener()
+		{
+			public void onClick(View v)
+			{
+				Util.showResultDialog(UserCentral.this, sb.toString(), "个人档案");
+			}
+		});
 		btnMobile.setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View v)
 			{
-				if (Common.mUser.mobile != null && Common.mUser.mobile.length() > 0)
+				if (!Util.isNullOrEmpty(Common.mUser.mobile))// != null && Common.mUser.mobile.length() > 0)
 					mobileDialog();
 				else
 					Common.startActivityOptions(UserCentral.this, BindMobile.class);
@@ -147,7 +156,7 @@ public class UserCentral extends AppCompatActivity
 		{
 			public void onClick(View v)
 			{
-				if (Common.mUser.qq != null && Common.mUser.qq.length() > 0)
+				if (!Util.isNullOrEmpty(Common.mUser.qq))// != null && Common.mUser.qq.length() > 0)
 					qqDialog();
 				else
 					SocialShare.mTencent.login(UserCentral.this, "all", new MyIListener());
@@ -282,32 +291,50 @@ public class UserCentral extends AppCompatActivity
 		Util.showConfirmCancelDialog(this, "解绑" + type, "您确定要解绑"+type+"？", lis);
 	}
 	
-	public void inic()
+	public void init()
 	{
 		Users user = Common.mUser;
-		username.setText(user.name);
-		nickname.setText(user.nickname);
-		titleName.setText(user.nickname);
+		username.setText(Util.isNullOrEmpty(user.name) ? "" : user.name);
+		String _nick = Util.isNullOrEmpty(user.nickname) ? "" : user.nickname;
+		nickname.setText(_nick);
+		titleName.setText(_nick);
 		level.setText(getUserLevel(user.dated));
 		roles.setText(getUserRole(user.role));
-		gender.setText(user.gender ? "男" : "女");
-		birthday.setText(user.birthday);
-		address.setText(user.address);
-		mark.setText(user.mark);
+		if (user.gender != null)
+			gender.setText(user.gender ? "男" : "女");
+		else
+			gender.setText("妖");
+		birthday.setText(Util.isNullOrEmpty(user.birthday) ? "" : user.birthday);
+		address.setText(Util.isNullOrEmpty(user.address) ? "" : user.address);
+		mark.setText(Util.isNullOrEmpty(user.mark) ? "" : user.mark);
 		inicBind(user);
+		if (sb == null)
+		{
+			sb = new StringBuilder();
+			sb.append("用户名：");
+			sb.append(user.name);
+			sb.append("\n等级：");
+			sb.append(level.getText().toString());
+			sb.append("\n注册时间：");
+			sb.append(user.getCreatedAt());
+			sb.append("\n上次登录：");
+			sb.append(user.lastLogin.getDate());
+			sb.append("\n累计登录：");
+			sb.append(user.dated + "天");
+		}
 	}
 	
 	private void inicBind(Users user)
 	{
-		if (user.email != null && !user.email.equals(""))
+		if (!Util.isNullOrEmpty(user.email))
 			email.setText(getSecstr(user.email, 4, 4));
 		else
 			email.setText("未绑定");
-		if (user.mobile != null && !user.mobile.equals(""))
+		if (!Util.isNullOrEmpty(user.mobile))
 			mobile.setText(getSecstr(user.mobile, 3, 4));
 		else
 			mobile.setText("未绑定");
-		if (user.qq != null && !user.qq.equals(""))
+		if (!Util.isNullOrEmpty(user.qq))
 			qq.setText(user.qq);
 		else
 			qq.setText("未绑定");
@@ -334,30 +361,27 @@ public class UserCentral extends AppCompatActivity
 	private String getUserLevel(Integer dated)
 	{
 		if (dated == null)
-			return "见习期";
-		else
-		{
-			if (dated < 10)
-				return "Lv 1";
-			else if (dated < 30)
-				return "Lv 2";
-			else if (dated < 60)
-				return "Lv 3";
-			else if (dated < 100)
-				return "Lv 4";
-			else if (dated < 150)
-				return "Lv 5";
-			else if (dated < 200)
-				return "Lv 6";
-			else if (dated < 250)
-				return "Lv 7";
-			else if (dated < 300)
-				return "Lv 8";
-			else if (dated < 360)
-				return "Lv 9";
-			else if (dated > 500)
-				return "Lv 10";
-		}
+			dated = 0;
+		if (dated < 10)
+			return "Lv 1";
+		else if (dated < 30)
+			return "Lv 2";
+		else if (dated < 60)
+			return "Lv 3";
+		else if (dated < 100)
+			return "Lv 4";
+		else if (dated < 150)
+			return "Lv 5";
+		else if (dated < 200)
+			return "Lv 6";
+		else if (dated < 250)
+			return "Lv 7";
+		else if (dated < 300)
+			return "Lv 8";
+		else if (dated < 360)
+			return "Lv 9";
+		else if (dated > 500)
+			return "Lv 10";
 		return "";
 	}
 	
@@ -408,7 +432,7 @@ public class UserCentral extends AppCompatActivity
 			public void run()
 			{
 				//appbar.setTransitionName(null);
-				inic();
+				init();
 			}
 		}, 500);
 		super.onResume();

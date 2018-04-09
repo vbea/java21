@@ -392,15 +392,33 @@ public class QQLoginReg extends AppCompatActivity
 						String nickname = json.getString("nickname").trim();
 						qqNick.setText(nickname);
 						mUser.nickname = nickname;
-						mUser.address = json.getString("province") + "-" + json.getString("city");
-						mUser.address = Util.trim(mUser.address, '-');
-						mUser.gender = json.getString("gender").equals("男");
-						iconUrl = json.getString("figureurl_qq_2");
+						if (json.has("gender"))
+							mUser.gender = json.getString("gender").equals("男");
+						else
+							mUser.gender = true;
+						if (json.has("province"))
+						{
+							StringBuilder _add = new StringBuilder();
+							_add.append(json.getString("province"));
+							if (json.has("city"))
+							{
+								_add.append("-");
+								_add.append(json.getString("city"));
+							}
+							mUser.address = _add.toString();
+						}
+						if (json.has("figureurl_qq_2"))
+							iconUrl = json.getString("figureurl_qq_2");
+						else
+							iconUrl = "";
 						mUser.qq = nickname;
 						mUser.qqId = SocialShare.mTencent.getOpenId();
 						//btIcon = Util.getNetBitmap(iconUrl);
 						//mHandler.sendEmptyMessage(1);
-						init();
+						if (!Util.isNullOrEmpty(iconUrl))
+							init();
+						else
+							btIcon = null;
 					}
 				}
 			}
@@ -481,12 +499,17 @@ public class QQLoginReg extends AppCompatActivity
 					td3 = true;
 					mUser.name = edtUsername.getText().toString().trim();
 					mUser.email = edtEmail.getText().toString();
-					File file = getIconFile();
-					if (file.exists())
+					if (btIcon != null)
 					{
-						uploadIcon(file);
-						while (td3) {sleep(500);}
+						File file = getIconFile();
+						if (file.exists())
+						{
+							uploadIcon(file);
+							while (td3) {sleep(500);}
+						}
 					}
+					if (mUser.gender == null)
+						mUser.gender = false;
 					mUser.psd = "";
 					mUser.valid = true;
 					mUser.role = 2;

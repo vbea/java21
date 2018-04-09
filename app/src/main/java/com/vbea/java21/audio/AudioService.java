@@ -27,7 +27,7 @@ public class AudioService extends Service
 	private AudioManager audioManager;
 	private NotificationManager notiManager;
 	//private AudioPlayListener listener;
-	private boolean isPlaying = false, isPlay = false, isReceived = false;
+	private boolean isPlaying = false, isPlay = false, isReceived = false, isPaused = false;
 	public boolean loop = false, order = true;
 	public int what = -1, max = 0,current = 0;//, result = 0;
 	public Music music;
@@ -154,9 +154,21 @@ public class AudioService extends Service
 		audioManager.abandonAudioFocus(afListener);
 	}
 	
+	public void Pause()
+	{
+		isPlay = isPlaying = false;
+		isPaused = true;
+		mThread = null;
+	}
+	
 	public boolean isPlay()
 	{
 		return isPlaying;
+	}
+	
+	public boolean isPause()
+	{
+		return isPaused;
 	}
 	
 	public void setLoop(boolean _loop)
@@ -220,7 +232,7 @@ public class AudioService extends Service
 			{
 				case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
 					//pause
-					Stop();
+					Pause();
 					break;
 				case AudioManager.AUDIOFOCUS_GAIN:
 					//resume

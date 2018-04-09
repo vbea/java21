@@ -94,8 +94,8 @@ public class About extends AppCompatActivity
 			status.setText("已激活");
 			if (spf.getBoolean("autok", false))
 				type.setText("自动验证");
-			android.setText(Build.VERSION.RELEASE + "-" + Build.VERSION.SDK);
 		}
+		android.setText(Build.VERSION.RELEASE + "-" + Build.VERSION.SDK);
 	}
 
 	@Override

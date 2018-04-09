@@ -71,7 +71,7 @@ public class Main extends AppCompatActivity
 	private long exitTime = 0;
 	private LinearLayout drawMuic, drawTheme, /*drawSms,*/ drawWifi, drawCodeEditor, layoutTips;
 	private RelativeLayout drawUser;
-	private TextView txtUserName, txtSignature, txtAudioCode; //btnTips;
+	private TextView txtUserName, txtSignature, txtAudioCode, txtVip;
 	private CustomTextView txtCotation;
 	private boolean START = false;
 	private SoundThread soundThread;
@@ -114,6 +114,7 @@ public class Main extends AppCompatActivity
 		imgSMS = (ImageView) findViewById(R.id.draw_image8);*/
 		//btnTips = (TextView) findViewById(R.id.txt_mainTipsbtn);
 		txtCotation = (CustomTextView) findViewById(R.id.txt_quotation);
+		txtVip = (TextView) findViewById(R.id.draw_isVIP);
 		setSupportActionBar(toolbar);
 		//toolbar.setNavigationIcon(R.mipmap.ic_ab_drawer);
 		//toolbar.setTitleTextColor(getResources().getColor(R.color.white));
@@ -665,7 +666,7 @@ public class Main extends AppCompatActivity
 						{
 							if (code == 1)
 							{
-								if (!Common.OldSerialNo.equals(Util.getSerialNo(Main.this)))
+								if (!Common.OldSerialNo.equals(Common.mUser.serialNo))
 								{
 									Util.toastShortMessage(Main.this, "帐号在其他设备登录，您的登录态已失效，请重新登录");
 									Common.Logout(Main.this);
@@ -701,14 +702,22 @@ public class Main extends AppCompatActivity
 	{
 		if (Common.isLogin())
 		{
-			txtUserName.setText(Common.mUser.nickname);
-			txtSignature.setText(Common.mUser.mark);
+			if (Util.isNullOrEmpty(Common.mUser.nickname))
+				txtUserName.setText("");
+			else
+				txtUserName.setText(Common.mUser.nickname);
+			if (Util.isNullOrEmpty(Common.mUser.mark))
+				txtSignature.setText("");
+			else
+				txtSignature.setText(Common.mUser.mark);
 			Common.getInbox().getMyInbox(System.currentTimeMillis(), myCallback);
+			txtVip.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
 		}
 		else
 		{
 			txtUserName.setText("请登录");
 			txtSignature.setText("");
+			txtVip.setVisibility(View.GONE);
 			closeDrawered();
 		}
 		if (Common.IsChangeICON)

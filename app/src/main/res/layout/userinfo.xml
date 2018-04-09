@@ -75,6 +75,7 @@
 			android:divider="@drawable/ic_divider"
 			android:showDividers="middle">
 			<TableRow
+				android:id="@+id/btn_info_user"
 				android:layout_width="fill_parent"
 				android:layout_height="76dp"
 				android:paddingLeft="10dp"

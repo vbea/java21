@@ -95,8 +95,11 @@ public class Themes extends AppCompatActivity
 	
 	public void reload()
 	{
-		Common.mUser.settings = Common.getSettingJson(new SettingUtil());
-		Common.updateUser();
+		if (Common.isLogin())
+		{
+			Common.mUser.settings = Common.getSettingJson(new SettingUtil());
+			Common.updateUser();
+		}
 		MyThemes.ISCHANGED = true;
 		ActivityManager mng = ActivityManager.getInstance();
 		mng.FinishAllActivities();

@@ -32,6 +32,8 @@ public class MD5Util
 	
 	public static String getMD5(Bitmap bitmap, String def)
 	{
+		if (bitmap == null)
+			return def;
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try
 		{

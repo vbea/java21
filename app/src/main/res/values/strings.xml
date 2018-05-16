@@ -130,21 +130,22 @@
 	<string name="donateinfo">您可以通过支付宝转账、微信转账，或者付费加入Q群222876252或49321718，也可以加入邠心工作室开发组QQ群135482843。您的支持给我们提供了动力，是对我们最大的鼓励！
 		\n（加入邠心工作室开发组Q群(135482843)的作为回报我们将送出5.2.1版本源码一份以及自学大礼包，包括文字教程、视频、源码实例等）\n二维码见下面，点击可放大
 	</string>
-	<string name="version">V 6.9.5 Build 1080
+	<string name="version">V 7.0 Build 1111
 	</string>
-	<string name="update">6.9.5 (1080)
+	<string name="update">7.0 (1111)
 	</string>
-	<integer name="versionCode">1030</integer>
+	<integer name="versionCode">1111</integer>
 	<string name="abt_ver">1.浏览器新增书签和历史记录功能
 		\n2.Java进阶教程排版优化
 		\n3.用户等级和登录体验优化
 		\n4.未激活用户也可访问在线教程
 		\n5.优化手机绑定流程
 		\n6.修复QQ新用户注册时闪退的问题
-		\n10.修复其他兼容性问题
+		\n7.音乐盛典支持暂停播放
+		\n8.其他细节及用户体验优化
 	</string>
 	<string name="shared">share_image</string>
-	<string name="about_us">作者的话：\n2013年5月20日，邠心工作室成立，至今已有五年时间，目前团队就我一人，我是在2012年(高中)开始自学Java，花了21天学完基础知识之后开始研究开发Android程序，并于2014年发布此APP，帮助那些也想要自学Java的朋友。
+	<string name="about_us">作者的话：\n2013年5月20日，邠心工作室成立，至今已有五年时间，目前团队就我一人，我是在2012年(高中)开始自学Java，花了21天学完基础知识之后开始研究Java并开发Android程序，并于2014年发布此APP，帮助那些也想要自学Java的朋友。
 	</string>
 	<string name="about_join">加入我们：\n邮箱：vbea@foxmail.com
 		\nQ  Q：248104237\nQ 群：222876252

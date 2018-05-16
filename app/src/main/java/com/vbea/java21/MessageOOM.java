@@ -22,8 +22,9 @@ import android.webkit.WebView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-public class SmsBomb extends AppCompatActivity 
+public class MessageOOM extends AppCompatActivity 
 {
+	//原短信轰炸机备份代码
 	EditText edtPhone;
 	TextView txtPreview;
 	Spinner spThread;

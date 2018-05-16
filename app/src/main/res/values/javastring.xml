@@ -10,7 +10,7 @@
 	</string>
 	<string name="java_email">邮箱：
 	</string>
-	<string name="java_emails">绑定邮箱：
+	<string name="java_emails">绑定邮箱
 	</string>
 	<string name="java_nick">昵称：
 	</string>
@@ -22,23 +22,31 @@
 	</string>
 	<string name="java_gender">性别：
 	</string>
+	<string name="info_gender">性别
+	</string>
 	<string name="java_birthday">生日：
 	</string>
-	<string name="java_level">等级：
+	<string name="java_age">年龄
 	</string>
-	<string name="java_role">用户组：
+	<string name="java_level">等级
+	</string>
+	<string name="java_role">用户组
 	</string>
 	<string name="java_address">地址：
 	</string>
-	<string name="java_mobile">绑定手机：
+	<string name="info_address">所在地
+	</string>
+	<string name="java_mobile">绑定手机
 	</string>
 	<string name="java_phone">手机：
 	</string>
-	<string name="java_qq">绑定QQ：
+	<string name="java_qq">绑定QQ
 	</string>
 	<string name="java_binding">绑定手机
 	</string>
-	<string name="java_mark">个性签名：
+	<string name="java_mark">个性签名
+	</string>
+	<string name="java_person">个人档案
 	</string>
 	<string name="sign">注册
 	</string>

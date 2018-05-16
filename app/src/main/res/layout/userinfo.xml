@@ -90,33 +90,9 @@
 					android:gravity="center_vertical"
 					android:textSize="16sp"
 					android:textColor="?attr/textPrimary"
-					android:text="@string/java_username"/>
+					android:text="@string/java_person"/>
 				<TextView
 					android:id="@+id/info_username"
-					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
-					android:gravity="center_vertical"
-					android:textSize="14sp"
-					android:singleLine="true"
-					android:textColor="?attr/colorAccent"/>
-			</TableRow>
-			<TableRow
-				android:layout_width="fill_parent"
-				android:layout_height="56dp"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp"
-				android:background="@drawable/btn_menu"
-				android:clickable="true">
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
-					android:layout_weight="1"
-					android:gravity="center_vertical"
-					android:textSize="16sp"
-					android:textColor="?attr/textPrimary"
-					android:text="@string/java_nick"/>
-				<TextView
-					android:id="@+id/info_nickname"
 					android:layout_width="wrap_content"
 					android:layout_height="fill_parent"
 					android:gravity="center_vertical"
@@ -186,7 +162,7 @@
 					android:gravity="center_vertical"
 					android:textSize="16sp"
 					android:textColor="?attr/textPrimary"
-					android:text="@string/java_gender"/>
+					android:text="@string/info_gender"/>
 				<TextView
 					android:id="@+id/info_gender"
 					android:layout_width="wrap_content"
@@ -282,7 +258,7 @@
 					android:gravity="center_vertical"
 					android:textSize="16sp"
 					android:textColor="?attr/textPrimary"
-					android:text="@string/java_birthday"/>
+					android:text="@string/java_age"/>
 				<TextView
 					android:id="@+id/info_birthday"
 					android:layout_width="wrap_content"
@@ -306,7 +282,7 @@
 					android:gravity="center_vertical"
 					android:textSize="16sp"
 					android:textColor="?attr/textPrimary"
-					android:text="@string/java_address"/>
+					android:text="@string/info_address"/>
 				<TextView
 					android:id="@+id/info_address"
 					android:layout_width="wrap_content"

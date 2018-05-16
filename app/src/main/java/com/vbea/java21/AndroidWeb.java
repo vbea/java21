@@ -263,7 +263,7 @@ public class AndroidWeb extends AppCompatActivity
 				public void onClick(View v)
 				{
 					Intent intent = new Intent(Intent.ACTION_SEND);
-					intent.putExtra(Intent.EXTRA_TEXT, url);
+					intent.putExtra(Intent.EXTRA_TEXT, title + "：" + url);
 					intent.setType("text/plain");
 					startActivity(intent);
 					mBSDialog.dismiss();

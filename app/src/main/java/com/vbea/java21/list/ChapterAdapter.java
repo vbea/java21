@@ -7,12 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.LinearLayout;
 import android.view.LayoutInflater;
 import android.graphics.Bitmap;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import com.vbea.java21.R;
+import com.vbea.java21.classes.Common;
 
 public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.MyViewHolder>
 {
@@ -28,7 +29,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.MyViewHo
 	public MyViewHolder onCreateViewHolder(ViewGroup p1, int p2)
 	{
 		LayoutInflater inflate = LayoutInflater.from(p1.getContext());
-		View v = inflate.inflate(R.layout.adapter, p1, false);
+		View v = inflate.inflate(R.layout.java6, p1, false);
 		MyViewHolder holder = new MyViewHolder(v);
 		return holder;
 	}
@@ -36,18 +37,20 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.MyViewHo
 	@Override
 	public void onBindViewHolder(final MyViewHolder holder, final int id)
 	{
-		holder.text.setText(mList.get(id).title);
-		holder.review.setText(mList.get(id).review);
+		final Chapter item = mList.get(id);
+ 		holder.text.setText(item.title);
+ 		holder.review.setText(item.review);
 		holder.card.setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View v)
 			{
 				if(onItemClickListener != null)
 				{
-					onItemClickListener.onItemClick(v, id);
+					onItemClickListener.onItemClick(id, item.title, item.review);
 				}
 			}
 		});
+		holder.read.setVisibility(Common.READ_Java.contains(id) ? View.VISIBLE : View.GONE);
 	}
 
 	@Override
@@ -67,13 +70,15 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.MyViewHo
 	{
 		TextView text;
 		TextView review;
-		CardView card;
+		ImageView read;
+ 		LinearLayout layout;
 		public MyViewHolder(View v)
 		{
 			super(v);
-			text = (TextView) v.findViewById(R.id.cap_title);
-			review = (TextView) v.findViewById(R.id.cap_review);
-			card = (CardView) v.findViewById(R.id.cardView);
+			text = (TextView) v.findViewById(R.id.know_title);
+ 			review = (TextView) v.findViewById(R.id.know_subTitle);
+ 			read = (ImageView) v.findViewById(R.id.item_imgread);
+ 			layout = (LinearLayout) v.findViewById(R.id.itemLayout);
 		}
 	}
 
@@ -82,7 +87,8 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.MyViewHo
         this.onItemClickListener = onItemClickListener;
     }
 
-    public interface OnItemClickListener{
-        void onItemClick(View view, int resId);
+    public interface OnItemClickListener
+	{
+        void onItemClick(int resId, String title, String sub);
     }
 }

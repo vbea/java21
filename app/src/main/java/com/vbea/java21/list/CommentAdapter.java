@@ -65,7 +65,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 		boolean isMy = Common.isMyUser(item.user);
 		//holder.endorse.setEnabled(!isMy);
 		//holder.oppose.setEnabled(!isMy);
-		holder.img_vip.setVisibility(item.isVip ? View.VISIBLE : View.GONE);
+		//holder.img_vip.setVisibility(item.isVip ? View.VISIBLE : View.GONE);
 		holder.reply.setVisibility(isMy?View.GONE:View.VISIBLE);
 		holder.delete.setVisibility(isMy || Common.isAdminUser() ? View.VISIBLE : View.GONE);
 		getActcount(item.endorse, holder.txt_endorse, holder.img_endorse);
@@ -188,7 +188,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 
 	public class MyViewHolder extends ViewHolder
 	{
-		TextView name, date, comment, reference, delete, reply, txt_endorse, txt_oppose, device, img_vip;
+		TextView name, date, comment, reference, delete, reply, txt_endorse, txt_oppose, device;
 		ImageView icon,img_endorse,img_oppose;
 		TableRow endorse, oppose;
 		RelativeLayout end;
@@ -210,7 +210,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 			txt_oppose = (TextView) v.findViewById(R.id.txt_oppose);
 			endorse = (TableRow) v.findViewById(R.id.comm_endorse);
 			oppose = (TableRow) v.findViewById(R.id.comm_oppose);
-			img_vip = (TextView) v.findViewById(R.id.comm_vip);
+			//img_vip = (TextView) v.findViewById(R.id.comm_vip);
 		}
 	}
 

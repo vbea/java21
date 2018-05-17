@@ -6,26 +6,9 @@
 	android:layout_height="fill_parent"
 	android:orientation="vertical">
 	<include layout="@layout/java_tool"/>
-	<ScrollView
-		android:layout_height="match_parent"
-		android:layout_width="match_parent">
-		<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-			android:padding="5dp"
-			android:orientation="vertical">
-			<TextView
-				android:layout_height="wrap_content"
-				android:layout_width="fill_parent"
-				android:textSize="16sp"
-				android:text="@string/helpinfo"/>
-			<TextView
-				android:layout_height="wrap_content"
-				android:layout_width="fill_parent"
-				android:textSize="16sp"
-				android:text="本软件是在手机上用AIDE开发的，由于环境限制，可能在其他设备上会出现运行问题，如果你遇到任何问题或BUG，都可以点击右上角的反馈按钮给我们反馈，如果遇到有关Java和Android的学习和开发上的问题也可以与我联系。联系方式在设置界面的“关于我们”选项中。"/>
-		</LinearLayout>
-	</ScrollView>
-
+	<WebView
+		android:id="@+id/webHelp"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
 </LinearLayout>
 

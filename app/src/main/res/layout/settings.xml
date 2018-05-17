@@ -260,7 +260,7 @@
 					android:layout_width="wrap_content"
 					android:layout_height="fill_parent"
 					android:layout_weight="1"
-					android:text="欢迎页广告"
+					android:text="显示开屏广告"
 					android:gravity="start|center_vertical"
 					android:paddingLeft="20dp"
 					android:paddingRight="15dp"

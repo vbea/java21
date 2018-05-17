@@ -19,19 +19,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.DialogInterface;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+//import android.widget.AdapterView;
+//import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
+//import android.graphics.Bitmap;
+//import android.graphics.BitmapFactory;
+//import android.graphics.Canvas;
+//import android.graphics.Paint;
+//import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.CircularBorderDrawable;
+//import android.support.design.widget.CircularBorderDrawable;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.PagerAdapter;
@@ -349,7 +349,7 @@ public class Main extends AppCompatActivity
 		{
 			public void onClick(DialogInterface d, int s)
 			{
-				Common.startActivityOptions(Main.this, SmsBomb.class);
+				Common.startActivityOptions(Main.this, MessageOOM.class);
 				mHandler.sendEmptyMessageDelayed(1, 500);
 			}
 		});
@@ -694,7 +694,7 @@ public class Main extends AppCompatActivity
 		catch (Exception er)
 		{
 			ExceptionHandler.log("mainLogin",er.toString());
-			toastLoginError("0x0001");
+			toastLoginError("0x0003");
 		}
 	}
 	

@@ -242,14 +242,16 @@ public class Login extends AppCompatActivity
 				public void onError(String error)
 				{
 					ExceptionHandler.log("Login.LoginUser", error);
-					mHandler.sendEmptyMessage(1);
+					toastLoginError("0x0001");
+					//mHandler.sendEmptyMessage(1);
 				}
 			});
 		}
 		catch (Exception e)
 		{
 			ExceptionHandler.log("Login.LoginThread", e.toString());
-			mHandler.sendEmptyMessage(1);
+			toastLoginError("0x0003");
+			//mHandler.sendEmptyMessage(1);
 		}
 	}
 	
@@ -274,17 +276,23 @@ public class Login extends AppCompatActivity
 				public void onError(String error)
 				{
 					ExceptionHandler.log("Login.LoginQQUser", error);
-					mHandler.sendEmptyMessage(1);
+					toastLoginError("0x0001");
+					//mHandler.sendEmptyMessage(1);
 				}
 			});
 		}
 		catch (Exception e)
 		{
 			ExceptionHandler.log("Login.qqLoginThread", e.toString());
-			mHandler.sendEmptyMessage(1);
+			toastLoginError("0x0003");
+			//mHandler.sendEmptyMessage(1);
 		}
 	}
-		
+	
+	private void toastLoginError(String code)
+	{
+		Util.toastShortMessage(getApplicationContext(), "登录失败，请重试(" + code + ")");
+	}
 	
 	class MyIListener implements IUiListener
 	{

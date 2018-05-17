@@ -557,7 +557,7 @@ public class QQLoginReg extends AppCompatActivity
 			try
 			{
 				//绑定老用户
-				Common.Login(QQLoginReg.this, edtUserbind.getText().toString(), MD5Util.getMD5(edtPassword.getText().toString()), 1, new Common.LoginListener()
+				Common.Login(QQLoginReg.this, edtUserbind.getText().toString(), MD5Util.getMD5(edtPassword.getText().toString()), false, new Common.LoginListener()
 				{
 					@Override
 					public void onLogin(int code)

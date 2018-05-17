@@ -7,12 +7,12 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Button; 
 import android.widget.TextView;
 import android.widget.EditText;
-import android.widget.CheckBox;
+
 import android.view.View;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,8 +40,8 @@ import org.json.JSONObject;
 public class Login extends AppCompatActivity
 {
 	private EditText edtUid, edtPass;
-	private Button btnLogin, btnSign;
-	private CheckBox chkLogin;
+	private TextView forget, btnSign;
+	private Button btnLogin;
 	private ProgressDialog mProgressDialog;
 	private boolean canGoback = true;
 	@Override
@@ -51,13 +51,12 @@ public class Login extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
-		TextView forget = (TextView) findViewById(R.id.btn_forgetpsd);
-		TextView qqLogin = (TextView) findViewById(R.id.btn_qqLogin);
+		forget = (TextView) findViewById(R.id.btn_forgetpsd);
+		btnSign = (TextView) findViewById(R.id.btnSign);
+		ImageView qqLogin = (ImageView) findViewById(R.id.btn_qqLogin);
 		btnLogin = (Button) findViewById(R.id.btnLogin);
-		btnSign = (Button) findViewById(R.id.btnSign);
 		edtUid = (EditText) findViewById(R.id.loginUid);
 		edtPass = (EditText) findViewById(R.id.loginPassword);
-		chkLogin = (CheckBox) findViewById(R.id.chkLogin);
 		setSupportActionBar(tool);
 		if (Common.HULUXIA && !Common.IS_ACTIVE)
 		{
@@ -91,6 +90,7 @@ public class Login extends AppCompatActivity
 				canGoback = false;
 				btnLogin.setEnabled(false);
 				btnSign.setEnabled(false);
+				forget.setEnabled(false);
 				btnLogin.setText("登录中...");
 				loginUser();
 			}
@@ -215,6 +215,7 @@ public class Login extends AppCompatActivity
 	{
 		btnLogin.setEnabled(true);
 		btnSign.setEnabled(true);
+		forget.setEnabled(true);
 		canGoback = true;
 		btnLogin.setText(R.string.java_login);
 		if (mProgressDialog != null)
@@ -225,7 +226,7 @@ public class Login extends AppCompatActivity
 	{
 		try
 		{
-			Common.Login(Login.this, edtUid.getText().toString(), MD5Util.getMD5(edtPass.getText().toString()), chkLogin.isChecked() ? 1 : 0, new Common.LoginListener()
+			Common.Login(Login.this, edtUid.getText().toString(), MD5Util.getMD5(edtPass.getText().toString()), false, new Common.LoginListener()
 			{
 				@Override
 				public void onLogin(int code)

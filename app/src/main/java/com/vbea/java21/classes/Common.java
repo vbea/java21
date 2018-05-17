@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Environment;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.ImageView;
 import android.content.Intent;
 import android.content.Context;
@@ -73,7 +74,7 @@ public class Common
 	public static String FileProvider;
 	public static final String LocalPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/ZDApp/";
 	public static List<Tips> mTips = null;
-	public static List<String> READ_Android, READ_J2EE, READ_AndroidAdvance;
+	public static List<String> READ_Java, READ_Android, READ_J2EE, READ_AndroidAdvance;
 	public static InboxManager myInbox;
 	private static long lastTipsTime;
 	private static Copys copyMsg;
@@ -152,8 +153,8 @@ public class Common
 			editor.putInt("check", code);
 			editor.putString("checkCode", codes);
 		}
-		editor.putBoolean("chartip", false);
-		editor.putBoolean("androidtip", false);
+		//editor.putBoolean("chartip", false);
+		//editor.putBoolean("androidtip", false);
 		editor.commit();
 		init(spf);
 	}
@@ -276,9 +277,16 @@ public class Common
 		AUTO_LOGIN_MODE = spf.getInt("loginmode", 0);
 		TIPS = spf.getBoolean("tips", true);
 		JAVA_TEXT_SIZE = spf.getInt("java_size", 2);
+		READ_Java = new ArrayList<String>();
 		READ_Android = new ArrayList<String>();
 		READ_J2EE = new ArrayList<String>();
 		READ_AndroidAdvance = new ArrayList<String>();
+		String[] java = spf.getString("read_java", "").split(",");
+ 		if (java != null && java.length > 0)
+ 		{
+ 			for (String s : java)
+ 				READ_Java.add(s);
+ 		}
 		String[] android = spf.getString("read_android", "").split(",");
 		if (android != null && android.length > 0)
 		{
@@ -305,6 +313,14 @@ public class Common
 			myInbox = new InboxManager();
 		return myInbox;
 	}
+
+	public static void addJavaRead(String num)
+ 	{
+ 		AUDIO_STUDY_STATE+=2;
+ 		if (READ_Java.contains(num))
+ 			return;
+ 		READ_Android.add(num);
+ 	}
 	
 	public static void addAndroidRead(String num)
 	{
@@ -372,6 +388,11 @@ public class Common
 	{
 		return (!Common.IS_ACTIVE || Common.WEL_ADV);
 	}
+
+	public static void showUserRole(TextView txtVip)
+ 	{
+ 		txtVip.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
+ 	}
 	
 	public static boolean isVipUser()
 	{

@@ -53,17 +53,22 @@ public class ChapterFragment extends Fragment
 			mAdapter.setOnItemClickListener(new ChapterAdapter.OnItemClickListener()
 			{
 				@Override
-				public void onItemClick(View view, int resId)
+				public void onItemClick(int resId, String title, String sub)
 				{
 					/*if (Common.isNotLogin())
 					{
 						Util.toastShortMessage(getContext(), "请先登录！");
 						return;
 					}*/
-					Common.AUDIO_STUDY_STATE+=2;
-					Intent intent = new Intent(getActivity(), ChapterText.class);
-					intent.putExtra("chapter", resId);
-					Common.startActivityOptions(getActivity(), intent, view, "share_image2");
+					String id = String.valueOf(resId);
+ 					Common.addJavaRead(id);
+ 					Intent intent = new Intent(getActivity(), AndroidWeb.class);
+ 					intent.putExtra("id", id);
+ 					intent.putExtra("url", "file:///android_asset/java/chapter" + id + ".html");
+ 					intent.putExtra("title", title);
+ 					intent.putExtra("sub", sub);
+ 					intent.putExtra("type", 0);
+					Common.startActivityOptions(getActivity(), intent);
 				}
 			});
 		}

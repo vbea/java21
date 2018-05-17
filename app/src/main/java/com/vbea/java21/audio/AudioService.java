@@ -148,6 +148,7 @@ public class AudioService extends Service
 			if (music != null)
 			{
 				mThread = new MusicThread(false);
+				mThread.setPriority(Thread.MAX_PRIORITY);
 				mThread.start();
 				audioManager.requestAudioFocus(afListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
 			}

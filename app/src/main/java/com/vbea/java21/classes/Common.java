@@ -348,7 +348,7 @@ public class Common
 	public static void Login(Context context, LoginListener listener)
 	{
 		if (AUTO_LOGIN_MODE == 1)
-			Login(context, USERID, USERPASS, 3, listener);
+			Login(context, USERID, USERPASS, true, listener);
 		else if (AUTO_LOGIN_MODE == 2)
 			qqLogin(context, USERPASS, listener);
 	}
@@ -465,7 +465,7 @@ public class Common
 		});
 	}
 	
-	public static void Login(final Context context, final String username, final String pasdword, final int mode, final LoginListener listener)
+	public static void Login(final Context context, final String username, final String pasdword, final boolean isAuto, final LoginListener listener)
 	{
 		BmobQuery<Users> sql1 = new BmobQuery<Users>();
 		sql1.addWhereEqualTo("name", username);
@@ -493,11 +493,11 @@ public class Common
 						Common.mUser = list.get(0);
 						SharedPreferences spf = context.getSharedPreferences("java21", Context.MODE_PRIVATE);
 						SharedPreferences.Editor editor = spf.edit();
-						if (mode < 3)
+						if (!isAuto)
 						{
-							editor.putString("uid", mode == 1 ? Common.mUser.name : "");
-							editor.putString("sid", mode == 1 ? Common.mUser.psd : "");
-							editor.putInt("loginmode", mode);
+							editor.putString("uid", Common.mUser.name);
+							editor.putString("sid", Common.mUser.psd);
+							editor.putInt("loginmode", 1);
 							USERID = username;
 							if (!IS_ACTIVE)//自动激活
 							{
@@ -932,7 +932,7 @@ public class Common
 		startActivityForResult(requestCode, context, new Intent(context, cls));
 	}
 	
-	public static void startActivityOptions(Activity context, Intent intent, Pair<View,String>...pairs)
+	public static void startActivityOptions(Activity context, Intent intent, Pair...pairs)
 	{
 		try
 		{

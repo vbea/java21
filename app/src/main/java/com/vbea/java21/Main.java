@@ -177,8 +177,7 @@ public class Main extends AppCompatActivity
 			{
 				if (Common.isLogin())
 				{
-					Common.startActivityOptions(Main.this, new Intent(Main.this, UserCentral.class),
-						(Pair<View,String>)Pair.create(drawUser, "share_user")		
+					Common.startActivityOptions(Main.this, new Intent(Main.this, UserCentral.class), Pair.create(drawUser, "share_user")		
 						/*(Pair<View,String>)Pair.create(mImgHead, "icon_pre"),
 						(Pair<View,String>)Pair.create(txtUserName, "share_nick")*/);
 				}

@@ -174,7 +174,7 @@ public class AndroidWeb extends AppCompatActivity
 			}
 		});
 		//android.R.attr.
-		applyTips();
+		//applyTips();
 		if (!Common.isNoadv())
 			initBanner();
 	}
@@ -222,7 +222,8 @@ public class AndroidWeb extends AppCompatActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		getMenuInflater().inflate(R.menu.android_item, menu);
+		if (type != 0)
+			getMenuInflater().inflate(R.menu.android_item, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -350,7 +351,7 @@ public class AndroidWeb extends AppCompatActivity
 		});
 	}
 	
-	private void applyTips()
+	/*private void applyTips()
 	{
 		SharedPreferences spf = getSharedPreferences("java21", MODE_PRIVATE);
 		boolean isRed = spf.getBoolean("androidtip", false);
@@ -361,7 +362,7 @@ public class AndroidWeb extends AppCompatActivity
 			editor.putBoolean("androidtip", true);
 			editor.commit();
 		}
-	}
+	}*/
 	
 	private void addImageClickListner()
 	{

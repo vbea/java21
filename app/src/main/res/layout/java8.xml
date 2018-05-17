@@ -40,7 +40,7 @@
 					android:textColor="?attr/colorPrimary"
 					android:singleLine="true"
 					android:gravity="center_vertical|left"/>
-				<TextView
+				<!--TextView
 					android:id="@+id/comm_vip"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
 					android:paddingRight="1dp"
 					android:visibility="gone"
 					android:text=" VIP "/>
-				<!--ImageView
+				<ImageView
 					android:id="@+id/comm_vip"
 					android:layout_width="16dp"
 					android:layout_height="16dp"

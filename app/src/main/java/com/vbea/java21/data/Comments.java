@@ -12,7 +12,7 @@ public class Comments extends BmobObject
 	public String comment;
 	public String date;
 	public String reference;
-	public Boolean isVip;
+	//public Boolean isVip;
 	public String endorse;
 	public String oppose;
 	public String device;

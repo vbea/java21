@@ -1,0 +1,53 @@
+blockquote {
+    border: 0px;
+    margin: 10px;
+    padding: 10px;
+    color: #333333;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, STHeiti, 'Microsoft Yahei', sans-serif;
+    white-space: normal;
+    background-color: #F3F7F0;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.5em;
+}
+
+.div {
+    padding: 0 5px;
+    background-color: white;
+}
+
+img {
+    max-width: 100%;
+}
+
+green {
+    color: #008200;
+}
+
+.exap {
+    font-size: 14px;
+    color: #666;
+}
+
+.error {
+    font-size: 14px;
+    color: #de1e1e;
+}
+
+.table {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+}
+
+.table tr:nth-child(2n) {
+    background-color: #eee;
+}
+
+.table tr td {
+    padding: 4px 10px;
+}
+
+li {
+    padding: 2px 0;
+}

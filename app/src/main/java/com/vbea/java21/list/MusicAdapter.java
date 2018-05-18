@@ -91,10 +91,10 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MyViewHolder
 		if (top)
 		{
 			status = "精选";
-			if (Common.audioService.what == p)
+			if (Common.audioService.what == p && Common.audioService.isPlay())
 				status += ", 正在播放";
 		}
-		else if (Common.audioService.what == p)
+		else if (Common.audioService.what == p && Common.audioService.isPlay())
 			status = "正在播放";
 		return status;
 	}

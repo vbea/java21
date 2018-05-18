@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.content.Intent;
 import android.widget.TextView;
+import android.widget.ProgressBar;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -35,6 +36,7 @@ public class AndroidFragment extends Fragment
 	private SwipeRefreshLayout refreshLayout;
 	private RecyclerView recyclerView;
 	private TextView errorText;
+	private ProgressBar proRefresh;
 	private AndroidAdapter mAdapter;
 	private List<AndroidHtml> mList;
 	private View rootView;
@@ -57,6 +59,7 @@ public class AndroidFragment extends Fragment
 			mList = new ArrayList<AndroidHtml>();
 			mAdapter = new AndroidAdapter();
 			errorText = (TextView) view.findViewById(R.id.txt_andError);
+			proRefresh = (ProgressBar) view.findViewById(R.id.refreshProgress);
         	recyclerView = (RecyclerView) view.findViewById(R.id.cpt_recyclerView);
 			refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swp_refresh);
 			
@@ -209,6 +212,7 @@ public class AndroidFragment extends Fragment
 	{
 		if (mCount > mList.size())
 		{
+			proRefresh.setVisibility(View.VISIBLE);
 			BmobQuery<AndroidHtml> query = new BmobQuery<AndroidHtml>();
 			query.addWhereEqualTo("enable", true);
 			query.order("order");
@@ -290,10 +294,10 @@ public class AndroidFragment extends Fragment
 					init();
 					break;
 				case 2:
-					int count = mAdapter.getItemCount();
 					mAdapter.setList(mList);
-					mAdapter.notifyItemInserted(count);
-					if (mCount <= count)
+					mAdapter.notifyItemInserted(mAdapter.getItemCount());
+					proRefresh.setVisibility(View.GONE);
+					if (mList.size() == mCount)
 						mAdapter.setEnd(true);
 					break;
 				case 3:

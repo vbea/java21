@@ -29,6 +29,7 @@
 			android:textColor="?android:attr/textColorPrimary"
 			android:text="青石巷"/>
 		<TextView
+			android:id="@+id/noti_sub"
 			android:layout_height="wrap_content"
 			android:layout_width="match_parent"
 			android:textSize="12sp"
@@ -40,7 +41,7 @@
 		android:layout_width="32dp"
 		android:layout_height="32dp"
 		android:layout_marginRight="5dp"
-		android:src="@mipmap/music_play"
+		android:src="@mipmap/not_pause"
 		android:tint="?android:attr/textColorSecondary"
 		android:background="@drawable/bg_btn_noti"/>
 	<ImageView

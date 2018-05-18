@@ -1,0 +1,341 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>第十二章 内部类 - 邠心工作室</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link href="css/main.css" rel="stylesheet" />
+    <script src="Script/shCore.js" type="text/javascript"></script>
+    <script src="Script/shBrushJava.js" type="text/javascript"></script>
+    <link href="css/shCoreDefault.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+    </script>
+</head>
+<body>
+    <div class="div">
+        <blockquote>
+            以前看到过这样一条新闻，说在一个鸡蛋中发现里面有一个小鸡蛋，这个小鸡蛋同样有蛋清和蛋黄，当时感觉很奇怪的。后来学习Java后，发现在Java中竟然也有这种奇怪的事，那就是内部类。内部类就好像刚提到的鸡蛋中的小鸡蛋一样，包含在另一个类中的。通过本章的学习，会发现内部类还有好多和该小鸡蛋相似的地方。同学们通过本章的学习，应该完成如下几个目标。
+            <ol>
+                <li>了解什么是非静态内部类和如何进行非静态内部类和外部类之间的访问。</li>
+                <li>了解什么是局部内部类和如何进行局部内部类和外部类之间的访问。</li>
+                <li>了解什么是静态内部类和如何进行静态内部类和外部类之间的访问。</li>
+                <li>了解什么是匿名内部类和如何进行匿名内部类和外部类之间的访问。</li>
+            </ol>
+        </blockquote>
+        <h3>12.1  非静态内部类</h3>
+        <p>当一个类作为另一个类的非静态成员，则这个类就是一个非静态内部类。在本节中就来学习如何创建和使用非静态内部类，同时也来讲解如何在内部类中访问外部类和在外部类中如何访问内部类。</p>
+        <h4>12.1.1 创建非静态内部类</h4>
+        <p>创建非静态内部类是很容易的，只需要定义一个类让该类作为其他类的非静态成员。该非静态内部类和成员变量或者成员方法没有区别，同样可以在非静态内部类前面加可以修饰成员的修饰符。<br />创建非静态内部类的基本语法如下所示。</p>
+        <pre class="brush:java">class Wai
+{
+    class Nei
+    {
+        //内部类成员
+    }
+    //外部类成员
+}
+</pre>
+        <h4>12.1.2  在外部类中访问内部类</h4>
+        <p>在内部类的程序中，是经常会进行外部类和内部类之间访问的。在外部类中访问内部类是很容易的，只要把内部类看成一个类，然后创建该类的对象，使用对象来调用内部类中的成员就可以了。</p>
+        <pre class="brush:java">class Wai
+{
+	class Nei //创建非静态内部类
+	{
+		int i=5; //内部类成员
+	}
+	public void myVoid() //外部类成员
+	{
+		Nei n=new Nei(); //创建一个内部类对象
+		int ii=n.i;	 //访问内部类成员
+		System.out.println("内部类的变量值为："+ii);
+	}
+}
+public class NeiBuLei2
+{
+	public static void main(String args[])
+	{
+		Wai w=new Wai();
+		w.myVoid();
+	}
+}</pre>
+        <p>从程序的第16行主方法讲起，在main方法中，首先创建一个外部类对象，然后访问外部类的成员方法。在外部类的成员方法中，创建了一个内部类对象，然后使用内部类对象调用内部类的成员变量，从而得到结果。编译该程序将产生三个class文件，分别是主类、外部类和内部类。内部类产生的class文件的名称为Wai$Nei.class，在该名称中可以区分该内部类到底是哪一个类的内部类。</p>
+        <h4>12.1.3  在外部类外访问内部类</h4>
+        <p>不但可以在外部类中访问内部类，还可以在外部类外访问内部类。同学们肯定会觉得非常难的，要想访问类成员中的成员怎么访问呢。其实在Java中，是很容易做到的。在外部类外访问内部类的基本语法如下所示。</p>
+        <pre class="brush:java">Wai.Nei wn = new Wai().new Nei();</pre>
+        <p>使用该方法就能够创建一个内部类对象，使用该内部类对象就可以访问内部类的成员。该方法是不容易理解的，该方法也是可以分为两条语句的。</p>
+        <pre class="brush:java">Wai w=new Wai();
+Wai.Nei wn=w.new Nei();
+</pre>
+        <p>这样就很容易理解了。首先是创建一个外部类的对象，然后让该外部类对象调用创建一个内部类对象。</p>
+        <p class="exap">一个在外部类外访问内部类的程序</p>
+        <pre class="brush:java">class Wai
+{
+	class Nei				//创建非静态内部类
+	{
+		int i=5;				//内部类成员
+		int ii=6;
+	}
+}
+public class NeiBuLei3
+{
+	public static void main(String args[])
+	{
+		Wai.Nei wn1=new Wai().new Nei();
+		Wai w=new Wai();
+		Wai.Nei wn2=w.new Nei();
+		System.out.println("内部类中的变量i的值为："+wn1.i);
+		System.out.println("内部类中的变量ii的值为："+wn2.ii);图12-3  在外部类外访问内部类
+	}
+}</pre>
+        <p>在示例代码中使用了两种方法来从外部类外访问内部类。在外部类外访问内部类时，是不能够直接创建内部类对象的，因为内部类只是外部类的一个成员。所以要想创建内部类对象，首先要创建外部类对象，然后以外部类对象为标识来创建内部类对象。</p>
+        <h4>12.1.4  在内部类中访问外部类</h4>
+        <p>在内部类中访问外部类，就像所有的同一个类中成员互相访问一样，这样是没有限制的，包括将成员声明为private私有的。</p>
+        <p class="exap">【范例】示例代码是一个在内部类中访问外部类的程序。</p>
+        <pre class="brush:java">class Wai
+{
+	int i=8; //外部类成员变量
+	class Nei //创建非静态内部类
+	{
+		public void myVoid() //内部类成员变量
+		{
+			System.out.println("外部类中的成员变量值为："+i);
+		}
+	}
+}
+public class NeiBuLei5
+{
+	public static void main(String args[])
+	{
+		Wai w=new Wai(); //创建外部类对象
+		Wai.Nei wn2=w.new Nei(); //创建内部类对象
+		wn2.myVoid(); //调用内部类中成员
+	}
+}</pre>
+        <p>在示例代码中，在内部类中定义了一个myVoid来访问外部类中的成员变量i。可以看到从内部类中访问外部类是非常容易的，不需要添加任何内容，就像成员方法间调用一样。</p>
+        <p>有些同学们学习完示例代码后，会有疑问，如果外部类中也有一个成员变量i怎么办呢？同学们可以进行实验，从结果中可以看到得到的是内部类成员变量的值。下面通过示例代码解决这个问题。</p>
+        <p class="exap">一个在内部类和外部类中具有同名称变量访问的程序</p>
+        <pre class="brush:java">class Wai
+{
+	int i=8;	//外部类成员变量
+	class Nei	//创建非静态内部类
+	{
+		int i=9;
+		Wai ww=new Wai();
+		public void myVoid()	//内部类成员变量
+		{
+			System.out.println("内部类中的成员变量值为："+i);
+			System.out.println("外部类中的成员变量值为："+ww.i);
+		}
+	}
+}
+public class NeiBuLei6
+{
+	public static void main(String args[])
+	{
+		Wai w=new Wai();		//创建外部类对象
+		Wai.Nei wn2=w.new Nei();//创建内部类对象
+		wn2.myVoid();			//调用内部类中成员
+	}
+}</pre>
+        <p>在本程序中的第3行定义了一个外部类的成员变量，第6行定义了一个内部类的成员变量，这两个成员变量的名称是相同的。而在内部直接访问时，将访问的是内部类的成员变量。要想访问外部类成员变量，就需要首先创建一个外部类对象，然后使用该对象调用外部类成员变量。</p>
+        <h4>12.2  局部内部类</h4>
+        <p>在上一节中介绍了非静态成员内部类，以及如何对非静态成员内部类进行操作。在本节中就来学习局部内部类的知识，通过非静态成员内部类的学习，是很容易来学习局部内部类的。从名称就可以看出局部内部类是作为一个类的局部变量来定义的。</p>
+        <h4>12.2.1  创建局部内部类</h4>
+        <p>局部内部类的作用范围是和局部变量的作用范围相同的，只在局部中起作用，所以对局部内部类进行访问时，只能在该局部内部类的作用范围内。</p>
+        <p class="exap">【范例】示例代码是一个创建和访问局部内部类的程序。</p>
+        <pre class="brush:java">class Wai
+{
+	public void myVoid()
+	{
+		class Nei				//定义一个局部内部类
+		{
+			int i=5;			//局部内部类的成员变量
+		}
+		Nei n=new Nei();
+		System.out.println("局部内部类的成员变量为："+n.i);
+	}
+}
+public class NeiBuLei8
+{
+	public static void main(String args[])
+	{
+		Wai w=new Wai();			//创建外部类对象
+		w.myVoid();				//调用内部类中成员
+	}
+}
+</pre>
+        <p>在本程序中定义了一个局部内部类，并进行了对该局部内部类的访问。对该内部类进行访问必须在该内部类所在的方法中通过创建内部类对象来进行访问。这是因为这里的内部类是作为局部成员的形式出现的，只能在它所在的方法中进行调用。</p>
+        <h4>12.2.2  在局部内部类中访问外部类成员变量</h4>
+        <p>在局部内部类中访问外部类成员变量是很容易实现的，并不需要进行过多操作。在局部内部类中可以直接调用外部类的成员变量。</p>
+        <p class="exap">【范例】示例代码是一个在局部内部类中访问外部类成员变量的程序。</p>
+        <pre class="brush:java">class Wai
+{
+	int i=9;					//定义一个外部类的成员变量
+	public void myVoid()
+	{
+		class Nei				//定义一个局部内部类
+		{
+			public void myNeiVoid()
+			{
+				System.out.println("外部类的成员变量值为："+i);//访问外部类的成员变量
+			}
+		}
+		Nei n=new Nei();		//创建内部类对象
+		n.myNeiVoid();			//调用内部类中的成员方法
+	}
+}
+public class NeiBuLei9
+{
+	public static void main(String args[])
+	{
+		Wai w=new Wai();		//创建外部类对象
+		w.myVoid();				//调用内部类中成员
+	}
+}</pre>
+        <p>在示例代码中定义了一个局部内部类，在该局部内部类中定义了一个方法来访问外部类的成员变量。从运行结果中可以看出在内部类中可以成功访问外部类的成员变量。在该程序中同样需要注意的是，对内部类进行访问需要和内部类在同一方法中。</p>
+        <h4>12.2.3  在局部内部类中访问外部类的局部变量</h4>
+        <p>和访问外部类的成员变量不同，在局部内部类中访问外部类中和局部内部类在同一局部的局部变量是不能够直接访问的。</p>
+        <p class="exap">【范例】示例代码是一个错误的访问外部类局部变量的程序。</p>
+        <pre class="brush:java">class Wai
+{
+	public void myVoid()
+	{
+		int i=9;				//定义一个外部类的局部变量
+		class Nei				//定义一个局部内部类
+		{
+			public void myNeiVoid()
+			{
+				System.out.println("外部类的局部变量值为："+i);//访问外部类的成员变量
+			}
+		}
+		Nei n=new Nei();		//创建内部类对象
+		n.myNeiVoid();			//调用内部类中的成员方法
+	}
+}
+public class NeiBuLei10
+{
+	public static void main(String args[])
+	{
+		Wai w=new Wai();		//创建外部类对象
+		w.myVoid();			//调用内部类中成员
+	}
+}</pre>
+        <p>运行该程序是会发生错误的，错误信息为“从内部类中访问局部变量i；需要被声明为最终类型”。在局部内部类中访问外部类的局部变量是不能够访问普通的局部变量的，必须将该局部变量声明为final。</p>
+        <h4>12.2.4  静态方法中的局部内部类</h4>
+        <p>局部内部类定义在非静态方法和静态方法中是不同的，在前面的两小节中都是将局部内部类定义在非静态方法中，在本节中就来学习静态方法中定义局部内部类的情况。在静态方法中定义的局部内部类要想访问外部类中的成员，该程序必须是静态成员。静态成员和非静态成员之间的访问是不变的。</p>
+        <p class="error">注意：在静态方法中定义的局部内部类要想访问外部类中的成员，该程序必须是静态成员。静态成员和非静态成员之间的访问是不变的。</p>
+        <p class="exap">一个错误的访问成员的程序</p>
+        <pre class="brush:java">class Wai
+{
+	int i=3;
+	public static void myVoid()
+	{
+		class Nei		//定义一个局部内部类
+		{
+			public void myNeiVoid()
+			{
+				System.out.println("外部类的局部变量值为："+i);//访问外部类的成员变量
+			}
+		}
+		Nei n=new Nei();	//创建内部类对象
+		n.myNeiVoid();		//调用内部类中的成员方法
+	}
+}
+public class NeiBuLei12
+{
+	public static void main(String args[])
+	{
+		Wai w=new Wai();	//创建外部类对象
+		w.myVoid();			//调用内部类中成员
+	}
+}
+</pre>
+        <p>运行该程序是会发生错误的，错误信息为“无法从静态上下文中引用非静态变量i”。该程序主要错误原因是第三行定义的外部类变量是一个非静态成员变量。而本程序中定义的局部变量是定义在静态的方法中，所以是不能够正常访问的。</p>
+        <h3>12.3  静态内部类</h3>
+        <p>在第一节中已经讲解了非静态内部类，在本节中就来讲解什么是静态内部类。静态内部类就是在外部类中扮演一个静态成员的角色。在本节中就来学习如何创建静态内部类和关于静态内部类访问的问题。</p>
+        <h4>12.3.1  创建静态内部类</h4>
+        <p>创建静态内部类的形式和创建非静态内部类的形式很相似的，只是需要将该内部类使用static修饰成静态的形式。使用static修饰类，这在正常类中是不可能的。定义静态内部类的语法如下所示。</p>
+        <pre class="brush:java">class Wai
+{
+    static class Nei
+    {
+        //内部类成员
+    }
+    //外部类成员
+}
+</pre>
+        <h4>12.3.2  在外部类中访问静态内部类</h4>
+        <p>在外部类中访问静态内部类和在外部类中访问非静态内部类一样的，只需要从成员间访问的角度就可以考虑到这一点。</p>
+        <p class="exap">【范例】示例代码是一个在外部类中访问静态内部类的程序。</p>
+        <pre class="brush:java">class Wai
+{
+	static class Nei		//创建静态内部类
+	{
+		int i=5;			//内部类成员
+	}
+	public void myVoid()	//外部类成员
+	{
+		Nei n=new Nei();	//创建一个内部类对象
+		int ii=n.i;			//访问内部类成员
+		System.out.println("静态内部类的变量值为："+ii);
+	}
+}
+public class NeiBuLei15
+{
+	public static void main(String args[])
+	{
+		Wai w=new Wai();
+		w.myVoid();
+	}
+}
+</pre>
+        <h4>12.3.3  在外部类外访问静态内部类</h4>
+        <p>通过上一小节的学习，知道在外部类中访问静态内部类和访问非静态内部类是相同的，但是在外部类中访问静态内部类和非静态内部类就不再相同。因为静态内部类是外部类的静态成员，静态成员是不需要外部类对象而存在的，所以在外部类外，对静态内部类进行访问时是不需要创建外部类对象的。</p>
+        <p class="error">注意：因为静态内部类是外部类的静态成员，静态成员是不需要外部类对象而存在的，所以在外部类外，对静态内部类进行访问时是不需要创建外部类对象的。</p>
+        <h3>12.4  匿名内部类</h3>
+        <p>在所有的内部类中最难的就应该是匿名内部类。匿名内部类从名字上看就知道是没有类名的类。在本节中就来介绍如何创建匿名内部类和如何进行关于匿名内部类的访问问题。</p>
+        <h4>12.4.1  创建匿名内部类</h4>
+        <p>在创建匿名内部类中将使用到继承父类或者实现接口的知识，匿名内部类是没有名字的，所以在创建匿名内部类时同时创建匿名内部类的对象。创建匿名内部类的语法格式如下所示。</p>
+        <pre class="brush:java">new NeiFather()
+{
+    //匿名内部类
+};</pre>
+        <p>在创建匿名内部类的语法中，NeiFather是匿名内部类继承的父类的类名，使用new同时创建了匿名内部类的对象。在匿名内部类中可以重写父类中的方法，也可以定义自己的方法。</p>
+        <h4>12.4.2  匿名内部类的初始化</h4>
+        <p>匿名内部类是没有名称的，所以匿名内部类也是不可能具有构造器的，这就出现一个问题。有时在匿名内部类中也是要定义成员变量的，但是该成员变量应该放在什么位置呢。这里的解决方法就是创建一个非静态语句块，将所有的初始化的成员变量都放在该非静态语句块中。这样在匿名内部类中的方法中就可以来调用这些成员变量。</p>
+        <h3>12.5  综合练习</h3>
+        <p>1.在下面的程序中运行哪一条语句可以正常运行。</p>
+        <pre class="brush:java">public class LianXi1
+{
+	static int h=1;
+	private int i=2;
+	public void myVoid()
+	{
+		final int j=3;
+		int k=4;
+		class Nei
+		{
+			public void myNeiVoid()
+			{
+				//System.out.println(h);
+				//System.out.println(i);
+				//System.out.println(j);
+				//System.out.println(k);
+			}
+		}
+		Nei n=new Nei();
+		n.myNeiVoid();
+	}
+	public static void main(String args[])
+	{
+		LianXi1 lx=new LianXi1();
+		lx.myVoid();
+	}
+}</pre>
+        <p class="exap">在该程序的第13行到第16行注释了4条访问程序中变量的语句，释放这些语句，可以发现访问h、i和j都是能够正常访问的，但是访问变量k就会发生编译异常。这是因为在局部内部类中，只能访问方法中的最终变量。</p>
+        <h3>12.6  小结</h3>
+        <p>在本章讲解了Java中的内部类，内部类包括非静态内部类、局部内部类、静态内部类和匿名内部类，并分别对这些内部类进行了讲解。在讲解每一种内部类时，首先讲解如何创建该内部类，并且讲解了如何对内部类进行访问。</p>
+    </div>
+</body>
+</html>

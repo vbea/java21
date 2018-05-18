@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Environment;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.ImageView;
 import android.content.Intent;
 import android.content.Context;
@@ -73,7 +74,7 @@ public class Common
 	public static String FileProvider;
 	public static final String LocalPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/ZDApp/";
 	public static List<Tips> mTips = null;
-	public static List<String> READ_Android, READ_J2EE, READ_AndroidAdvance;
+	public static List<String> READ_Java, READ_Android, READ_J2EE, READ_AndroidAdvance;
 	public static InboxManager myInbox;
 	private static long lastTipsTime;
 	private static Copys copyMsg;
@@ -152,8 +153,8 @@ public class Common
 			editor.putInt("check", code);
 			editor.putString("checkCode", codes);
 		}
-		editor.putBoolean("chartip", false);
-		editor.putBoolean("androidtip", false);
+		//editor.putBoolean("chartip", false);
+		//editor.putBoolean("androidtip", false);
 		editor.commit();
 		init(spf);
 	}
@@ -276,9 +277,16 @@ public class Common
 		AUTO_LOGIN_MODE = spf.getInt("loginmode", 0);
 		TIPS = spf.getBoolean("tips", true);
 		JAVA_TEXT_SIZE = spf.getInt("java_size", 2);
+		READ_Java = new ArrayList<String>();
 		READ_Android = new ArrayList<String>();
 		READ_J2EE = new ArrayList<String>();
 		READ_AndroidAdvance = new ArrayList<String>();
+		String[] java = spf.getString("read_java", "").split(",");
+		if (java != null && java.length > 0)
+		{
+			for (String s : java)
+				READ_Java.add(s);
+		}
 		String[] android = spf.getString("read_android", "").split(",");
 		if (android != null && android.length > 0)
 		{
@@ -304,6 +312,14 @@ public class Common
 		if (myInbox == null)
 			myInbox = new InboxManager();
 		return myInbox;
+	}
+	
+	public static void addJavaRead(String num)
+	{
+		AUDIO_STUDY_STATE+=2;
+		if (READ_Java.contains(num))
+			return;
+		READ_Android.add(num);
 	}
 	
 	public static void addAndroidRead(String num)
@@ -348,7 +364,7 @@ public class Common
 	public static void Login(Context context, LoginListener listener)
 	{
 		if (AUTO_LOGIN_MODE == 1)
-			Login(context, USERID, USERPASS, 3, listener);
+			Login(context, USERID, USERPASS, true, listener);
 		else if (AUTO_LOGIN_MODE == 2)
 			qqLogin(context, USERPASS, listener);
 	}
@@ -371,6 +387,11 @@ public class Common
 	public static boolean isWeladv()
 	{
 		return (!Common.IS_ACTIVE || Common.WEL_ADV);
+	}
+	
+	public static void showUserRole(TextView txtVip)
+	{
+		txtVip.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
 	}
 	
 	public static boolean isVipUser()
@@ -465,7 +486,7 @@ public class Common
 		});
 	}
 	
-	public static void Login(final Context context, final String username, final String pasdword, final int mode, final LoginListener listener)
+	public static void Login(final Context context, final String username, final String pasdword, final boolean isAuto, final LoginListener listener)
 	{
 		BmobQuery<Users> sql1 = new BmobQuery<Users>();
 		sql1.addWhereEqualTo("name", username);
@@ -493,11 +514,11 @@ public class Common
 						Common.mUser = list.get(0);
 						SharedPreferences spf = context.getSharedPreferences("java21", Context.MODE_PRIVATE);
 						SharedPreferences.Editor editor = spf.edit();
-						if (mode < 3)
+						if (!isAuto)
 						{
-							editor.putString("uid", mode == 1 ? Common.mUser.name : "");
-							editor.putString("sid", mode == 1 ? Common.mUser.psd : "");
-							editor.putInt("loginmode", mode);
+							editor.putString("uid", Common.mUser.name);
+							editor.putString("sid", Common.mUser.psd);
+							editor.putInt("loginmode", 1);
 							USERID = username;
 							if (!IS_ACTIVE)//自动激活
 							{
@@ -932,7 +953,7 @@ public class Common
 		startActivityForResult(requestCode, context, new Intent(context, cls));
 	}
 	
-	public static void startActivityOptions(Activity context, Intent intent, Pair<View,String>...pairs)
+	public static void startActivityOptions(Activity context, Intent intent, Pair...pairs)
 	{
 		try
 		{
@@ -1023,6 +1044,7 @@ public class Common
 		mUser = null;//登录用户
 		FileProvider = null;//文件提供者
 		mTips = null;//通知中心
+		READ_Java = null;
 		READ_Android = null;
 		READ_J2EE = null;
 		READ_AndroidAdvance = null;

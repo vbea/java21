@@ -24,6 +24,10 @@ green {
     color: #008200;
 }
 
+p:not(.exap):not(.error):not(.nov) {
+    text-indent: 2em;
+}
+
 .exap {
     font-size: 14px;
     color: #666;
@@ -50,4 +54,11 @@ green {
 
 li {
     padding: 2px 0;
+}
+
+.blueTitle {
+    padding: 5px 10px;
+    color: white;
+    display: inline-block;
+    background-color: #0099ff;
 }

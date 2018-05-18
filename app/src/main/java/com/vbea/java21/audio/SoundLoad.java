@@ -36,7 +36,7 @@ public class SoundLoad
 {
 	private SoundPool mSoundPool1;//,mSoundPool2;//,mSoundPool3;
 	private AssetManager am;
-	private List<Music> musicTop;
+	public List<Music> musicTop;
 	private String[] sound_alpha = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};//常用音源26
 	private String[] sound_bass = {"A1","A2","A3","A4","A5","A6","A7","A8","A9","A10","A11","A12","A13","A14","A15","A16"};//低音16
 	private String[] sound_pitch = {"B1","B2","B3","B4","B5","B6","B7","B8","B9","B10"};//高音10
@@ -44,7 +44,6 @@ public class SoundLoad
 	private HashMap<String, Integer> hash_music;//,hash_music2,hash_tone;
 	private String path = "sound/%1$s.ogg";
 	public boolean isCometed = false;
-	//private int playCode = 0;
 	//private boolean soDown;
 	public SoundLoad(Context context) throws Exception
 	{
@@ -58,7 +57,7 @@ public class SoundLoad
 		//hash_music2 = new HashMap<String, Integer>(88);
 	}
 	
-	private SoundPool getSoundPool()
+	public SoundPool getSoundPool()
 	{
 		SoundPool.Builder mSoundPool = new SoundPool.Builder();
 		mSoundPool.setMaxStreams(10);
@@ -76,7 +75,7 @@ public class SoundLoad
 		load1();
 	}
 	//正常音节码解析
-	private void load1()
+	public void load1()
 	{
 		try
 		{
@@ -99,7 +98,7 @@ public class SoundLoad
 		}
 	}
 	//高低音节补充码解析
-	private void load2()
+	public void load2()
 	{
 		try
 		{
@@ -131,7 +130,7 @@ public class SoundLoad
 	}
 	
 	//升降调音节码解析
-	private void load3()
+	public void load3()
 	{
 		try
 		{
@@ -246,11 +245,6 @@ public class SoundLoad
 		return null;
 	}
 	
-	public List<Music> getMusicList()
-	{
-		return musicTop;
-	}
-	
 	/*public boolean isValid(int m)
 	{
 		return m < musicTop.size();
@@ -268,15 +262,8 @@ public class SoundLoad
 			mSoundPool1.autoPause();
 			mSoundPool1.release();
 		}
+		
 	}
-	
-	/*public void stop()
-	{
-		if (mSoundPool1 != null)
-		{
-			mSoundPool1.stop(playCode);
-		}
-	}*/
 	
 	/*public void unZIP(Context context) throws IOException
 	{

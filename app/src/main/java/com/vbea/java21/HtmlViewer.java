@@ -60,7 +60,6 @@ import com.tencent.connect.share.QQShare;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
-import android.os.*;
 
 public class HtmlViewer extends AppCompatActivity
 {
@@ -128,12 +127,17 @@ public class HtmlViewer extends AppCompatActivity
 		wset.setAppCacheMaxSize(1024*1024*10);
 		wset.setAllowFileAccess(true);
 		wset.setRenderPriority(WebSettings.RenderPriority.HIGH);
-		//wset.setGeolocationEnabled(true);
-		//wset.setJavaScriptCanOpenWindowsAutomatically(true);
-		wset.setSupportMultipleWindows(false);
+		wset.setGeolocationEnabled(true);
+		wset.setJavaScriptCanOpenWindowsAutomatically(true);
 		webView.addJavascriptInterface(new JavaScriptShowCode(), "showcode");
 		onSetting();
-		mHandler.sendEmptyMessageDelayed(0, 300);
+		new Handler().postDelayed(new Runnable()
+		{
+			public void run()
+			{
+				init();
+			}
+		}, 300);
 		webView.setWebChromeClient(new MyWebChromeClient());
 		
 		webView.setWebViewClient(new WebViewClient()
@@ -167,17 +171,16 @@ public class HtmlViewer extends AppCompatActivity
 								}
 							}
 						});
+						return true;
+						//return super.shouldOverrideUrlLoading(v, url);
 					}
-					return true;
 				}
-				/*else// if (!SH_url.equals(url))
+				else// if (!SH_url.equals(url))
 				{
-					//Util.toastShortMessage(getApplicationContext(), SH_url + "\n" + url);
 					SH_url = url;
-					mHandler.sendEmptyMessageDelayed(1, 300);
-					//return true;
-				}*/
-				return super.shouldOverrideUrlLoading(v, url);
+					v.loadUrl(url);
+				}
+				return false;
 			}
 			
 			@Override
@@ -896,20 +899,6 @@ public class HtmlViewer extends AppCompatActivity
 			return true;
 		}
 	}
-	
-	Handler mHandler = new Handler()
-	{
-
-		@Override
-		public void handleMessage(Message msg)
-		{
-			if (msg.what == 0)
-				init();
-			else if (msg.what == 1)
-				webView.loadUrl(SH_url);
-			super.handleMessage(msg);
-		}
-	};
 	
 	class JavaScriptShowCode
 	{

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_height="match_parent"
+	android:layout_width="match_parent"
+	android:paddingLeft="5dp"
+	android:paddingRight="5dp"
+	android:orientation="vertical">
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_01"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_02"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_03"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_04"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+
+	<ImageView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:src="@mipmap/image_c1_1"
+		android:onClick="onImage"/>
+
+	<ImageView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:src="@mipmap/image_c1_2"
+		android:onClick="onImage"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_05"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+
+	<ImageView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:src="@mipmap/image_c1_3"
+		android:onClick="onImage"/>
+
+	<ImageView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:src="@mipmap/image_c1_4"
+		android:onClick="onImage"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_06"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+
+	<ImageView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:src="@mipmap/image_c1_5"
+		android:onClick="onImage"/>
+
+	<ImageView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:src="@mipmap/image_c1_6"
+		android:onClick="onImage"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_07"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+
+	<ImageView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:src="@mipmap/image_c1_7"
+		android:onClick="onImage"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_08"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_09"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+
+	<ImageView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:src="@mipmap/image_c1_8"
+		android:onClick="onImage"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_10"
+		android:autoLink="web"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+	<ImageView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:src="@mipmap/image_c1_9"
+		android:onClick="onImage"/>
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_11"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_12"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_13"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_14"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_15"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+
+	<ImageView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:src="@mipmap/image_c1_10"
+		android:onClick="onImage"/>
+
+	<ImageView
+		android:layout_height="wrap_content"
+		android:layout_width="wrap_content"
+		android:src="@mipmap/image_c1_11"
+		android:onClick="onImage"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_16"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_17"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+
+	<TextView
+		android:layout_height="wrap_content"
+		android:layout_width="fill_parent"
+		android:text="@string/c1_18"
+		android:textSize="?attr/javaTextSize"
+		android:textIsSelectable="true"/>
+</LinearLayout>
+

@@ -34,8 +34,8 @@ public class UserEdit extends AppCompatActivity
 {
 	private LayoutInflater inflat;
 	private RadioButton rdbMale, rdbFemale;
-	private EditText edtNick, edtRemark, edtAddress, edtBirthday;
-	private TextView username, chPassword;
+	private EditText edtNick, edtRemark, edtAddress;
+	private TextView username, birthday, chPassword;
 	private Button btnSave;
 	private Dialog mDialog;
 	private View dialogView;
@@ -55,10 +55,10 @@ public class UserEdit extends AppCompatActivity
 		username = (TextView) findViewById(R.id.info_username);
 		edtRemark = (EditText) findViewById(R.id.udt_mark);
 		edtNick = (EditText) findViewById(R.id.udt_nick);
-		edtBirthday = (EditText) findViewById(R.id.udt_birthday);
 		rdbMale = (RadioButton) findViewById(R.id.rdbMale);
 		rdbFemale = (RadioButton) findViewById(R.id.rdbFemale);
 		edtAddress = (EditText) findViewById(R.id.udt_address);
+		birthday = (TextView) findViewById(R.id.info_birthday);
 		chPassword = (TextView) findViewById(R.id.udt_password);
 	
 		setSupportActionBar(tool);
@@ -71,13 +71,11 @@ public class UserEdit extends AppCompatActivity
 			}
 		});
 		
-		edtBirthday.setOnFocusChangeListener(new View.OnFocusChangeListener()
+		birthday.setOnClickListener(new View.OnClickListener()
 		{
-			public void onFocusChange(View v, boolean f)
+			public void onClick(View v)
 			{
-				if (!f) return;
-				v.clearFocus();
-				String[] s = edtBirthday.getText().toString().split("-");
+				String[] s = birthday.getText().toString().split("-");
 				int year=2017,month=1,day=1;
 				if (s != null && s.length == 3)
 				{
@@ -89,7 +87,7 @@ public class UserEdit extends AppCompatActivity
 				{
 					public void onDateSet(DatePicker v, int _year, int _month, int _day)
 					{
-						edtBirthday.setText(String.format("%d-%02d-%02d",_year,(_month+1),_day));
+						birthday.setText(String.format("%d-%02d-%02d",_year,(_month+1),_day));
 						mDialog.dismiss();
 					}
 				}, year, month-1, day);
@@ -109,7 +107,7 @@ public class UserEdit extends AppCompatActivity
 				Common.mUser.mark = edtRemark.getText().toString();
 				Common.mUser.address = edtAddress.getText().toString();
 				Common.mUser.gender = rdbMale.isChecked();
-				Common.mUser.birthday = edtBirthday.getText().toString();
+				Common.mUser.birthday = birthday.getText().toString();
 				Common.updateUser();
 				supportFinishAfterTransition();
 			}
@@ -152,7 +150,7 @@ public class UserEdit extends AppCompatActivity
 			else
 				rdbFemale.setChecked(true);
 		}
-		edtBirthday.setText(toStrings(user.birthday));
+		birthday.setText(toStrings(user.birthday));
 		edtAddress.setText(toStrings(user.address));
 	}
 	

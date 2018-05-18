@@ -46,4 +46,52 @@
 		<item>(选学)随着Internet的逐渐普及，越来越多的软件项目应用涉及到网络。而Java似乎专门为网络设计的，它提供了很多方法供程序员使用，使大家能够很方便地开发网络应用软件。在本章中，将介绍Java网络编程的基础知识，以及网络编程的特点和方法。</item>
 		<item>(阅读)在本章中就来使用一个综合案例来讲解如何使用Java进行实际开发。在本章中将开发一个读者最熟悉的学生管理系统，该系统在每一个学校中都有，该系统是非常容易开发的。</item>
 	</array>
+	<array name="array_shortChapter">
+		<item>Java简介</item>
+		<item>Java的基本数据类型</item>
+		<item>运算符</item>
+		<item>流程控制</item>
+		<item>数组</item>
+		<item>类与对象</item>
+		<item>控制逻辑</item>
+		<item>继承</item>
+		<item>接口</item>
+		<item>构造器</item>
+		<item>异常处理</item>
+		<item>内部类</item>
+		<item>多线程</item>
+		<item>Swing桌面应用程序开发</item>
+		<item>布局管理器</item>
+		<item>Swing常用控件</item>
+		<item>JDBC数据库编程</item>
+		<item>Java中I/O流</item>
+		<item>集合框架</item>
+		<item>网络编程</item>
+		<item>学生管理系统</item>
+		<item>Java知识总结</item>
+		<item>Java面试题</item>
+	</array>
+	<string name="cap_00">Java简介</string>
+	<string name="cap_01">Java的基本数据类型</string>
+	<string name="cap_02">运算符</string>
+	<string name="cap_03">流程控制</string>
+	<string name="cap_04">数组</string>
+	<string name="cap_05">类与对象</string>
+	<string name="cap_06">控制逻辑</string>
+	<string name="cap_07">继承</string>
+	<string name="cap_08">接口</string>
+	<string name="cap_09">构造器</string>
+	<string name="cap_10">异常处理</string>
+	<string name="cap_11">内部类</string>
+	<string name="cap_12">多线程</string>
+	<string name="cap_13">Swing桌面应用程序开发</string>
+	<string name="cap_14">布局管理器</string>
+	<string name="cap_15">Swing常用控件</string>
+	<string name="cap_16">JDBC数据库编程</string>
+	<string name="cap_17">Java中I/O流</string>
+	<string name="cap_18">集合框架</string>
+	<string name="cap_19">网络编程</string>
+	<string name="cap_20">学生管理系统</string>
+	<string name="cap_21">Java知识总结</string>
+	<string name="cap_22">Java面试题</string>
 </resources>

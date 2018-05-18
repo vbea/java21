@@ -4,7 +4,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.MenuItem;
 import android.view.Menu;
-import android.webkit.WebView;
+import android.content.Intent;
+import android.widget.RelativeLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -19,10 +20,9 @@ public class Help extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.help);
 
-		WebView web = (WebView) findViewById(R.id.webHelp);
 		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(tool);
-		web.loadUrl("file:///android_asset/web/help.html");
+		
 		tool.setNavigationOnClickListener(new View.OnClickListener()
 		{
 			@Override

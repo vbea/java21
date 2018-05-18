@@ -26,7 +26,6 @@ import com.vbea.java21.list.MusicAdapter;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
-import com.vbea.java21.audio.*;
 
 public class MusicList extends AppCompatActivity
 {
@@ -52,7 +51,7 @@ public class MusicList extends AppCompatActivity
 			}
 		});
 		
-		mAdapter = new MusicAdapter(Common.SOUND.getMusicList());
+		mAdapter = new MusicAdapter(Common.SOUND.musicTop);
 		mAdapter.setIsVip(Common.isVipUser());
 		DividerItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
 		decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
@@ -77,18 +76,6 @@ public class MusicList extends AppCompatActivity
 				Util.toastShortMessage(getApplicationContext(), "已复制代码到剪贴板");
 			}
 		});
-		Common.audioService.addAudioChangedListener(new OnAudioChangedListener()
-		{
-			@Override
-			public void onAudioChange()
-			{
-				try
-				{
-					mAdapter.notifyDataSetChanged();
-				}
-				catch (Exception e){}
-			}
-		});
 	}
 
 	@Override
@@ -96,12 +83,5 @@ public class MusicList extends AppCompatActivity
 	{
 		super.onResume();
 		mAdapter.notifyDataSetChanged();
-	}
-
-	@Override
-	protected void onDestroy()
-	{
-		Common.audioService.addAudioChangedListener(null);
-		super.onDestroy();
 	}
 }

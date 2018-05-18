@@ -71,9 +71,9 @@ public class Comment extends AppCompatActivity
 		title = getIntent().getStringExtra("title");
 		resId = getIntent().getStringExtra("id");
 		url = getIntent().getStringExtra("url");
-		type = getIntent().getIntExtra("type", -1);
+		type = getIntent().getIntExtra("type", 0);
 		refreshLayout.setColorSchemeResources(MyThemes.getColorPrimary(), MyThemes.getColorAccent());
-		if (resId == null || type == -1)
+		if (resId == null || type == 0)
 		{
 			Util.toastShortMessage(this, "不支持的参数");
 			supportFinishAfterTransition();
@@ -293,7 +293,7 @@ public class Comment extends AppCompatActivity
 		Comments coms = new Comments();
 		coms.user = Common.mUser.name;
 		coms.name = Common.mUser.nickname;
-		//coms.isVip = Common.isVipUser();
+		coms.isVip = Common.isVipUser();
 		coms.id = resId;
 		coms.type = type;
 		coms.title = title;

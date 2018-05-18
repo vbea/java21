@@ -44,9 +44,10 @@
 				android:singleLine="true"
 				android:textColor="@color/white"
 				android:textSize="9sp"
-				android:paddingLeft="3dp"
-				android:paddingRight="3dp"
-				android:visibility="gone"/>
+				android:paddingLeft="1dp"
+				android:paddingRight="1dp"
+				android:visibility="gone"
+				android:text=" VIP "/>
 			<TextView
 				android:id="@+id/draw_txtName"
 				android:layout_width="wrap_content"

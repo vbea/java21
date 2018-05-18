@@ -40,7 +40,6 @@
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_vertical"
 			android:src="@mipmap/ic_readed"
-			android:tint="?attr/colorAccent"
 			android:visibility="gone"/>
 	</LinearLayout>
 	<RelativeLayout

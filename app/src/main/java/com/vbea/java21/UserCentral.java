@@ -51,7 +51,7 @@ public class UserCentral extends AppCompatActivity
 	private RelativeLayout userTop;
 	private AppBarLayout appbar;
 	private AlphaAnimation appears, disappears;
-	private TextView titleName, username, level, gender, mobile, email, qq, birthday, address, mark, roles;
+	private TextView titleName, username, nickname, level, gender, mobile, email, qq, birthday, address, mark, roles;
 	private StringBuilder sb;
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -67,7 +67,7 @@ public class UserCentral extends AppCompatActivity
 		icon = (ImageView) findViewById(R.id.user_icon);
 		titleName = (TextView) findViewById(R.id.user_topName);
 		username = (TextView) findViewById(R.id.info_username);
-		//nickname = (TextView) findViewById(R.id.info_nickname);
+		nickname = (TextView) findViewById(R.id.info_nickname);
 		gender = (TextView) findViewById(R.id.info_gender);
 		level = (TextView) findViewById(R.id.info_level);
 		mobile = (TextView) findViewById(R.id.info_mobile);
@@ -294,18 +294,19 @@ public class UserCentral extends AppCompatActivity
 	public void init()
 	{
 		Users user = Common.mUser;
-		username.setText(getString(user.name));
-		//nickname.setText(_nick);
-		titleName.setText(getString(user.nickname));
+		username.setText(Util.isNullOrEmpty(user.name) ? "" : user.name);
+		String _nick = Util.isNullOrEmpty(user.nickname) ? "" : user.nickname;
+		nickname.setText(_nick);
+		titleName.setText(_nick);
 		level.setText(getUserLevel(user.dated));
 		roles.setText(getUserRole(user.role));
 		if (user.gender != null)
 			gender.setText(user.gender ? "男" : "女");
 		else
 			gender.setText("妖");
-		birthday.setText(getString(user.birthday));
-		address.setText(getString(user.address));
-		mark.setText(getString(user.mark));
+		birthday.setText(Util.isNullOrEmpty(user.birthday) ? "" : user.birthday);
+		address.setText(Util.isNullOrEmpty(user.address) ? "" : user.address);
+		mark.setText(Util.isNullOrEmpty(user.mark) ? "" : user.mark);
 		inicBind(user);
 		if (sb == null)
 		{
@@ -319,8 +320,7 @@ public class UserCentral extends AppCompatActivity
 			sb.append("\n上次登录：");
 			sb.append(user.lastLogin.getDate());
 			sb.append("\n累计登录：");
-			sb.append(user.dated);
-			sb.append("天");
+			sb.append(user.dated + "天");
 		}
 	}
 	
@@ -405,9 +405,6 @@ public class UserCentral extends AppCompatActivity
 				case 4:
 					role = "版主";
 					break;
-				case 5:
-					role = "测试账号";
-					break;
 				case 10:
 					role = "管理员";
 					break;
@@ -440,15 +437,6 @@ public class UserCentral extends AppCompatActivity
 		}, 500);
 		super.onResume();
 	}
-	
-	private String getString(String s)
-	{
-		if (Util.isNullOrEmpty(s))
-			return "";
-		else
-			return s;
-	}
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{

@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.content.Intent;
 import android.content.DialogInterface;
 import android.widget.TextView;
-import android.widget.ProgressBar;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -38,7 +37,6 @@ public class JavaFragment extends Fragment
 	private SwipeRefreshLayout refreshLayout;
 	private RecyclerView recyclerView;
 	private TextView errorText;
-	private ProgressBar proRefresh;
 	private J2EEAdapter mAdapter;
 	private List<JavaEE> mList;
 	private View rootView;
@@ -61,7 +59,6 @@ public class JavaFragment extends Fragment
 			mList = new ArrayList<JavaEE>();
 			mAdapter = new J2EEAdapter();
 			errorText = (TextView) view.findViewById(R.id.txt_andError);
-			proRefresh = (ProgressBar) view.findViewById(R.id.refreshProgress);
         	recyclerView = (RecyclerView) view.findViewById(R.id.cpt_recyclerView);
 			refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swp_refresh);
 
@@ -211,7 +208,6 @@ public class JavaFragment extends Fragment
 	{
 		if (mCount > mList.size())
 		{
-			proRefresh.setVisibility(View.VISIBLE);
 			BmobQuery<JavaEE> query = new BmobQuery<JavaEE>();
 			query.addWhereEqualTo("enable", true);
 			query.order("order");
@@ -266,7 +262,6 @@ public class JavaFragment extends Fragment
 					if (mList.size() == mCount)
 						mAdapter.setEnd(true);
 					mAdapter.notifyItemInserted(mAdapter.getItemCount());
-					proRefresh.setVisibility(View.GONE);
 					break;
 				case 3:
 					errorText.setText("敬请期待");

@@ -26,13 +26,4 @@
 		android:gravity="center"
 		android:visibility="gone"
 		android:text="加载失败\n请检查你的网络连接"/>
-	<ProgressBar
-		android:id="@+id/refreshProgress"
-		android:layout_width="match_parent"
-		android:layout_height="3dp"
-		android:layout_alignParentBottom="true"
-		style="?android:attr/progressBarStyleHorizontal"
-		android:progressDrawable="@drawable/web_progress"
-		android:visibility="gone"
-		android:indeterminate="true"/>
 </RelativeLayout>

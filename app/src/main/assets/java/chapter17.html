@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>第十八章 Java中输出输入流 - 邠心工作室</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link href="css/main.css" rel="stylesheet" />
+    <script src="Script/shCore.js" type="text/javascript"></script>
+    <script src="Script/shBrushJava.js" type="text/javascript"></script>
+    <link href="css/shCoreDefault.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+    </script>
+</head>
+<body>
+    <div class="div">
+        <blockquote>
+            在学习输出输入流之前，先来了解一下实际中的管道的问题。管道通常是可以双向流通的，Java中的流也是这样的，有输出流和输入流。管道是可以输送石油，也是可以输送水的，Java中的流也是可以输送不同的东西的，包括字节和字符等内容。Java中的输出输入流又称为IO流。通过本章的学习，同学们应该能够完成如下几个目标。
+            <ol>
+                <li>了解什么是I/O流。</li>
+                <li>掌握流的分类。</li>
+                <li>熟练掌握流如何进行文件操作。</li>
+            </ol>
+        </blockquote>
+        <h3>18.1  I/O流简介</h3>
+        <p>学习如何使用I/O流进行输入/输出操作之前，首先应当了解I/O流的基本原理与分类，这样才能恰当的运用各种I/O流进行不同的输入/输出操作。</p>
+        <h4>18.1.1  什么是IO流</h4>
+        <p>数据流是形象的概念，可以理解为是一种“数据的管道”。管道中流动的东西可以是基于字节，也可以是基于字符的等。就好像管道里面可以流动水，也可以流动石油一样，当程序需要读取数据的时候，就会开启一个通向数据源的管道，这个数据源可以是存放在硬盘中的文件，也可以是内存中的数据，或是网络上的数据。</p>
+        <p>Java中的数据流分为2种，一种是字节流，另一种是字符流。这两种流主要由4个抽象类来表示：InputStream，OutputStream，Reader，Writer，输入输出各两种。其中InputStream和OutputStream表示字节流，Reader和Writer表示字符流，其他各种各样的流均是继承这4个抽象类而来的。</p>
+        <h4>18.1.2  节点流与处理流</h4>
+        <p>根据流功能层次的不同可以将其分为两类：节点流（Node Streams）与处理流（Processing Streams），下面列出了这两种流的异同。</p>
+        <p>节点流一般用于直接从指定的位置进行读/写操作，例如磁盘文件、内存区域、网络连接等，其中一般只提供了一些基本的读写操作方法，功能比较单一。</p>
+        <p>处理流往往是用于对其他输入/输出流进行封装，对内容进行过滤处理，其中一般提供了一些功能比较强大的读写方法。</p>
+        <p>实际应用中，通常是将节点流与处理流二者结合起来使用。节点流直接与指定的源或目标相连，例如某个文件、某个网络连接等。而处理流则对节点流或其他处理流进一步进行封装，提供更丰富的输入/输出操作能力，例如缓冲、按字符串行读写等。</p>
+        <h4>18.1.3  字节流与字符流</h4>
+        <p>根据流处理数据类型的不同也可以以将其分为两类：字节流与字符流，下面列出了这两种流的不同之处。</p>
+        <ul>
+            <li>字节流以字节为基本单位来处理数据的输入/输出，一般都用于对二进制数据的读写，例如声音、图象等数据。</li>
+            <li>字符流以字符为基本单位来处理数据的输入和输出，一般都用于对文本类型数据的读写，例如文本文件、网络中发送的文本信息等。</li>
+        </ul>
+        <p>表列出了Java I/O中字节流与字符流的四个抽象基类，Java I/O中的其他字节流与字符流都派生自这四个抽象基类。</p>
+        <img src="image/201805181650.jpg" />
+        <h4>18.1.4  抽象基类</h4>
+        <p>字节流和字符流的抽象基类包括InputStream类、OutputStream类、Reader类和Writer类组成，在后面将要讲到的流类都是继承这几个抽象基类的。</p>
+        <span class="blueTitle">InputStream类</span>
+        <p>InputStream类是一个输入流，同样也是一个字节流。InputStream类是表示字节输入流的所有类的超类。其中定义了一些基本的读取字节数据流的方法，由其子类继承并扩展。 </p>
+        <pre class="brush:java">public int available() throws IOException //获取可以从此输入流读取（或跳过）的字节数
+public void close() throws IOException //关闭输入流，同时释放系统资源
+public void mark(int readlimit) //在输入流中标记位置，参数readlimit为位置参数
+public boolean markSupported() //用于测试该输入流是否支持mark和reset方法
+public abstract int read() throws IOException //从输入流中读取下一个数据字节
+public int read(byte[] b) throws IOException //从输入流中读取字节数据，并存入字节数组b中
+public int read(byte[] b,int off,int len) throws IOException //从输入流中读取len个数据字节，并存入字节数组b中
+public void reset() throws IOException //将此流重新定位到最后一次调用mark方法时所处的位置
+public long skip(long n) throws IOException //跳过并且放弃输入流中的n个字节数据
+</pre>
+        <p class="error">使用InputStream类是可能发生IOException异常的，所以在使用时是要进行异常处理的。</p>
+        <span class="blueTitle">OutputStream类</span>
+        <p>OutputStream类是一个输出流，同样也是一个字节流。OutputStream类是表示输出字节流的所有类的超类。输出流接收输出字节并将这些字节发送到某个接收器。</p>
+        <pre class="brush:java">public void close() throws IOException //关闭输出流，同时释放系统资源
+public void flush() throws IOException //刷新输出流，同时输出所有缓冲的输出字节
+public void write(byte[] b) throws IOException //将字节数组b中的b.length个字节数据输入到输出流
+public void write(byte[] b,int off,int len) throws IOException //将字节数组b中的len个字节数据（从偏移量off开始）输入到输出流
+public abstract void write(int b) throws IOException //将指定的字节输入到输出流
+</pre>
+        <p class="error">同样使用InputStream类是可能发生IOException异常的，所以在使用时是要进行异常处理的。</p>
+        <span class="blueTitle">Reader类</span>
+        <p>Reader类是一个输入流，同样也是一个字符流。Reader类是所有输入字符流的超类，也就是说所有的输入字符流都派生自Reader类，其中提供了很多关于字符流输入操作的方法，</p>
+        <pre class="brush:java">public abstract int read() throws IOException</pre>
+        <p class="exap">读取单个字符，返回值的低16比特存放读取字符的编码（0～65535），高16比特忽略，如果因为已经到达流末尾而没有可读的字符，则返回值-1。往往都会将此方法的返回值强制类型转换成char类型</p>
+        <pre class="brush:java">public int read(char[] cbuf) throws IOException</pre>
+        <p class="exap">从输入流中读取一定数量的字符，并将其存储在缓冲区字符数组cbuf中，以整数形式返回实际读取的字符数。若流中实际可读的字符数小于数组cbuf的长度，则返回值会小于数组cbuf的长度，否则返回值等于数组cbuf的长度</p>
+        <pre class="brush:java">public abstract int read(char[] cbuf,int off,int len) throws IOException</pre>
+        <p class="exap">将输入流中最多len个字符读入字符数组cbuf，将读取的第一个字符存储在元素cbuf[off]中，下一个存储在cbuf[off+1]中，依次类推，方法的返回值为实际读取的字符数。若流中实际可读的字符数小于len，则返回值会小于len，否则返回值等于len</p>
+        <pre class="brush:java">public long skip(long n) throws IOException</pre>
+        <p class="exap">跳过此输入流中的指定数量的字符，参数n为指定的数量，返回值为实际跳过的字符数</p>
+        <pre class="brush:java">public boolean ready() throws IOException</pre>
+        <p class="exap">判断此字符输入流是否准备好被读，若是则返回true，否则返回false</p>
+        <pre class="brush:java">public void close() throws IOException</pre>
+        <p class="exap">关闭此输入流并释放与该流关联的所有系统资源</p>
+        <pre class="brush:java">public void mark(int readAheadLimit) throws IOException</pre>
+        <p class="exap">在此输入流中标记当前的位置，参数readAheadLimit指出从此标记位置开始此流可以记忆的最大字符数，未来调用reset方法可以回到标记处重新读取字符。没有使用mark方法设置标记的流是不能回到某处再次读取的</p>
+        <pre class="brush:java">public void reset() throws IOException</pre>
+        <p class="exap">将此流重新定位到最后一次对此流调用mark方法时的位置public boolean markSupported()测试此输入流是否支持mark和reset方法，支持则返回true，否则返回false</p>
+        <pre class="brush:java">public void mark(int readAheadLimit) throws IOException</pre>
+        <p class="exap">在此输入流中标记当前的位置，参数readAheadLimit指出从此标记位置开始此流可以记忆的最大字符数，未来调用reset方法可以回到标记处重新读取字符。没有使用mark方法设置标记的流是不能回到某处再次读取的</p>
+        <pre class="brush:java">public void reset() throws IOException</pre>
+        <p class="exap">将此流重新定位到最后一次对此流调用mark方法时的位置public boolean markSupported()测试此输入流是否支持mark和reset方法，支持则返回true，否则返回false</p>
+        <p class="error">同样使用Reader类是可能发生IOException异常的，所以在使用时是要进行异常处理的。</p>
+        <span class="blueTitle">Writer类</span>
+        <p>Writer类是一个输出流，同样也是一个字符流。Writer类是所有输出字符流的超类，也就是说所有的输出字符流都派生自Writer类，其中提供了很多关于字符流输出操作的方法。</p>
+        <pre class="brush:java">public void write(int c) throws IOException</pre>
+        <p class="exap">将指定的字符写入此输出流，参数c表示要写入的字符。要注意的是，c的低16个比特被作为一个字符写入流，而高16个比特被忽略</p>
+        <pre class="brush:java">public void write(char[] cbuf) throws IOException</pre>
+        <p class="exap">将指定字符数组cbuf的内容写入输入流</p>
+        <pre class="brush:java">public abstract void write(char[] cbuf,int off,int len) throws IOException</pre>
+        <p class="exap">将指定字符数组cbuf中从偏移量off开始的len个字符写入此输出流</p>
+        <pre class="brush:java">public void write(String str) throws IOException</pre>
+        <p class="exap">向流中写入指定字符串str的各个字符</p>
+        <pre class="brush:java">public void write(String str,int off,int len) throws IOException</pre>
+        <p class="exap">将指定字符串str中从偏移量off开始的len个字符写入此输出流</p>
+        <pre class="brush:java">public void flush() throws IOException</pre>
+        <p class="exap">刷新此输出流并强制写出所有缓冲中的输出字符</p>
+        <pre class="brush:java">public void close()throws IOException</pre>
+        <p class="exap">关闭此输出流并释放与此流有关的所有系统资源</p>
+        <p class="error">同样使用Writer类是可能发生IOException异常的，所以在使用时是要进行异常处理的。字节流与字符流提供的方法很相似的。它们的不同主要体现在操作的基本单位不同，一个是以字节为基本单位，另一个是以字符为基本单位。</p>
+        <p>注意：字节流和字符流的不同主要体现在操作的基本单位不同，一个是以字节为基本单位，另一个是以字符为基本单位。</p>
+        <h3>18.2  使用流进行文件操作</h3>
+        <p>使用流来进行文件操作是流应用中最常见的应用之一。使用流能够读取文件内容，同样也能够写入文件内容。进行文件操作的类包括File、FileInputStream、FileOutputStream、FileReader、FileWriter等几个类。</p>
+        <h4>18.2.1  使用File类进行文件与目录操作</h4>
+        <p>Java中专门提供了一个表示目录与文件的类——<span style="color:gray">java.io.</span><span style="color:blue">File</span>，通过其可以获取文件、目录的信息，对文件、目录进行管理。File类一共提供了四个构造器，表列出了其中常用的三个。</p>
+        <p>在File类中最常用的是第一个构造函数。使用构造函数<b>public File(String pathname)</b>创建一个文件对象。其中，如果pathname是实际存在的路径，则该File对象表示的是目录；如果pathname是存在的文件名，则该File对象表示的是文件。</p>
+        <pre class="brush:java">public File(String pathname)</pre>
+        <p>通过指定的路径名字符串pathname创建一个File对象，如果给定字符串是空字符串，那么创建的File对象将不代表任何文件或目录</p>
+        <pre class="brush:java">public File(String parent,String child)</pre>
+        <p>根据指定的父路径名字符串parent以及子路径字符串child创建一个File对象。若parent为null，则与单字符串参数构造器效果一样，否则parent将用于表示目录，而child则表示该目录下的子目录或文件</p>
+        <pre class="brush:java">public File(File parent,String child)</pre>
+        <p>根据指定的父File对象parent及子路径字符串child创建一个File对象。若parent为null，则与单字符串参数构造器效果一样，否则parent将用于表示目录，而child则表示该目录下的子目录或文件</p>
+        <h4>18.2.2  FileInputStream类与FileOutputStream类</h4>
+        <p>FileInputStream类是InputStream的子类。FileInputStream类主要用于从文件系统中的某个文件中获取输入字节。FileOutputStream类是OutputStream的子类，FileOutputStream主要是用于将数据以字节流写入目标文件的输出流。表为FileInputStream中的方法声明及其使用描述。</p>
+        <p>FileInputStream类从文件系统中的某个文件中获取输入字节。主要用于读取诸如图像数据之类的原始字节流。要读取字符流，可以考虑使用FileReader。</p>
+        <ul>
+            <li>intavailable()返回可以从该文件输入流中读取的字节数</li>
+            <li>close()关闭文件输入流，同时释放系统资源</li>
+            <li>finalize()确认文件输入流不在被引用的状态，并可以调用close方法</li>
+            <li>getChannel()返回与该文件输入流有关的FileChannel对象</li>
+            <li>getFD()返回连接到文件系统（正被该FileInputStream使用）中实际文件的FileDescriptor对象</li>
+            <li>read()从该输入流中读取一个数据字节，并以int类型返回read(byte[] b)读取输入流中b.length个字节的数据，并存入字节数组b中</li>
+            <li>read(byte[] b, int off, int len)读取输入流中从偏移量off开始的len个字节的数据，并存入字节数组b中</li>
+            <li>skip(long n)跳过输入流中的数据，同时丢弃n个字节的数据</li>
+        </ul>
+        <p>与FileInputStream类相对，FileOutputStream类用于将数据写入File或FileDescriptor的输出流。主要用于写入诸如图像数据之类的原始字节的流。要写入字符流，可以考虑使用FileWriter。</p>
+        <ul>
+            <li>finalize()断开到文件的连接，确认该文件输出流不处在被引用状态，并可以调用close方法</li>
+            <li>ChannelgetChannel()返回与该文件输出流有关的FileChannel对象</li>
+            <li>getFD()返回与该流有关的文件描述符FileDescrilitor对象</li>
+            <li>write(byte[] b)将b.length个字节的数据从指定字节数组写入到该文件输出流中</li>
+            <li>write(byte[] b, int off, int len)将指定字节数组中的部分数据（从偏移量off开始的len个字节）写入到该文件输出流</li>
+            <li>write(int b)将指定字节b写入到该文件输出流</li>
+        </ul>
+        <h4>18.2.3  FileReader类与FileWriter类</h4>
+        <p>FileReader与FileWriter和FileInputStream与FileOutputStream类似，所不同的是它们是针对字符进行操作，而不是字节。这两个类的间接父类是字符流Reader和Writer。其中，FileWriter是用于写入字符文件的便捷类。FileReader是用于读取字符文件的便捷类。在FileReader类及FileWriter类中未自定义方法，继承了其父类及间接父类中的方法。</p>
+        <h3>18.3  综合练习</h3>
+        <span>1.字节流和字符流主要区别有哪些？</span>
+        <p class="exap">
+            【提示】字节流是最基本的，所有的“InputStrem”和“OutputStream”的子类都是字节流，其主要用于处理二进制数据，并按字节来处理。<br />
+            但是实际开发中很多的数据是文本，这就提出了字符流的概念，它按虚拟机的encode来处理，也就是要进行字符集的转化。这两者之间通过“InputStreamReader”和“OutputStreamWriter”来关联。实际上，通过“byte[]”和“String”来关联在实际开发中出现的汉字问题，这都是在字符流和字节流之间转化不统一而造成的。在从字节流转化为字符流时，实际上就是“byte[]”转化为“String”。
+        </p>
+        <pre class="brush:java">public String(byte  bytes[],  String  charsetName)</pre>
+        <p class="exap">注意：有一个关键的参数字符集编码，通常可以省略，就是操作系统的lang。<br />字符流转化为字节流，实际上是String转化为byte[]。</p>
+        <pre class="brush:java">byte[] String.getBytes(String charsetName)</pre>
+        <p class="exap">至于Java.io中还出现了许多其他的流，主要是为了提高性能和使用方便，如“BufferedInputStream”、“PipedInputStream”等。</p>
+        <h3>18.4  小结</h3>
+        <p>在本章中主要对Java中的流进行了详细的讲解，同时也讲解了如何使用流进行文件操作。进行文件操作是流的最重要作用之一，这里对其进行详细的讲解。</p>
+    </div>
+</body>
+</html>

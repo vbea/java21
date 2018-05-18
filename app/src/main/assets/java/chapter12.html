@@ -149,7 +149,7 @@ public static void sleep(long millis, int nanos) throws InterruptedException;
         <h4>13.5.3  yield让步方法</h4>
         <p>在Java中具有两种线程让步方法，先来介绍第一种yield让步方法。yield让步方法是让线程让出当前CPU，而将CPU让给哪一个线程是不确定的，由系统来进行选择。使用yield让步方法的线程将从运行状态进入到准备状态。</p>
         <p class="error">注意：yield让步操作是可能不成功的。因为在线程中使用yield方法，使该线程进入准备状态。但是系统是有可能再次选择该线程，使该线程进入运行状态的。</p>
-        <p>yield让步方法的基本语法格式如下所示。</p>
+        <span>yield让步方法的基本语法格式如下所示。</span>
         <pre class="brush:java">public static void yield();</pre>
         <p>可以看出yield让步方法是一个静态方法，所以该方法也是和对象无关的。当在正在运行的线程中运行该方法时，该线程将回到准备状态。</p>
         <h4>13.5.4  join让步方法</h4>
@@ -160,7 +160,7 @@ public final void join(long millis, int nanos) throws InterruptedException;
 </pre>
         <p>join让步方法是具有三种形式的，没有参数表示指定的线程执行完成后再执行其他线程，参数表示在参数的时间内执行让步给的执行线程。join让步方法也是可能发生捕获异常的，所以在使用时要进行异常处理。</p>
         <h3>13.6  综合练习</h3>
-        <p>1.判断下面程序是否能够正常运行。</p>
+        <span>1.判断下面程序是否能够正常运行。</span>
         <pre class="brush:java">public class LianXi1 extends Thread
 {
 	public void run()
@@ -176,7 +176,7 @@ public final void join(long millis, int nanos) throws InterruptedException;
 		lx.run();
 	}
 }</pre>
-        <p>2.判断下面的程序是否能够正常运行。</p>
+        <span>2.判断下面的程序是否能够正常运行。</span>
         <pre class="brush:java">public class LianXi2 extends Thread
 {
 	public void run()

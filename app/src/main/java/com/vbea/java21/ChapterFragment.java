@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.vbea.java21.list.Chapter;
 import com.vbea.java21.list.ChapterAdapter;
+import com.vbea.java21.list.MyDividerDecoration;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 
@@ -38,6 +39,9 @@ public class ChapterFragment extends Fragment
 		if (recyclerView == null)
 		{
 			recyclerView = (RecyclerView) view.findViewById(R.id.cpt_recyclerView);
+			MyDividerDecoration decoration = new MyDividerDecoration(getContext());
+			//decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
+			recyclerView.addItemDecoration(decoration);
 			recyclerView.setHasFixedSize(true);
 			recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
@@ -69,6 +73,7 @@ public class ChapterFragment extends Fragment
  					intent.putExtra("sub", sub);
  					intent.putExtra("type", 0);
 					Common.startActivityOptions(getActivity(), intent);
+					mAdapter.notifyDataSetChanged();
 				}
 			});
 		}

@@ -173,6 +173,54 @@
 					android:textColor="?attr/colorAccent"/>
 			</TableRow>
 			<TableRow
+				android:layout_width="fill_parent"
+				android:layout_height="56dp"
+				android:paddingLeft="10dp"
+				android:paddingRight="10dp"
+				android:background="@drawable/btn_menu"
+				android:clickable="true">
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:layout_weight="1"
+					android:gravity="center_vertical"
+					android:textSize="16sp"
+					android:textColor="?attr/textPrimary"
+					android:text="@string/java_age"/>
+				<TextView
+					android:id="@+id/info_birthday"
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:gravity="center_vertical"
+					android:textSize="14sp"
+					android:singleLine="true"
+					android:textColor="?attr/colorAccent"/>
+			</TableRow>
+			<TableRow
+				android:layout_width="fill_parent"
+				android:layout_height="56dp"
+				android:paddingLeft="10dp"
+				android:paddingRight="10dp"
+				android:background="@drawable/btn_menu"
+				android:clickable="true">
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:layout_weight="1"
+					android:gravity="center_vertical"
+					android:textSize="16sp"
+					android:textColor="?attr/textPrimary"
+					android:text="@string/info_address"/>
+				<TextView
+					android:id="@+id/info_address"
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:gravity="center_vertical"
+					android:textSize="14sp"
+					android:singleLine="true"
+					android:textColor="?attr/colorAccent"/>
+			</TableRow>
+			<TableRow
 				android:id="@+id/btn_info_mobile"
 				android:layout_width="fill_parent"
 				android:layout_height="56dp"
@@ -237,54 +285,6 @@
 					android:text="@string/java_qq"/>
 				<TextView
 					android:id="@+id/info_qq"
-					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
-					android:gravity="center_vertical"
-					android:textSize="14sp"
-					android:singleLine="true"
-					android:textColor="?attr/colorAccent"/>
-			</TableRow>
-			<TableRow
-				android:layout_width="fill_parent"
-				android:layout_height="56dp"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp"
-				android:background="@drawable/btn_menu"
-				android:clickable="true">
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
-					android:layout_weight="1"
-					android:gravity="center_vertical"
-					android:textSize="16sp"
-					android:textColor="?attr/textPrimary"
-					android:text="@string/java_age"/>
-				<TextView
-					android:id="@+id/info_birthday"
-					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
-					android:gravity="center_vertical"
-					android:textSize="14sp"
-					android:singleLine="true"
-					android:textColor="?attr/colorAccent"/>
-			</TableRow>
-			<TableRow
-				android:layout_width="fill_parent"
-				android:layout_height="56dp"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp"
-				android:background="@drawable/btn_menu"
-				android:clickable="true">
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
-					android:layout_weight="1"
-					android:gravity="center_vertical"
-					android:textSize="16sp"
-					android:textColor="?attr/textPrimary"
-					android:text="@string/info_address"/>
-				<TextView
-					android:id="@+id/info_address"
 					android:layout_width="wrap_content"
 					android:layout_height="fill_parent"
 					android:gravity="center_vertical"

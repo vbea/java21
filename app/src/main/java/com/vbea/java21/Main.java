@@ -372,6 +372,7 @@ public class Main extends AppCompatActivity
 	
 	public void goBack(View v)
 	{
+		saveStatus();
 		Copys msg = Common.getCopyMsg();
 		if (msg != null)
 			Util.addClipboard(this, "java21", msg.getMessage());
@@ -507,6 +508,7 @@ public class Main extends AppCompatActivity
 		//Common.getCopyMsg(this);
 		SharedPreferences spf = getSharedPreferences("java21", MODE_PRIVATE);
 		SharedPreferences.Editor editor = spf.edit();
+		editor.putString("read_java", Util.Join(",", Common.READ_Java));
 		editor.putString("read_android", Util.Join(",", Common.READ_Android));
 		editor.putString("read_android2", Util.Join(",", Common.READ_AndroidAdvance));
 		editor.putString("read_javaee", Util.Join(",", Common.READ_J2EE));
@@ -710,7 +712,7 @@ public class Main extends AppCompatActivity
 			else
 				txtSignature.setText(Common.mUser.mark);
 			Common.getInbox().getMyInbox(System.currentTimeMillis(), myCallback);
-			txtVip.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
+			Common.showUserRole(txtVip);
 		}
 		else
 		{
@@ -802,8 +804,8 @@ public class Main extends AppCompatActivity
 			{
 				if((System.currentTimeMillis() - exitTime) > 2000)
 				{
-					if (saveStatus())
-						Util.toastShortMessage(getApplicationContext(), "再按一次退出程序");
+					//if (saveStatus())
+					Util.toastShortMessage(getApplicationContext(), "再按一次退出程序");
 					exitTime = System.currentTimeMillis();
 				}
 				else

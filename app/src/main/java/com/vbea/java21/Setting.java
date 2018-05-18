@@ -233,7 +233,7 @@ public class Setting extends AppCompatActivity
 		{
 			public void onClick(View v)
 			{
-				Util.showConfirmCancelDialog(Setting.this, android.R.string.dialog_alert_title, "您确定要清除阅读记录吗？此操作将清空JavaEE和Android初级及进阶教程的阅读记录。",
+				Util.showConfirmCancelDialog(Setting.this, android.R.string.dialog_alert_title, "您确定要清除阅读记录吗？此操作将清空Java基础、JavaEE和Android初级及进阶教程的阅读记录。",
 				new DialogInterface.OnClickListener()
 				{
 					public void onClick(DialogInterface d, int s)
@@ -382,6 +382,7 @@ public class Setting extends AppCompatActivity
 		edt.putInt("java_size", Common.JAVA_TEXT_SIZE);
 		if (clear)
 		{
+			edt.putString("read_java", "");
 			edt.putString("read_android", "");
 		 	edt.putString("read_javaee", "");
 			edt.putString("read_android2", "");

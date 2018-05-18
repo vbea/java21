@@ -40,7 +40,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.MyViewHo
 		final Chapter item = mList.get(id);
  		holder.text.setText(item.title);
  		holder.review.setText(item.review);
-		holder.card.setOnClickListener(new View.OnClickListener()
+		holder.layout.setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View v)
 			{
@@ -50,7 +50,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.MyViewHo
 				}
 			}
 		});
-		holder.read.setVisibility(Common.READ_Java.contains(id) ? View.VISIBLE : View.GONE);
+		holder.read.setVisibility(Common.READ_Java.contains(String.valueOf(id)) ? View.VISIBLE : View.GONE);
 	}
 
 	@Override

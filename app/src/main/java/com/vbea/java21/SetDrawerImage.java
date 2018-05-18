@@ -71,6 +71,11 @@ public class SetDrawerImage extends AppCompatActivity
 					return;
 				Common.APP_BACK_ID = id;
 				MyThemes.initBackColor(SetDrawerImage.this);
+				if (Common.isLogin())
+				{
+					Common.mUser.settings = Common.getSettingJson(new SettingUtil());
+					Common.updateUser();
+				}
 				adapter.notifyDataSetChanged();
 			}
 		});
@@ -79,13 +84,11 @@ public class SetDrawerImage extends AppCompatActivity
 	@Override
 	protected void onDestroy()
 	{
-		if (MyThemes.ISCHANGED && Common.isLogin())
+		if (MyThemes.ISCHANGED)
 		{
-			Common.mUser.settings = Common.getSettingJson(new SettingUtil());
-			Common.updateUser();
+			edt.putInt("back", Common.APP_BACK_ID);
+			edt.commit();
 		}
-		edt.putInt("back", Common.APP_BACK_ID);
-		edt.commit();
 		super.onDestroy();
 	}
 	

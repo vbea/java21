@@ -317,7 +317,7 @@ public class UserCentral extends AppCompatActivity
 			sb.append("\n注册时间：");
 			sb.append(user.getCreatedAt());
 			sb.append("\n上次登录：");
-			sb.append(user.lastLogin.getDate());
+			sb.append(Common.OldLoginDate);
 			sb.append("\n累计登录：");
 			sb.append(user.dated);
 			sb.append("天");

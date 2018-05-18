@@ -2,7 +2,13 @@
 <resources>
 	<string name="java_username">注册时填写的用户名
 	</string>
+	<string name="java_fmail">注册时填写的邮箱
+	</string>
+	<string name="java_forphone">手机(未绑定可留空)
+	</string>
 	<string name="java_psd">密码
+	</string>
+	<string name="java_npsd">新密码
 	</string>
 	<string name="java_pasd">确认密码
 	</string>
@@ -22,11 +28,11 @@
 	</string>
 	<string name="java_qqlogin">QQ登录
 	</string>
-	<string name="java_gender">性别：
+	<string name="java_gender">性别
 	</string>
 	<string name="info_gender">性别
 	</string>
-	<string name="java_birthday">生日：
+	<string name="java_birthday">生日
 	</string>
 	<string name="java_age">年龄
 	</string>
@@ -34,13 +40,11 @@
 	</string>
 	<string name="java_role">用户组
 	</string>
-	<string name="java_address">地址：
+	<string name="java_address">地址
 	</string>
 	<string name="info_address">所在地
 	</string>
 	<string name="java_mobile">绑定手机
-	</string>
-	<string name="java_phone">手机：
 	</string>
 	<string name="java_qq">绑定QQ
 	</string>

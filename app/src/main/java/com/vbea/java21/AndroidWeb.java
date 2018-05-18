@@ -136,7 +136,8 @@ public class AndroidWeb extends AppCompatActivity
 			public void onPageFinished(WebView view, String url)
 			{
 				super.onPageFinished(view, url);
-				addImageClickListner();
+				if (type != 0)
+					addImageClickListner();
 			}
 		});
 		myweb.setWebChromeClient(new WebChromeClient()

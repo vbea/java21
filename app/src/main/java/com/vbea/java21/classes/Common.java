@@ -78,7 +78,7 @@ public class Common
 	public static InboxManager myInbox;
 	private static long lastTipsTime;
 	private static Copys copyMsg;
-	public static String OldSerialNo;
+	public static String OldSerialNo, OldLoginDate;
 	public static void start(Context context)
 	{
 		startBmob(context);
@@ -169,24 +169,26 @@ public class Common
 	
 	public static boolean checkUpdateSetting(Context context)
 	{
-		if (!mUser.serialNo.equals(OldSerialNo))
+		try
 		{
-			try
+			SettingUtil utils = new SettingUtil();
+			if (!Util.isNullOrEmpty(mUser.settings))
 			{
-				SettingUtil utils = new SettingUtil();
-				if (!Util.isNullOrEmpty(mUser.settings))
+				utils.synaxSetting(mUser.settings);
+				int back_id = utils.getIntValue(SettingUtil.SET_BACKIMG);
+				int theme_id = utils.getIntValue(SettingUtil.SET_THEME);
+				if (!mUser.serialNo.equals(OldSerialNo) || APP_BACK_ID != back_id || APP_THEME_ID != theme_id)
 				{
-					utils.synaxSetting(mUser.settings);
-					APP_BACK_ID = utils.getIntValue(SettingUtil.SET_BACKIMG);
-					APP_THEME_ID = utils.getIntValue(SettingUtil.SET_THEME);
+					APP_BACK_ID = back_id;
+					APP_THEME_ID = theme_id;
 					JAVA_TEXT_SIZE = utils.getIntValue(SettingUtil.SET_FONTSIZE);
-					return true;
 				}
+				return true;
 			}
-			catch (Exception e)
-			{
-				ExceptionHandler.log("checkUpdateSetting", e);
-			}
+		}
+		catch (Exception e)
+		{
+			ExceptionHandler.log("checkUpdateSetting", e);
 		}
 		return false;
 	}
@@ -197,6 +199,7 @@ public class Common
 		Date now = new Date();
 		if (mUser.lastLogin != null)
 		{
+			OldLoginDate = mUser.lastLogin.getDate();
 			if (mUser.dated == null)
 				mUser.dated = 1;
 			mUser.device = Util.getDeviceId(context);
@@ -216,6 +219,7 @@ public class Common
 		else
 		{
 			mUser.lastLogin = new BmobDate(now);
+			OldLoginDate = mUser.lastLogin.getDate();
 			mUser.dated = 1;
 			updateUser();
 		}
@@ -319,7 +323,7 @@ public class Common
  		AUDIO_STUDY_STATE+=2;
  		if (READ_Java.contains(num))
  			return;
- 		READ_Android.add(num);
+ 		READ_Java.add(num);
  	}
 	
 	public static void addAndroidRead(String num)
@@ -348,6 +352,7 @@ public class Common
 	
 	public static void clearReadHistory()
 	{
+		READ_Java.clear();
 		READ_J2EE.clear();
 		READ_Android.clear();
 		READ_AndroidAdvance.clear();
@@ -388,10 +393,40 @@ public class Common
 	{
 		return (!Common.IS_ACTIVE || Common.WEL_ADV);
 	}
-
+	
 	public static void showUserRole(TextView txtVip)
+	{
+		if (mUser.role != null)
+			showUserRole(txtVip, mUser.role);
+		else
+			txtVip.setVisibility(View.GONE);
+	}
+
+	public static void showUserRole(TextView txtVip, int role)
  	{
- 		txtVip.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
+		switch (role)
+		{
+			case 10:
+				txtVip.setText("管理员");
+				txtVip.setBackgroundResource(R.drawable.ic_bg_svip);
+				txtVip.setTextColor(-3007950);
+				txtVip.setVisibility(View.VISIBLE);
+				break;
+			case 11:
+				txtVip.setText("VIP");
+				txtVip.setBackgroundResource(R.drawable.ic_bg_vip);
+				txtVip.setTextColor(-1);
+				txtVip.setVisibility(View.VISIBLE);
+				break;
+			case 12:
+				txtVip.setText("SVIP");
+				txtVip.setBackgroundResource(R.drawable.ic_bg_svip);
+				txtVip.setTextColor(-3007950);
+				txtVip.setVisibility(View.VISIBLE);
+				break;
+			default:
+				txtVip.setVisibility(View.GONE);
+		}
  	}
 	
 	public static boolean isVipUser()

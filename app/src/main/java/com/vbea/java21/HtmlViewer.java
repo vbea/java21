@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
@@ -53,14 +54,13 @@ import com.vbea.java21.widget.MyWebView;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.SocialShare;
-import com.vbea.java21.classes.AlertDialog;
+import com.vbea.java21.classes.MyAlertDialog;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.tencent.connect.common.Constants;
 import com.tencent.connect.share.QQShare;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
-import android.os.*;
 
 public class HtmlViewer extends AppCompatActivity
 {
@@ -70,12 +70,12 @@ public class HtmlViewer extends AppCompatActivity
 	private MyWebView webView;
 	private WebView souceView;
 	private TextView NightView;
-	private ProgressBar webProgress;
+	private ProgressBar webProgress, sourceProgress;
 	private BottomSheetDialog mBSDialog;
 	private LinearLayout share_qq, share_qzone, share_wx, share_wxpy;
 	private LinearLayout share_sina, share_web, share_link, share_more;
 	private String SH_html, SH_url = "", SH_history = "", SH_hisName = "", SH_home, UA_Default;
-	private int SH_search = 0, SH_UA = 0;
+	private int SH_search = 0, SH_UA = 0, SOURCE_LOAD = -1;
 	private Uri cameraUri;
 	private String[] Searchs, UAurls;
 	private boolean ISSOURCE = false;
@@ -100,6 +100,7 @@ public class HtmlViewer extends AppCompatActivity
 		tool = (Toolbar) findViewById(R.id.toolbar);
 		NightView = (TextView) findViewById(R.id.api_nightView);
 		webProgress = (ProgressBar) findViewById(R.id.apiProgress);
+		sourceProgress = (ProgressBar) findViewById(R.id.sourceProgress);
 		tool.setTitle("点此输入网址或搜索");
 		setSupportActionBar(tool);
 		if (MyThemes.isNightTheme()) NightView.setVisibility(View.VISIBLE);
@@ -131,7 +132,7 @@ public class HtmlViewer extends AppCompatActivity
 		//wset.setGeolocationEnabled(true);
 		//wset.setJavaScriptCanOpenWindowsAutomatically(true);
 		wset.setSupportMultipleWindows(false);
-		webView.addJavascriptInterface(new JavaScriptShowCode(), "showcode");
+		//webView.addJavascriptInterface(new JavaScriptShowCode(), "showcode");
 		onSetting();
 		mHandler.sendEmptyMessageDelayed(0, 300);
 		webView.setWebChromeClient(new MyWebChromeClient());
@@ -194,10 +195,19 @@ public class HtmlViewer extends AppCompatActivity
 			{
 				SH_url = url;
 				addHistory();
-				view.loadUrl("javascript:window.showcode.show(document.getElementsByTagName('html')[0].outerHTML);");
+				//view.loadUrl("javascript:window.showcode.show(document.getElementsByTagName('html')[0].outerHTML);");
 				tool.setTitle(view.getTitle());
 				//view.loadUrl("javascript:close_adtip();");
 				super.onPageFinished(view, url);
+			}
+		});
+		
+		souceView.setWebViewClient(new WebViewClient()
+		{
+			@Override
+			public void onPageFinished(WebView view, String url)
+			{
+				sourceProgress.setVisibility(View.GONE);
 			}
 		});
 		
@@ -386,7 +396,7 @@ public class HtmlViewer extends AppCompatActivity
 		menu.findItem(R.id.item_back).setVisible(webView.canGoBack() && !ISSOURCE);
 		menu.findItem(R.id.item_forward).setVisible(webView.canGoForward() && !ISSOURCE);
 		menu.findItem(R.id.item_androidshare).setVisible(!SH_url.equals(""));
-		menu.findItem(R.id.item_code).setVisible(!SH_url.equals(""));
+		menu.findItem(R.id.item_code).setVisible(!SH_url.equals("") && SOURCE_LOAD != 2);
 		menu.findItem(R.id.item_home).setVisible(isValidHome());
 		menu.findItem(R.id.item_code).setTitle(ISSOURCE ? "返回" : "查看源");
 		return super.onPrepareOptionsMenu(menu);
@@ -481,21 +491,19 @@ public class HtmlViewer extends AppCompatActivity
 		}
 		else if (item.getItemId() == R.id.item_code)
 		{
-			if (Util.isNullOrEmpty(webView.getUrl()))
+			if (Util.isNullOrEmpty(SH_url))
 				return true;
 			if (ISSOURCE)
 				goPage();
 			else
 			{
-				if (!Util.isNullOrEmpty(SH_html))
+				if (SOURCE_LOAD == 0)
 				{
-					ISSOURCE = true;
-					souceView.setVisibility(View.VISIBLE);
-					webView.setVisibility(View.GONE);
-					souceView.loadData(SH_html, "text/plain; charset=UTF-8", null);
-					tool.setTitle("view-source:"+webView.getUrl());
-					searchView.setQuery(webView.getUrl(), false);
+					sourceProgress.setVisibility(View.VISIBLE);
+					new CodeThread().start();
 				}
+				else if (SOURCE_LOAD == 1)
+					mHandler.sendEmptyMessage(2);
 			}
 		}
 		else if (item.getItemId() == R.id.item_setting)
@@ -574,7 +582,7 @@ public class HtmlViewer extends AppCompatActivity
 			Common.startActivityForResult(HtmlViewer.this, Bookmark.class, 520);
 			return;
 		}
-		AlertDialog dialog = new AlertDialog(this);
+		MyAlertDialog dialog = new MyAlertDialog(this);
 		dialog.setTitle(R.string.bookmark);
 		dialog.setItems(R.array.array_bookmark, new DialogInterface.OnClickListener()
 		{
@@ -607,6 +615,7 @@ public class HtmlViewer extends AppCompatActivity
 		//添加历史记录 静默操作
 		if (webHelper != null && !SH_history.equals(SH_url) && !SH_hisName.equals(webView.getTitle()))
 		{
+			SOURCE_LOAD = 0;
 			SH_history = SH_url;
 			SH_hisName = webView.getTitle();
 			webHelper.addHistory(SH_hisName, SH_url);
@@ -646,7 +655,7 @@ public class HtmlViewer extends AppCompatActivity
     //设置回退 
     //覆盖Activity类的onKeyDown(int keyCoder,KeyEvent event)方法 
     public boolean onKeyDown(int keyCode, KeyEvent event)
-	{ 
+	{
         if ((keyCode == KeyEvent.KEYCODE_BACK) && event.getAction() == KeyEvent.ACTION_DOWN)
 		{
 			if (ISSOURCE)
@@ -662,7 +671,7 @@ public class HtmlViewer extends AppCompatActivity
 	
 	public void selectImage()
 	{
-		AlertDialog dialogBuild = new AlertDialog(HtmlViewer.this);
+		MyAlertDialog dialogBuild = new MyAlertDialog(HtmlViewer.this);
 		dialogBuild.setItems(headItems, new DialogInterface.OnClickListener()
 		{
 			public void onClick(DialogInterface dialog, int item)
@@ -907,9 +916,44 @@ public class HtmlViewer extends AppCompatActivity
 				init();
 			else if (msg.what == 1)
 				webView.loadUrl(SH_url);
+			else if (msg.what == 2)
+			{
+				if (SOURCE_LOAD == 1)
+				{
+					ISSOURCE = true;
+					souceView.setVisibility(View.VISIBLE);
+					webView.setVisibility(View.GONE);
+					souceView.loadData(SH_html, "text/plain; charset=UTF-8", null);
+					tool.setTitle("view-source:"+webView.getUrl());
+					searchView.setQuery(webView.getUrl(), false);
+				} else
+					sourceProgress.setVisibility(View.GONE);
+			}
 			super.handleMessage(msg);
 		}
 	};
+	
+	class CodeThread extends Thread implements Runnable
+	{
+		public void run()
+		{
+			try
+			{
+				byte[] bytes = Util.getHtmlByteArray(SH_url);
+				SH_html = new String(bytes);
+				SOURCE_LOAD = 1;
+			}
+			catch (Exception e)
+			{
+				SOURCE_LOAD = 2;
+				ExceptionHandler.log("CodeThread", e);
+			}
+			finally
+			{
+				mHandler.sendEmptyMessage(2);
+			}
+		}
+	}
 	
 	class JavaScriptShowCode
 	{

@@ -31,6 +31,7 @@
 		<RadioGroup
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
+			android:layout_marginBottom="16dp"
 			android:orientation="horizontal"
 			android:checkedButton="@+id/rdbNewUser"
 			android:gravity="center"
@@ -60,7 +61,8 @@
 				android:text="注册新用户"/>
 			<android.support.design.widget.TextInputLayout
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content">
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp">
 				<EditText
 					android:id="@+id/edt_qqUsername"
 					android:layout_width="match_parent"
@@ -84,8 +86,8 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
 				android:textColor="?attr/textPrimary"
-				android:paddingBottom="3dp"
 				android:textSize="16sp"
 				android:text="提示：注册后请及时更改密码"/>
 		</LinearLayout>
@@ -98,17 +100,17 @@
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:textColor="?attr/textPrimary"
+				android:textColor="?attr/colorAccent"
 				android:textSize="16sp"
 				android:text="老用户绑定帐号"/>
 			<android.support.design.widget.TextInputLayout
 				android:layout_width="match_parent"
-				android:layout_height="wrap_content">
+				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp">
 				<EditText
 					android:id="@+id/edt_qqUsernameBinding"
-					android:layout_width="wrap_content"
+					android:layout_width="match_parent"
 					android:layout_height="fill_parent"
-					android:layout_weight="1"
 					android:maxLength="11"
 					android:textSize="16sp"
 					android:singleLine="true"
@@ -119,18 +121,18 @@
 				android:layout_height="wrap_content">
 				<EditText
 					android:id="@+id/edt_qqPassword"
-					android:layout_width="wrap_content"
+					android:layout_width="match_parent"
 					android:layout_height="fill_parent"
-					android:layout_weight="1"
 					android:maxLength="16"
 					android:inputType="textPassword"
-					android:text="@string/java_psd"
+					android:hint="@string/java_psd"
 					android:textSize="16sp"/>
 			</android.support.design.widget.TextInputLayout>
 			<CheckBox
 				android:id="@+id/chk_useQqIcon"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:layout_marginTop="16dp"
 				android:text="使用QQ头像和昵称"/>
 		</LinearLayout>
 		<Button

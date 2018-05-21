@@ -118,7 +118,7 @@ public class TouchWebView extends WebView
     }
 
     public void linkJSInterface() {
-        addJavascriptInterface(new ActionSelectInterface(this), "JSInterface");
+        //addJavascriptInterface(new ActionSelectInterface(this), "JSInterface");
     }
 
     /**

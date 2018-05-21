@@ -58,6 +58,7 @@ public class SetDrawerImage extends AppCompatActivity
 			@Override
 			public void onClick(View view)
 			{
+				goBack();
 				supportFinishAfterTransition();
 			}
 		});
@@ -73,8 +74,15 @@ public class SetDrawerImage extends AppCompatActivity
 				MyThemes.initBackColor(SetDrawerImage.this);
 				if (Common.isLogin())
 				{
-					Common.mUser.settings = Common.getSettingJson(new SettingUtil());
-					Common.updateUser();
+					try
+					{
+						Common.mUser.settings = Common.getSettingJson(new SettingUtil());
+						Common.updateUser();
+					}
+					catch (Exception e)
+					{
+						ExceptionHandler.log("setdraw.updateuser", e);
+					}
 				}
 				adapter.notifyDataSetChanged();
 			}
@@ -84,12 +92,23 @@ public class SetDrawerImage extends AppCompatActivity
 	@Override
 	protected void onDestroy()
 	{
+		super.onDestroy();
+	}
+	
+	private void goBack()
+	{
 		if (MyThemes.ISCHANGED)
 		{
 			edt.putInt("back", Common.APP_BACK_ID);
 			edt.commit();
 		}
-		super.onDestroy();
+	}
+
+	@Override
+	public void onBackPressed()
+	{
+		goBack();
+		super.onBackPressed();
 	}
 	
 	@Override

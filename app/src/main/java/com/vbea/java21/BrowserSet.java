@@ -14,7 +14,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
-import com.vbea.java21.classes.AlertDialog;
+import com.vbea.java21.classes.MyAlertDialog;
 
 public class BrowserSet extends AppCompatActivity
 {
@@ -55,7 +55,7 @@ public class BrowserSet extends AppCompatActivity
 				View view = LayoutInflater.from(BrowserSet.this).inflate(R.layout.webhome, null);
 				final EditText edt = (EditText) view.findViewById(R.id.edt_webhome);
 				edt.setText(Util.isNullOrEmpty(SH_home) ? "http://" : SH_home);
-				AlertDialog dialog = new AlertDialog(BrowserSet.this);
+				MyAlertDialog dialog = new MyAlertDialog(BrowserSet.this);
 				dialog.setTitle("设置主页");
 				dialog.setView(view);
 				dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
@@ -75,7 +75,7 @@ public class BrowserSet extends AppCompatActivity
 		{
 			public void onClick(View v)
 			{
-				AlertDialog dialog = new AlertDialog(BrowserSet.this);
+				MyAlertDialog dialog = new MyAlertDialog(BrowserSet.this);
 				dialog.setTitle("设置搜索引擎");
 				dialog.setSingleChoiceItems(Searchs, SH_search, new DialogInterface.OnClickListener()
 				{
@@ -93,7 +93,7 @@ public class BrowserSet extends AppCompatActivity
 		{
 			public void onClick(View v)
 			{
-				AlertDialog dialog = new AlertDialog(BrowserSet.this);
+				MyAlertDialog dialog = new MyAlertDialog(BrowserSet.this);
 				dialog.setTitle("浏览器UA标识");
 				dialog.setSingleChoiceItems(UserAgents, SH_UA, new DialogInterface.OnClickListener()
 				{

@@ -91,7 +91,11 @@ public class Comment extends AppCompatActivity
 		recyclerView.setAdapter(mAdapter);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		
+		if (Common.mUser.role == 0)
+		{
+			edtComment.setEnabled(false);
+			edtComment.setHint("您已被禁言，无法评论，请联系管理员解禁");
+		}
 		tool.setNavigationOnClickListener(new View.OnClickListener()
 		{
 			@Override

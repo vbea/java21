@@ -41,7 +41,7 @@ import android.support.v7.widget.Toolbar;
 import com.vbea.java21.widget.TouchWebView;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
-import com.vbea.java21.classes.AlertDialog;
+import com.vbea.java21.classes.MyAlertDialog;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.data.SQLHelper;
 import com.vbea.java21.data.CodeMode;
@@ -99,7 +99,7 @@ public class CodeEditor extends AppCompatActivity
 		//set.setTextSize(WebSettings.TextSize.LARGER);
 		set.setUserAgentString(getString(R.string.pc_ua));
 		//set.setTextSize(WebSettings.TextSize.LARGER);
-		myweb.addJavascriptInterface(new EditorInterface(), "EditorManage");
+		//myweb.addJavascriptInterface(new EditorInterface(), "EditorManage");
 		myweb.setWebViewClient(new WebViewClient()
 		{
 			@Override
@@ -224,7 +224,7 @@ public class CodeEditor extends AppCompatActivity
 	
 	private void choisLanguage()
 	{
-		AlertDialog dialog = new AlertDialog(CodeEditor.this);
+		MyAlertDialog dialog = new MyAlertDialog(CodeEditor.this);
 		dialog.setTitle("新建...");
 		dialog.setSingleChoiceItems(strTitle, lanCode,
 			new DialogInterface.OnClickListener()
@@ -383,7 +383,7 @@ public class CodeEditor extends AppCompatActivity
 			View view = LayoutInflater.from(CodeEditor.this).inflate(R.layout.webhome, null);
 			final EditText edt = (EditText) view.findViewById(R.id.edt_webhome);
 			edt.setHint("*.txt");
-			AlertDialog dialog = new AlertDialog(CodeEditor.this);
+			MyAlertDialog dialog = new MyAlertDialog(CodeEditor.this);
 			dialog.setTitle("文件名");
 			dialog.setView(view);
 			dialog.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()

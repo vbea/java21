@@ -91,7 +91,7 @@ public class AndroidWeb extends AppCompatActivity
 		WebSettings set = myweb.getSettings();
 		set.setJavaScriptEnabled(true);
 		set.setUseWideViewPort(true);
-		myweb.addJavascriptInterface(new JavaScriptShowCode(), "showcode");
+		//myweb.addJavascriptInterface(new JavaScriptShowCode(), "showcode");
 		switch (Common.JAVA_TEXT_SIZE)
 		{
 			case 0:
@@ -136,8 +136,8 @@ public class AndroidWeb extends AppCompatActivity
 			public void onPageFinished(WebView view, String url)
 			{
 				super.onPageFinished(view, url);
-				if (type != 0)
-					addImageClickListner();
+				//if (type != 0)
+				addImageClickListner();
 			}
 		});
 		myweb.setWebChromeClient(new WebChromeClient()
@@ -374,7 +374,7 @@ public class AndroidWeb extends AppCompatActivity
 						"{" + 
 						"    objs[i].onclick=function()  "+
 						"    { "  + 
-						"        window.showcode.openImage(this.src); " +
+						"        window.location.href = this.src;" +
 						"    } " +
 						"}" + 
 						"})()");
@@ -427,14 +427,14 @@ public class AndroidWeb extends AppCompatActivity
 		}
 	}
 	
-	final class JavaScriptShowCode
+	/*final class JavaScriptShowCode
 	{
 		@JavascriptInterface
 		public void openImage(String img)
 		{
 			openImageActivity(img);
 		}
-	}
+	}*/
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)

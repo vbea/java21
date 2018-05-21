@@ -169,6 +169,8 @@ public class Login extends AppCompatActivity
 			{
 				case 0:
 					Util.toastShortMessage(getApplicationContext(), "登录成功");
+					try
+					{
 					if (Common.checkUpdateSetting(Login.this))
 					{
 						reloadLogin();
@@ -184,6 +186,11 @@ public class Login extends AppCompatActivity
 						}
 						//reloadLogin();
 						supportFinishAfterTransition();
+					}
+					}
+					catch (Exception e)
+					{
+						ExceptionHandler.log("login.handle1", e);
 					}
 					break;
 				case 1:
@@ -265,7 +272,7 @@ public class Login extends AppCompatActivity
 				@Override
 				public void onLogin(int code)
 				{
-					if (Common.mUser != null && code == 1)
+					if (Common.isLogin() && code == 1)
 						mHandler.sendEmptyMessage(0);
 					else if (code == 0)
 						mHandler.sendEmptyMessage(3);

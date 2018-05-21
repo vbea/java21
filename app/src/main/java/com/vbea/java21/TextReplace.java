@@ -15,7 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.Snackbar;
 
-import com.vbea.java21.classes.AlertDialog;
+import com.vbea.java21.classes.MyAlertDialog;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 
@@ -68,7 +68,7 @@ public class TextReplace extends AppCompatActivity
 		final CheckBox cased = (CheckBox) view.findViewById(R.id.chkIgnoeCase);
 		edt1.setText(oldValue);
 		edt2.setText(newValue);
-		AlertDialog builder = new AlertDialog(TextReplace.this);
+		MyAlertDialog builder = new MyAlertDialog(TextReplace.this);
 		builder.setTitle("替换选项");
 		builder.setView(view);
 		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()

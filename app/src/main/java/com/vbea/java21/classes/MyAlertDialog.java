@@ -6,11 +6,11 @@ import android.content.DialogInterface;
 import android.widget.Button;
 import com.vbea.java21.MyThemes;
 
-public class AlertDialog extends AlertDialog.Builder
+public class MyAlertDialog extends AlertDialog.Builder
 {
 	Context context;
 	boolean isButton;
-	public AlertDialog(Context _context)
+	public MyAlertDialog(Context _context)
 	{
 		super(_context);
 		context = _context;

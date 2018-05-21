@@ -12,7 +12,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
-import com.vbea.java21.classes.AlertDialog;
+import com.vbea.java21.classes.MyAlertDialog;
 import com.vbea.secret.k;
 
 import cn.bmob.v3.update.BmobUpdateAgent;
@@ -59,7 +59,7 @@ public class About extends AppCompatActivity
 		{
 			public void onClick(View v)
 			{
-				AlertDialog dia = new AlertDialog(About.this);
+				MyAlertDialog dia = new MyAlertDialog(About.this);
 				dia.setTitle("新版特性");
 				dia.setMessage(R.string.abt_ver);
 				dia.setPositiveButton("知道了", null);

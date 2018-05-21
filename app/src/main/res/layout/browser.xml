@@ -47,6 +47,14 @@
 				android:max="100"
 				android:progress="0"
 				android:secondaryProgress="0"/>
+			<ProgressBar
+				android:id="@+id/sourceProgress"
+				android:layout_width="match_parent"
+				android:layout_height="5dp"
+				style="?android:attr/progressBarStyleHorizontal"
+				android:progressDrawable="@drawable/web_progress"
+				android:visibility="gone"
+				android:indeterminate="true"/>
 			<TextView
 				android:id="@+id/api_nightView"
 				android:layout_width="fill_parent"

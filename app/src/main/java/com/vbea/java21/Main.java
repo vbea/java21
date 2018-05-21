@@ -52,7 +52,7 @@ import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.AdvConfig;
 import com.vbea.java21.classes.InboxManager;
-import com.vbea.java21.classes.AlertDialog;
+import com.vbea.java21.classes.MyAlertDialog;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.widget.CustomTextView;
 import com.vbea.java21.audio.SoundLoad;
@@ -188,6 +188,19 @@ public class Main extends AppCompatActivity
 				}
 			}
 		});
+		txtCotation.setOnClickListener(new View.OnClickListener()
+		{
+			public void onClick(View v)
+			{
+				Util.showResultDialog(Main.this, txtCotation.getText().toString(), "消息通知", new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface d, int i)
+					{
+						setTip(Common.getTip());
+					}
+				});
+			}
+		});
 		setHead();
 		myCallback = new InboxCallback();
 		if (START)
@@ -198,7 +211,6 @@ public class Main extends AppCompatActivity
 	{
 		if (Common.isNet(this) && Common.canLogin())
 			onAutoLogin();
-		setIcon();
 		//设置菜单图标
 		/*if (!Common.isSupportMD())
 		{
@@ -356,17 +368,17 @@ public class Main extends AppCompatActivity
 	
 	private void showPlugin()
 	{
-		if (Common.mUser != null)
+		if (Common.isLogin())
 		{
 			//drawSms.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
 			drawWifi.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
-			//drawCodeEditor.setVisibility(Common.IS_ACTIVE ? View.VISIBLE : View.GONE);
+			drawCodeEditor.setVisibility(Common.isSVipUser() ? View.VISIBLE : View.GONE);
 		}
 		else
 		{
 			//drawSms.setVisibility(View.GONE);
 			drawWifi.setVisibility(View.VISIBLE);
-			//drawCodeEditor.setVisibility(View.VISIBLE);
+			drawCodeEditor.setVisibility(View.GONE);
 		}
 	}
 	
@@ -387,10 +399,10 @@ public class Main extends AppCompatActivity
 	private void onAudioDialog()
 	{
 		if (Common.isAudio() && Common.AUDIO_STUDY_STATE >= 10) {
-		AlertDialog builder = new AlertDialog(this);
+		MyAlertDialog builder = new MyAlertDialog(this);
 		builder.setTitle("提示");
 		builder.setCancelable(false);
-		builder.setMessage("学累了吧，要不要听听音乐放松下？");
+		builder.setMessage("学累了吧，要不要去音乐盛典听听音乐放松下？");
 		builder.setPositiveButton("去看看", new DialogInterface.OnClickListener()
 		{
 			public void onClick(DialogInterface d, int p)
@@ -667,7 +679,7 @@ public class Main extends AppCompatActivity
 						{
 							if (code == 1)
 							{
-								if (!Common.OldSerialNo.equals(Common.mUser.serialNo))
+								if (!Common.OldSerialNo.equals(Common.mUser.serialNo) && !Util.isNullOrEmpty(Common.OldSerialNo))
 								{
 									Util.toastShortMessage(Main.this, "帐号在其他设备登录，您的登录态已失效，请重新登录");
 									Common.Logout(Main.this);
@@ -713,6 +725,11 @@ public class Main extends AppCompatActivity
 				txtSignature.setText(Common.mUser.mark);
 			Common.getInbox().getMyInbox(System.currentTimeMillis(), myCallback);
 			Common.showUserRole(txtVip);
+			if (Common.IsChangeICON)
+			{
+				Common.IsChangeICON = false;
+				mHandler.sendEmptyMessage(7);
+			}
 		}
 		else
 		{
@@ -720,11 +737,6 @@ public class Main extends AppCompatActivity
 			txtSignature.setText("");
 			txtVip.setVisibility(View.GONE);
 			closeDrawered();
-		}
-		if (Common.IsChangeICON)
-		{
-			Common.IsChangeICON = false;
-			setIcon();
 		}
 	}
 	
@@ -781,6 +793,9 @@ public class Main extends AppCompatActivity
 					BmobUpdateAgent.setUpdateOnlyWifi(false);
 					BmobUpdateAgent.update(getApplicationContext());
 					//QbSdk.initX5Environment(Main.this, null);
+					break;
+				case 7:
+					setIcon();
 					break;
 			}
 			super.handleMessage(msg);

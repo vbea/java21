@@ -1,7 +1,5 @@
 package com.vbea.java21;
 
-import java.lang.reflect.Field;
-
 import android.app.Dialog;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -26,24 +24,19 @@ import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
-import com.vbea.java21.classes.MD5Util;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.data.Users;
 
 public class UserEdit extends AppCompatActivity
 {
-	private LayoutInflater inflat;
 	private RadioButton rdbMale, rdbFemale;
 	private EditText edtNick, edtRemark, edtAddress, edtBirthday;
-	private TextView username, chPassword;
+	//private TextView username, chPassword;
 	private Button btnSave;
 	private Dialog mDialog;
-	private View dialogView;
-	private EditText oldpass;
-	private EditText newpass;
-	private EditText querpass;
-	private boolean isNewPass = false;
-	private String NewPass = "";
+	
+	//private boolean isNewPass = false;
+	//private String NewPass = "";
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -52,14 +45,14 @@ public class UserEdit extends AppCompatActivity
 		setContentView(R.layout.usercmd);
 		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
 		btnSave = (Button) findViewById(R.id.btnSave);
-		username = (TextView) findViewById(R.id.info_username);
+		//username = (TextView) findViewById(R.id.info_username);
 		edtRemark = (EditText) findViewById(R.id.udt_mark);
 		edtNick = (EditText) findViewById(R.id.udt_nick);
 		edtBirthday = (EditText) findViewById(R.id.udt_birthday);
 		rdbMale = (RadioButton) findViewById(R.id.rdbMale);
 		rdbFemale = (RadioButton) findViewById(R.id.rdbFemale);
 		edtAddress = (EditText) findViewById(R.id.udt_address);
-		chPassword = (TextView) findViewById(R.id.udt_password);
+		//chPassword = (TextView) findViewById(R.id.udt_password);
 	
 		setSupportActionBar(tool);
 		tool.setNavigationOnClickListener(new View.OnClickListener()
@@ -104,8 +97,8 @@ public class UserEdit extends AppCompatActivity
 				String nick = edtNick.getText().toString().trim();
 				if (!nick.equals(""))
 					Common.mUser.nickname = nick.trim();
-				if (isNewPass)
-					Common.mUser.psd = NewPass;
+				/*if (isNewPass)
+					Common.mUser.psd = NewPass;*/
 				Common.mUser.mark = edtRemark.getText().toString();
 				Common.mUser.address = edtAddress.getText().toString();
 				Common.mUser.gender = rdbMale.isChecked();
@@ -115,34 +108,44 @@ public class UserEdit extends AppCompatActivity
 			}
 		});
 		
-		chPassword.setOnClickListener(new View.OnClickListener()
+		/*chPassword.setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View v)
 			{
 				shDialog();
 			}
-		});
+		});*/
 		init(Common.mUser);
-		Common.Login(this, new Common.LoginListener()
+		try
 		{
-			@Override
-			public void onLogin(int code)
+			Common.Login(this, new Common.LoginListener()
 			{
-				if (code == 1) //登录成功
-					init(Common.mUser);
-			}
+				@Override
+				public void onLogin(int code)
+				{
+					if (code == 1) //登录成功
+						init(Common.mUser);
+				}
 
-			@Override
-			public void onError(String error)
-			{
-				//登录失败
-			}
-		});
+				@Override
+				public void onError(String error)
+				{
+					//登录失败
+					ExceptionHandler.log("UserEdit.login(onError)", error);
+				}
+			});
+		}
+		catch (Exception e)
+		{
+			ExceptionHandler.log("UserEdit.login()", e);
+		}
 	}
 	
 	private void init(Users user)
 	{
-		username.setText(user.name);
+		if (!Common.isLogin())
+			return;
+		//username.setText(user.name);
 		edtNick.setText(user.nickname);
 		edtRemark.setText(toStrings(user.mark));
 		if (Common.mUser.gender != null)
@@ -156,140 +159,11 @@ public class UserEdit extends AppCompatActivity
 		edtAddress.setText(toStrings(user.address));
 	}
 	
-	private boolean getView()
-	{
-		if (inflat == null)
-			inflat = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-		dialogView = inflat.inflate(R.layout.editpassword, null);
-		TableRow oldRow = (TableRow) dialogView.findViewById(R.id.tabOldPassRow);
-		oldpass = (EditText) dialogView.findViewById(R.id.edt_oldPasd);
-		newpass = (EditText) dialogView.findViewById(R.id.edt_newPasd);
-		querpass = (EditText) dialogView.findViewById(R.id.edt_querPasd);
-		if (Common.mUser.psd == null || Common.mUser.psd.equals(""))
-		{
-			oldRow.setVisibility(View.GONE);
-			return true;
-		}
-		return false;
-	}
-	
 	private String toStrings(String str)
 	{
 		if (str != null)
 			return str;
 		return "";
-	}
-	
-	public void shDialog()
-	{
-		final boolean isEmptyOdp = getView();
-		AlertDialog.Builder builder = new AlertDialog.Builder(UserEdit.this);
-		builder.setTitle("修改密码");
-		builder.setView(dialogView);
-		builder.setCancelable(false);
-		builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface dialog, int d)
-			{
-				isShowing(dialog, false);
-				if (!isEmptyOdp)
-				{
-					if (isEmpty(oldpass, "请输入原密码"))
-						return;
-					if (oldpass.getText().toString().trim().length() < 4)
-					{
-						oldpass.requestFocus();
-						oldpass.setError("密码长度过短");
-						return;
-					}
-				}
-				if (isEmpty(newpass, "请输入新密码"))
-				{
-					return;
-				}
-				if (newpass.getText().toString().trim().length() < 4)
-				{
-					newpass.requestFocus();
-					newpass.setError("密码长度过短");
-					return;
-				}
-				if (!newpass.getText().toString().equals(querpass.getText().toString()))
-				{
-					querpass.requestFocus();
-					querpass.setError("两次输入密码不一致");
-					return;
-				}
-				if (!isEmptyOdp)
-				{
-					if (!MD5Util.getMD5(oldpass.getText().toString()).equals(Common.mUser.psd))
-					{
-						oldpass.setText("");
-						oldpass.requestFocus();
-						oldpass.setError("原密码错误");
-						return;
-					}
-				}
-				isNewPass = true;
-				NewPass = MD5Util.getMD5(querpass.getText().toString());
-				Util.toastLongMessage(getApplicationContext(), "已提交密码修改请求，点击保存按钮即可修改成功，点击返回则放弃本次修改");
-				dialog.cancel();
-			}
-		});
-		builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface dialog, int d)
-			{
-				dialog.cancel();
-			}
-		});
-		builder.setOnCancelListener(new DialogInterface.OnCancelListener()
-		{
-			public void onCancel(DialogInterface dialog)
-			{
-				isShowing(dialog, true);
-				dialog.dismiss();
-			}
-		});
-		final AlertDialog passDialog = builder.create();
-		passDialog.setOnShowListener(new DialogInterface.OnShowListener()
-		{
-			public void onShow(DialogInterface dialog)
-			{
-				int color = MyThemes.getColorAccent(UserEdit.this);
-				Button negative = passDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
-				if (negative != null)
-					negative.setTextColor(color);
-				Button positive = passDialog.getButton(DialogInterface.BUTTON_POSITIVE);
-				if (positive != null)
-					positive.setTextColor(color);
-			}
-		});
-		passDialog.show();
-	}
-	
-	private boolean isEmpty(EditText view, String tip)
-	{
-		if (view.getText().toString().length() == 0)
-		{
-			view.requestFocus();
-			view.setError(tip);
-			return true;
-		}
-		return false;
-	}
-	
-	private void isShowing(DialogInterface dialog, boolean state)
-	{
-		try
-		{
-			Field f = dialog.getClass().getSuperclass().getDeclaredField("mShowing");
-			f.setAccessible(true);
-			f.set(dialog, state);
-		}
-		catch (Exception e)
-		{
-			ExceptionHandler.log("DialogReflect", e.toString());
-		}
 	}
 
 	@Override

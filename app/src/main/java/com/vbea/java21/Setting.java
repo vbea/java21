@@ -20,7 +20,7 @@ import android.support.v7.widget.Toolbar;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.DataCleanManager;
 import com.vbea.java21.classes.Util;
-import com.vbea.java21.classes.AlertDialog;
+import com.vbea.java21.classes.MyAlertDialog;
 
 public class Setting extends AppCompatActivity
 {
@@ -254,7 +254,7 @@ public class Setting extends AppCompatActivity
 		{
 			public void onClick(View v)
 			{
-				AlertDialog dialog = new AlertDialog(Setting.this);
+				MyAlertDialog dialog = new MyAlertDialog(Setting.this);
 				dialog.setSingleChoiceItems(getResources().getStringArray(R.array.array_textsize), Common.JAVA_TEXT_SIZE,
 					new DialogInterface.OnClickListener()
 					{

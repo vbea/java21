@@ -40,7 +40,7 @@ public class Machine extends AppCompatActivity
 	private SharedPreferences spf;
 	private EditText edtKey;
 	private ProgressDialog mDialog;
-	private final String PDATE = "2017-12-22";
+	private final String PDATE = "2018-05-20";
 	//private boolean START = false;
 	//private int DATED = 0;
 	@Override
@@ -68,7 +68,7 @@ public class Machine extends AppCompatActivity
 			if (pdate.getYear() == now.getYear() &&
 				pdate.getMonth() == now.getMonth() &&
 				pdate.getDate() == now.getDate())
-				edtKey.setText("0E623-273-FEEEC-AD7-EB127");
+				edtKey.setText("25A15-8C0-0AAAD-0A2-AD714");
 			//delete on 20170606
 			/*k dec = new k();
 			SimpleDateFormat text = new SimpleDateFormat("yyyy-MM-dd");

@@ -90,7 +90,6 @@
 				android:paddingEnd="16dp"
 				android:paddingStart="16dp">
 				<ImageView
-					android:id="@+id/draw_image1"
 					android:layout_width="40dp"
 					android:layout_height="40dp"
 					android:src="@mipmap/ic_theme"
@@ -120,7 +119,6 @@
 				android:paddingStart="16dp"
 				android:visibility="gone">
 				<ImageView
-					android:id="@+id/draw_image2"
 					android:layout_width="40dp"
 					android:layout_height="40dp"
 					android:src="@mipmap/ic_music"
@@ -158,7 +156,6 @@
 				android:paddingEnd="16dp"
 				android:paddingStart="16dp">
 				<ImageView
-					android:id="@+id/draw_image3"
 					android:layout_width="40dp"
 					android:layout_height="40dp"
 					android:src="@mipmap/ic_api"
@@ -186,7 +183,6 @@
 				android:paddingEnd="16dp"
 				android:paddingStart="16dp">
 				<ImageView
-					android:id="@+id/draw_image7"
 					android:layout_width="40dp"
 					android:layout_height="40dp"
 					android:src="@mipmap/ic_browser"
@@ -229,7 +225,6 @@
 				android:paddingEnd="16dp"
 				android:paddingStart="16dp">
 				<ImageView
-					android:id="@+id/draw_image4"
 					android:layout_width="40dp"
 					android:layout_height="40dp"
 					android:src="@mipmap/ic_place"
@@ -286,7 +281,6 @@
 				android:paddingEnd="16dp"
 				android:paddingStart="16dp">
 				<ImageView
-					android:id="@+id/draw_image7"
 					android:layout_width="40dp"
 					android:layout_height="40dp"
 					android:src="@mipmap/ic_wifi"
@@ -348,7 +342,6 @@
 				android:paddingEnd="16dp"
 				android:paddingStart="16dp">
 				<ImageView
-					android:id="@+id/draw_image5"
 					android:layout_width="40dp"
 					android:layout_height="40dp"
 					android:src="@mipmap/ic_setting"
@@ -376,7 +369,6 @@
 				android:paddingEnd="16dp"
 				android:paddingStart="16dp">
 				<ImageView
-					android:id="@+id/draw_image6"
 					android:layout_width="40dp"
 					android:layout_height="40dp"
 					android:src="@mipmap/ic_help"
@@ -404,7 +396,6 @@
 				android:paddingEnd="16dp"
 				android:paddingStart="16dp">
 				<ImageView
-					android:id="@+id/draw_image7"
 					android:layout_width="40dp"
 					android:layout_height="40dp"
 					android:src="@mipmap/ic_exit"

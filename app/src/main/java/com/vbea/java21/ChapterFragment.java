@@ -59,11 +59,11 @@ public class ChapterFragment extends Fragment
 				@Override
 				public void onItemClick(int resId, String title, String sub)
 				{
-					/*if (Common.isNotLogin())
+					if (!Common.isLogin())
 					{
 						Util.toastShortMessage(getContext(), "请先登录！");
 						return;
-					}*/
+					}
 					String id = String.valueOf(resId);
  					Common.addJavaRead(id);
  					Intent intent = new Intent(getActivity(), AndroidWeb.class);

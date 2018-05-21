@@ -16,7 +16,7 @@ import com.vbea.java21.data.Users;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.MD5Util;
 import com.vbea.java21.classes.Common;
-import com.vbea.java21.classes.AlertDialog;
+import com.vbea.java21.classes.MyAlertDialog;
 import com.vbea.java21.classes.ExceptionHandler;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.exception.BmobException;
@@ -91,9 +91,9 @@ public class ResetPassword extends AppCompatActivity
 	
 	private void exitDialog()
 	{
-		AlertDialog build = new AlertDialog(this);
+		MyAlertDialog build = new MyAlertDialog(this);
 		build.setTitle(android.R.string.dialog_alert_title);
-		build.setMessage("您确定要放弃重置密码并返回？");
+		build.setMessage("您确定要放弃此次重置密码并返回？");
 		build.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener()
 		{
 			public void onClick(DialogInterface dialog, int i)

@@ -159,7 +159,7 @@ public class Common
 		init(spf);
 	}
 	
-	public static String getSettingJson(SettingUtil utils)
+	public static String getSettingJson(SettingUtil utils) throws Exception
 	{
 		utils.addSettings(SettingUtil.SET_THEME, APP_THEME_ID);
 		utils.addSettings(SettingUtil.SET_BACKIMG, APP_BACK_ID);
@@ -195,7 +195,15 @@ public class Common
 	
 	public static void updateUserLogin(Context context)
 	{
-		OldSerialNo = mUser.serialNo;
+		if (mUser.role == null)
+			mUser.role = 1;
+		if (Util.isNullOrEmpty(mUser.serialNo))
+		{
+			OldSerialNo = "";
+			mUser.serialNo = "";
+		}
+		else
+			OldSerialNo = mUser.serialNo;
 		Date now = new Date();
 		if (mUser.lastLogin != null)
 		{
@@ -234,6 +242,7 @@ public class Common
 			Users user = new Users();
 			user.setObjectId(mUser.getObjectId());
 			user.psd = mUser.psd;
+			user.role = mUser.role;
 			user.nickname = mUser.nickname;
 			user.birthday = mUser.birthday;
 			user.address = mUser.address;
@@ -366,7 +375,7 @@ public class Common
 	}
 	
 	//自动登录
-	public static void Login(Context context, LoginListener listener)
+	public static void Login(Context context, LoginListener listener) throws Exception
 	{
 		if (AUTO_LOGIN_MODE == 1)
 			Login(context, USERID, USERPASS, true, listener);
@@ -443,6 +452,13 @@ public class Common
 		return false;
 	}
 	
+	public static boolean isSVipUser()
+	{
+		if (mUser != null && mUser.role != null && IS_ACTIVE)
+			return mUser.role == 10 || mUser.role == 12;
+		return false;
+	}
+	
 	public static void saveUserIconByName(String name)
 	{
 		BmobQuery<Users> sql = new BmobQuery<Users>();
@@ -458,7 +474,7 @@ public class Common
 		});
 	}
 	
-	public static void qqLogin(final Context context, String openId, final LoginListener listener)
+	public static void qqLogin(final Context context, String openId, final LoginListener listener) throws Exception
 	{
 		BmobQuery<Users> sql = new BmobQuery<Users>();
 		sql.addWhereEqualTo("qqId", openId);
@@ -521,7 +537,7 @@ public class Common
 		});
 	}
 	
-	public static void Login(final Context context, final String username, final String pasdword, final boolean isAuto, final LoginListener listener)
+	public static void Login(final Context context, final String username, final String pasdword, final boolean isAuto, final LoginListener listener) throws Exception
 	{
 		BmobQuery<Users> sql1 = new BmobQuery<Users>();
 		sql1.addWhereEqualTo("name", username);
@@ -788,6 +804,11 @@ public class Common
 				v.setImageDrawable(getRoundedIconDrawable(context, BitmapFactory.decodeFile(file.getAbsolutePath())));
 			else
 			{
+				if (downed)
+				{
+					v.setImageDrawable(getRoundedIconDrawable(context, BitmapFactory.decodeResource(context.getResources(), R.mipmap.head)));
+					return;
+				}
 				try
 				{
 					mUser.icon.download(file, new DownloadFileListener()

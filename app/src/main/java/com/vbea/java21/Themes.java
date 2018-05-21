@@ -19,6 +19,7 @@ import com.vbea.java21.list.ThemeItem;
 import com.vbea.java21.list.ThemeAdapter;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.SettingUtil;
+import com.vbea.java21.classes.ExceptionHandler;
 
 public class Themes extends AppCompatActivity
 {
@@ -97,8 +98,15 @@ public class Themes extends AppCompatActivity
 	{
 		if (Common.isLogin())
 		{
-			Common.mUser.settings = Common.getSettingJson(new SettingUtil());
-			Common.updateUser();
+			try
+			{
+				Common.mUser.settings = Common.getSettingJson(new SettingUtil());
+				Common.updateUser();
+			}
+			catch (Exception e)
+			{
+				ExceptionHandler.log("setTheme.update", e);
+			}
 		}
 		MyThemes.ISCHANGED = true;
 		ActivityManager mng = ActivityManager.getInstance();

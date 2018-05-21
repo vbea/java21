@@ -399,12 +399,12 @@ public class Util
 	{
 		if(msg == null) return;
 		//String rmsg = msg.replace(",", "\n");
-		new AlertDialog(context).setTitle(title).setMessage(msg).setNegativeButton("知道了", lis).create().show();
+		new MyAlertDialog(context).setTitle(title).setMessage(msg).setNegativeButton("知道了", lis).create().show();
 	}
 	
 	public static void showConfirmCancelDialog(Context context, String title, String message, DialogInterface.OnClickListener posListener)
 	{
-		AlertDialog dialog = new AlertDialog(context);
+		MyAlertDialog dialog = new MyAlertDialog(context);
 		dialog.setTitle(title);
 		dialog.setMessage(message);
 		dialog.setPositiveButton(android.R.string.ok, posListener);
@@ -420,7 +420,7 @@ public class Util
 	
 	public static void showConfirmCancelDialog(Context context, int title, String message, DialogInterface.OnClickListener posListener)
 	{
-		AlertDialog dialog = new AlertDialog(context);
+		MyAlertDialog dialog = new MyAlertDialog(context);
 		dialog.setTitle(title);
 		dialog.setMessage(message);
 		dialog.setPositiveButton(android.R.string.ok, posListener);
@@ -431,7 +431,7 @@ public class Util
 	
 	public static void showConfirmCancelDialog(Context context, String ok, String message, String cacel, DialogInterface.OnClickListener posListener)
 	{
-		AlertDialog dialog = new AlertDialog(context);
+		MyAlertDialog dialog = new MyAlertDialog(context);
 		dialog.setTitle(android.R.string.dialog_alert_title);
 		dialog.setMessage(message);
 		dialog.setPositiveButton(ok, posListener);

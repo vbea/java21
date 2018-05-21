@@ -243,8 +243,10 @@ public class IconPreview extends AppCompatActivity
 					Common.updateUser();
 				}
 				else
-					//ExceptionHandler.log("上传头像："+p1.toString());
+				{
+					ExceptionHandler.log("uploadIcon", p1.toString());
 					Util.toastShortMessage(getApplicationContext(), "上传失败");
+				}
 			}
 		});
 	}

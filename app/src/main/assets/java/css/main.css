@@ -14,10 +14,12 @@ blockquote {
 .div {
     padding: 0 5px;
     background-color: white;
+	overflow-x: hidden;
 }
 
 img {
     max-width: 100%;
+	display: block;
 }
 
 green {

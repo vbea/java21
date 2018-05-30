@@ -47,6 +47,7 @@ import com.vbea.java21.data.SQLHelper;
 import com.vbea.java21.data.CodeMode;
 
 import org.apache.commons.io.FileUtils;
+import org.w3c.dom.*;
 /*import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebStorage;
@@ -197,6 +198,11 @@ public class CodeEditor extends AppCompatActivity
 				return false;
 			}
 		});*/
+		if (getIntent().getAction() == Intent.ACTION_VIEW)
+		{
+			if (getIntent().getData() != null)
+				Util.toastShortMessage(getApplicationContext(), getIntent().getDataString());
+		}
 	}
 
 	private void getUrl(String language, String mode)

@@ -133,6 +133,7 @@ public class Main extends AppCompatActivity
         tabLayout.setupWithViewPager(viewpager);
 		tabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.gray2));
 		MyThemes.ISCHANGED = true;
+		Common.IsChangeICON = true;
         drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
 		mDrawerLayout.addDrawerListener(drawerToggle);
 		mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener()
@@ -725,11 +726,6 @@ public class Main extends AppCompatActivity
 				txtSignature.setText(Common.mUser.mark);
 			Common.getInbox().getMyInbox(System.currentTimeMillis(), myCallback);
 			Common.showUserRole(txtVip);
-			if (Common.IsChangeICON)
-			{
-				Common.IsChangeICON = false;
-				mHandler.sendEmptyMessage(7);
-			}
 		}
 		else
 		{
@@ -737,6 +733,11 @@ public class Main extends AppCompatActivity
 			txtSignature.setText("");
 			txtVip.setVisibility(View.GONE);
 			closeDrawered();
+		}
+		if (Common.IsChangeICON)
+		{
+			Common.IsChangeICON = false;
+			mHandler.sendEmptyMessage(7);
 		}
 	}
 	

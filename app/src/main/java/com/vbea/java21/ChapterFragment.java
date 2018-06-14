@@ -59,11 +59,11 @@ public class ChapterFragment extends Fragment
 				@Override
 				public void onItemClick(int resId, String title, String sub)
 				{
-					if (!Common.isLogin())
+					/*if (!Common.isLogin())
 					{
 						Util.toastShortMessage(getContext(), "请先登录！");
 						return;
-					}
+					}*/
 					String id = String.valueOf(resId);
  					Common.addJavaRead(id);
  					Intent intent = new Intent(getActivity(), AndroidWeb.class);
@@ -71,7 +71,7 @@ public class ChapterFragment extends Fragment
  					intent.putExtra("url", "file:///android_asset/java/chapter" + id + ".html");
  					intent.putExtra("title", title);
  					intent.putExtra("sub", sub);
- 					intent.putExtra("type", 0);
+ 					intent.putExtra("type", 5);
 					Common.startActivityOptions(getActivity(), intent);
 					mAdapter.notifyDataSetChanged();
 				}

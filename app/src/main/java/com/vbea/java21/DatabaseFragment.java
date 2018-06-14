@@ -21,8 +21,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.DividerItemDecoration;
-import com.vbea.java21.data.JavaEE;
-import com.vbea.java21.list.J2EEAdapter;
+import com.vbea.java21.data.Database;
+import com.vbea.java21.list.DatabaseAdapter;
 import com.vbea.java21.list.MyDividerDecoration;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
@@ -33,14 +33,14 @@ import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.exception.BmobException;
 
-public class JavaFragment extends Fragment
+public class DatabaseFragment extends Fragment
 {
 	private SwipeRefreshLayout refreshLayout;
 	private RecyclerView recyclerView;
 	private TextView errorText;
 	private ProgressBar proRefresh;
-	private J2EEAdapter mAdapter;
-	private List<JavaEE> mList;
+	private DatabaseAdapter mAdapter;
+	private List<Database> mList;
 	private View rootView;
 	private int mCount = -1;
 	//private ProgressDialog mPdialog;
@@ -58,8 +58,8 @@ public class JavaFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
 		if (recyclerView == null)
 		{
-			mList = new ArrayList<JavaEE>();
-			mAdapter = new J2EEAdapter();
+			mList = new ArrayList<Database>();
+			mAdapter = new DatabaseAdapter();
 			errorText = (TextView) view.findViewById(R.id.txt_andError);
 			proRefresh = (ProgressBar) view.findViewById(R.id.refreshProgress);
         	recyclerView = (RecyclerView) view.findViewById(R.id.cpt_recyclerView);
@@ -80,21 +80,22 @@ public class JavaFragment extends Fragment
 				errorText.setVisibility(View.VISIBLE);
 				errorText.setText("请登录后下拉刷新获取章节列表");
 			}*/
-			mAdapter.setOnItemClickListener(new J2EEAdapter.OnItemClickListener()
+			
+			mAdapter.setOnItemClickListener(new DatabaseAdapter.OnItemClickListener()
 			{
 				@Override
 				public void onItemClick(String id, String title, String sub, String url)
 				{
 					//更新数据
 					/*update();
-					if (true)return;*/
-					Common.addJavaEeRead(id);
+					 if (true)return;*/
+					//Common.addJavaEeRead(id);
 					Intent intent = new Intent(getActivity(), AndroidWeb.class);
 					intent.putExtra("id", id);
 					intent.putExtra("url", url);
 					intent.putExtra("title", title);
 					intent.putExtra("sub", sub);
-					intent.putExtra("type", 3);
+					intent.putExtra("type", 6);
 					Common.startActivityOptions(getActivity(), intent);
 					mAdapter.notifyDataSetChanged();
 				}
@@ -138,9 +139,9 @@ public class JavaFragment extends Fragment
 			init();
 			return;
 		}
-		BmobQuery<JavaEE> query = new BmobQuery<JavaEE>();
+		BmobQuery<Database> query = new BmobQuery<Database>();
 		query.addWhereEqualTo("enable", true);
-		query.count(JavaEE.class, new CountListener()
+		query.count(Database.class, new CountListener()
 		{
 			@Override
 			public void done(Integer count, BmobException e)
@@ -160,18 +161,18 @@ public class JavaFragment extends Fragment
 			}
 		});
 	}
-	
+
 	/*public void update()
-	{
-		Util.showConfirmCancelDialog(getActivity(), "数据更新", "你确定要更新数据吗", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface d, int s)
-			{
-				mPdialog = ProgressDialog.show(getActivity(), null, "请稍候...");
-				new UpdateThread().start();
-			}
-		});
-	}*/
+	 {
+	 Util.showConfirmCancelDialog(getActivity(), "数据更新", "你确定要更新数据吗", new DialogInterface.OnClickListener()
+	 {
+	 public void onClick(DialogInterface d, int s)
+	 {
+	 mPdialog = ProgressDialog.show(getActivity(), null, "请稍候...");
+	 new UpdateThread().start();
+	 }
+	 });
+	 }*/
 
 	private void refresh()
 	{
@@ -185,14 +186,14 @@ public class JavaFragment extends Fragment
 			errorText.setVisibility(View.VISIBLE);
 			errorText.setText("正在加载，请稍候");
 		}
-		BmobQuery<JavaEE> query = new BmobQuery<JavaEE>();
+		BmobQuery<Database> query = new BmobQuery<Database>();
 		query.addWhereEqualTo("enable", true);
 		query.order("order");
 		query.setLimit(15);
-		query.findObjects(new FindListener<JavaEE>()
+		query.findObjects(new FindListener<Database>()
 		{
 			@Override
-			public void done(List<JavaEE> list, BmobException e)
+			public void done(List<Database> list, BmobException e)
 			{
 				if (e == null)
 				{
@@ -212,15 +213,15 @@ public class JavaFragment extends Fragment
 		if (mCount > mList.size())
 		{
 			proRefresh.setVisibility(View.VISIBLE);
-			BmobQuery<JavaEE> query = new BmobQuery<JavaEE>();
+			BmobQuery<Database> query = new BmobQuery<Database>();
 			query.addWhereEqualTo("enable", true);
 			query.order("order");
 			query.setLimit(15);
 			query.setSkip(mList.size());
-			query.findObjects(new FindListener<JavaEE>()
+			query.findObjects(new FindListener<Database>()
 			{
 				@Override
-				public void done(List<JavaEE> list, BmobException e)
+				public void done(List<Database> list, BmobException e)
 				{
 					if (e == null)
 					{
@@ -276,13 +277,13 @@ public class JavaFragment extends Fragment
 						refreshLayout.setRefreshing(false);
 					break;
 				/*case 4:
-					Util.toastShortMessage(getActivity(), "更新成功");
-					mPdialog.dismiss();
-					break;
-				case 5:
-					Util.toastShortMessage(getActivity(), "更新失败");
-					mPdialog.dismiss();
-					break;*/
+					 Util.toastShortMessage(getActivity(), "更新成功");
+					 mPdialog.dismiss();
+					 break;
+				 case 5:
+					 Util.toastShortMessage(getActivity(), "更新失败");
+					 mPdialog.dismiss();
+					 break;*/
 			}
 			super.handleMessage(msg);
 		}
@@ -298,36 +299,5 @@ public class JavaFragment extends Fragment
 		if (refreshLayout.isRefreshing())
 			refreshLayout.setRefreshing(false);
 		super.onResume();
-	}
-	
-	class UpdateThread extends Thread implements Runnable
-	{
-		public void run()
-		{
-			try
-			{
-				for (JavaEE item : mList)
-				{
-					if (item.isTitle)
-						continue;
-					item.url = item.url.replace("http://vbea.wicp.net/","");
-					item.update(new UpdateListener()
-					{
-						public void done(BmobException e)
-						{
-							if (e!=null)
-								ExceptionHandler.log("update", e.toString());
-						}
-					});
-					sleep(500);
-				}
-				mHandler.sendEmptyMessage(4);
-			}
-			catch (Exception e)
-			{
-				mHandler.sendEmptyMessage(5);
-				ExceptionHandler.log("update", e.toString());
-			}
-		}
 	}
 }

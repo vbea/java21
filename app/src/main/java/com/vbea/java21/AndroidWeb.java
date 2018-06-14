@@ -45,6 +45,8 @@ import com.tencent.tauth.UiError;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.BannerView;
 import com.qq.e.ads.banner.AbstractBannerADListener;
+import com.qq.e.ads.interstitial.InterstitialAD;
+import com.qq.e.ads.interstitial.AbstractInterstitialADListener;
 import com.qq.e.comm.util.AdError;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.CountListener;
@@ -177,6 +179,13 @@ public class AndroidWeb extends AppCompatActivity
 		//applyTips();
 		if (!Common.isNoadv())
 			initBanner();
+		if (!Common.isLogin())
+		{
+			btnComment.setEnabled(false);
+			edtComment.setEnabled(false);
+			edtComment.setHint("登录后可发表评论");
+			initInterstitial();
+		}
 	}
 	
 	private void initBanner()
@@ -199,6 +208,26 @@ public class AndroidWeb extends AppCompatActivity
 		});
 		bannerLayout.addView(bannerView);
 		bannerView.loadAD();
+	}
+	
+	private void initInterstitial()
+	{
+		final InterstitialAD interstitial = new InterstitialAD(this, AdvConfig.APPID, AdvConfig.Interstitial);
+		interstitial.setADListener(new AbstractInterstitialADListener()
+		{
+			@Override
+			public void onNoAD(AdError e)
+			{
+				ExceptionHandler.log("in-ad:"+e.getErrorCode(), e.getErrorMsg());
+			}
+
+			@Override
+			public void onADReceive()
+			{
+				interstitial.show();
+			}
+		});
+		interstitial.loadAD();
 	}
 	
 	private Bitmap getShareBitmap()

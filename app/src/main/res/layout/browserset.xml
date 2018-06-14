@@ -78,6 +78,32 @@
 					android:textColor="?attr/colorAccent"
 					android:textSize="14sp"/>
 			</LinearLayout>
+			<LinearLayout
+				android:id="@+id/btnSetSavePath"
+				android:layout_width="fill_parent"
+				android:layout_height="56dp"
+				android:background="@drawable/btn_menu"
+				android:orientation="horizontal">
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:layout_weight="1"
+					android:text="图片保存位置"
+					android:gravity="start|center_vertical"
+					android:paddingLeft="20dp"
+					android:paddingRight="15dp"
+					android:textColor="?attr/textPrimary"
+					android:textSize="17sp"/>
+				<TextView
+					android:id="@+id/txt_webSavePath"
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:text="DCIM"
+					android:gravity="start|center_vertical"
+					android:paddingRight="15dp"
+					android:textColor="?attr/colorAccent"
+					android:textSize="14sp"/>
+			</LinearLayout>
 		</LinearLayout>
 	</ScrollView>
 </LinearLayout>

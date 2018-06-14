@@ -61,6 +61,8 @@ import com.tencent.connect.share.QQShare;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
+import android.app.*;
+import org.apache.commons.io.*;
 
 public class HtmlViewer extends AppCompatActivity
 {
@@ -74,7 +76,7 @@ public class HtmlViewer extends AppCompatActivity
 	private BottomSheetDialog mBSDialog;
 	private LinearLayout share_qq, share_qzone, share_wx, share_wxpy;
 	private LinearLayout share_sina, share_web, share_link, share_more;
-	private String SH_html, SH_url = "", SH_history = "", SH_hisName = "", SH_home, UA_Default;
+	private String SH_html, SH_url = "", SH_history = "", SH_hisName = "", SH_home, UA_Default, SH_savePath;
 	private int SH_search = 0, SH_UA = 0, SOURCE_LOAD = -1;
 	private Uri cameraUri;
 	private String[] Searchs, UAurls;
@@ -258,6 +260,33 @@ public class HtmlViewer extends AppCompatActivity
 				}
 			}
 		});
+		
+		webView.setOnLongClickListener(new View.OnLongClickListener()
+		{
+			@Override
+			public boolean onLongClick(View v)
+			{
+				WebView.HitTestResult result = ((WebView)v).getHitTestResult();
+				if (result != null)
+				{
+					if (result.getType() == WebView.HitTestResult.IMAGE_TYPE)
+					{
+						final String url = result.getExtra();
+						AlertDialog.Builder builder = new AlertDialog.Builder(HtmlViewer.this);
+						builder.setItems(new String[]{"保存图片"}, new DialogInterface.OnClickListener()
+						{
+							public void onClick(DialogInterface dialog, int s)
+							{
+								saveBitmap(url);
+								dialog.dismiss();
+							}
+						});
+						builder.show();
+					}
+				}
+				return false;
+			}
+		});
 	}
 	
 	private void init()
@@ -295,6 +324,32 @@ public class HtmlViewer extends AppCompatActivity
 		v.setDrawingCacheEnabled(true);
 		v.buildDrawingCache();
 		return Bitmap.createScaledBitmap(v.getDrawingCache(), 120, 120, true);
+	}
+	
+	private void saveBitmap(final String url)
+	{
+		new Thread(new Runnable()
+		{
+			public void run()
+			{
+				try
+				{
+					Bitmap bitmap = Util.getNetBitmap(url);
+					if (bitmap != null)
+					{
+						Util.saveBitmap(SH_savePath, "VBE" + System.currentTimeMillis() + ".png", bitmap);
+						mHandler.sendEmptyMessage(3);
+					}
+					else
+						mHandler.sendEmptyMessage(4);
+				}
+				catch (Exception e)
+				{
+					mHandler.sendEmptyMessage(4);
+					ExceptionHandler.log("saveBitmap()", e);
+				}
+			}
+		}).start();
 	}
 	
 	private void loadUrls(String url)
@@ -638,6 +693,7 @@ public class HtmlViewer extends AppCompatActivity
 			webHelper = new WebHelper(this);
 		SH_home = spf.getString("web_home", "");
 		SH_search = spf.getInt("web_search", 0);
+		SH_savePath = spf.getString("web_savepath", Common.ExterPath + "/DCIM/Java21");
 		int ua = spf.getInt("web_ua", 0);
 		if (SH_UA != ua)
 		{
@@ -930,6 +986,10 @@ public class HtmlViewer extends AppCompatActivity
 				} else
 					sourceProgress.setVisibility(View.GONE);
 			}
+			else if (msg.what == 3)
+				Util.toastShortMessage(getApplicationContext(), "保存成功");
+			else if (msg.what == 4)
+				Util.toastShortMessage(getApplicationContext(), "保存失败");
 			super.handleMessage(msg);
 		}
 	};

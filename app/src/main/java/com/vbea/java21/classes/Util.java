@@ -3,6 +3,7 @@ package com.vbea.java21.classes;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
@@ -309,6 +310,21 @@ public class Util
             return null;
         }
     }
+	
+	public static void saveBitmap(String folder, String filename, Bitmap bitmap) throws IOException
+	{
+		File directory = new File(folder);
+		if (!directory.exists())
+			directory.mkdirs();
+		File file = new File(folder + File.separator + filename);
+		if (file.exists())
+			file.delete();
+		file.createNewFile();
+		FileOutputStream out = new FileOutputStream(file);
+		bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+		out.flush();
+		out.close();
+	}
 	
 	public static String getDeviceModel()
 	{

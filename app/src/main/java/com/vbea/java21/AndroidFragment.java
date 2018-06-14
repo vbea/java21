@@ -71,13 +71,13 @@ public class AndroidFragment extends Fragment
 			recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 			refreshLayout.setColorSchemeResources(MyThemes.getColorPrimary(), MyThemes.getColorAccent());
 			//mList = new ArrayList<AndroidHtml>();
-			if (Common.isLogin())
+			//if (Common.isLogin())
 				getCount();
-			else
+			/*else
 			{
 				errorText.setVisibility(View.VISIBLE);
 				errorText.setText("请登录后下拉刷新获取章节列表");
-			}
+			}*/
 			mAdapter.setOnItemClickListener(new AndroidAdapter.OnItemClickListener()
 			{
 				@Override
@@ -102,13 +102,13 @@ public class AndroidFragment extends Fragment
 				@Override
 				public void onRefresh()
 				{
-					if (!Common.isLogin())
+					/*if (!Common.isLogin())
 					{
 						recyclerView.setVisibility(View.GONE);
 						errorText.setVisibility(View.VISIBLE);
 						errorText.setText("加载失败，请登录后重试");
 					}
-					else
+					else*/
 						getCount();
 				}
 			});
@@ -323,10 +323,10 @@ public class AndroidFragment extends Fragment
 	@Override
 	public void onResume()
 	{
-		if (!Common.isLogin())
+		/*if (!Common.isLogin())
 		{
 			recyclerView.setVisibility(View.GONE);
-		}
+		}*/
 		if (refreshLayout.isRefreshing())
 			refreshLayout.setRefreshing(false);
 		super.onResume();

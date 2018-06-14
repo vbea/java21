@@ -551,6 +551,7 @@ public class HtmlViewer extends AppCompatActivity
 		webView.setVisibility(View.VISIBLE);
 		souceView.setVisibility(View.GONE);
 		souceView.loadData("", "text/plain", null);
+		sourceProgress.setVisibility(View.GONE);
 		tool.setTitle(webView.getTitle());
 		searchItem.collapseActionView();
 		ISSOURCE = false;

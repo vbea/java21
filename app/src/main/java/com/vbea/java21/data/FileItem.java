@@ -11,9 +11,9 @@ public class FileItem implements Comparable<FileItem>
 		isUplev = false;
 	}
 	
-	public void setIsUplev(boolean isUplev)
+	public void setIsUplev(boolean uplev)
 	{
-		this.isUplev = isUplev;
+		isUplev = uplev;
 	}
 
 	public boolean isUplev()
@@ -21,9 +21,9 @@ public class FileItem implements Comparable<FileItem>
 		return isUplev;
 	}
 
-	public void setDetail(String detail)
+	public void setDetail(String d)
 	{
-		this.detail = detail;
+		detail = d;
 	}
 
 	public String getDetail()
@@ -31,9 +31,9 @@ public class FileItem implements Comparable<FileItem>
 		return detail;
 	}
 
-	public void setName(String name)
+	public void setName(String n)
 	{
-		this.name = name;
+		name = n;
 	}
 
 	public String getName()

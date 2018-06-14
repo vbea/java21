@@ -65,6 +65,11 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder>
 			});
 		}
 	}
+	
+	public void setData(Cursor data)
+	{
+		cursor = data;
+	}
 
 	@Override
 	public int getItemCount()

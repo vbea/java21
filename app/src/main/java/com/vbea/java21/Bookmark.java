@@ -95,8 +95,16 @@ public class Bookmark extends AppCompatActivity
 									@Override
 									public void onClick(DialogInterface p1, int p2)
 									{
-										Util.toastShortMessage(getApplicationContext(), onDeleteBookmark(String.valueOf(id)) ? "删除成功" : "删除失败");
-										mAdapter.notifyDataSetChanged();
+										if (onDeleteBookmark(String.valueOf(id)))
+										{
+											Util.toastShortMessage(getApplicationContext(), "删除成功");
+											init();
+											mAdapter.notifyDataSetChanged();
+										}
+										else
+										{
+											Util.toastShortMessage(getApplicationContext(), "删除失败");
+										}
 									}
 								});
 								break;
@@ -111,8 +119,12 @@ public class Bookmark extends AppCompatActivity
 	{
 		try
 		{
-			query = new WebHelper(this);
-			mAdapter = new BookAdapter(query.listBookmark());
+			if (query == null)
+				query = new WebHelper(this);
+			if (mAdapter == null)
+				mAdapter = new BookAdapter(query.listBookmark());
+			else
+				mAdapter.setData(query.listBookmark());
 			//ExceptionHandler.log("bookmark_query", "count=" + mAdapter.getItemCount());
 		}
 		catch (Exception e)

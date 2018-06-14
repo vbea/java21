@@ -34,14 +34,14 @@
         <h4>1.2.1  下载JDK</h4>
         <p>Java的系统包为JDK，JDK的全称为Java Development Kit，可以根据不同的平台来下载不同的JDK，下面介绍在64位的Windows 10系统上，如何下载并完成配置的。</p>
         <p>1.进入<a href="https://www.java.com/zh_CN/download/">Oracle官方网站</a>，点击“免费Java下载”，找到“查看所有Java”链接并点击，然后点击“下载JDK”。</p>
-        <img src="image/20180514145543.jpg" />
+        <img src="http://vbe.tutc.cc:8081/xml/image/20180514145543.jpg" />
         <p>2.点击连接下载：<a href="http://download.oracle.com/otn-pub/java/jdk-nb/8u171-8.2/jdk-8u171-nb-8_2-windows-x64.exe">jdk-8u171-windows-x64.exe</a><br />或<a href="http://182.150.10.177/dl.softmgr.qq.com/original/Development/jdk-8u91-windows-x64.exe?mkey=5afe5a424a1bb043&f=b24&c=0&p=.exe">jdk-8u91-windows-x64.exe</a></p>
         <h4>1.2.2  安装JDK</h4>
         <p>下载完成后，进行安装，下面介绍Windows下的JDK安装步骤。</p>
         <p class="nov">1.安装JDK的开始界面</p>
-        <img src="image/20180514152155.jpg" />
+        <img src="http://vbe.tutc.cc:8081/xml/image/20180514152155.jpg" />
         <p class="nov">2.根据提示点击“下一步”</p>
-        <img src="image/20180514152325.jpg" />
+        <img src="http://vbe.tutc.cc:8081/xml/image/20180514152325.jpg" />
         <h4>1.2.3  查看与设置环境变量</h4>
         <p>所谓环境变量是供系统内部使用的变量，是包含系统的当前系统用户的环境信息的字符串和软件的一个确定存放的路径，安装完JDK就必须配置环境变量，方法如下所述。</p>
         <ul>
@@ -49,14 +49,14 @@
             <li>在弹出的窗口中，点击【高级系统设置】</li>
             <li>在弹出的【系统属性】窗口中，切换到【高级】选项卡，然后点击【环境变量】按钮，如下图所示</li>
         </ul>
-        <img src="image/20180514154652.jpg" />
+        <img src="http://vbe.tutc.cc:8081/xml/image/20180514154652.jpg" />
         <p>配置JAVA_HOME环境变量，先在【系统变量】下方中，找看看是否能够找到该变量名，如果没有的话点击【新建】按钮，新建一个变量，然后设置变量值，变量值为【JDK的实际安装路径】，比如【C:\java\jdk1.8.0_171】，则变量值填写该路径即可。</p>
         <p>接下来配置CLASSPATH环境变量，在系统变量中找不到该变量名称，所以我们也要新建一个，变量值为“.;%JAVA_HOME%/lib/tools.jar”。</p>
         <p>然后再配置path环境变量，该变量在变量系统中可以找到，因此我们直接双击该变量名，就会出现【编辑系统变量】窗口，然后点击新建，分别输入“%JAVA_HOME%\bin”和“%JAVA_HOME%\jre\bin”，如下图所示</p>
-        <img src="image/20180514155444.jpg" />
+        <img src="http://vbe.tutc.cc:8081/xml/image/20180514155444.jpg" />
         <h4>1.2.4 JDK常用命令</h4>
         <p>在图中显示了JDK中的一部分命令，在本节来对这些命令进行必要的讲解。</p>
-        <img src="image/20180514155805.jpg" />
+        <img src="http://vbe.tutc.cc:8081/xml/image/20180514155805.jpg" />
         <ol>
             <li>
                 javac的常用命令<br />
@@ -88,7 +88,7 @@
         </ol>
         <h4>1.2.5  Java各个目录含义</h4>
         <p>JDK安装完成后，在安装目录下会安装很多目录和文件。这里再对这些目录进行简单的介绍。分类及说明如表所示。</p>
-        <img src="image/201805141605.jpg" />
+        <img src="http://vbe.tutc.cc:8081/xml/image/201805141605.jpg" />
         <h4>1.2.6  要善于使用JDK的帮助文件</h4>
         <p>JDK的帮助文件有在线版本和离线版本两种，可以从Java的官方网站上下载到最新的JDK帮助文件，帮助文件分为两种格式，有HTML格式和CHM格式。JDK的帮助文件使用很简单，只需要打开目录下的index.html即可。若想查找某个方法是怎么实现的，只需根据包的路径找到此方法就行了。本APP也提供有帮助文件（API文档）功能。</p>
         <h3>1.3  程序开发过程</h3>
@@ -122,8 +122,8 @@ public class HelloWorld
             </pre>
         <h4>1.5.2  编译程序代码并运行</h4>
         <p>编写完Java程序的源代码就可以对该程序进行编译，编译Java程序的源代码的方法有如下几个步骤</p>
-        <img src="image/201805141606.jpg" />
-        <img src="image/201805141607.jpg" />
+        <img src="http://vbe.tutc.cc:8081/xml/image/201805141606.jpg" />
+        <img src="http://vbe.tutc.cc:8081/xml/image/201805141607.jpg" />
         <h4>1.5.3  注意事项</h4>
         <ul>
             <li>在编写、编译和运行Java程序时是有很多注意点的，这也是初学者需要注意的地方。</li>

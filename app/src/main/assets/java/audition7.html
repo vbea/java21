@@ -1,0 +1,157 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>Java面试题（七）</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <style type="text/css">
+        .div {
+            padding: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 100%; background-color: #FFF; margin: 0 auto;">
+        <h1 style="width: 100%; text-align: center; font-size: 1.1em;">Java 面试题（七）</h1>
+        <div class="div">
+            <strong>121、内部类可以引用他包含类的成员吗？有没有什么限制？</strong>
+            <p>一个内部类对象可以访问创建它的外部类对象的内容。</p>
+            <strong>122、WEB SERVICE名词解释。JSWDL开发包的介绍。JAXP、JAXM的解释。SOAP、UDDI,WSDL解释。</strong>
+            <p>
+                Web ServiceWeb Service是基于网络的、分布式的模块化组件，它执行特定的任务，遵守具体的技术规范，这些规范使得Web Service能与其他兼容的组件进行互操作。<br />
+                JAXP(Java API for XML Parsing) 定义了在Java中使用DOM, SAX, XSLT的通用的接口。这样在你的程序中你只要使用这些通用的接口，当你需要改变具体的实现时候也不需要修改代码。<br />
+                JAXM(Java API for XML Messaging) 是为SOAP通信提供访问方法和传输机制的API。<br />
+                WSDL是一种 XML 格式，用于将网络服务描述为一组端点，这些端点对包含面向文档信息或面向过程信息的消息进行操作。这种格式首先对操作和消息进行抽象描述，然后将其绑定到具体的网络协议和消息格式上以定义端点。相关的具体端点即组合成为抽象端点（服务）。<br />
+                SOAP即简单对象访问协议(Simple Object Access Protocol)，它是用于交换XML编码信息的轻量级协议。<br />
+                UDDI 的目的是为电子商务建立标准；UDDI是一套基于Web的、分布式的、为Web Service提供的、信息注册中心的实现标准规范，同时也包含一组使企业能将自身提供的Web Service注册，以使别的企业能够发现的访问协议的实现标准。
+            </p>
+            <strong>123、Java的HashMap是如何工作的？</strong>
+            <p>
+                HashMap是一个针对数据结构的键值，每个键都会有相应的值，关键是识别这样的值。<br />
+                HashMap 基于 hashing 原理，我们通过 put ()和 get ()方法储存和获取对象。当我们将键值对传递给 put ()方法时，它调用键对象的 hashCode ()方法来计算 hashcode，让后找到 bucket 位置来储存值对象。当获取对象时，通过键对象的 equals ()方法找到正确的键值对，然后返回值对象。HashMap 使用 LinkedList 来解决碰撞问题，当发生碰撞了，对象将会储存在 LinkedList 的下一个节点中。 HashMap 在每个 LinkedList 节点中储存键值对对象。
+            </p>
+            <strong>124、什么是快速失败的故障安全迭代器？</strong>
+            <p>快速失败的Java迭代器可能会引发ConcurrentModifcationException在底层集合迭代过程中被修改。故障安全作为发生在实例中的一个副本迭代是不会抛出任何异常的。快速失败的故障安全范例定义了当遭遇故障时系统是如何反应的。例如，用于失败的快速迭代器ArrayList和用于故障安全的迭代器ConcurrentHashMap。</p>
+            <strong>125、Java BlockingQueue是什么？</strong>
+            <p>Java BlockingQueue是一个并发集合util包的一部分。BlockingQueue队列是一种支持操作，它等待元素变得可用时来检索，同样等待空间可用时来存储元素。</p>
+            <strong>126、什么时候使用ConcurrentHashMap？</strong>
+            <p>在问题124中我们看到ConcurrentHashMap被作为故障安全迭代器的一个实例，它允许完整的并发检索和更新。当有大量的并发更新时，ConcurrentHashMap此时可以被使用。这非常类似于Hashtable，但ConcurrentHashMap不锁定整个表来提供并发，所以从这点上ConcurrentHashMap的性能似乎更好一些。所以当有大量更新时ConcurrentHashMap应该被使用。</p>
+            <strong>127、哪一个List实现了最快插入？</strong>
+            <p>
+                LinkedList和ArrayList是另个不同变量列表的实现。ArrayList的优势在于动态的增长数组，非常适合初始时总长度未知的情况下使用。LinkedList的优势在于在中间位置插入和删除操作，速度是最快的。<br />
+                LinkedList实现了List接口，允许null元素。此外LinkedList提供额外的get，remove，insert方法在LinkedList的首部或尾部。这些操作使LinkedList可被用作堆栈（stack），队列（queue）或双向队列（deque）。<br />
+                ArrayList实现了可变大小的数组。它允许所有元素，包括null。 每个ArrayList实例都有一个容量（Capacity），即用于存储元素的数组的大小。这个容量可随着不断添加新元素而自动增加，但是增长算法并没有定义。当需要插入大量元素时，在插入前可以调用ensureCapacity方法来增加ArrayList的容量以提高插入效率。
+            </p>
+            <strong>128、Iterator和ListIterator的区别</strong>
+            <ul>
+                <li>ListIterator有add()方法，可以向List中添加对象，而Iterator不能。</li>
+                <li>ListIterator和Iterator都有hasNext()和next()方法，可以实现顺序向后遍历，但是ListIterator有hasPrevious()和previous()方法，可以实现逆向（顺序向前）遍历。Iterator就不可以。</li>
+                <li>ListIterator可以定位当前的索引位置，nextIndex()和previousIndex()可以实现。Iterator没有此功能。</li>
+                <li>都可实现删除对象，但是ListIterator可以实现对象的修改，set()方法可以实现。Iierator仅能遍历，不能修改。</li>
+            </ul>
+            <strong>129、什么是CopyOnWriteArrayList，它与ArrayList有何不同？</strong>
+            <p>
+                CopyOnWriteArrayList是ArrayList的一个线程安全的变体，其中所有可变操作（add、set等等）都是通过对底层数组进行一次新的复制来实现的。相比较于ArrayList它的写操作要慢一些，因为它需要实例的快照。<br />
+                CopyOnWriteArrayList中写操作需要大面积复制数组，所以性能肯定很差，但是读操作因为操作的对象和写操作不是同一个对象，读之间也不需要加锁，读和写之间的同步处理只是在写完后通过一个简单的"="将引用指向新的数组对象上来，这个几乎不需要时间，这样读操作就很快很安全，适合在多线程里使用，绝对不会发生ConcurrentModificationException ，因此CopyOnWriteArrayList适合使用在读操作远远大于写操作的场景里，比如缓存。
+            </p>
+            <strong>130、迭代器和枚举之间的区别</strong>
+            <p>如果面试官问这个问题，那么他的意图一定是让你区分Iterator不同于Enumeration的两个方面：</p>
+            <ul>
+                <li>Iterator允许移除从底层集合的元素。</li>
+                <li>Iterator的方法名是标准化的。</li>
+            </ul>
+            <strong>131、Hashmap如何同步？</strong>
+            <p>当我们需要一个同步的HashMap时，有两种选择：</p>
+            <ul>
+                <li>使用Collections.synchronizedMap（..）来同步HashMap。</li>
+                <li>使用ConcurrentHashMap的</li>
+            </ul>
+            <p>这两个选项之间的首选是使用ConcurrentHashMap，这是因为我们不需要锁定整个对象，以及通过ConcurrentHashMap分区地图来获得锁。</p>
+            <strong>132、IdentityHashMap和HashMap的区别</strong>
+            <p>IdentityHashMap是Map接口的实现。不同于HashMap的，这里采用参考平等。</p>
+            <ul>
+                <li>在HashMap中如果两个元素是相等的，则key1.equals(key2)</li>
+                <li>在IdentityHashMap中如果两个元素是相等的，则key1 == key2</li>
+            </ul>
+            <strong>133、简述你所知道的Linux</strong>
+            <p>
+                Linux起源于1991年，1995年流行起来的免费操作系统，目前， Linux是主流的服务器操作系统， 广泛应用于互联网、云计算、智能手机（Android）等领域。由于Java主要用于服务器端的开发，因此Java应用的部署环境有很多为Linux。<br />
+                Windows操作系统的目录结构，是以盘符为单位，C盘、D盘、E盘等等，数据存储在各个盘符之下，而Linux操作系统最顶层只有一个根目录root，所有文件都存储在这一个根目录之下。<br />
+                Linux不像Windows的图形操作界面，是通过命令的方式进行操作，常用命令有：<br />
+                a . pwd：用于显示当前工作目录；<br />
+                b . ls：用于查看当前工作目录内容；<br />
+                c . cd：用于改变当前工作目录。
+            </p>
+            <strong>134、JDK、JRE、JVM关系是什么？</strong>
+            <p>
+                JDK（Java Development Kit）即为Java开发工具包，包含编写Java程序所必须的编译、运行等开发工具以及JRE。开发工具如：用于编译java程序的javac命令、用于启动JVM运行java程序的java命令、用于生成文档的javadoc命令以及用于打包的jar命令等等。<br />
+                JRE（Java Runtime Environment）即为Java运行环境，提供了运行Java应用程序所必须的软件环境，包含有Java虚拟机（JVM）和丰富的系统类库。系统类库即为java提前封装好的功能类，只需拿来直接使用即可，可以大大的提高开发效率。<br />
+                JVM（Java Virtual Machines）即为Java虚拟机，提供了字节码文件（.class）的运行环境支持。<br />简单说，就是JDK包含JRE包含JVM。
+            </p>
+            <strong>135、Java支持的数据类型有哪些？什么是自动拆装箱？</strong>
+            <p>
+                基本数据类型：<br />
+                整数值型：byte,short,int,long,<br />
+                字符型：char<br />
+                浮点类型：float,double<br />
+                布尔型：boolean<br />
+                整数默认int型，小数默认是double型。Float和long类型的必须加后缀。
+            </p>
+            <p>
+                首先知道String是引用类型不是基本类型，引用类型声明的变量是指该变量在内存中实际存储的是一个引用地址，实体在堆中。引用类型包括类、接口、数组等。String类还是final修饰的。<br />
+                而包装类就属于引用类型，自动装箱和拆箱就是基本类型和引用类型之间的转换，至于为什么要转换，因为基本类型转换为引用类型后，就可以new对象，从而调用包装类中封装好的方法进行基本类型之间的转换或者toString（当然用类名直接调用也可以，便于一眼看出该方法是静态的），还有就是如果集合中想存放基本类型，泛型的限定类型只能是对应的包装类型。
+            </p>
+            <strong>136、请写出下面几个表达式的结果，答案可以用10进制或16进制书写</strong>
+            <p>
+                1). 0xaa | 0x55<br />
+                2). 15 & 240<br />
+                3). 10 ^ 12<br />
+                4). -2 >> 1<br />
+                5). -2 >>> 1
+            </p>
+            <p>
+                1). 分析：十六进制数用0x……来表示，后面一个十六进制位是四位，两个十六进制位为一个字节，最多后面可以有8个十六进制位，32个字节,如：0xFFFFFFFF。 或（“ | ”）运算，全0为0，其他为1。<br />
+                所以：0xaa 用二进制表示为 10101010 ,0x55 用二进制表示为 01010101 ,按位或之后为 11111111 ，十进制数为255，十六进制数为 0xFF 。
+            </p>
+            <p>
+                2). 分析：10进制转换成2进制，用该数字除以2，记录商和余数，利用商再次除以2，记录商和余数……直到上为0或余数为0停止，余数逆序组成二进制的从低到高位（最后的余数为二进制最低位）。与（“ & ”）运算，全1为1，其他为0。<br />
+                所以： 15 等于1111 ，240等于 11110000，15前面用0补齐为00001111 ，按位与之后为 00000000 ，即结果为0
+            </p>
+            <p>
+                3). 分析： 亦或（“ ^ ”）运算，相同取0，不同取1。<br />
+                所以：1010 ^ 1100 =0110 , 十进制表示为6，十六进制表示为 0x06。
+            </p>
+            <p>
+                4). 分析： 带符号右移（“ >> ”），即有符号位时，负数符号位补1，正数符号位补0， -2 的二进制求法是正数取反加1，因此 2 的二进制表示为0000 0000 0000 0000 0000 0000 0000 0010 ，取反加一为<br />
+                1111 1111 1111 1111 1111 1111 1111 1110 ，即 -2 的二进制表示。<br />
+                注： >> , << , >>> , 运算符只针对int型和long型，byte ,short ,char型需要转换成Int型在进行操作。<br />
+                所以： 带符号右移之后为 1111 1111 1111 1111 1111 1111 1111 1111 ，除符号位之外，减一取反，得到带符号十进 制数为 -1 。
+            </p>
+            <p>
+                5). 分析：无符号右移 (“ >>> ”) ，即无论正负数，右移之后符号位均补 0 。<br />
+                所以： -2 的二进制无符号右移一位之后为 0111 1111 1111 1111 1111 1111 1111 1111，即 2^31 - 1,二的三十一次方减一。<br />
+                注：右移和无符号右移主要区别就在于左面最高位补 0 还是补 1 的问题，无符号右移任何时候最高位都补 0 ， 有符号右移则是正数补 0 ，负数补 1 。（没有无符号左移！）。
+            </p>
+            <strong>137、Java中，什么是构造方法？什么是构造方法重载？什么是复制构造方法？</strong>
+            <p>
+                当新对象被创建的时候，构造方法会被调用。每一个类都有构造方法。在程序员没有给类提供构造方法的情况下，Java编译器会为这个类创建一个默认的构造方法。<br />
+                Java中构造方法重载和方法重载很相似。可以为一个类创建多个构造方法。每一个构造方法必须有它自己唯一的参数列表。<br />
+                Java不支持像C++中那样的复制构造方法，这个不同点是因为如果你不自己写构造方法的情况下，Java不会创建默认的复制构造方法。
+            </p>
+            <strong>138、解释内存中的栈(stack)、堆(heap)和方法区(method area)的用法。</strong>
+            <p>通常我们定义一个基本数据类型的变量，一个对象的引用，还有就是函数调用的现场保存都使用JVM中的栈空间；而通过new关键字和构造器创建的对象则放在堆空间，堆是垃圾收集器管理的主要区域，由于现在的垃圾收集器都采用分代收集算法，所以堆空间还可以细分为新生代和老生代，再具体一点可以分为Eden、Survivor（又可分为From Survivor和To Survivor）、Tenured；方法区和堆都是各个线程共享的内存区域，用于存储已经被JVM加载的类信息、常量、静态变量、JIT编译器编译后的代码等数据；程序中的字面量（literal）如直接书写的100、”hello”和常量都是放在常量池中，常量池是方法区的一部分，。栈空间操作起来最快但是栈很小，通常大量的对象都是放在堆空间，栈和堆的大小都可以通过JVM的启动参数来进行调整，栈空间用光了会引发StackOverflowError，而堆和常量池空间不足则会引发OutOfMemoryError。</p>
+            <strong>139、Java集合框架是什么？说出一些集合框架的优点？</strong>
+            <p>每种编程语言中都有集合，最初的Java版本包含几种集合类：Vector、Stack、HashTable和Array。随着集合的广泛使用，Java1.2提出了囊括所有集合接口、实现和算法的集合框架。在保证线程安全的情况下使用泛型和并发集合类，Java已经经历了很久。它还包括在Java并发包中，阻塞接口以及它们的实现。集合框架的部分优点如下： </p>
+            <ol>
+                <li>使用核心集合类降低开发成本，而非实现我们自己的集合类。</li>
+                <li>随着使用经过严格测试的集合框架类，代码质量会得到提高。</li>
+                <li>通过使用JDK附带的集合类，可以降低代码维护成本。</li>
+                <li>复用性和可操作性。</li>
+            </ol>
+            <strong>140、当两个对象的hashcode相同会发生什么？</strong>
+            <p>因为hashcode相同，所以它们的bucket位置相同，‘碰撞’会发生。因为HashMap使用链表存储对象，这个Entry(包含有键值对的Map.Entry对象)会存储在链表中。</p>
+        </div>
+        <div style="font-size:0.8em; text-align:right;">《21天学通Java》整理提供-2018.06.18</div>
+    </div>
+</body>
+</html>

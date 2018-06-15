@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>Java面试题（六）</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <style type="text/css">
+        .div {
+            padding: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 100%; background-color: #FFF; margin: 0 auto;">
+        <h1 style="width: 100%; text-align: center; font-size: 1.1em;">Java 面试题（六）</h1>
+        <div class="div">
+            <strong>101、java中会存在内存泄漏吗，请简单描述。</strong>
+            <p>会。如：int i,i2; return (i-i2); //when i为足够大的正数,i2为足够大的负数。结果会造成溢位，导致错误。</p>
+            <strong>102、java中实现多态的机制是什么？</strong>
+            <p>方法的重写Overriding和重载Overloading是Java多态性的不同表现。重写Overriding是父类与子类之间多态性的一种表现，重载Overloading是一个类中多态性的一种表现。</p>
+            <strong>103、垃圾回收器的基本原理是什么？垃圾回收器可以马上回收内存吗？有什么办法主动通知虚拟机进行垃圾回收？</strong>
+            <p>对于GC来说，当程序员创建对象时，GC就开始监控这个对象的地址、大小以及使用情况。通常，GC采用有向图的方式记录和管理堆(heap)中的所有对象。通过这种方式确定哪些对象是"可达的"，哪些对象是"不可达的"。当GC确定一些对象为"不可达"时，GC就有责任回收这些内存空间。可以。程序员可以手动执行System.gc()，通知GC运行，但是Java语言规范并不保证GC一定会执行。</p>
+            <strong>104、静态变量和实例变量的区别？</strong>
+            <p>
+                static i = 10; //常量<br />
+                class A a; a.i =10;//可变
+            </p>
+            <strong>105、什么是java序列化，如何实现java序列化？</strong>
+            <p>
+                序列化就是一种用来处理对象流的机制，所谓对象流也就是将对象的内容进行流化。可以对流化后的对象进行读写操作，也可将流化后的对象传输于网络之间。序列化是为了解决在对对象流进行读写操作时所引发的问题。<br />
+                序列化的实现：将需要被序列化的类实现Serializable接口，该接口没有需要实现的方法，implements Serializable只是为了标注该对象是可被序列化的，然后使用一个输出流(如：FileOutputStream)来构造一个ObjectOutputStream(对象流)对象，接着，使用ObjectOutputStream对象的writeObject(Object obj)方法就可以将参数为obj的对象写出(即保存其状态)，要恢复的话则用输入流。
+            </p>
+            <strong>106、是否可以从一个static方法内部发出对非static方法的调用？</strong>
+            <p>不可以,如果其中包含对象的method()；不能保证对象初始化。</p>
+            <strong>107、写clone()方法时，通常都有一行代码，是什么？</strong>
+            <p>Clone 有缺省行为，super.clone();他负责产生正确大小的空间，并逐位复制。</p>
+            <strong>108、在JAVA中，如何跳出当前的多重嵌套循环？</strong>
+            <p>用break; return 方法。</p>
+            <strong>109、List、Map、Set三个接口，存取元素时，各有什么特点？</strong>
+            <p>List 以特定次序来持有元素，可有重复元素。Set 无法拥有重复元素,内部排序。Map 保存key-value值，value可多值。</p>
+            <strong>110、J2EE是什么？</strong>
+            <p>J2EE是Sun公司提出的多层(multi-diered),分布式(distributed),基于组件(component-base)的企业级应用模型(enterpriese application model).在这样的一个应用系统中，可按照功能划分为不同的组件，这些组件又可在不同计算机上，并且处于相应的层次(tier)中。所属层次包括客户层(clietn tier)组件,web层和组件,Business层和组件,企业信息系统(EIS)层。</p>
+            <strong>111、UML方面</strong>
+            <p>标准建模语言UML。用例图,静态图(包括类图、对象图和包图),行为图,交互图(顺序图,合作图),实现图。</p>
+            <strong>112、说出一些常用的类，包，接口，请各举5个</strong>
+            <p>
+                常用的类：BufferedReader BufferedWriter FileReader FileWirter String Integer<br />
+                常用的包：java.lang java.awt java.io java.util java.sql<br />
+                常用的接口：Remote List Map Document NodeList
+            </p>
+            <strong>113、开发中都用到了那些设计模式？用在什么场合？</strong>
+            <p>每个模式都描述了一个在我们的环境中不断出现的问题，然后描述了该问题的解决方案的核心。通过这种方式，你可以无数次地使用那些已有的解决方案，无需在重复相同的工作。主要用到了MVC的设计模式。用来开发JSP/Servlet或者J2EE的相关应用。简单工厂模式等。</p>
+            <strong>114、jsp有哪些动作？作用分别是什么？</strong>
+            <p>JSP共有以下6种基本动作 jsp:include：在页面被请求的时候引入一个文件。 jsp:useBean：寻找或者实例化一个JavaBean。 jsp:setProperty：设置JavaBean的属性。 jsp:getProperty：输出某个JavaBean的属性。 jsp:forward：把请求转到一个新的页面。 jsp:plugin：根据浏览器类型为Java插件生成OBJECT或EMBED标记。</p>
+            <strong>115、Anonymous Inner Class (匿名内部类) 是否可以extends(继承)其它类，是否可以implements(实现)interface(接口)？</strong>
+            <p>可以继承其他类或完成其他接口，在swing编程中常用此方式。</p>
+            <strong>116、应用服务器与WEB SERVER的区别？</strong>
+            <p>
+                应用服务器：Weblogic、Tomcat、Jboss<br />
+                WEB SERVER：IIS、 Apache
+            </p>
+            <strong>117、BS与CS的联系与区别。</strong>
+            <p>
+                C/S是Client/Server的缩写。服务器通常采用高性能的PC、工作站或小型机，并采用大型数据库系统，如Oracle、Sybase、Informix或 SQL Server。客户端需要安装专用的客户端软件。<br />
+                B/Ｓ是Brower/Server的缩写，客户机上只要安装一个浏览器（Browser），如Netscape Navigator或Internet Explorer，服务器安装Oracle、Sybase、Informix或 SQL Server等数据库。在这种结构下，用户界面完全通过WWW浏览器实现，一部分事务逻辑在前端实现，但是主要事务逻辑在服务器端实现。浏览器通过Ｗeb Server 同数据库进行数据交互。
+            </p>
+            C/S 与 B/S 区别：<br />
+            <ol>
+                <li>
+                    硬件环境不同<br />
+                    C/S 一般建立在专用的网络上, 小范围里的网络环境, 局域网之间再通过专门服务器提供连接和数据交换服务。<br />
+                    B/S 建立在广域网之上的, 不必是专门的网络硬件环境,例与电话上网, 租用设备. 信息自己管理. 有比C/S更强的适应范围, 一般只要有操作系统和浏览器就行。
+                </li>
+                <li>
+                    对安全要求不同<br />
+                    C/S 一般面向相对固定的用户群, 对信息安全的控制能力很强. 一般高度机密的信息系统采用C/S 结构适宜. 可以通过B/S发布部分可公开信息。<br />
+                    B/S 建立在广域网之上, 对安全的控制能力相对弱, 可能面向不可知的用户。
+                </li>
+                <li>
+                    对程序架构不同<br />
+                    C/S 程序可以更加注重流程, 可以对权限多层次校验, 对系统运行速度可以较少考虑。<br />
+                    B/S 对安全以及访问速度的多重的考虑, 建立在需要更加优化的基础之上. 比C/S有更高的要求 B/S结构的程序架构是发展的趋势, 从MS的.Net系列的BizTalk 2000 Exchange 2000等, 全面支持网络的构件搭建的系统. SUN 和IBM推的JavaBean 构件技术等,使 B/S更加成熟。
+                </li>
+                <li>
+                    软件重用不同<br />
+                    C/S 程序可以不可避免的整体性考虑, 构件的重用性不如在B/S要求下的构件的重用性好。<br />
+                    B/S 对的多重结构,要求构件相对独立的功能. 能够相对较好的重用.就入买来的餐桌可以再利用,而不是做在墙上的石头桌子。
+                </li>
+                <li>
+                    系统维护不同<br />
+                    C/S 程序由于整体性, 必须整体考察, 处理出现的问题以及系统升级. 升级难. 可能是再做一个全新的系统。<br />
+                    B/S 构件组成,方面构件个别的更换,实现系统的无缝升级. 系统维护开销减到最小.用户从网上自己下载安装就可以实现升级。
+                </li>
+                <li>
+                    处理问题不同<br />
+                    C/S 程序可以处理用户面固定, 并且在相同区域, 安全要求高需求, 与操作系统相关. 应该都是相同的系统。<br />
+                    B/S 建立在广域网上, 面向不同的用户群, 分散地域, 这是C/S无法作到的. 与操作系统平台关系最小。
+                </li>
+                <li>
+                    用户接口不同<br />
+                    C/S 多是建立的Window平台上,表现方法有限,对程序员普遍要求较高。<br />
+                    B/S 建立在浏览器上, 有更加丰富和生动的表现方式与用户交流. 并且大部分难度减低,减低开发成本。
+                </li>
+                <li>
+                    信息流不同<br />
+                    C/S 程序一般是典型的中央集权的机械式处理, 交互性相对低。<br />
+                    B/S 信息流向可变化, B-B B-C B-G等信息、流向的变化, 更像交易中心。
+                </li>
+            </ol>
+            <strong>118、LINUX下线程，GDI类的解释。</strong>
+            <p>
+                LINUX实现的就是基于核心轻量级进程的"一对一"线程模型，一个线程实体对应一个核心轻量级进程，而线程之间的管理在核外函数库中实现。<br />
+                GDI类为图像设备编程接口类库。
+            </p>
+            <strong>119、STRUTS的应用(如STRUTS架构)</strong>
+            <p>Struts是采用Java Servlet/JavaServer Pages技术，开发Web应用程序的开放源码的framework。 采用Struts能开发出基于MVC(Model-View-Controller)设计模式的应用构架。 Struts有如下的主要功能： 一.包含一个controller servlet，能将用户的请求发送到相应的Action对象。 二.JSP自由tag库，并且在controller servlet中提供关联支持，帮助开发员创建交互式表单应用。 三.提供了一系列实用对象：XML处理、通过Java reflection APIs自动处理JavaBeans属性、国际化的提示和消息。</p>
+            <strong>120、Jdo是什么？</strong>
+            <p>JDO是Java对象持久化的新的规范，为java data object的简称,也是一个用于存取某种数据仓库中的对象的标准化API。JDO提供了透明的对象存储，因此对开发人员来说，存储数据对象完全不需要额外的代码（如JDBC API的使用）。这些繁琐的例行工作已经转移到JDO产品提供商身上，使开发人员解脱出来，从而集中时间和精力在业务逻辑上。另外，JDO很灵活，因为它可以在任何数据底层上运行。JDBC只是面向关系数据库（RDBMS）JDO更通用，提供到任何数据底层的存储功能，比如关系数据库、文件、XML以及对象数据库（ODBMS）等等，使得应用可移植性更强。</p>
+        </div>
+        <div style="font-size:0.8em; text-align:right;">《21天学通Java》整理提供-2018.06.15</div>
+    </div>
+</body>
+</html>

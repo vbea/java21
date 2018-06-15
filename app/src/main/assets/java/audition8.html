@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>Java面试题（八）</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <style type="text/css">
+        .div {
+            padding: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 100%; background-color: #FFF; margin: 0 auto;">
+        <h1 style="width: 100%; text-align: center; font-size: 1.1em;">Java 面试题（八）</h1>
+        <div class="div">
+            <strong>141、如果两个键的hashcode相同，你如何获取值对象？</strong>
+            <p>当我们调用get()方法，HashMap会使用键对象的hashcode找到bucket位置，然后会调用keys.equals()方法去找到链表中正确的节点，最终找到要找的值对象。</p>
+            <strong>142、HashMap和Hashtable有什么区别？</strong>
+            <p>
+                1、HashMap是非线程安全的，HashTable是线程安全的。<br />
+                2、HashMap的键和值都允许有null值存在，而HashTable则不行。<br />
+                3、因为线程安全的问题，HashMap效率比HashTable的要高。<br />
+                4、Hashtable是同步的，而HashMap不是。因此，HashMap更适合于单线程环境，而Hashtable适合于多线程环境。<br />
+                一般现在不建议用HashTable, ①是HashTable是遗留类，内部实现很多没优化和冗余。②即使在多线程环境下，现在也有同步的ConcurrentHashMap替代，没有必要因为是多线程而用HashTable。
+            </p>
+            <strong>143、如何决定选用HashMap还是TreeMap？</strong>
+            <p>对于在Map中插入、删除和定位元素这类操作，HashMap是最好的选择。然而，假如你需要对一个有序的key集合进行遍历，TreeMap是更好的选择。基于你的collection的大小，也许向HashMap中添加元素会更快，将map换为TreeMap进行有序key的遍历。</p>
+            <strong>144、ArrayList和Vector有何异同点？</strong>
+            <p>ArrayList和Vector在很多时候都很类似。</p>
+            <ol>
+                <li>两者都是基于索引的，内部由一个数组支持。</li>
+                <li>两者维护插入的顺序，我们可以根据插入顺序来获取元素。</li>
+                <li>ArrayList和Vector的迭代器实现都是fail-fast的。</li>
+                <li>ArrayList和Vector两者允许null值，也可以使用索引值对元素进行随机访问。</li>
+            </ol>
+            <p>以下是ArrayList和Vector的不同点。</p>
+            <ol>
+                <li>Vector是同步的，而ArrayList不是。然而，如果你寻求在迭代的时候对列表进行改变，你应该使用CopyOnWriteArrayList。</li>
+                <li>ArrayList比Vector快，它因为有同步，不会过载。</li>
+                <li>ArrayList更加通用，因为我们可以使用Collections工具类轻易地获取同步列表和只读列表。</li>
+            </ol>
+            <strong>145、Array和ArrayList有何区别？什么时候更适合用Array？</strong>
+            <p>
+                Array可以容纳基本类型和对象，而ArrayList只能容纳对象。<br />
+                Array是指定大小的，而ArrayList大小是固定的。<br />
+                Array没有提供ArrayList那么多功能，比如addAll、removeAll和iterator等。尽管ArrayList明显是更好的选择，但也有些时候Array比较好用。<br />
+                （1）如果列表的大小已经指定，大部分情况下是存储和遍历它们。<br />
+                （2）对于遍历基本数据类型，尽管Collections使用自动装箱来减轻编码任务，在指定大小的基本类型的列表上工作也会变得很慢。<br />
+                （3）如果你要使用多维数组，使用[][]比List好
+            </p>
+            <strong>146、用过哪些 Map 类，都有什么区别，HashMap 是线程安全的吗,并发下使用的 Map 是什么，他们内部原理分别是什么，比如存储方式， hashcode，扩容， 默认容量等。</strong>
+            <p>hashMap是线程不安全的，HashMap是数组+链表+红黑树（JDK1.8增加了红黑树部分）实现的，采用哈希表来存储的。</p>
+            <strong>147、用一行命令查看文件的最后五行。</strong>
+            <p>Tail -n 5 filename</p>
+            <strong>148、用一行命令输出正在运行的 java 进程。</strong>
+            <p>ps -ef|grep Java</p>
+            <strong>149、进程和线程的区别。</strong>
+            <p>
+                Linux 实现并没有区分这两个概念（进程和线程）<br />
+                1. 进程：程序的一次执行<br />
+                2. 线程：CPU的基本调度单位<br />
+                一个进程可以包含多个线程。
+            </p>
+            <strong>150、ThreadLocal 用过么，用途是什么，原理是什么，用的时候要注意什么。</strong>
+            <p>
+                Threadlocal底层是通过threadlocalMap进行存储键值 每个ThreadLocal类创建一个Map，然后用线程的ID作为Map的key，实例对象作为Map的value，这样就能达到各个线程的值隔离的效果。<br />
+                ThreadLocal的作用是提供线程内的局部变量，这种变量在线程的生命周期内起作用，减少同一个线程内多个函数或者组件之间一些公共变量的传递的复杂度。<br />
+                谁设置谁负责移除
+            </p>
+            <strong>151、简述 ConcurrentLinkedQueue和LinkedBlockingQueue的用处和不同之处。</strong>
+            <p>
+                LinkedBlockingQueue 是一个基于单向链表的、范围任意的（其实是有界的）、FIFO 阻塞队列。<br />
+                ConcurrentLinkedQueue是一个基于链接节点的无界线程安全队列，它采用先进先出的规则对节点进行排序，当我们添加一个元素的时候，它会添加到队列的尾部，当我们获取一个元素时，它会返回队列头部的元素。它采用了“wait－free”算法来实现，该算法在Michael & Scott算法上进行了一些修改, Michael & Scott算法的详细信息可以参见参考资料一。
+            </p>
+            <strong>152、导致线程死锁的原因？怎么解除线程死锁。</strong>
+            <p>
+                死锁问题是多线程特有的问题，它可以被认为是线程间切换消耗系统性能的一种极端情况。在死锁时，线程间相互等待资源，而又不释放自身的资源，导致无穷无尽的等待，其结果是系统任务永远无法执行完成。死锁问题是在多线程开发中应该坚决避免和杜绝的问题。<br />
+                一般来说，要出现死锁问题需要满足以下条件：
+            </p>
+            <ol>
+                <li>互斥条件：一个资源每次只能被一个线程使用。</li>
+                <li>请求与保持条件：一个进程因请求资源而阻塞时，对已获得的资源保持不放。</li>
+                <li>不剥夺条件：进程已获得的资源，在未使用完之前，不能强行剥夺。</li>
+                <li>循环等待条件：若干进程之间形成一种头尾相接的循环等待资源关系。</li>
+            </ol>
+            <p>只要破坏死锁 4 个必要条件之一中的任何一个，死锁问题就能被解决。 </p>
+            <strong>153、http1.0 和 http1.1 有什么区别。</strong>
+            <p>
+                HTTP 1.0主要有以下几点变化：<br />
+                请求和相应可以由于多行首部字段构成<br />
+                响应对象前面添加了一个响应状态行<br />
+                响应对象不局限于超文本<br />
+                服务器与客户端之间的连接在每次请求之后都会关闭<br />
+                实现了Expires等传输内容的缓存控制<br />
+                内容编码Accept-Encoding、字符集Accept-Charset等协商内容的支持<br />
+                这时候开始有了请求及返回首部的概念，开始传输不限于文本（其他二进制内容）<br /><br />
+                HTTP 1.1加入了很多重要的性能优化：持久连接、分块编码传输、字节范围请求、增强的缓存机制、传输编码及请求管道。
+            </p>
+            <strong>154、说说你知道的几种 HTTP 响应码，比如 200, 302, 404。</strong>
+            <p>
+                1xx：信息，请求收到，继续处理<br />
+                2xx：成功，行为被成功地接受、理解和采纳<br />
+                3xx：重定向，为了完成请求，必须进一步执行的动作<br />
+                4xx：客户端错误，请求包含语法错误或者请求无法实现<br />
+                5xx：服务器错误，服务器不能实现一种明显无效的请求<br />
+                200 ok 一切正常<br />
+                302 Moved Temporatily 文件临时移出<br />
+                404 not found
+            </p>
+            <strong>155、当你用浏览器打开一个链接的时候，计算机做了哪些工作步骤。</strong>
+            <p>DNS解析–>端口分析–>TCP请求–>服务器处理请求–>服务器响应–>浏览器解析—>链接关闭</p>
+            <strong>156、MYSQL 有哪些存储引擎，各自优缺点。</strong>
+            <p>
+                MyISAM： 拥有较高的插入，查询速度，但不支持事务<br />
+                InnoDB ：5.5版本后Mysql的默认数据库，事务型数据库的首选引擎，支持ACID事务，支持行级锁定<br />
+                BDB： 源自Berkeley DB，事务型数据库的另一种选择，支持COMMIT和ROLLBACK等其他事务特性<br />
+                Memory ：所有数据置于内存的存储引擎，拥有极高的插入，更新和查询效率。但是会占用和数据量成正比的内存空间。并且其内容会在Mysql重新启动时丢失<br />
+                Merge ：将一定数量的MyISAM表联合而成一个整体，在超大规模数据存储时很有用<br />
+                Archive ：非常适合存储大量的独立的，作为历史记录的数据。因为它们不经常被读取。Archive拥有高效的插入速度，但其对查询的支持相对较差<br />
+                Federated： 将不同的Mysql服务器联合起来，逻辑上组成一个完整的数据库。非常适合分布式应用<br />
+                Cluster/NDB ：高冗余的存储引擎，用多台数据机器联合提供服务以提高整体性能和安全性。适合数据量大，安全和性能要求高的应用<br />
+                CSV： 逻辑上由逗号分割数据的存储引擎。它会在数据库子目录里为每个数据表创建一个.CSV文件。这是一种普通文本文件，每个数据行占用一个文本行。CSV存储引擎不支持索引。<br />
+                BlackHole ：黑洞引擎，写入的任何数据都会消失，一般用于记录binlog做复制的中继<br />
+                另外，Mysql的存储引擎接口定义良好。有兴趣的开发者通过阅读文档编写自己的存储引擎。
+            </p>
+            <strong>157、聚集索引和非聚集索引的区别。</strong>
+            <p>
+                “聚簇”就是索引和记录紧密在一起。<br />
+                非聚簇索引 索引文件和数据文件分开存放，索引文件的叶子页只保存了主键值，要定位记录还要去查找相应的数据块。
+            </p>
+            <strong>158、数据库中 BTREE 和 B+tree 区别。</strong>
+            <p>
+                B+是btree的变种，本质都是btree，btree+与B-Tree相比，B+Tree有以下不同点：<br />
+                每个节点的指针上限为2d而不是2d+1。<br />
+                内节点不存储data，只存储key；叶子节点不存储指针。
+            </p>
+            <strong>159、elasticsearch 索引数据多了怎么办，如何调优，部署。</strong>
+            <p>
+                使用bulk API<br />
+                初次索引的时候，把 replica 设置为 0<br />
+                增大 threadpool.index.queue_size<br />
+                增大 indices.memory.index_buffer_size<br />
+                增大 index.translog.flush_threshold_ops<br />
+                增大 index.translog.sync_interval<br />
+                增大 index.engine.robin.refresh_interval
+            </p>
+            <strong>160、lucence 内部结构是什么</strong>
+            <p>
+                索引(Index)：<br />
+                在Lucene中一个索引是放在一个文件夹中的。<br />
+                如上图，同一文件夹中的所有的文件构成一个Lucene索引。<br />
+                段(Segment)：<br />
+                一个索引可以包含多个段，段与段之间是独立的，添加新文档可以生成新的段，不同的段可以合并。<br />
+                segments.gen和segments_X是段的元数据文件，也即它们保存了段的属性信息。<br />
+                文档(Document)：<br />
+                文档是我们建索引的基本单位，不同的文档是保存在不同的段中的，一个段可以包含多篇文档。<br />
+                新添加的文档是单独保存在一个新生成的段中，随着段的合并，不同的文档合并到同一个段中。<br />
+                域(Field)：<br />
+                一篇文档包含不同类型的信息，可以分开索引，比如标题，时间，正文，作者等，都可以保存在不同的域里。<br />
+                不同域的索引方式可以不同，在真正解析域的存储的时候，我们会详细解读。<br />
+                词(Term)：<br />
+                词是索引的最小单位，是经过词法分析和语言处理后的字符串。
+            </p>
+        </div>
+        <div style="font-size:0.8em; text-align:right;">《21天学通Java》整理提供-2018.06.15</div>
+    </div>
+</body>
+</html>

@@ -93,7 +93,11 @@ public class FileSelect extends AppCompatActivity
 	{
 		rootPath = Environment.getExternalStorageDirectory();
 		mList = new ArrayList<FileItem>();
-		listFiles(rootPath);
+		String def = getIntent().getStringExtra("default");
+		if (!Util.isNullOrEmpty(def))
+			listFiles(new File(def));
+		else
+			listFiles(rootPath);
 	}
 	
 	public void listFiles(File files)

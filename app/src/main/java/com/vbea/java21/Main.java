@@ -124,6 +124,7 @@ public class Main extends AppCompatActivity
 		fa.addItem(new KnowFragment(), getString(R.string.javaadv));
 		/*if (Common.IS_ACTIVE)
 		{*/
+			fa.addItem(new DatabaseFragment(), "数据库");
 			fa.addItem(new JavaFragment(), "J2EE");
 			fa.addItem(new AndroidFragment(), "安卓基础");
 			fa.addItem(new Android2Fragment(), "安卓进阶");

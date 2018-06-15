@@ -72,7 +72,8 @@ public class Common
 	public static AudioService audioService;
 	private static final String defaultKey = "JAVA8-APP-KEY21-APK-VBEST";
 	public static String FileProvider;
-	public static final String LocalPath = Environment.getExternalStorageDirectory().getAbsolutePath()+"/ZDApp/";
+	public static final String ExterPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+	private static final String LocalPath = ExterPath + "/ZDApp/";
 	public static List<Tips> mTips = null;
 	public static List<String> READ_Java, READ_Android, READ_J2EE, READ_AndroidAdvance;
 	public static InboxManager myInbox;
@@ -369,7 +370,7 @@ public class Common
 	
 	public static boolean canLogin()
 	{
-		if (AUTO_LOGIN_MODE <= 0 || USERID.equals("") || USERPASS.equals("") || mUser != null)
+		if (AUTO_LOGIN_MODE <= 0 || USERID.equals("") || USERPASS.equals("") || mUser != null || !IS_ACTIVE)
 			return false;
 		return true;
 	}

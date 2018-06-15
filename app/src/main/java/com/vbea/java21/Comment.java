@@ -71,9 +71,9 @@ public class Comment extends AppCompatActivity
 		title = getIntent().getStringExtra("title");
 		resId = getIntent().getStringExtra("id");
 		url = getIntent().getStringExtra("url");
-		type = getIntent().getIntExtra("type", -1);
+		type = getIntent().getIntExtra("type", 0);
 		refreshLayout.setColorSchemeResources(MyThemes.getColorPrimary(), MyThemes.getColorAccent());
-		if (resId == null || type == -1)
+		if (resId == null || type == 0)
 		{
 			Util.toastShortMessage(this, "不支持的参数");
 			supportFinishAfterTransition();

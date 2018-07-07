@@ -49,6 +49,7 @@ public class BindMobile extends AppCompatActivity
 		btnCheck = (TextView) findViewById(R.id.bd_getcheck);
 		btnBinding = (Button) findViewById(R.id.btn_bdingPhone);
 		setSupportActionBar(tool);
+		edtOldPhone.setHint(Util.getSecstr(Common.mUser.mobile, 3, 4));
 		tool.setNavigationOnClickListener(new View.OnClickListener()
 		{
 			@Override

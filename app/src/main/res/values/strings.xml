@@ -130,21 +130,23 @@
 	<string name="donateinfo">您可以通过支付宝转账、微信转账，或者付费加入Q群222876252或49321718，也可以加入邠心工作室开发组QQ群135482843。您的支持给我们提供了动力，是对我们最大的鼓励！
 		\n（加入邠心工作室开发组Q群(135482843)的作为回报我们将送出5.2.1版本源码一份以及自学大礼包，包括文字教程、视频、源码实例等）\n二维码见下面，点击可放大
 	</string>
-	<string name="version">V 7.0.5 Build 1188
+	<string name="version">V 7.0.7 Build 1200
 	</string>
-	<string name="update">7.0.5 (1188)
+	<string name="update">7.0.7 (1200)
 	</string>
-	<integer name="versionCode">1188</integer>
-	<string name="abt_ver">1.新增数据库教程，持续连载中
-		\n2.浏览器新增保存图片的功能，可自定义保存图片的路径
-		\n3.新增游客模式，不用登录也能访问所有教程
-		\n4.修复浏览器删除书签后不刷新的问题
-		\n5.修复其他已知问题
+	<integer name="versionCode">1200</integer>
+	<string name="abt_ver">当前版本：v7.0.7
+		\n1.安卓进阶教程更新
+		\n2.修复自动更新闪退的BUG
+		\n3.文件夹选择界面新增新建文件夹和删除文件夹功能，新增显示所有文件和打开文件的功能
+		\n4.新增游客模式，不用登录也能访问所有教程
+		\n5.修复浏览器保存图片图库不更新的问题
+		\n6.修复其他已知问题
 	</string>
 	<string name="shared">share_image</string>
 	<string name="about_us">作者的话：\n2013年5月20日，邠心工作室成立，至今已有五年时间，目前团队就我一人，我是在2012年(高中)开始自学Java，花了21天学完基础知识之后开始研究Java并开发Android程序，并于2014年发布此APP，帮助那些也想要自学Java的朋友。
 	</string>
-	<string name="about_join">加入我们：\n邮箱：vbea@foxmail.com
+	<string name="about_join">加入我们：\n邮箱：vbea@oxmail.com
 		\nQ  Q：248104237\nQ 群：222876252
 		\n官网：http://vbea.wicp.net\n微博：腾讯微博(@邠心工作室)\n
 		\t新浪微博(@邠心工作室)\n贴吧：邠心吧、邠心工作室吧\n地址：四川省成都市"

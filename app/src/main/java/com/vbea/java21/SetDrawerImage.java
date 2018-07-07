@@ -133,7 +133,7 @@ public class SetDrawerImage extends AppCompatActivity
 					switch (item)
 					{
 						case 0:
-							if (Util.hasAndroidN())
+							if (Util.isAndroidN())
 							{
 								if (!Util.hasAllPermissions(SetDrawerImage.this, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
 									Util.requestPermission(SetDrawerImage.this, 1001, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);

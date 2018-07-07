@@ -93,14 +93,14 @@ public class MainActivity extends AppCompatActivity
 		}
 		if (Common.isWeladv())
 		{
-			if (Util.hasAndroidN())
+			if (Util.isAndroidN())
 				checkAndRequestPermission();
 			else
 				fetchSplashAD();
 		}
 		else
 		{
-			if (Util.hasAndroidN())
+			if (Util.isAndroidN())
 			{
 				if (!Util.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE))
 					Util.requestPermission(this, 100, Manifest.permission.READ_EXTERNAL_STORAGE);

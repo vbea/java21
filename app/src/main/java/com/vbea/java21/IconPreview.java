@@ -68,7 +68,7 @@ public class IconPreview extends AppCompatActivity
 						switch (item)
 						{
 							case 0:
-								if (Util.hasAndroidN())
+								if (Util.isAndroidN())
 								{
 									if (!Util.hasAllPermissions(IconPreview.this, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
 										Util.requestPermission(IconPreview.this, 1001, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -120,7 +120,7 @@ public class IconPreview extends AppCompatActivity
 		if (uri == null)
 			return;
 		Intent intent = new Intent("com.android.camera.action.CROP");
-		if (Util.hasAndroidN())
+		if (Util.isAndroidN())
 			intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 		intent.setDataAndType(uri, "image/*");    
 		// 设置裁剪    

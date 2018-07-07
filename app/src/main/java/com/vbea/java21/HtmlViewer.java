@@ -337,7 +337,7 @@ public class HtmlViewer extends AppCompatActivity
 					Bitmap bitmap = Util.getNetBitmap(url);
 					if (bitmap != null)
 					{
-						Util.saveBitmap(SH_savePath, "VBE" + System.currentTimeMillis() + ".png", bitmap);
+						Util.saveBitmap(HtmlViewer.this, SH_savePath, "VBE" + System.currentTimeMillis() + ".png", bitmap);
 						mHandler.sendEmptyMessage(3);
 					}
 					else
@@ -407,6 +407,8 @@ public class HtmlViewer extends AppCompatActivity
 		getMenuInflater().inflate(R.menu.web_menu, menu);
 		searchItem = menu.findItem(R.id.item_urls);
 		searchView = (SearchView) searchItem.getActionView();
+		if (searchView == null)
+			return super.onCreateOptionsMenu(menu);
 		searchItem.setActionView(searchView);
 		searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener()
 		{
@@ -737,7 +739,7 @@ public class HtmlViewer extends AppCompatActivity
 				switch (item)
 				{
 					case 0:
-						if (Util.hasAndroidN())
+						if (Util.isAndroidN())
 						{
 							if (!Util.hasAllPermissions(HtmlViewer.this, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
 								Util.requestPermission(HtmlViewer.this, 1001, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);

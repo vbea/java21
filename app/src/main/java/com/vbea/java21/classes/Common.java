@@ -59,7 +59,7 @@ public class Common
 	public static boolean NO_ADV = false;//去广告
 	public static boolean WEL_ADV = true;//欢迎页广告
 	//public static boolean EYESHIELD = false;//护眼模式
-	//public static boolean PRO = false;//专业版
+	public static boolean isShowFile = true;//显示所有文件
 	public static SoundLoad SOUND = null;//音乐池
 	public static boolean AUDIO = false;//是否显示音乐
 	public static boolean MUSIC = true;//是否开启音乐
@@ -196,6 +196,8 @@ public class Common
 	
 	public static void updateUserLogin(Context context)
 	{
+		if (HULUXIA)//add code on 20180707
+			mUser.role = 3;
 		if (mUser.role == null)
 			mUser.role = 1;
 		if (Util.isNullOrEmpty(mUser.serialNo))
@@ -502,7 +504,6 @@ public class Common
 						editor.putString("sid", Common.mUser.qqId);
 						editor.putInt("loginmode", 2);
 						USERID = mUser.name;
-						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 						editor.putString("key", KEY);
 						if (!isVipUser())
 							editor.putBoolean("weladv", true);
@@ -511,6 +512,7 @@ public class Common
 							KEY = mUser.key;
 							if (regist(KEY))
 							{
+								SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 								IS_ACTIVE = true;
 								editor.putBoolean("autok", true);
 								editor.putString("date", format.format(new Date()));

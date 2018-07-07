@@ -347,34 +347,17 @@ public class UserCentral extends AppCompatActivity
 	private void inicBind(Users user)
 	{
 		if (!Util.isNullOrEmpty(user.email))
-			email.setText(getSecstr(user.email, 4, 4));
+			email.setText(Util.getSecstr(user.email, 4, 4));
 		else
 			email.setText("未绑定");
 		if (!Util.isNullOrEmpty(user.mobile))
-			mobile.setText(getSecstr(user.mobile, 3, 4));
+			mobile.setText(Util.getSecstr(user.mobile, 3, 4));
 		else
 			mobile.setText("未绑定");
 		if (!Util.isNullOrEmpty(user.qq))
 			qq.setText(user.qq);
 		else
 			qq.setText("未绑定");
-	}
-	
-	private String getSecstr(String str, int start, int end)
-	{
-		String regex = "(\\S{"+start+"})(.*)(\\S{"+end+"})";
-		Matcher m = Pattern.compile(regex).matcher(str);
-		if (m.find())
-		{
-			String rep = m.group(2);
-			StringBuilder sb = new StringBuilder();
-			for (int i=0; i<rep.length(); i++)
-			{
-				sb.append("*");
-			}
-			return str.replaceAll(rep, sb.toString());
-		}
-		return str;
 	}
 	
 	//获取用户等级

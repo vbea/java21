@@ -14,14 +14,18 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import java.math.BigDecimal;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import junit.framework.Assert;
 import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -33,9 +37,11 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.widget.Toast;
+import android.webkit.MimeTypeMap;
 import android.support.design.widget.Snackbar;
 import android.telephony.TelephonyManager;
 import com.vbea.java21.R;
+import org.apache.commons.io.FileUtils;
 
 public class Util
 {
@@ -311,12 +317,12 @@ public class Util
         }
     }
 	
-	public static void saveBitmap(String folder, String filename, Bitmap bitmap) throws IOException
+	public static void saveBitmap(Context context, String folder, String filename, Bitmap bitmap) throws IOException
 	{
 		File directory = new File(folder);
 		if (!directory.exists())
 			directory.mkdirs();
-		File file = new File(folder + File.separator + filename);
+		File file = new File(directory, filename);
 		if (file.exists())
 			file.delete();
 		file.createNewFile();
@@ -324,6 +330,24 @@ public class Util
 		bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
 		out.flush();
 		out.close();
+		updateGallery(context, file);
+	}
+	
+	public static void updateGallery(Context context, File f)
+	{
+		try
+		{
+			//MediaStore.Images.Media.insertImage(context.getContentResolver(), f.getAbsolutePath(), f.getName(), null);
+			ContentValues values = new ContentValues();
+			values.put(MediaStore.Images.Media.DATA, f.getAbsolutePath());
+			values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+			context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+			context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(f.getParentFile())));
+		}
+		catch (Exception e)
+		{
+			ExceptionHandler.log("updateGallery()", e);
+		}
 	}
 	
 	public static String getDeviceModel()
@@ -539,6 +563,29 @@ public class Util
             bitmap = null;
 		}
 		return bitmap;
+	}
+	
+	//下载文件
+	public static void downloadFile(final String url, String path, String name)
+	{
+		try
+		{
+			InputStream inStream = null;
+			URL htmlUrl = new URL(url);         
+			URLConnection connection = htmlUrl.openConnection();         
+			connection.setDoInput(true);
+			connection.connect();
+			inStream = connection.getInputStream();
+			File file = new File(path, name);
+			if (!file.exists())
+				file.createNewFile();
+			FileUtils.copyToFile(inStream, file);
+			inStream.close();
+		}
+		catch (Exception e)
+		{              
+			ExceptionHandler.log("Util.downloadFile", e.toString());    
+		}
 	}
 
     // =========
@@ -789,7 +836,7 @@ public class Util
 		return sb.toString().substring(1);
 	}
 	
-	public static boolean hasAndroidN()
+	public static boolean isAndroidN()
 	{
 		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N);
 	}
@@ -902,5 +949,53 @@ public class Util
 			return deviceId.toString();
 		}
 		return deviceId.toString();
+	}
+	
+	//获取文件扩展名
+	public static String getExtension(String name)
+	{
+		String suffix = "";
+		int idx = name.lastIndexOf(".");
+		if(idx > 0)
+			suffix = name.substring(idx);
+		return suffix;
+	}
+	
+	//获取文件扩展名(去掉.)
+	public static String getExtensionName(String name)
+	{
+		String suffix = "";
+		int idx = name.lastIndexOf(".");
+		if(idx > 0)
+			suffix = name.substring(idx + 1);
+		return suffix;
+	}
+	
+	//得到扩展名MIME类型
+	public static String getMimeType(String fileName)
+	{
+		String mime = "*/*";
+		String tmp = MimeTypeMap.getSingleton().getMimeTypeFromExtension(getExtensionName(fileName));
+		if (tmp != null)
+			mime = tmp;
+		return mime;
+	}
+	
+	//显示敏感信息
+	public static String getSecstr(String str, int start, int end)
+	{
+		String regex = "(\\S{"+start+"})(.*)(\\S{"+end+"})";
+		Matcher m = Pattern.compile(regex).matcher(str);
+		if (m.find())
+		{
+			String rep = m.group(2);
+			StringBuilder sb = new StringBuilder();
+			for (int i=0; i<rep.length(); i++)
+			{
+				sb.append("*");
+			}
+			return str.replaceAll(rep, sb.toString());
+		}
+		return str;
 	}
 }

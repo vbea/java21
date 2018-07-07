@@ -69,7 +69,7 @@ public class Main extends AppCompatActivity
     private Toolbar toolbar;
 	private TabLayout tabLayout;
 	private long exitTime = 0;
-	private LinearLayout drawMuic, drawTheme, /*drawSms,*/ drawWifi, drawCodeEditor, layoutTips;
+	private LinearLayout drawMuic, drawTheme, drawHelp, drawWifi, drawCodeEditor, layoutTips;
 	private RelativeLayout drawUser;
 	private TextView txtUserName, txtSignature, txtAudioCode, txtVip;
 	private CustomTextView txtCotation;
@@ -95,7 +95,7 @@ public class Main extends AppCompatActivity
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 		drawMuic = (LinearLayout) findViewById(R.id.drawer_music);
 		drawTheme = (LinearLayout) findViewById(R.id.draw_item1);
-		//drawSms = (LinearLayout) findViewById(R.id.drawer_smsLayout);
+		drawHelp = (LinearLayout) findViewById(R.id.drawer_helpLayout);
 		drawWifi = (LinearLayout) findViewById(R.id.drawer_wifiLayout);
 		drawCodeEditor = (LinearLayout) findViewById(R.id.drawer_codeEditor);
 		drawUser = (RelativeLayout) findViewById(R.id.draw_user);
@@ -122,14 +122,13 @@ public class Main extends AppCompatActivity
 		FragmentAdapter fa = new FragmentAdapter(getSupportFragmentManager());
 		fa.addItem(new ChapterFragment(), getString(R.string.contacts));
 		fa.addItem(new KnowFragment(), getString(R.string.javaadv));
-		/*if (Common.IS_ACTIVE)
-		{*/
+		if (!Common.HULUXIA)
 			fa.addItem(new DatabaseFragment(), "数据库");
-			fa.addItem(new JavaFragment(), "J2EE");
-			fa.addItem(new AndroidFragment(), "安卓基础");
-			fa.addItem(new Android2Fragment(), "安卓进阶");
+		fa.addItem(new JavaFragment(), "J2EE");
+		fa.addItem(new AndroidFragment(), "安卓基础");
+		fa.addItem(new Android2Fragment(), "安卓进阶");
+		if (!Common.HULUXIA)
 			fa.addItem(new AideFragment(), "AIDE");
-		//}
         viewpager.setAdapter(fa);
         tabLayout.setupWithViewPager(viewpager);
 		tabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.gray2));
@@ -370,6 +369,8 @@ public class Main extends AppCompatActivity
 	
 	private void showPlugin()
 	{
+		if (Common.HULUXIA)
+			drawHelp.setVisibility(View.GONE);
 		if (Common.isLogin())
 		{
 			//drawSms.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
@@ -387,10 +388,14 @@ public class Main extends AppCompatActivity
 	public void goBack(View v)
 	{
 		saveStatus();
-		Copys msg = Common.getCopyMsg();
-		if (msg != null)
-			Util.addClipboard(this, "java21", msg.getMessage());
+		if (!Common.isSVipUser())
+		{
+			Copys msg = Common.getCopyMsg();
+			if (msg != null)
+				Util.addClipboard(this, "java21", msg.getMessage());
+		}
 		Common.gc(this);
+		//toolbar.setTransitionName(null);
 		if (Common.isSupportMD())
 			finishAndRemoveTask();
 		else
@@ -400,7 +405,7 @@ public class Main extends AppCompatActivity
 	
 	private void onAudioDialog()
 	{
-		if (Common.isAudio() && Common.AUDIO_STUDY_STATE >= 10) {
+		if (Common.isAudio() && Common.AUDIO_STUDY_STATE >= 20) {
 		MyAlertDialog builder = new MyAlertDialog(this);
 		builder.setTitle("提示");
 		builder.setCancelable(false);
@@ -474,6 +479,8 @@ public class Main extends AppCompatActivity
 					Common.getInbox().clearCount();
 					invalidateOptionsMenu();
 				}
+				else
+					Common.startActivityOptions(this, Login.class);
 				break;
 			case R.id.item_about:
 				Common.startActivityOptions(Main.this, About.class);
@@ -611,7 +618,7 @@ public class Main extends AppCompatActivity
 	
 	private void showBanner()
 	{
-		if (Common.isNoadv())
+		if (Common.isNoadv() || Common.HULUXIA)
 		{
 			if (bannerView != null)
 			{
@@ -772,8 +779,8 @@ public class Main extends AppCompatActivity
 					closeDrawered();
 					break;
 				case 2:
-					if (Common.isSupportMD())
-						toolbar.setTransitionName(null);
+					/*if (Common.isSupportMD())
+						toolbar.setTransitionName(null);*/
 					checkVersion();
 					break;
 				case 3:
@@ -804,13 +811,13 @@ public class Main extends AppCompatActivity
 		}
 	};
 
-	@Override
+	/*@Override
 	protected void onStop()
 	{
 		if (Common.isSupportMD())
 			toolbar.setTransitionName(getString(R.string.shared));
 		super.onStop();
-	}
+	}*/
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)

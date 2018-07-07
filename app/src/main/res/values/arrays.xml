@@ -5,24 +5,36 @@
 		<item>Java面试宝典（二）</item>
 		<item>Java面试宝典（三）</item>
 		<item>Java面试宝典（四）</item>
+		<item>Java面试宝典（五）</item>
+		<item>Java面试宝典（六）</item>
+		<item>Java面试宝典（七）</item>
+		<item>Java面试宝典（八）</item>
 	</string-array>
 	<string-array name="url_baodian">
 		<item>java/audition1.html</item>
 		<item>java/audition2.html</item>
 		<item>java/audition3.html</item>
 		<item>java/audition4.html</item>
+		<item>java/audition5.html</item>
+		<item>java/audition6.html</item>
+		<item>java/audition7.html</item>
+		<item>java/audition8.html</item>
 	</string-array>
 	<string-array name="array_shizhan">
 		<item>Java代码查错</item>
 		<item>Java编程题</item>
 		<item>Java实战训练(一)</item>
+		<item>Java实战训练(二)</item>
 		<item>Java实战训练(一)参考答案</item>
+		<item>Java实战训练(二)参考答案</item>
 	</string-array>
 	<string-array name="url_shizhan">
 		<item>java/debugging.html</item>
 		<item>java/programme.html</item>
 		<item>java/training1.html</item>
+		<item>java/training2.html</item>
 		<item>java/answer1.html</item>
+		<item>java/answer2.html</item>
 	</string-array>
 	<string-array name="array_gender">
 		<item>男</item>

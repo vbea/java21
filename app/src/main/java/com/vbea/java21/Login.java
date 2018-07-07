@@ -58,7 +58,7 @@ public class Login extends AppCompatActivity
 		edtUid = (EditText) findViewById(R.id.loginUid);
 		edtPass = (EditText) findViewById(R.id.loginPassword);
 		setSupportActionBar(tool);
-		if (Common.HULUXIA && !Common.IS_ACTIVE)
+		if (Common.HULUXIA)// && !Common.IS_ACTIVE)
 		{
 			//btnSign.setVisibility(View.GONE);
 			qqLogin.setVisibility(View.GONE);

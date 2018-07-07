@@ -1,8 +1,10 @@
 package com.vbea.java21.list;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Collections;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.content.Context;
@@ -21,7 +23,7 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.MyViewHolder>
 	private List<FileItem> files;
 	public FileAdapter()
 	{
-		
+		files = new ArrayList<FileItem>();
 	}
 
 	@Override
@@ -38,15 +40,35 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.MyViewHolder>
 	{
 		final FileItem file = files.get(p);
 		holder.title.setText(file.getName());
-		holder.sub.setText(file.getDetail());
+		if (file.isUplev())
+			holder.sub.setText(file.getDetail());
+		else
+			holder.sub.setText(file.getDetail() + " " + file.getSize());
+		holder.icon.setImageResource(file.isFolder() ? R.mipmap.ic_folder : R.mipmap.ic_anyfile);
 		holder.layout.setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View v)
 			{
-				if(onItemClickListener != null)
+				if(onItemClickListener != null && file.isEnable())
 				{
-					onItemClickListener.onItemClick(file.getName(), file.isUplev());
+					if (file.isFolder())
+						onItemClickListener.onItemClick(file.getName(), file.isUplev());
+					else
+						onItemClickListener.onOpenFile(file.getName());
 				}
+			}
+		});
+		holder.layout.setOnLongClickListener(new View.OnLongClickListener()
+		{
+			@Override
+			public boolean onLongClick(View p1)
+			{
+				if (file.isFolder() && !file.isUplev())
+				{
+					onItemClickListener.onDelete(file.getName());
+					return true;
+				}
+				return false;
 			}
 		});
 	}
@@ -61,8 +83,25 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.MyViewHolder>
 	
 	public void setList(List<FileItem> list)
 	{
-		files = list;
 		Collections.sort(list);
+		files = list;
+	}
+	
+	public void addList(List<FileItem> list)
+	{
+		Collections.sort(list);
+		files.addAll(list);
+	}
+	
+	public void addItem(FileItem item)
+	{
+		files.add(item);
+	}
+	
+	public void clear()
+	{
+		if (files != null)
+			files.clear();
 	}
 
 	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
@@ -74,12 +113,14 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.MyViewHolder>
 	{
 		TextView title;
 		TextView sub;
+		ImageView icon;
 		LinearLayout layout;
 		public MyViewHolder(View v)
 		{
 			super(v);
-			title = (TextView) v.findViewById(R.id.item_title);
-			sub = (TextView) v.findViewById(R.id.item_sub);
+			title = (TextView) v.findViewById(R.id.file_name);
+			sub = (TextView) v.findViewById(R.id.file_detail);
+			icon = (ImageView) v.findViewById(R.id.file_icon);
 			layout = (LinearLayout) v.findViewById(R.id.itemLayout);
 		}
 	}
@@ -87,5 +128,7 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.MyViewHolder>
 	public interface OnItemClickListener
 	{
         void onItemClick(String name, boolean uplev);
+		void onOpenFile(String name);
+		void onDelete(String name);
     }
 }

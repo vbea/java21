@@ -177,7 +177,7 @@ public class AndroidWeb extends AppCompatActivity
 			}
 		});
 		//applyTips();
-		if (!Common.isNoadv())
+		if (!Common.isNoadv() || Common.HULUXIA)
 			initBanner();
 		if (!Common.isLogin())
 		{

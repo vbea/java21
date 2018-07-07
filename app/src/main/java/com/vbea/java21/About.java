@@ -6,6 +6,7 @@ import android.view.View;
 import android.content.SharedPreferences;
 import android.content.DialogInterface;
 import android.widget.TextView;
+import android.widget.TableRow;
 import android.widget.LinearLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -30,6 +31,7 @@ public class About extends AppCompatActivity
 		actLayout = (LinearLayout) findViewById(R.id.abt_actLayout);
 		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
 		TextView newv = (TextView) findViewById(R.id.about_new);
+		TableRow rowStatus = (TableRow) findViewById(R.id.tab_actStatus);
 		install = (TextView) findViewById(R.id.about_install);
 		active = (TextView) findViewById(R.id.about_active);
 		txt_key = (TextView) findViewById(R.id.about_key);
@@ -39,6 +41,8 @@ public class About extends AppCompatActivity
 		android = (TextView) findViewById(R.id.about_android);
 		status = (TextView) findViewById(R.id.about_status);
 		setSupportActionBar(tool);
+		if (Common.HULUXIA)
+			rowStatus.setVisibility(View.GONE);
 		BmobUpdateAgent.forceUpdate(About.this);
 		tool.setNavigationOnClickListener(new View.OnClickListener()
 		{
@@ -79,11 +83,18 @@ public class About extends AppCompatActivity
 	{
 		try
 		{
+			android.setText("Android " + Build.VERSION.RELEASE + ", API " + Build.VERSION.SDK);
 			k dec = new k();
 			install.setText(dec.decrypt(Common.SDATE));
 			sign.setText(Util.AuthKey(this) ? "验证通过" : "验证不通过");
 		}
 		catch (Exception e) {}
+		if (Common.HULUXIA)
+		{
+			actLayout.setVisibility(View.GONE);
+			sign.setText("验证不通过，此为盗版");
+			return;
+		}
 		if (Common.IS_ACTIVE)
 		{
 			actLayout.setVisibility(View.VISIBLE);
@@ -95,7 +106,6 @@ public class About extends AppCompatActivity
 			if (spf.getBoolean("autok", false))
 				type.setText("自动验证");
 		}
-		android.setText(Build.VERSION.RELEASE + "-" + Build.VERSION.SDK);
 	}
 
 	@Override

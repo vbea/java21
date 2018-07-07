@@ -359,6 +359,12 @@ public class Setting extends AppCompatActivity
 			swiWelAdv.setChecked(spf.getBoolean("weladv", true));
 			txtCacheSize.setText(DataCleanManager.getCacheSize(this));
 			txtImageSize.setText(DataCleanManager.getFolderSize(Common.getCachePath()));
+			if (Common.HULUXIA)
+			{
+				btnAdver.setVisibility(View.GONE);
+				btnJoin.setVisibility(View.GONE);
+				return;
+			}
 			if (Common.isNoadv() && Common.isVipUser())
 				btnWelAdv.setVisibility(View.VISIBLE);
 		}

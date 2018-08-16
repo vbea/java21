@@ -31,7 +31,7 @@
         <p>Java集合框架主要由一组用来操作对象的接口组成。不同接口描述一组不同数据类型。在这些接口中Collection接口是层次结构中的根接口。在Collection接口中具有开发中经常用使用到的set接口、list接口和map接口。</p>
         <h4>19.1.2  Collection接口</h4>
         <p>在上一小节中已经知道，Collection接口是集合继承树中最顶层的接口，该接口声明了集合中常用到的一些通用方法，在表中给出了这些方法。</p>
-        <img src="http://vbe.tutc.cc:8081/xml/image/201805181728.jpg" />
+        <img src="image/201805181728.jpg" />
         <h3>19.2  列表</h3>
         <p>List列表作为集合中的一种，其主要特点在于其中的元素保持一定的顺序，并且元素是可以重复的。在本小节将具体讲解List的使用及其实现类（如ArrayList、LinkedList）的使用。List接口继承自Collection接口，代表列表的功能（角色），其中的元素可以按索引的顺序访问，所以也可以称之为有索引的Collection。实现该接口的类均属于Ordered类型，具有列表的功能，其元素顺序均是按添加（索引）的先后进行排列的。</p>
         <h4>19.2.1  List列表接口</h4>
@@ -59,7 +59,7 @@
         <p>java.util.List的几种实现中，有三种最为常用的实现类，这三个类分别是Vector类、ArrayList类和LinkedList类。接下来将逐个介绍。</p>
         <h4>19.2.2  Vector类</h4>
         <p>Vector类也称为向量，从Java一诞生就有，后来被作为集合框架的一部分，其性能特点与ArrayList基本上是相同的。不同之处是该类的功能方法是同步的，同一时刻只能有一个线程访问，没有特殊需要，现在一般都使用ArrayList，ArrayList会在下一小节中讲解。</p>
-        <img src="http://vbe.tutc.cc:8081/xml/image/201805181736.jpg" />
+        <img src="image/201805181736.jpg" />
         <p>Vector提供了用于增加元素的方法，方法如下所述。</p>
         <ul>
             <li>public void addElement（Object obj）方法：该方法是将指定的组件添加到该向量的末尾，并将其大小增加1。如果向量的大小比容量大，则增大其容量。</li>
@@ -104,7 +104,7 @@
         </ul>
         <h4>19.2.4  LinkedList类</h4>
         <p>本小节主要介绍LinkedList类，其功能与ArrayList、Vector相同，都是列表（List）的实现。其内部是依赖双链表来实现的，因此具有很好的插入删除性能，但随机访问元素的性能相对较差，适合用在插入、删除多，元素随机访问少的场合。表列出了LinkedList类的几个构造器。</p>
-        <img src="http://vbe.tutc.cc:8081/xml/image/201805181743.jpg" />
+        <img src="image/201805181743.jpg" />
         <p>LinkedList类中同样具有很多方法。在前面学习Vector类和ArrayList类时，已经使用添加和删除方法进行了举例，这里就类使用LinkedList类中提供了获取或修改某个位置的元素方法来举例。获取和删除方法包括如下几个方法。</p>
         <ul>
             <li>public E element()方法：该方法找到但不删除此列表的头（即第一个元素），这个方法是实现了接口Queue中的同名方法。</li>
@@ -123,10 +123,10 @@
         <p>Set接口与List接口最大的区别在于：Set中没有重复的元素。Set是非常简单的集合，Set中的对象没有特定顺序。Sorted接口具有排序的功能，TreeSet类则是实现了该接口；HashSet类使用哈希算法存取集合中的元素，存取速度比较快。Set接口声明如下所示：</p>
         <pre class="brush:java">public interface Set&lt;E>extends Collection&lt;E></pre>
         <p class="exap">提示：Set接口与List接口最大的区别在于：Set中没有重复的元素。</p>
-        <img src="http://vbe.tutc.cc:8081/xml/image/201805181750.jpg" />
+        <img src="image/201805181750.jpg" />
         <h4>19.3.2  SortedSet接口</h4>
         <p>SortedSet继承自Set接口，所以该接口不但具有Set的所有功能，而且是一个Sorted类型的Set。也就是说，实现该接口的类将按元素的天然顺序自动排序，不管插入的顺序是什么，其总会按照元素的天然顺序进行遍历。表列出了该接口中的常用方法。</p>
-        <img src="http://vbe.tutc.cc:8081/xml/image/201805181751.jpg" />
+        <img src="image/201805181751.jpg" />
         <h4>19.3.3  TreeSet类</h4>
         <p>TreeSet类是实现了接口SortedSet的类，已知SortedSet提供了集合元素的顺序存储，其中元素保持升序排列。此类保证排序后的set按照升序排列元素，根据使用的构造方法不同，可能会按照元素的自然顺序进行排序。</p>
         <p>TreeSet类提供了四种构造方法，这些方法声明及使用描述如下所示：</p>
@@ -138,23 +138,23 @@
         </ul>
         <h4>19.3.4  HashSet类</h4>
         <p>HashSet类是Set接口最常用的实现之一，其既不是Ordered的也不是Sorted的，元素在其中存储不保证任何顺序。实际上，HashSet存储对象引用时是按照哈希策略来实现的。另外，可以向HashSet中添加null值，但只能添加一次。表列出了HashSet类的几个构造器。</p>
-        <img src="http://vbe.tutc.cc:8081/xml/image/201805181753.jpg" />
+        <img src="image/201805181753.jpg" />
         <h3>19.4  映射</h3>
         <p>Map（映射）是一个存储关键字和值的关联或者说是关键字/值对的集合。给定一个关键字，可以得到其相应的值。关键字和值都是对象。关键字必须是惟一的。但值是可以被复制的。而一个值对象可以是另一个Map，依次类推，这样就可形成一个多级映射。对于键对象来说，像Set一样，一个Map容器中的键对象不允许重复，这是为了保持查找结果的一致性。</p>
         <h4>19.4.1  Map接口</h4>
         <p>Map也可以称之为键/值集合，因为在实现了该接口的集合中，元素都是成对出现的，一个称之为键，另一个称之为值。键和值都是对象，键对象用来在Map中惟一的标识一个值对象。键对象在Map中不能重复出现，就像Set中的元素不能重复一样。</p>
         <p class="exap">注意：与Collection系列的集合一样，系统并不真正把对象放到Map中，Map中存放的只是键和值对象的引用。</p>
-        <img src="http://vbe.tutc.cc:8081/xml/image/201805181754.jpg" />
+        <img src="image/201805181754.jpg" />
         <h4>19.4.2  HashMap类</h4>
         <p>HashMap类是基于哈希表的Map接口的实现。该类提供所有可选的映射操作，并允许使用null值和null键。但是此类不保证映射的顺序。</p>
         <p>HashMap的实例有两个参数影响其性能：初始容量和加载因子。容量是哈希表中桶的数量，初始容量只是哈希表在创建时的容量。加载因子是哈希表在其容量自动增加之前可以达到多满的一种尺度。当哈希表中的条目数超出了加载因子与当前容量的乘积时，通过调用rehash方法将容量翻倍。HashMap类声明如下所示：</p>
         <pre class="brush:java">public class HashMap&lt;K,V> extends AbstractMap&lt;K,V> implements Map&lt;K,V>, Cloneable, Serializable</pre>
-        <img src="http://vbe.tutc.cc:8081/xml/image/201805181756.jpg" />
+        <img src="image/201805181756.jpg" />
         <p>HashMap类可为基本操作（get和put）提供稳定的性能。迭代该集合视图所需的时间与HashMap实例的“容量”（桶的数量）及其大小（键-值映射关系数）之和成比例。所以，如果迭代性能很重要，则不要将初始容量设置得太高，或将加载因子设置得太低。</p>
         <h4>19.4.3  TreeMap类</h4>
         <p>TreeMap类是SortedMap接口的基于红黑树的实现（红黑树是一种特定类型的二叉树，是一种自平衡二叉查找树，同学们可以查阅相关资料）。此类保证了映射按照升序顺序排列关键字，根据使用的构造方法不同，可能会按照键的类的自然顺序进行排序（参见Comparable），或者按照创建时所提供的比较器进行排序。TreeMap类的声明如下所示：</p>
         <pre class="brush:java">public class TreeMap&lt;K,V> extends AbstractMap&lt;K,V> implements SortedMap&lt;K,V>, Cloneable, Serializable</pre>
-        <img src="http://vbe.tutc.cc:8081/xml/image/201805181758.jpg" />
+        <img src="image/201805181758.jpg" />
         <h3>19.5 综合练习</h3>
         <span>1.如何使用集合中的sort方法对集合中的元素进行排序？</span>
         <pre class="brush:java">import java.util.*;

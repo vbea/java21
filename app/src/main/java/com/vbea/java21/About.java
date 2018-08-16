@@ -21,7 +21,7 @@ import cn.bmob.v3.update.BmobUpdateAgent;
 public class About extends AppCompatActivity
 {
 	LinearLayout actLayout;
-	TextView install, active, txt_key, scrip, type, sign, status, android;
+	TextView install, active, txt_key, scrip, type, sign, status, android, channel;
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -40,8 +40,9 @@ public class About extends AppCompatActivity
 		sign = (TextView) findViewById(R.id.about_sign);
 		android = (TextView) findViewById(R.id.about_android);
 		status = (TextView) findViewById(R.id.about_status);
+		channel = (TextView) findViewById(R.id.about_channel);
 		setSupportActionBar(tool);
-		if (Common.HULUXIA)
+		if (Common.isHuluxiaUser())
 			rowStatus.setVisibility(View.GONE);
 		BmobUpdateAgent.forceUpdate(About.this);
 		tool.setNavigationOnClickListener(new View.OnClickListener()
@@ -84,6 +85,7 @@ public class About extends AppCompatActivity
 		try
 		{
 			android.setText("Android " + Build.VERSION.RELEASE + ", API " + Build.VERSION.SDK);
+			channel.setText(Util.getMetaValue(this, "InstallChannel"));
 			k dec = new k();
 			install.setText(dec.decrypt(Common.SDATE));
 			sign.setText(Util.AuthKey(this) ? "验证通过" : "验证不通过");
@@ -92,7 +94,7 @@ public class About extends AppCompatActivity
 		if (Common.HULUXIA)
 		{
 			actLayout.setVisibility(View.GONE);
-			sign.setText("验证不通过，此为盗版");
+			sign.setText("验证不通过");
 			return;
 		}
 		if (Common.IS_ACTIVE)

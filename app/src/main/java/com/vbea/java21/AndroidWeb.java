@@ -177,14 +177,15 @@ public class AndroidWeb extends AppCompatActivity
 			}
 		});
 		//applyTips();
-		if (!Common.isNoadv() || Common.HULUXIA)
+		if (!Common.isNoadv() || Common.isHuluxiaUser())
 			initBanner();
+		if (Common.isHuluxiaAd())
+			initInterstitial();
 		if (!Common.isLogin())
 		{
 			btnComment.setEnabled(false);
 			edtComment.setEnabled(false);
 			edtComment.setHint("登录后可发表评论");
-			initInterstitial();
 		}
 	}
 	

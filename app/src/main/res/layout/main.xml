@@ -8,17 +8,14 @@
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:orientation="vertical">
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:orientation="vertical"
-			android:background="?attr/colorPrimary"
-			android:fitsSystemWindows="true">
+		android:orientation="vertical"
+		android:background="?attr/colorPrimary"
+		android:fitsSystemWindows="true">
 			<android.support.design.widget.CoordinatorLayout
+				android:id="@+id/mainRootLayout"
 				android:layout_width="match_parent"
-				android:layout_height="match_parent">
+				android:layout_height="match_parent"
+				android:layout_weight="1">
 				<android.support.design.widget.AppBarLayout
 					android:id="@+id/appbarLayout"
 					android:layout_width="match_parent"
@@ -50,7 +47,6 @@
 					android:background="?attr/titleColor"
 					app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 			</android.support.design.widget.CoordinatorLayout>
-		</LinearLayout>
 		<LinearLayout
 			android:id="@+id/layout_tips"
 			android:layout_width="fill_parent"

@@ -245,7 +245,7 @@ public class Common
 			Users user = new Users();
 			user.setObjectId(mUser.getObjectId());
 			user.psd = mUser.psd;
-			user.role = mUser.role;
+			//user.role = mUser.role;
 			user.nickname = mUser.nickname;
 			user.birthday = mUser.birthday;
 			user.address = mUser.address;
@@ -377,15 +377,6 @@ public class Common
 		return true;
 	}
 	
-	//自动登录
-	public static void Login(Context context, LoginListener listener) throws Exception
-	{
-		if (AUTO_LOGIN_MODE == 1)
-			Login(context, USERID, USERPASS, true, listener);
-		else if (AUTO_LOGIN_MODE == 2)
-			qqLogin(context, USERPASS, listener);
-	}
-	
 	public static boolean isAudio()
 	{
 		if (AUDIO && audioService != null)
@@ -462,6 +453,20 @@ public class Common
 		return false;
 	}
 	
+	public static boolean isHuluxiaAd()
+	{
+		if (mUser != null && mUser.role != null && mUser.role != 3 && IS_ACTIVE)
+			return false;
+		return true;
+	}
+	
+	public static boolean isHuluxiaUser()
+	{
+		if (mUser != null && mUser.role != null)
+			return mUser.role == 3;
+		return HULUXIA;
+	}
+	
 	public static void saveUserIconByName(String name)
 	{
 		BmobQuery<Users> sql = new BmobQuery<Users>();
@@ -475,6 +480,15 @@ public class Common
 					saveIcon(list.get(0));
 			}
 		});
+	}
+
+	//自动登录
+	public static void Login(Context context, LoginListener listener) throws Exception
+	{
+		if (AUTO_LOGIN_MODE == 1)
+			Login(context, USERID, USERPASS, true, listener);
+		else if (AUTO_LOGIN_MODE == 2)
+			qqLogin(context, USERPASS, listener);
 	}
 	
 	public static void qqLogin(final Context context, String openId, final LoginListener listener) throws Exception

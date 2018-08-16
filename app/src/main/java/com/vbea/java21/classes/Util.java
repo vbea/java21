@@ -27,7 +27,9 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.content.pm.ApplicationInfo;
 import android.database.Cursor;
+import android.graphics.Rect;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
@@ -836,6 +838,11 @@ public class Util
 		return sb.toString().substring(1);
 	}
 	
+	public static boolean isAndroidM()
+	{
+		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M);
+	}
+	
 	public static boolean isAndroidN()
 	{
 		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N);
@@ -997,5 +1004,34 @@ public class Util
 			return str.replaceAll(rep, sb.toString());
 		}
 		return str;
+	}
+	
+	//获取清单文件数据
+	public static String getMetaValue(Context context, String metaKey)
+	{
+		String apiKey = "";
+		if (context == null || isNullOrEmpty(metaKey))
+			return apiKey;
+        try
+		{
+			ApplicationInfo ai = context.getPackageManager().getApplicationInfo(context.getPackageName(),PackageManager.GET_META_DATA);
+            if (ai != null)
+			{
+				if (ai.metaData != null)
+					apiKey = ai.metaData.getString(metaKey);
+            }
+        }
+		catch (Exception e)
+		{
+			ExceptionHandler.log("Util.getMetaValue()", e);
+		}
+        return apiKey;
+	}
+	
+	public static int getStatusBarHeight(Activity p)
+	{
+		Rect rect = new Rect();
+		p.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
+		return rect.top;
 	}
 }

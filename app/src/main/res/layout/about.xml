@@ -248,6 +248,30 @@
 				android:layout_height="wrap_content"
 				android:textSize="14sp"
 				android:textColor="?attr/textPrimary"
+				android:text="安装渠道："/>
+			<TextView
+				android:id="@+id/about_channel"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:textSize="14sp"
+				android:textColor="?attr/colorAccent"
+				android:singleLine="true"
+				android:ellipsize="middle"
+				android:text="VBES"/>
+		</TableRow>
+		<TableRow
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:paddingLeft="10dp"
+			android:paddingRight="10dp"
+			android:paddingTop="5dp"
+			android:gravity="center_vertical">
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:textSize="14sp"
+				android:textColor="?attr/textPrimary"
 				android:text="证书校验："/>
 			<TextView
 				android:id="@+id/about_sign"

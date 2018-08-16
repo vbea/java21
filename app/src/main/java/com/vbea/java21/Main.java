@@ -58,6 +58,7 @@ import com.vbea.java21.widget.CustomTextView;
 import com.vbea.java21.audio.SoundLoad;
 import com.vbea.java21.data.Copys;
 import com.vbea.java21.data.Tips;
+import com.vbea.java21.classes.*;
 //import com.tencent.smtt.sdk.QbSdk;
 
 public class Main extends AppCompatActivity
@@ -223,6 +224,20 @@ public class Main extends AppCompatActivity
 			imgHelp.setImageBitmap(handleBitmap((BitmapDrawable)getResources().getDrawable(R.mipmap.ic_help)));
 			imgWifi.setImageBitmap(handleBitmap((BitmapDrawable)getResources().getDrawable(R.mipmap.ic_wifi)));
 			imgSMS.setImageBitmap(handleBitmap((BitmapDrawable)getResources().getDrawable(R.mipmap.ic_warsms)));
+		}*/
+		//20180719-消除CoordinatorLayout底部空白
+		/*if (Util.isAndroidM())
+		{
+			int statusBarHeight = Util.getStatusBarHeight(this);
+			Util.toastShortMessage(getApplicationContext(), "height:" + statusBarHeight);
+			if (statusBarHeight >= 0) {
+				int sunHeight = statusBarHeight + DensityUtil.dip2px(this, 27);
+				ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
+				layoutParams.height = sunHeight;
+				toolbar.setLayoutParams(layoutParams);
+				View rootLayout = findViewById(R.id.mainRootLayout);
+				rootLayout.setPadding(0, -statusBarHeight * 2, 0, 0);
+			}
 		}*/
 	}
 	
@@ -618,7 +633,7 @@ public class Main extends AppCompatActivity
 	
 	private void showBanner()
 	{
-		if (Common.isNoadv() || Common.HULUXIA)
+		if (Common.isNoadv() && !Common.isHuluxiaUser())
 		{
 			if (bannerView != null)
 			{

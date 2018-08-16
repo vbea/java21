@@ -285,7 +285,7 @@
 			android:value="A1M46EZRJ7WI"/>
 		<meta-data
 			android:name="InstallChannel"
-			android:value="MIUI"/>
+			android:value="test"/>
 		<meta-data
 			android:name="android.max_aspect"
 			android:value="2.2"/>

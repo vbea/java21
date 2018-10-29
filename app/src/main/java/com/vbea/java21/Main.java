@@ -137,7 +137,7 @@ public class Main extends AppCompatActivity
 		Common.IsChangeICON = true;
         drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
 		mDrawerLayout.addDrawerListener(drawerToggle);
-		mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener()
+		mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener()
 		{
 			@Override
 			public void onDrawerSlide(View p1, float p2)

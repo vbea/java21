@@ -128,7 +128,8 @@ public class test
 	public static void main(String[] args)
 	{
 		//创建test类的对象实例
-		test t = new test();
+		final test t;
+		t = new test();
 		//调用方法打印结果
 		t.getMes();
 	}
@@ -168,7 +169,7 @@ public class test
 public class test 
 {
 	//申明一个static类型的String类型的变量color
-	String color = "绿色";
+	static String color = "绿色";
 	//Java程序的主入口函数
 	public static void main(String[] args)
 	{	
@@ -198,8 +199,7 @@ public static final double PI = 3.14;
 	public static void main(String args[])
 	{
 		System.out.println(i); //直接访问
-		LianXi1 lx = new LianXi1();
-		System.out.println(lx.j); //使用对象调用
+		System.out.println(LianXi1.j); //使用对象调用
 	}
 }
 </pre>

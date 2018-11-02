@@ -59,7 +59,6 @@ import com.vbea.java21.audio.SoundLoad;
 import com.vbea.java21.data.Copys;
 import com.vbea.java21.data.Tips;
 import com.vbea.java21.classes.*;
-//import com.tencent.smtt.sdk.QbSdk;
 
 public class Main extends AppCompatActivity
 {

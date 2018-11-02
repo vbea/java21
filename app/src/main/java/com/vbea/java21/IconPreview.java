@@ -18,7 +18,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-
+import android.support.v4.content.FileProvider;
 import com.vbea.java21.data.Users;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
@@ -105,7 +105,7 @@ public class IconPreview extends AppCompatActivity
 		{
 			Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 			File file = new File(Common.getTempImagePath());
-			TEMP_URI = MyFileProvider.getUriForFile(getApplicationContext(), Common.FileProvider, file);
+			TEMP_URI = FileProvider.getUriForFile(getApplicationContext(), Common.FileProvider, file);
 			intent1.putExtra(MediaStore.EXTRA_OUTPUT, TEMP_URI);
 			startActivityForResult(intent1, 10);
 		}

@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import android.Manifest;
 import android.app.Activity;
 import android.app.SearchManager;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,6 +21,7 @@ import android.webkit.URLUtil;
 import android.webkit.ValueCallback;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
+import android.webkit.SslErrorHandler;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -39,6 +41,8 @@ import android.content.ClipboardManager;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.net.http.SslCertificate;
+import android.net.http.SslError;
 import android.text.TextUtils;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
@@ -48,6 +52,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.SearchView;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.content.FileProvider;
 import android.support.design.widget.BottomSheetDialog;
 import com.vbea.java21.data.WebHelper;
 import com.vbea.java21.widget.MyWebView;
@@ -61,8 +66,6 @@ import com.tencent.connect.share.QQShare;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
-import android.app.*;
-import org.apache.commons.io.*;
 
 public class HtmlViewer extends AppCompatActivity
 {
@@ -153,7 +156,8 @@ public class HtmlViewer extends AppCompatActivity
 					}
 					else
 					{
-						Util.addClipboard(HtmlViewer.this, url);
+						if (Common.isAdminUser())
+							Util.addClipboard(HtmlViewer.this, url);
 						Util.showConfirmCancelDialog(HtmlViewer.this, "提示", "网页想要打开第三方应用，是否继续？", new DialogInterface.OnClickListener()
 						{
 							public void onClick(DialogInterface d, int s)
@@ -202,6 +206,30 @@ public class HtmlViewer extends AppCompatActivity
 				tool.setTitle(view.getTitle());
 				//view.loadUrl("javascript:close_adtip();");
 				super.onPageFinished(view, url);
+			}
+			@Override
+			public void onReceivedSslError(WebView v, SslErrorHandler h, SslError e)
+			{
+				String message = "";
+				switch (e.getPrimaryError())
+				{
+					case e.SSL_EXPIRED:
+						message = "该网站证书已过期，确定继续？";
+						break;
+					case e.SSL_IDMISMATCH:
+						message = "该网站的名称与证书上的名称不一致，确定继续？";
+						break;
+					case e.SSL_UNTRUSTED:
+						message = "该网站证书不被信任，确认继续？";
+						break;
+					case e.SSL_DATE_INVALID:
+						message = "该网站证书日期无效，确认继续？";
+						break;
+					case e.SSL_INVALID:
+						message = "该网站证书不可用，确认继续？";
+						break;
+				}
+				showSecurityDialod(message, e.getCertificate(), h);
 			}
 		});
 		
@@ -273,6 +301,8 @@ public class HtmlViewer extends AppCompatActivity
 					if (result.getType() == WebView.HitTestResult.IMAGE_TYPE)
 					{
 						final String url = result.getExtra();
+						if (url.startsWith("file:"))
+							return false;
 						AlertDialog.Builder builder = new AlertDialog.Builder(HtmlViewer.this);
 						builder.setItems(new String[]{"保存图片"}, new DialogInterface.OnClickListener()
 						{
@@ -317,6 +347,46 @@ public class HtmlViewer extends AppCompatActivity
 			if (!Util.isNullOrEmpty(SH_home))
 				loadUrls(SH_home);
 		}
+	}
+	
+	private void showSecurityDialod(final String msg, final SslCertificate sert, final SslErrorHandler handle)
+	{
+		MyAlertDialog builder = new MyAlertDialog(this);
+		builder.setTitle("安全警告");
+		builder.setMessage(msg);
+		builder.setCancelable(false);
+		builder.setPositiveButton("继续", new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface d, int s)
+			{
+				handle.proceed();
+			}
+		});
+		builder.setNegativeButton("取消", null);
+		builder.setNeutralButton("查看证书", new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface d, int s)
+			{
+				StringBuilder sb = new StringBuilder();
+				sb.append("颁发给：");
+				sb.append(sert.getIssuedTo().getCName());
+				sb.append("\n");
+				sb.append("颁发者：");
+				sb.append(sert.getIssuedBy().getCName());
+				sb.append("\n有效期：");
+				sb.append(sert.getValidNotBefore());
+				sb.append("至");
+				sb.append(sert.getValidNotAfter());
+				Util.showResultDialog(HtmlViewer.this, sb.toString(), "安全证书", "确定", new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface d, int s)
+					{
+						showSecurityDialod(msg, sert, handle);
+					}
+				});
+			}
+		});
+		builder.show();
 	}
 	
 	private Bitmap getShareBitmap()
@@ -598,7 +668,7 @@ public class HtmlViewer extends AppCompatActivity
 			params.putString(QQShare.SHARE_TO_QQ_TITLE, webView.getTitle());
 			params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, SH_url);
 			params.putString(QQShare.SHARE_TO_QQ_SUMMARY, webView.getTitle());
-			params.putString(QQShare.SHARE_TO_QQ_APP_NAME,"21天学通Java");
+			params.putString(QQShare.SHARE_TO_QQ_APP_NAME, getString(R.string.app_name));
 			params.putInt(QQShare.SHARE_TO_QQ_KEY_TYPE, QQShare.SHARE_TO_QQ_TYPE_DEFAULT);
 			SocialShare.shareToQQ(HtmlViewer.this, params, v.getId()==R.id.btn_share_qzone, qqShareListener);
 		}
@@ -786,7 +856,7 @@ public class HtmlViewer extends AppCompatActivity
 		{
 			Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 			File file = new File(Common.getTempImagePath());
-			cameraUri = MyFileProvider.getUriForFile(getApplicationContext(), Common.FileProvider, file);
+			cameraUri = FileProvider.getUriForFile(getApplicationContext(), Common.FileProvider, file);
 			intent1.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri);
 			startActivityForResult(intent1, CHOOSE_CAMERA);
 		}

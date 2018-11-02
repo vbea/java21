@@ -12,9 +12,9 @@
 		android:title="消息"
 		android:icon="@mipmap/ic_newmsg"
 		app:showAsAction="always"/>
-	<item
+	<!--item
 		android:id="@+id/item_alipay"
-		android:title="@string/getalipay"/>
+		android:title="@string/getalipay"/-->
 	<item
 		android:id="@+id/item_about"
 		android:title="@string/about"/>

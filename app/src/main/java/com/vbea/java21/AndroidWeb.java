@@ -8,6 +8,8 @@ import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
 import android.webkit.JavascriptInterface;
+import android.webkit.SslErrorHandler;
+import android.net.http.SslError;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.LinearLayout;
@@ -51,7 +53,6 @@ import com.qq.e.comm.util.AdError;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.exception.BmobException;
-
 
 public class AndroidWeb extends AppCompatActivity
 {
@@ -140,6 +141,12 @@ public class AndroidWeb extends AppCompatActivity
 				super.onPageFinished(view, url);
 				//if (type != 0)
 				addImageClickListner();
+			}
+			
+			@Override
+			public void onReceivedSslError(WebView v, SslErrorHandler h, SslError e)
+			{
+				h.proceed();
 			}
 		});
 		myweb.setWebChromeClient(new WebChromeClient()

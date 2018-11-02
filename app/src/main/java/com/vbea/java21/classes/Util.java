@@ -434,14 +434,29 @@ public class Util
 	
 	public static final void showResultDialog(Context context, String msg, String title)
 	{
-		showResultDialog(context, msg, title, null);
+		showResultDialog(context, msg, title, new DialogInterface.OnClickListener(){
+			public void onClick(DialogInterface d, int s)
+			{
+				
+			}
+		});
+	}
+	
+	public static final void showResultDialog(Context context, String msg, String title, String ok)
+	{
+		showResultDialog(context, msg, title, ok, null);
 	}
 	
 	public static final void showResultDialog(Context context, String msg, String title, DialogInterface.OnClickListener lis)
 	{
+		showResultDialog(context, msg, title, "知道了", lis);
+	}
+	
+	public static final void showResultDialog(Context context, String msg, String title, String ok, DialogInterface.OnClickListener lis)
+	{
 		if(msg == null) return;
 		//String rmsg = msg.replace(",", "\n");
-		new MyAlertDialog(context).setTitle(title).setMessage(msg).setNegativeButton("知道了", lis).create().show();
+		new MyAlertDialog(context).setTitle(title).setMessage(msg).setNegativeButton(ok, lis).create().show();
 	}
 	
 	public static void showConfirmCancelDialog(Context context, String title, String message, DialogInterface.OnClickListener posListener)

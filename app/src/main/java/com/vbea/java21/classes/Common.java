@@ -71,14 +71,14 @@ public class Common
 	public static int JAVA_TEXT_SIZE = 2;
 	public static AudioService audioService;
 	private static final String defaultKey = "JAVA8-APP-KEY21-APK-VBEST";
-	public static String FileProvider;
+	public static final String FileProvider = "com.vbea.java21.fileprovider";
 	public static final String ExterPath = Environment.getExternalStorageDirectory().getAbsolutePath();
 	private static final String LocalPath = ExterPath + "/ZDApp/";
 	public static List<Tips> mTips = null;
 	public static List<String> READ_Java, READ_Android, READ_J2EE, READ_AndroidAdvance;
 	public static InboxManager myInbox;
 	private static long lastTipsTime;
-	private static Copys copyMsg;
+	private static List<Copys> copyMsgs;
 	public static String OldSerialNo, OldLoginDate;
 	public static void start(Context context)
 	{
@@ -89,7 +89,6 @@ public class Common
 		SharedPreferences spf = context.getSharedPreferences("java21", Context.MODE_PRIVATE);
 		SharedPreferences.Editor editor = spf.edit();
 		init(spf);
-		FileProvider = context.getApplicationContext().getPackageName() + ".fileprovider";
 		if (spf.getString("key", "").trim().equals("") || spf.getString("date","").trim().equals(""))
 		{
 			IS_ACTIVE = false;
@@ -931,15 +930,20 @@ public class Common
 			{
 				if (e == null && list.size() > 0)
 				{
-					copyMsg = list.get(0);
+					copyMsgs = list;
 				}
 			}
 		});
 	}
 	
-	public static Copys getCopyMsg()
+	public static List<Copys> getCopyMsg()
 	{
-		return copyMsg;
+		return copyMsgs;
+	}
+	
+	public static Copys getCopyMsg(int index)
+	{
+		return copyMsgs.get(index);
 	}
 	
 	public static void getTips()
@@ -1115,13 +1119,13 @@ public class Common
 		WEL_ADV = true;//欢迎页广告
 		SOUND = null;//音乐池
 		mUser = null;//登录用户
-		FileProvider = null;//文件提供者
 		mTips = null;//通知中心
 		READ_Android = null;
 		READ_J2EE = null;
 		READ_AndroidAdvance = null;
 		myInbox = null;//消息中心
-		copyMsg = null;
+		copyMsgs.clear();
+		copyMsgs = null;
 		//停止正在运行的音乐服务
 		if (audioService != null)
 		{

@@ -263,16 +263,7 @@
 			android:exported="true" >
 		</provider>
 		<provider
-			android:name="android.support.v4.content.FileProvider"
-            android:authorities="cn.bmob.update.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/xml_paths" />
-        </provider>
-		<provider
-            android:name="${applicationId}.MyFileProvider"
+            android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -285,7 +276,7 @@
 			android:value="A1M46EZRJ7WI"/>
 		<meta-data
 			android:name="InstallChannel"
-			android:value="test"/>
+			android:value="Bmob"/>
 		<meta-data
 			android:name="android.max_aspect"
 			android:value="2.2"/>
@@ -302,4 +293,5 @@
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 	<!--uses-permission android:name="android.permission.GET_TASKS"/-->
 	<uses-permission android:name="android.permission.SIGNAL_PERSISTENT_PROCESSES"/>
+	<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 </manifest>

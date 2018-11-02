@@ -8,7 +8,7 @@ public class TimeAgo
 	private final long minute = 60 * 1000;// 1分钟
 	private final long hour = 60 * minute;// 1小时
 	private final long day = 24 * hour;// 1天
-	private final long month = 31 * day;// 月
+	private final long month = 30 * day;// 月
 	private final long year = 12 * month;// 年
 	private boolean isTime = true;
 	private int afterDay = 5;
@@ -96,7 +96,10 @@ public class TimeAgo
 		Date now = new Date();
         long diff = now.getTime() - date.getTime();
         long r = 0;
-        if (diff > year)
+		r = now.getYear() - date.getYear();
+		if (r > 0)
+			return r + "年前";
+        else if (diff > year)
 		{
 			r = (diff / year);
 			return r + "年前";

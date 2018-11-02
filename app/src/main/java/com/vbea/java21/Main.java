@@ -1,6 +1,6 @@
 package com.vbea.java21;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -79,6 +79,7 @@ public class Main extends AppCompatActivity
 	private ViewGroup bannerLayout;
 	private BannerView bannerView;
 	private InboxCallback myCallback;
+	private boolean menuReady = false;
     @Override
     protected void onCreate(Bundle savedInstanceState)
 	{
@@ -123,13 +124,14 @@ public class Main extends AppCompatActivity
 		FragmentAdapter fa = new FragmentAdapter(getSupportFragmentManager());
 		fa.addItem(new ChapterFragment(), getString(R.string.contacts));
 		fa.addItem(new KnowFragment(), getString(R.string.javaadv));
-		if (!Common.HULUXIA)
-			fa.addItem(new DatabaseFragment(), "数据库");
 		fa.addItem(new JavaFragment(), "J2EE");
 		fa.addItem(new AndroidFragment(), "安卓基础");
 		fa.addItem(new Android2Fragment(), "安卓进阶");
 		if (!Common.HULUXIA)
+		{
 			fa.addItem(new AideFragment(), "AIDE");
+			fa.addItem(new DatabaseFragment(), "数据库");
+		}
         viewpager.setAdapter(fa);
         tabLayout.setupWithViewPager(viewpager);
 		tabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.gray2));
@@ -137,7 +139,7 @@ public class Main extends AppCompatActivity
 		Common.IsChangeICON = true;
         drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
 		mDrawerLayout.addDrawerListener(drawerToggle);
-		mDrawerLayout.setDrawerListener(new DrawerLayout.DrawerListener()
+		mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener()
 		{
 			@Override
 			public void onDrawerSlide(View p1, float p2)
@@ -403,12 +405,12 @@ public class Main extends AppCompatActivity
 	public void goBack(View v)
 	{
 		saveStatus();
-		if (!Common.isSVipUser())
+		/*if (!Common.isSVipUser())
 		{
-			Copys msg = Common.getCopyMsg();
+			List<Copys> msg = Common.getCopyMsg();
 			if (msg != null)
 				Util.addClipboard(this, "java21", msg.getMessage());
-		}
+		}*/
 		Common.gc(this);
 		//toolbar.setTransitionName(null);
 		if (Common.isSupportMD())
@@ -453,20 +455,30 @@ public class Main extends AppCompatActivity
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		getMenuInflater().inflate(R.menu.main_menu, menu);
+		menuReady = false;
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu)
 	{
-		Copys msg = Common.getCopyMsg();
-		if (msg != null)
-		{
-			menu.findItem(R.id.item_alipay).setVisible(true);
-			menu.findItem(R.id.item_alipay).setTitle(msg.getTitle());
+		if (!menuReady) {
+			List<Copys> msg = Common.getCopyMsg();
+			if (msg != null)
+			{
+				menuReady = true;
+				if (msg.size() > 0) {
+					menu.clear();
+					for (int i = 0; i < msg.size(); i++)
+						menu.add(10, i, 0, msg.get(i).getTitle());
+					getMenuInflater().inflate(R.menu.main_menu, menu);
+				}
+				//menu.findItem(R.id.item_alipay).setVisible(true);
+				//menu.findItem(R.id.item_alipay).setTitle(msg.getTitle());
+			}
 		}
-		else
-			menu.findItem(R.id.item_alipay).setVisible(false);
+		//else
+			//menu.findItem(R.id.item_alipay).setVisible(false);
 		if (Common.getInbox().getCount() > 0)
 		{
 			menu.findItem(R.id.item_newmsg).setVisible(true);
@@ -483,6 +495,10 @@ public class Main extends AppCompatActivity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
+		if (item.getGroupId() == 10) {
+			showDynamicMenu(item.getItemId());
+			return true;
+		}
 		//Common.myInbox.refreshMessage();
 		switch (item.getItemId())
 		{
@@ -500,7 +516,7 @@ public class Main extends AppCompatActivity
 			case R.id.item_about:
 				Common.startActivityOptions(Main.this, About.class);
 				break;
-			case R.id.item_alipay:
+			/*case R.id.item_alipay:
 				try
 				{
 					Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -513,9 +529,54 @@ public class Main extends AppCompatActivity
 				{
 					Util.toastShortMessage(getApplicationContext(), "未安装支付宝");
 				}
-				break;
+				break;*/
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private void showDynamicMenu(int id)
+	{
+		final Copys msg = Common.getCopyMsg(id);
+		if (msg != null)
+		{
+			if (msg.getType() == 0)
+				Util.showResultDialog(this, msg.getMessage(), msg.getTitle());
+			else if (msg.getType() == 1) {
+				Util.showConfirmCancelDialog(this, msg.getTitle(), msg.getMessage(), new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface d, int p)
+					{
+						Util.addClipboard(Main.this, msg.getResult());
+						Util.toastShortMessage(getApplicationContext(), "复制成功");
+					}
+				});
+			}
+			else
+			{
+				final Intent intent = new Intent(Intent.ACTION_VIEW);
+				if (msg.getType() == 2)
+					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+				else if (msg.getType() == 3)
+					intent.setClass(this, HtmlViewer.class);
+				if (!Util.isNullOrEmpty(msg.getUrl()))
+					intent.setData(Uri.parse(msg.getUrl()));
+				if (!Util.isNullOrEmpty(msg.getMessage())) {
+					Util.showConfirmCancelDialog(this, msg.getTitle(), msg.getMessage(), new DialogInterface.OnClickListener()
+					{
+						public void onClick(DialogInterface d, int p)
+						{
+							startActivity(intent);
+							if (!Util.isNullOrEmpty(msg.getResult()))
+								Util.toastLongMessage(getApplicationContext(), msg.getResult());
+						}
+					});
+				} else {
+					startActivity(intent);
+					if (!Util.isNullOrEmpty(msg.getResult()))
+						Util.toastLongMessage(getApplicationContext(), msg.getResult());
+				}
+			}
+		}
 	}
 
 	@Override
@@ -591,7 +652,7 @@ public class Main extends AppCompatActivity
 		showDrawerImage();
 		onAudioDialog();
 		showBanner();
-		if (Common.isNet(this))
+		if (!menuReady && Common.isNet(this))
 			Common.getTestMsg();
 		StatService.onResume(this);
 		super.onResume();

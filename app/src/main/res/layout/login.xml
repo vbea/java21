@@ -6,6 +6,9 @@
 	android:layout_width="match_parent"
 	android:orientation="vertical">
 	<include layout="@layout/java_tool"/>
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
@@ -95,5 +98,10 @@
 			android:tint="?attr/colorAccent"
 			android:src="@mipmap/share_btn_qq"/>
 	</LinearLayout>
+	<com.vbea.java21.widget.RippleColorView
+		android:id="@+id/rippleColorView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"/>
+	</FrameLayout>
 </LinearLayout>
 

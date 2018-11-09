@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.ArrayList;
 
 import android.app.ProgressDialog;
+import android.animation.Animator;
+import android.content.Intent;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,14 +16,13 @@ import android.widget.LinearLayout;
 import android.widget.Button; 
 import android.widget.TextView;
 import android.widget.EditText;
-
 import android.view.View;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.view.inputmethod.InputMethodManager;
 import android.net.Uri;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.graphics.Point;
 
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.MD5Util;
@@ -28,6 +31,7 @@ import com.vbea.java21.classes.SocialShare;
 import com.vbea.java21.classes.SettingUtil;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.data.Users;
+import com.vbea.java21.widget.RippleColorView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.exception.BmobException;
@@ -44,6 +48,7 @@ public class Login extends AppCompatActivity
 	private Button btnLogin;
 	private ProgressDialog mProgressDialog;
 	private boolean canGoback = true;
+	private RippleColorView rippleColorView;
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -57,6 +62,7 @@ public class Login extends AppCompatActivity
 		btnLogin = (Button) findViewById(R.id.btnLogin);
 		edtUid = (EditText) findViewById(R.id.loginUid);
 		edtPass = (EditText) findViewById(R.id.loginPassword);
+		rippleColorView = (RippleColorView)findViewById(R.id.rippleColorView);
 		setSupportActionBar(tool);
 		if (Common.HULUXIA)// && !Common.IS_ACTIVE)
 		{
@@ -160,6 +166,19 @@ public class Login extends AppCompatActivity
 		//Common.reStart(Login.this);
 	}
 	
+	private Point getLocationInView(View src, View target) {
+        final int[] l0 = new int[2];
+        src.getLocationOnScreen(l0);
+
+        final int[] l1 = new int[2];
+        target.getLocationOnScreen(l1);
+
+        l1[0] = l1[0] - l0[0] + target.getWidth() / 2;
+        l1[1] = l1[1] - l0[1] + target.getHeight() / 2;
+
+        return new Point(l1[0], l1[1]);
+    }
+	
 	Handler mHandler = new Handler()
 	{
 		@Override
@@ -168,25 +187,24 @@ public class Login extends AppCompatActivity
 			switch (msg.what)
 			{
 				case 0:
-					Util.toastShortMessage(getApplicationContext(), "登录成功");
 					try
 					{
-					if (Common.checkUpdateSetting(Login.this))
-					{
-						reloadLogin();
-						ActivityManager.getInstance().FinishAllActivities();
-						Common.startActivityOptions(Login.this, Main.class);
-					}
-					else
-					{
-						if (Common.isLogin())
+						if (Common.checkUpdateSetting(Login.this))
 						{
-							Common.mUser.settings = Common.getSettingJson(new SettingUtil());
-							Common.updateUser();
+							reloadLogin();
+							ActivityManager.getInstance().FinishAllActivities();
+							Common.startActivityOptions(Login.this, Main.class);
 						}
-						//reloadLogin();
-						supportFinishAfterTransition();
-					}
+						else
+						{
+							if (Common.isLogin())
+							{
+								Common.mUser.settings = Common.getSettingJson(new SettingUtil());
+								Common.updateUser();
+							}
+							//reloadLogin();
+							supportFinishAfterTransition();
+						}
 					}
 					catch (Exception e)
 					{
@@ -205,13 +223,16 @@ public class Login extends AppCompatActivity
 					if (Common.isNet(Login.this))
 					{
 						Common.startActivityOptions(Login.this, QQLoginReg.class);
-						finish();
+						mHandler.sendEmptyMessageDelayed(5, 300);
 					}
 					break;
 				case 4:
 					Util.toastShortMessage(getApplicationContext(), "该帐号已被封禁，无法登录！");
 					Common.Logout();
 					resetButton();
+					break;
+				case 5:
+					finish();
 					break;
 			}
 			super.handleMessage(msg);
@@ -238,9 +259,36 @@ public class Login extends AppCompatActivity
 				@Override
 				public void onLogin(int code)
 				{
-					if (Common.mUser != null && code == 1)
-						mHandler.sendEmptyMessage(0);
-					else if (code == 0)
+					if (Common.mUser != null && code == 1) {
+						((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(edtUid.getWindowToken(), 0);
+						Point p = getLocationInView(rippleColorView, btnLogin);
+						rippleColorView.reveal(p.x, p.y, MyThemes.getColorAccent(Login.this), new Animator.AnimatorListener()
+						{
+							@Override
+							public void onAnimationStart(Animator p1)
+							{
+								
+							}
+
+							@Override
+							public void onAnimationEnd(Animator p1)
+							{
+								mHandler.sendEmptyMessage(0);
+							}
+
+							@Override
+							public void onAnimationCancel(Animator p1)
+							{
+								
+							}
+
+							@Override
+							public void onAnimationRepeat(Animator p1)
+							{
+								
+							}
+						});
+					} else if (code == 0)
 						mHandler.sendEmptyMessage(2);
 					else if (code == 2)
 						mHandler.sendEmptyMessage(4);
@@ -272,9 +320,10 @@ public class Login extends AppCompatActivity
 				@Override
 				public void onLogin(int code)
 				{
-					if (Common.isLogin() && code == 1)
+					if (Common.isLogin() && code == 1) {
+						Util.toastShortMessage(getApplicationContext(), "登录成功");
 						mHandler.sendEmptyMessage(0);
-					else if (code == 0)
+					} else if (code == 0)
 						mHandler.sendEmptyMessage(3);
 					else if (code == 2)
 						mHandler.sendEmptyMessage(4);

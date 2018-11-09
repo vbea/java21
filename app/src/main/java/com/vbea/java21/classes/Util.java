@@ -1,5 +1,6 @@
 package com.vbea.java21.classes;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -334,6 +335,19 @@ public class Util
 		out.close();
 		updateGallery(context, file);
 	}
+	
+	public static void saveCropBitmap(Bitmap bm, File file)
+	{
+		try
+		{
+        	BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+        	bm.compress(Bitmap.CompressFormat.PNG, 80, bos);
+        	bos.flush();
+        	bos.close();
+		} catch (Exception e) {
+			ExceptionHandler.log("Util.saveCropBitmap", e);
+		}
+    }
 	
 	public static void updateGallery(Context context, File f)
 	{

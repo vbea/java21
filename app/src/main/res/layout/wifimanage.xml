@@ -8,7 +8,7 @@
 		android:layout_width="match_parent"
 		android:orientation="vertical"
 		android:clipToPadding="true"
-		android:background="?attr/divider">
+		android:background="@color/dividers">
 		<include
 			layout="@layout/java_tool"/>
 		<android.support.v7.widget.RecyclerView

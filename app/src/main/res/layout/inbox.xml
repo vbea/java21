@@ -7,7 +7,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:orientation="vertical"
-		android:background="?attr/divider">
+		android:background="@color/dividers">
 		<include layout="@layout/java_tool"/>
 		<android.support.v4.widget.SwipeRefreshLayout
 			android:id="@+id/inbox_refresh"

@@ -13,7 +13,7 @@
 		android:layout_height="match_parent"
 		android:layout_marginBottom="53dp"
 		android:orientation="vertical"
-		android:background="?attr/divider">
+		android:background="@color/dividers">
 		<include layout="@layout/java_tool"/>
 		<android.support.v4.widget.SwipeRefreshLayout
 			android:id="@+id/comm_refresh"

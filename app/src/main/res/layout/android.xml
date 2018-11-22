@@ -14,7 +14,7 @@
 			android:id="@+id/cpt_recyclerView"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:background="?attr/divider"/>
+			android:background="@color/dividers"/>
 	</android.support.v4.widget.SwipeRefreshLayout>
 	<TextView
 		android:id="@+id/txt_andError"

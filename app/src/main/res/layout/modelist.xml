@@ -10,6 +10,6 @@
 		android:id="@+id/mode_recyclerView"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:background="?attr/divider"/>
+		android:background="@color/dividers"/>
 </LinearLayout>
 

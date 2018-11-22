@@ -22,31 +22,24 @@ import cn.bmob.v3.exception.BmobException;
 
 import com.vbea.java21.classes.Common;
 
-public class Feedback extends AppCompatActivity
+public class Feedback extends BaseActivity
 {
 	EditText txtFeedback,txtContact;
 	Button btnFeed;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.feedback);
-		
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
+	}
+
+	@Override
+	public void after()
+	{
+		enableBackButton();
 		btnFeed = (Button) findViewById(R.id.btn_feed);
 		txtFeedback = (EditText) findViewById(R.id.txt_feed);
 		txtContact = (EditText) findViewById(R.id.txt_feedCon);
-		
-		setSupportActionBar(tool);
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
 		
 		btnFeed.setOnClickListener(new View.OnClickListener()
 		{

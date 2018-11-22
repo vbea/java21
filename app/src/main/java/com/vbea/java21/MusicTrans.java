@@ -20,30 +20,25 @@ import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
 
-public class MusicTrans extends AppCompatActivity
+public class MusicTrans extends BaseActivity
 {
 	private EditText txtMusic, txtCode;
 	private Button btnTrans;
 	private boolean COMPLETE = false;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.musictrans);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(tool);
+	}
+
+	@Override
+	public void after()
+	{
+		enableBackButton();
 		btnTrans = (Button) findViewById(R.id.btn_musicTrans);
 		txtMusic = (EditText) findViewById(R.id.txt_musicNew);
 		txtCode = (EditText) findViewById(R.id.txt_musicOld);
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
 		
 		btnTrans.setOnClickListener(new View.OnClickListener()
 		{

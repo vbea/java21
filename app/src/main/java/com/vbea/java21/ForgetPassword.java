@@ -23,33 +23,26 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.exception.BmobException;
 
-public class ForgetPassword extends AppCompatActivity
+public class ForgetPassword extends BaseActivity
 {
 	private Button btnForget;
 	private EditText edtUsername, edtEmail, edtPhone;
 	private String objId="", userName="";
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.forget);
 
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
+	@Override
+	protected void before()
+	{
+		setContentView(R.layout.forget);
+	}
+
+	@Override
+	protected void after()
+	{
+		enableBackButton();
 		btnForget = (Button) findViewById(R.id.btnForget);
 		edtUsername = (EditText) findViewById(R.id.forUsername);
 		edtEmail = (EditText) findViewById(R.id.forEmail);
 		edtPhone = (EditText) findViewById(R.id.forPhone);
-		setSupportActionBar(tool);
-
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
 		
 		btnForget.setOnClickListener(new View.OnClickListener()
 		{

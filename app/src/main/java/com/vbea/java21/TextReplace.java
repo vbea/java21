@@ -19,31 +19,26 @@ import com.vbea.java21.classes.MyAlertDialog;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 
-public class TextReplace extends AppCompatActivity
+public class TextReplace extends BaseActivity
 {
 	private EditText edit;
 	private View baseView;
 	private String oldValue="", newValue="";
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.txtreplace);
 
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
+	@Override
+	protected void before()
+	{
+		setContentView(R.layout.txtreplace);
+	}
+
+	
+	@Override
+	protected void after()
+	{
+		enableBackButton();
 		edit = (EditText) findViewById(R.id.edt_replace);
 		Button btnPlace = (Button) findViewById(R.id.btn_replace);
 		baseView = findViewById(R.id.txtreplaceRelativeLayout);
-		setSupportActionBar(tool);
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
 		
 		btnPlace.setOnClickListener(new View.OnClickListener()
 		{

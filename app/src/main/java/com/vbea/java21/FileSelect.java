@@ -29,12 +29,13 @@ import android.support.design.widget.FloatingActionButton;
 
 import com.vbea.java21.data.FileItem;
 import com.vbea.java21.list.FileAdapter;
+import com.vbea.java21.list.MyDividerDecoration;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.MyAlertDialog;
 
-public class FileSelect extends AppCompatActivity
+public class FileSelect extends BaseActivity
 {
 	/**
 	 * 邠心工作室
@@ -50,34 +51,28 @@ public class FileSelect extends AppCompatActivity
 	private TextView txtLocation;
 	private FloatingActionButton btnDone;
 	private boolean isCompleted = false;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.filelist);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
+	}
+
+	@Override
+	public void after()
+	{
+		enableBackButton();
 		recyclerView = (RecyclerView) findViewById(R.id.file_recyclerView);
 		btnDone = (FloatingActionButton) findViewById(R.id.fbtn_done);
 		txtLocation = (TextView) findViewById(R.id.file_location);
 		mAdapter = new FileAdapter();
-		setSupportActionBar(tool);
-		DividerItemDecoration decoration = new DividerItemDecoration(FileSelect.this, DividerItemDecoration.VERTICAL);
-		decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
+		MyDividerDecoration decoration = new MyDividerDecoration(FileSelect.this);
 		recyclerView.addItemDecoration(decoration);
 		recyclerView.setAdapter(mAdapter);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		sdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		init();
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
 		
 		mAdapter.setOnItemClickListener(new FileAdapter.OnItemClickListener()
 		{

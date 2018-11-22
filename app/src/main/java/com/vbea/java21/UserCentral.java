@@ -49,7 +49,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.exception.BmobException;
 
-public class UserCentral extends AppCompatActivity
+public class UserCentral extends BaseActivity
 {
 	private ImageView icon;
 	private LayoutInflater inflat;
@@ -61,17 +61,20 @@ public class UserCentral extends AppCompatActivity
 	private View dialogView;
 	private EditText oldpass, newpass, querpass;
 	private StringBuilder sb;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.userinfo);
-		
+	}
+	
+	@Override
+	public void after()
+	{
+		enableBackButton();
 		appbar = (AppBarLayout) findViewById(R.id.appbar);
 		userTop = (RelativeLayout) findViewById(R.id.user_top);
 		topLayout = (LinearLayout) findViewById(R.id.topLayout);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
 		icon = (ImageView) findViewById(R.id.user_icon);
 		titleName = (TextView) findViewById(R.id.user_topName);
 		username = (TextView) findViewById(R.id.info_username);
@@ -96,7 +99,6 @@ public class UserCentral extends AppCompatActivity
 		ViewGroup.LayoutParams para = appbar.getLayoutParams();
 		para.height = (int)(getWindowManager().getDefaultDisplay().getWidth() / 1.4);
 		appbar.setLayoutParams(para);
-		setSupportActionBar(tool);
 		if (Common.APP_BACK_ID == 100)
 			userTop.setBackground(Common.getHomeBack());
 		else
@@ -122,18 +124,6 @@ public class UserCentral extends AppCompatActivity
 			}
 		});
 		
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			public void onClick(View v)
-			{
-				if (topLayout.getVisibility() == View.GONE)
-				{
-					topLayout.startAnimation(appears);
-					topLayout.setVisibility(View.VISIBLE);
-				}
-				supportFinishAfterTransition();
-			}
-		});
 		icon.setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View v)
@@ -694,6 +684,19 @@ public class UserCentral extends AppCompatActivity
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
+
+	@Override
+	protected void onFinish()
+	{
+		if (topLayout.getVisibility() == View.GONE)
+		{
+			topLayout.startAnimation(appears);
+			topLayout.setVisibility(View.VISIBLE);
+		}
+		super.onFinish();
+	}
+	
+	
 	
 	Handler mHandler = new Handler()
 	{

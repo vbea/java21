@@ -41,7 +41,7 @@ import com.tencent.tauth.UiError;
 import com.tencent.connect.common.Constants;
 import org.json.JSONObject;
 
-public class Login extends AppCompatActivity
+public class Login extends BaseActivity
 {
 	private EditText edtUid, edtPass;
 	private TextView forget, btnSign;
@@ -49,13 +49,16 @@ public class Login extends AppCompatActivity
 	private ProgressDialog mProgressDialog;
 	private boolean canGoback = true;
 	private RippleColorView rippleColorView;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
+	}
+
+	@Override
+	public void after()
+	{
 		forget = (TextView) findViewById(R.id.btn_forgetpsd);
 		btnSign = (TextView) findViewById(R.id.btnSign);
 		ImageView qqLogin = (ImageView) findViewById(R.id.btn_qqLogin);
@@ -63,14 +66,13 @@ public class Login extends AppCompatActivity
 		edtUid = (EditText) findViewById(R.id.loginUid);
 		edtPass = (EditText) findViewById(R.id.loginPassword);
 		rippleColorView = (RippleColorView)findViewById(R.id.rippleColorView);
-		setSupportActionBar(tool);
 		if (Common.HULUXIA)// && !Common.IS_ACTIVE)
 		{
 			//btnSign.setVisibility(View.GONE);
 			qqLogin.setVisibility(View.GONE);
 		}
 		edtUid.setText(Common.USERID);
-		tool.setNavigationOnClickListener(new View.OnClickListener()
+		toolbar.setNavigationOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View view)

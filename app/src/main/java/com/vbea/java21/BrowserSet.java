@@ -18,21 +18,24 @@ import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.MyAlertDialog;
 
-public class BrowserSet extends AppCompatActivity
+public class BrowserSet extends BaseActivity
 {
 	private SharedPreferences spf;
 	private String SH_home, SH_savePath;
 	private String[] Searchs, UserAgents;
 	private int SH_UA, SH_search;
 	private TextView txtUserAgent, txtSearch, txtSavePath;
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.browserset);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(tool);
+	}
+
+	@Override
+	protected void after()
+	{
+		enableBackButton();
 		txtSearch = (TextView) findViewById(R.id.txt_webSearch);
 		txtUserAgent = (TextView) findViewById(R.id.txt_webUa);
 		txtSavePath = (TextView) findViewById(R.id.txt_webSavePath);
@@ -41,15 +44,7 @@ public class BrowserSet extends AppCompatActivity
 		LinearLayout btnUserAgent = (LinearLayout) findViewById(R.id.btnSetUa);
 		LinearLayout btnSavePath = (LinearLayout) findViewById(R.id.btnSetSavePath);
 		//btnHistory = (TextView) findViewById(R.id.btnSetHistory);
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				setSetting();
-				supportFinishAfterTransition();
-			}
-		});
+
 		btnHome.setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View v)
@@ -155,6 +150,12 @@ public class BrowserSet extends AppCompatActivity
 	{
 		setSetting();
 		super.onBackPressed();
+	}
+
+	@Override
+	protected void onFinish()
+	{
+		setSetting();
 	}
 	
 	@Override

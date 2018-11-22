@@ -21,24 +21,25 @@ import com.vbea.java21.classes.ExceptionHandler;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.exception.BmobException;
 
-public class ResetPassword extends AppCompatActivity
+public class ResetPassword extends BaseActivity
 {
 	private EditText newPsd, queryPsd;
 	private String objectId;
 	private Button reset;
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.reset);
 
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
+	@Override
+	protected void before()
+	{
+		setContentView(R.layout.reset);
+	}
+
+	@Override
+	protected void after()
+	{
 		reset = (Button) findViewById(R.id.btnReset);
 		TextView username = (TextView) findViewById(R.id.resUsername);
 		newPsd = (EditText) findViewById(R.id.resNewPassword);
 		queryPsd = (EditText) findViewById(R.id.resQuerPsd);
-		setSupportActionBar(tool);
 		username.setText(getIntent().getExtras().getString("user", ""));
 		objectId = getIntent().getExtras().getString("oid", "");
 		if (objectId.equals(""))
@@ -46,7 +47,7 @@ public class ResetPassword extends AppCompatActivity
 			Util.toastShortMessage(getApplicationContext(), "获取用户信息失败，请重试");
 			reset.setEnabled(false);
 		}
-		tool.setNavigationOnClickListener(new View.OnClickListener()
+		toolbar.setNavigationOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View view)

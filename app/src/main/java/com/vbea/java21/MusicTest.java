@@ -21,7 +21,7 @@ import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.Util;
 
-public class MusicTest extends AppCompatActivity
+public class MusicTest extends BaseActivity
 {
 	private SeekBar seekVelo, seekVelo2;
 	private TextView txtVelocity, txtVelocity2, velUpper, velLower;
@@ -31,15 +31,19 @@ public class MusicTest extends AppCompatActivity
 	private long velocity = 200, mvelo = 150;
 	private boolean isStop = true;
 	private int checkLog = 0;
-	private int keyHeight = 500;
+	//private int keyHeight = 500;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.musicedt);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(tool);
+	}
+
+	
+	@Override
+	public void after()
+	{
+		enableBackButton();
 		seekVelo = (SeekBar) findViewById(R.id.seekVelocity);
 		seekVelo2 = (SeekBar) findViewById(R.id.seekVelocity2);
 		txtVelocity = (TextView) findViewById(R.id.txtVelocity);
@@ -54,14 +58,6 @@ public class MusicTest extends AppCompatActivity
 		String codes = getIntent().getStringExtra("music");
 		if (codes != null)
 			txtMusic.setText(codes);
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
 		/*txtMusic.setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View v)

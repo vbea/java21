@@ -1,8 +1,6 @@
 package com.vbea.java21;
 
-
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,13 +8,13 @@ import android.view.View;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.ExceptionHandler;
-import com.vbea.java21.classes.MyActivityManager;
 
-public abstract class BaseActivity extends AppCompatActivity {
-    public Toolbar toolbar;
-    public boolean hasFix = false;
+public abstract class BaseActivity extends AppCompatActivity
+{
+    protected Toolbar toolbar;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+	{
         setTheme(MyThemes.getTheme());
         super.onCreate(savedInstanceState);
         before();
@@ -25,26 +23,37 @@ public abstract class BaseActivity extends AppCompatActivity {
         after();
     }
 
-    public abstract void before();
-    public abstract void after();
+    protected abstract void before();
+    protected abstract void after();
 
-    public <T extends View> T bind(int id) {
+    public <T extends View> T bind(int id)
+	{
         return (T)findViewById(id);
     }
 
-    public void enableBackButton() {
-        toolbar.setNavigationIcon(R.mipmap.ic_arrow_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+    protected void enableBackButton()
+	{
+        //toolbar.setNavigationIcon(R.mipmap.ic_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener()
+		{
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+			{
+				onFinish();
                 supportFinishAfterTransition();
             }
         });
     }
+	
+	protected void onFinish()
+	{
+		
+	}
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroy()
+	{
         super.onDestroy();
-        MyActivityManager.getInstance().finishActivity(this);
+        ActivityManager.getInstance().finishActivity(this);
     }
 }

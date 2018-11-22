@@ -10,27 +10,20 @@ import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.classes.Common;
 
-public class Help extends AppCompatActivity
+public class Help extends BaseActivity
 {
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.help);
+	}
 
-		WebView web = (WebView) findViewById(R.id.webHelp);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(tool);
+	@Override
+	public void after()
+	{
+		enableBackButton();
+		WebView web = bind(R.id.webHelp);
 		web.loadUrl("file:///android_asset/web/help.html");
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
 	}
 	
 	@Override

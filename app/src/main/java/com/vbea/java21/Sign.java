@@ -36,20 +36,23 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.exception.BmobException;
 
-public class Sign extends AppCompatActivity
+public class Sign extends BaseActivity
 {
 	private RadioButton rdbMale;
 	private EditText edtUsername, edtPass1, edtPass2, edtEmail, edtNick;
 	private boolean isNameExist, isEmailExist, isRecheck, td1, td2;
 	private Button btnSign;
 	private boolean canGoback = true;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.sign);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
+	}
+
+	@Override
+	public void after()
+	{
 		btnSign = (Button) findViewById(R.id.btnSign);
 		edtUsername = (EditText) findViewById(R.id.signUsername);
 		edtPass1 = (EditText) findViewById(R.id.signPassword);
@@ -57,8 +60,8 @@ public class Sign extends AppCompatActivity
 		edtEmail = (EditText) findViewById(R.id.signEmail);
 		edtNick = (EditText) findViewById(R.id.signNick);
 		rdbMale = (RadioButton) findViewById(R.id.rdbMale);
-		setSupportActionBar(tool);
-		tool.setNavigationOnClickListener(new View.OnClickListener()
+		
+		toolbar.setNavigationOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View view)

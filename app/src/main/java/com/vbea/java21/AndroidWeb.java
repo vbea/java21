@@ -54,7 +54,7 @@ import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.exception.BmobException;
 
-public class AndroidWeb extends AppCompatActivity
+public class AndroidWeb extends BaseActivity
 {
 	private WebView myweb;
 	private ProgressBar proGro;
@@ -68,16 +68,19 @@ public class AndroidWeb extends AppCompatActivity
 	private int type = 0;//Android
 	//private int CommentCount = 0;
 	private final String template = "已有%1s条评论";
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.article);
 
+	@Override
+	protected void before()
+	{
+		setContentView(R.layout.article);
+	}
+
+	@Override
+	protected void after()
+	{
+		enableBackButton();
 		proGro = (ProgressBar) findViewById(R.id.artProgress);
 		myweb = (WebView) findViewById(R.id.artWebView);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
 		NightView = (TextView) findViewById(R.id.art_nightView);
 		CommentView = (TextView) findViewById(R.id.art_comment);
 		bannerLayout = (ViewGroup) findViewById(R.id.webBanner);
@@ -89,8 +92,7 @@ public class AndroidWeb extends AppCompatActivity
 		sub = getIntent().getExtras().getString("sub", "");
 		id = getIntent().getExtras().getString("id", "");
 		type = getIntent().getIntExtra("type", 0);
-		tool.setTitle(title);
-		setSupportActionBar(tool);
+		toolbar.setTitle(title);
 		WebSettings set = myweb.getSettings();
 		set.setJavaScriptEnabled(true);
 		set.setUseWideViewPort(true);
@@ -156,15 +158,6 @@ public class AndroidWeb extends AppCompatActivity
 			{
 				proGro.setProgress(newProgress);
 				proGro.setVisibility(newProgress == 100 ? View.GONE : View.VISIBLE);
-			}
-		});
-
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
 			}
 		});
 		
@@ -254,7 +247,11 @@ public class AndroidWeb extends AppCompatActivity
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		if (type != 0)
+		{
 			getMenuInflater().inflate(R.menu.android_item, menu);
+			if (type == 5)
+				menu.findItem(R.id.item_androidshare).setVisible(false);
+		}
 		return super.onCreateOptionsMenu(menu);
 	}
 

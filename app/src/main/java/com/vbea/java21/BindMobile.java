@@ -26,7 +26,7 @@ import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
 
-public class BindMobile extends AppCompatActivity
+public class BindMobile extends BaseActivity
 {
 	private EditText edtPhone, edtOldPhone;
 	private TableRow tabOldPhone;
@@ -36,28 +36,22 @@ public class BindMobile extends AppCompatActivity
 	//private int smsCode = 0;
 	//private String getCheckC = "获取验证码";
 	//private String getReCheck = " 重试(%02d) ";
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.bdphone);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
+	}
+	
+	@Override
+	protected void after()
+	{
 		edtPhone = (EditText) findViewById(R.id.edt_bdphone);
 		edtOldPhone = (EditText) findViewById(R.id.edt_oldphone);
 		tabOldPhone = (TableRow) findViewById(R.id.tab_oldPhone);
 		btnCheck = (TextView) findViewById(R.id.bd_getcheck);
 		btnBinding = (Button) findViewById(R.id.btn_bdingPhone);
-		setSupportActionBar(tool);
-		edtOldPhone.setHint(Util.getSecstr(Common.mUser.mobile, 3, 4));
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
+		
 		btnCheck.setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View v)
@@ -75,6 +69,7 @@ public class BindMobile extends AppCompatActivity
 				new CheckThread().start();
 			}
 		});
+		
 		edtPhone.addTextChangedListener(new TextWatcher()
 		{
 			@Override
@@ -120,10 +115,18 @@ public class BindMobile extends AppCompatActivity
 				//new VerifyThread().start();
 			}
 		});
-		if (Util.isNullOrEmpty(Common.mUser.mobile))
+		
+		if (Common.isLogin())
 		{
-			tabOldPhone.setVisibility(View.GONE);
-			needOld = false;
+			if (Util.isNullOrEmpty(Common.mUser.mobile))
+			{
+				tabOldPhone.setVisibility(View.GONE);
+				needOld = false;
+			}
+			else
+			{
+				edtOldPhone.setHint(Util.getSecstr(Common.mUser.mobile, 3, 4));
+			}
 		}
 	}
 	

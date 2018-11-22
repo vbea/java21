@@ -15,7 +15,7 @@ import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.ExceptionHandler;
 
-public class Modelist extends AppCompatActivity
+public class Modelist extends BaseActivity
 {
 	/**
 	 * 邠心工作室
@@ -27,30 +27,23 @@ public class Modelist extends AppCompatActivity
 	private ModeAdapter mAdapter;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.modelist);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
-		recyclerView = (RecyclerView) findViewById(R.id.mode_recyclerView);
+	}
+
+	@Override
+	public void after()
+	{
+		enableBackButton();
+		recyclerView = bind(R.id.mode_recyclerView);
 		mAdapter = new ModeAdapter(new SQLHelper(this).select());
-		setSupportActionBar(tool);
 		DividerItemDecoration decoration = new DividerItemDecoration(Modelist.this, DividerItemDecoration.VERTICAL);
 		decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
 		recyclerView.addItemDecoration(decoration);
 		recyclerView.setAdapter(mAdapter);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
 	}
 
 	@Override

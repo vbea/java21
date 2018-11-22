@@ -33,39 +33,32 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 
-public class SetDrawerImage extends AppCompatActivity
+public class SetDrawerImage extends BaseActivity
 {
 	private DrawerAdapter adapter;
 	private SharedPreferences spf;
 	private SharedPreferences.Editor edt;
 	//private String[] headItems = {"拍照","相册"};
 	//private Uri TEMP_URI;
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.drawer_layout);
 
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
-		RecyclerView recyclerView = (RecyclerView) findViewById(R.id.drw_recyclerView);
+	@Override
+	protected void before()
+	{
+		setContentView(R.layout.drawer_layout);
+	}
+
+	@Override
+	protected void after()
+	{
+		enableBackButton();
+		RecyclerView recyclerView = bind(R.id.drw_recyclerView);
 		recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),
 					(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? 3 : 5)));
-		setSupportActionBar(tool);
 		adapter = new DrawerAdapter();
 		recyclerView.setAdapter(adapter);
 		spf = getSharedPreferences("java21", MODE_PRIVATE);
 		edt = spf.edit();
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				goBack();
-				supportFinishAfterTransition();
-			}
-		});
 
 		adapter.setOnItemClickListener(new DrawerAdapter.OnItemClickListener()
 		{
@@ -91,6 +84,12 @@ public class SetDrawerImage extends AppCompatActivity
 				adapter.notifyDataSetChanged();
 			}
 		});
+	}
+
+	@Override
+	protected void onFinish()
+	{
+		goBack();
 	}
 
 	@Override

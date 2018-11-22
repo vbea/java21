@@ -20,41 +20,35 @@ import android.support.v7.widget.DividerItemDecoration;
 
 import com.vbea.java21.data.WebHelper;
 import com.vbea.java21.list.BookAdapter;
+import com.vbea.java21.list.MyDividerDecoration;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.ExceptionHandler;
 
-public class Bookmark extends AppCompatActivity
+public class Bookmark extends BaseActivity
 {
 	private RecyclerView recyclerView;
 	private BookAdapter mAdapter;
 	private WebHelper query;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.musiclist);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
-		recyclerView = (RecyclerView) findViewById(R.id.music_recyclerView);
-		setSupportActionBar(tool);
-		init();
-		DividerItemDecoration decoration = new DividerItemDecoration(Bookmark.this, DividerItemDecoration.VERTICAL);
-		decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
+	}
+
+	@Override
+	public void after()
+	{
+		enableBackButton();
+		recyclerView = bind(R.id.music_recyclerView);
+		MyDividerDecoration decoration = new MyDividerDecoration(Bookmark.this);
+		//decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
 		recyclerView.addItemDecoration(decoration);
 		recyclerView.setAdapter(mAdapter);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				setResult(RESULT_CANCELED);
-				supportFinishAfterTransition();
-			}
-		});
+		init();
 		
 		mAdapter.setOnItemClickListener(new BookAdapter.OnItemClickListener()
 		{

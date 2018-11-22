@@ -35,24 +35,26 @@ import com.vbea.java21.classes.SocialShare;
 import com.vbea.java21.classes.Util;
 import com.vbea.secret.*;
 
-public class Machine extends AppCompatActivity
+public class Machine extends BaseActivity
 {
 	private SharedPreferences spf;
 	private EditText edtKey;
 	private ProgressDialog mDialog;
-	private final String PDATE = "2018-05-20";
+	//private final String PDATE = "2018-05-20";
 	//private boolean START = false;
 	//private int DATED = 0;
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.machine);
-		
+	}
+
+	@Override
+	protected void after()
+	{
+		enableBackButton();
 		//START = getIntent().getBooleanExtra("start", false);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(tool);
 		Button btnSubm = (Button) findViewById(R.id.btn_commitRegist);
 		//TextView txtCheck = (TextView) findViewById(R.id.text_probation);
 		TextView txtGroup = (TextView) findViewById(R.id.txt_macgroup);
@@ -105,14 +107,6 @@ public class Machine extends AppCompatActivity
 				}
 				activeApp(true);
 				//regist(edtKey.getText().toString());
-			}
-		});
-		
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			public void onClick(View v)
-			{
-				closePage();
 			}
 		});
 	}

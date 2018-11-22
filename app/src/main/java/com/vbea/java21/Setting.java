@@ -22,23 +22,25 @@ import com.vbea.java21.classes.DataCleanManager;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.MyAlertDialog;
 
-public class Setting extends AppCompatActivity
+public class Setting extends BaseActivity
 {
-	//private Switch sldGift,sldSkip,sldAdver,sldEyes;
 	private SharedPreferences spf;
 	private TextView txtCacheSize, txtImageSize;
 	private TextView btnSetheme, btnSetimg, btnScore,btnJoin,btnFeed, btnDonate, btnHistory, btnTextsize;
 	private LinearLayout btnAdver, btnWelAdv, btnUpdate, btnMusic, btnTips;
 	private Switch swiMusic, swiTips, swiAdv, swiWelAdv;
 	private boolean isTipsChange = false;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.settings);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(tool); 
+	}
+	
+	@Override
+	public void after()
+	{
+		enableBackButton();
 		btnAdver = (LinearLayout) findViewById(R.id.btnSetadv);
 		btnSetheme = (TextView) findViewById(R.id.btn_setTheme);
 		btnSetimg = (TextView) findViewById(R.id.btn_setImage);
@@ -65,15 +67,6 @@ public class Setting extends AppCompatActivity
 		txtCacheSize = (TextView) findViewById(R.id.txt_setCacheSize);
 		txtImageSize = (TextView) findViewById(R.id.txt_setCacheImageSize);
 		spf = getSharedPreferences("java21", MODE_PRIVATE);
-
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
 		
 		btnMusic.setOnClickListener(new View.OnClickListener()
 		{
@@ -400,6 +393,13 @@ public class Setting extends AppCompatActivity
 	protected void onResume()
 	{
 		super.onResume();
+	}
+
+	@Override
+	protected void onFinish()
+	{
+		saveState(false);
+		super.onFinish();
 	}
 	
 	@Override

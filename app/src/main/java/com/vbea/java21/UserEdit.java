@@ -27,7 +27,7 @@ import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.data.Users;
 
-public class UserEdit extends AppCompatActivity
+public class UserEdit extends BaseActivity
 {
 	private RadioButton rdbMale, rdbFemale;
 	private EditText edtNick, edtRemark, edtAddress, edtBirthday;
@@ -37,13 +37,17 @@ public class UserEdit extends AppCompatActivity
 	
 	//private boolean isNewPass = false;
 	//private String NewPass = "";
+
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.usercmd);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
+	}
+
+	@Override
+	public void after()
+	{
+		enableBackButton();
 		btnSave = (Button) findViewById(R.id.btnSave);
 		//username = (TextView) findViewById(R.id.info_username);
 		edtRemark = (EditText) findViewById(R.id.udt_mark);
@@ -53,16 +57,6 @@ public class UserEdit extends AppCompatActivity
 		rdbFemale = (RadioButton) findViewById(R.id.rdbFemale);
 		edtAddress = (EditText) findViewById(R.id.udt_address);
 		//chPassword = (TextView) findViewById(R.id.udt_password);
-	
-		setSupportActionBar(tool);
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
 		
 		edtBirthday.setOnFocusChangeListener(new View.OnFocusChangeListener()
 		{

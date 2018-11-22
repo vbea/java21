@@ -38,31 +38,34 @@ import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.exception.BmobException;
 //import org.json.JSONObject;
 
-public class Comment extends AppCompatActivity
+public class Comment extends BaseActivity
 {
 	/**
 	* 邠心工作室
 	* 21天学通Java
 	* 评论页面
 	*/
-	String resId, title, reference, url, reply;
-	Integer type;
-	TextView emptyView;
-	EditText edtComment;
-	Button btnComment;
-	List<Comments> mList;
-	RecyclerView recyclerView;
-	CommentAdapter mAdapter;
-	SimpleDateFormat dateformat;
-	InputMethodManager imm;
+	private String resId, title, reference, url, reply;
+	private Integer type;
+	private TextView emptyView;
+	private EditText edtComment;
+	private Button btnComment;
+	private List<Comments> mList;
+	private RecyclerView recyclerView;
+	private CommentAdapter mAdapter;
+	private SimpleDateFormat dateformat;
+	private InputMethodManager imm;
 	private SwipeRefreshLayout refreshLayout;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.comment);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
+	}
+
+	@Override
+	public void after()
+	{
 		recyclerView = (RecyclerView) findViewById(R.id.com_recyclerView);
 		edtComment = (EditText) findViewById(R.id.edt_comment);
 		btnComment = (Button) findViewById(R.id.btnComment);
@@ -90,7 +93,7 @@ public class Comment extends AppCompatActivity
 			}
 		}
 		if (title != null)
-			tool.setTitle(title + " 的评论");
+			toolbar.setTitle(title + " 的评论");
 		reference = "";
 		reply = "";
 		imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
@@ -112,7 +115,7 @@ public class Comment extends AppCompatActivity
 			edtComment.setEnabled(false);
 			edtComment.setHint("您已被禁言，无法评论，请联系管理员解禁");
 		}
-		tool.setNavigationOnClickListener(new View.OnClickListener()
+		toolbar.setNavigationOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View view)

@@ -22,22 +22,25 @@ import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.list.WifiItem;
 import com.vbea.java21.list.WifiAdapter;
 
-public class WifiViews extends AppCompatActivity
+public class WifiViews extends BaseActivity
 {
 	private RecyclerView recyclerView;
 	private WifiAdapter mAdapter;
 	private LinearLayout mLayout;
 	private boolean START = true;
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.wifimanage);
+	}
+
+	@Override
+	protected void after()
+	{
+		enableBackButton();
 		recyclerView = (RecyclerView) findViewById(R.id.wifi_recyclerView);
 		mLayout = (LinearLayout) findViewById(R.id.wifi_proLayout);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(tool);
 		mAdapter = new WifiAdapter(this);
 		//DividerItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
 		//decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
@@ -45,15 +48,6 @@ public class WifiViews extends AppCompatActivity
 		recyclerView.setAdapter(mAdapter);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
 		
 		mAdapter.setOnItemClickListener(new WifiAdapter.OnItemClickListener()
 		{

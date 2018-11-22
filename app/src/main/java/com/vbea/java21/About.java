@@ -18,18 +18,22 @@ import com.vbea.secret.k;
 
 import cn.bmob.v3.update.BmobUpdateAgent;
 
-public class About extends AppCompatActivity
+public class About extends BaseActivity
 {
 	LinearLayout actLayout;
 	TextView install, active, txt_key, scrip, type, sign, status, android, channel;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	public void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.about);
-		actLayout = (LinearLayout) findViewById(R.id.abt_actLayout);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
+	}
+
+	@Override
+	public void after()
+	{
+		enableBackButton();
+		actLayout = bind(R.id.abt_actLayout);
 		TextView newv = (TextView) findViewById(R.id.about_new);
 		TableRow rowStatus = (TableRow) findViewById(R.id.tab_actStatus);
 		install = (TextView) findViewById(R.id.about_install);
@@ -41,18 +45,9 @@ public class About extends AppCompatActivity
 		android = (TextView) findViewById(R.id.about_android);
 		status = (TextView) findViewById(R.id.about_status);
 		channel = (TextView) findViewById(R.id.about_channel);
-		setSupportActionBar(tool);
 		if (Common.isHuluxiaUser())
 			rowStatus.setVisibility(View.GONE);
-		BmobUpdateAgent.forceUpdate(About.this);
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
+		BmobUpdateAgent.forceUpdate(this);
 		status.setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View v)

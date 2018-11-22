@@ -30,20 +30,23 @@ import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.BannerView;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 
-public class Knowledge extends AppCompatActivity
+public class Knowledge extends BaseActivity
 {
 	private ViewGroup bannerLayout;
 	private TextView NightView;
 	private WebView myweb;
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.apiword);
 
+	@Override
+	protected void before()
+	{
+		setContentView(R.layout.apiword);
+	}
+
+	@Override
+	protected void after()
+	{
+		enableBackButton();
 		myweb = (WebView) findViewById(R.id.WebViewApi);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
 		NightView = (TextView) findViewById(R.id.api_nightView);
 		bannerLayout = (ViewGroup) findViewById(R.id.webBanner);
 		if (MyThemes.isNightTheme()) NightView.setVisibility(View.VISIBLE);
@@ -51,8 +54,7 @@ public class Knowledge extends AppCompatActivity
 		if (Common.isSupportMD())
 			myweb.removeJavascriptInterface("searchBoxJavaBridge_");
 		String index = getIntent().getExtras().getString("url", "");
-		tool.setTitle(getIntent().getExtras().getString("title", ""));
-		setSupportActionBar(tool);
+		toolbar.setTitle(getIntent().getExtras().getString("title", ""));
 		myweb.loadUrl(getUrl(index));
 		WebSettings set = myweb.getSettings();
 		switch (Common.JAVA_TEXT_SIZE)
@@ -74,15 +76,6 @@ public class Knowledge extends AppCompatActivity
 				break;
 		}
 		myweb.setWebViewClient(new WebViewClient());
-		
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
 		if (!Common.isNoadv())
 			initBanner();
 	}

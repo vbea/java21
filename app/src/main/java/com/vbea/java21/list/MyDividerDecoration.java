@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
 
@@ -18,7 +19,7 @@ public class MyDividerDecoration extends ItemDecoration
 
 	public MyDividerDecoration(Context context)
 	{
-		drawable = context.getResources().getDrawable(R.drawable.ic_divider);
+		drawable = ContextCompat.getDrawable(context, R.drawable.ic_divider);
 		/*TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.divider});
 		drawable = a.getDrawable(0);
 		a.recycle();*/

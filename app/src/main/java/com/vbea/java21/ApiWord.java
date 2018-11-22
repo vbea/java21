@@ -43,7 +43,7 @@ import com.qq.e.ads.banner.BannerView;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.comm.util.AdError;
 
-public class ApiWord extends AppCompatActivity
+public class ApiWord extends BaseActivity
 {
 	private WebView myweb;
 	private ProgressBar proGro;
@@ -62,21 +62,22 @@ public class ApiWord extends AppCompatActivity
 	private LinearLayout share_sina, share_web, share_link, share_more;
 	private ViewGroup bannerLayout;
 	private BannerView bannerView;
-	//private final String apiUrl = "http://www.yq1021.com/api/overview-summary.html";
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.apiword);
-		
+	}
+	
+	@Override
+	protected void after()
+	{
+		enableBackButton();
 		proGro = (ProgressBar) findViewById(R.id.apiProgress);
 		myweb = (WebView) findViewById(R.id.WebViewApi);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
 		NightView = (TextView) findViewById(R.id.api_nightView);
 		bannerLayout = (ViewGroup) findViewById(R.id.webBanner);
 		if (MyThemes.isNightTheme()) NightView.setVisibility(View.VISIBLE);
-		setSupportActionBar(tool);
 		WebSettings set = myweb.getSettings();
 		set.setJavaScriptEnabled(true);
 		set.setLoadWithOverviewMode(true);
@@ -116,15 +117,6 @@ public class ApiWord extends AppCompatActivity
 			{
 				proGro.setProgress(newProgress);
 				proGro.setVisibility(newProgress == 100 ? View.GONE : View.VISIBLE);
-			}
-		});
-		
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
 			}
 		});
 		

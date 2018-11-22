@@ -32,8 +32,9 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.exception.BmobException;
+import com.vbea.java21.list.*;
 
-public class MyInbox extends AppCompatActivity
+public class MyInbox extends BaseActivity
 {
 	/**
 	 * 邠心工作室
@@ -45,34 +46,26 @@ public class MyInbox extends AppCompatActivity
 	private RecyclerView recyclerView;
 	private InboxAdapter mAdapter;
 	private SwipeRefreshLayout refreshLayout;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.inbox);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
+	}
+
+	@Override
+	public void after()
+	{
+		enableBackButton();
 		recyclerView = (RecyclerView) findViewById(R.id.inbox_recyclerView);
 		emptyView = (TextView) findViewById(R.id.inbox_emptyview);
 		refreshLayout = (SwipeRefreshLayout) findViewById(R.id.inbox_refresh);
 		refreshLayout.setColorSchemeResources(MyThemes.getColorPrimary(), MyThemes.getColorAccent());
 		mAdapter = new InboxAdapter();
-		setSupportActionBar(tool);
-		DividerItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-		decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
-		recyclerView.addItemDecoration(decoration);
+		recyclerView.addItemDecoration(new MyDividerDecoration(this));
 		recyclerView.setAdapter(mAdapter);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
 
 		refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
 		{

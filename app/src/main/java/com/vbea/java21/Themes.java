@@ -21,26 +21,26 @@ import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.SettingUtil;
 import com.vbea.java21.classes.ExceptionHandler;
 
-public class Themes extends AppCompatActivity
+public class Themes extends BaseActivity
 {
 	private List<ThemeItem> mItem;
 	private ThemeAdapter adapter;
 	private SharedPreferences spf;
 	private SharedPreferences.Editor edt;
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.theme);
-		
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
-		RecyclerView recyclerView = (RecyclerView) findViewById(R.id.the_recyclerView);
+	}
+
+	@Override
+	protected void after()
+	{
+		enableBackButton();
+		RecyclerView recyclerView = bind(R.id.the_recyclerView);
 		recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
-		setSupportActionBar(tool);
-		//tool.setNavigationIcon(R.drawable.abc_ic_ab_back_material);
-		//tool.setTitleTextColor(getResources().getColor(R.color.white));
 		spf = getSharedPreferences("java21", MODE_PRIVATE);
 		edt = spf.edit();
 		mItem = new ArrayList<ThemeItem>();
@@ -51,17 +51,6 @@ public class Themes extends AppCompatActivity
 		}
 		adapter = new ThemeAdapter(mItem);
 		recyclerView.setAdapter(adapter);
-		
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				//updated on 20170610
-				//reload();
-				supportFinishAfterTransition();
-			}
-		});
 		
 		adapter.setOnItemClickListener(new ThemeAdapter.OnItemClickListener()
 		{

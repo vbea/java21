@@ -56,7 +56,7 @@ import com.tencent.connect.UserInfo;
 import com.tencent.connect.common.Constants;
 import org.json.JSONObject;
 
-public class QQLoginReg extends AppCompatActivity
+public class QQLoginReg extends BaseActivity
 {
 	private boolean isNameExist, isEmailExist, isRecheck, td1, td2, td3;
 	private Users mUser;
@@ -70,13 +70,17 @@ public class QQLoginReg extends AppCompatActivity
 	private LinearLayout layoutOld, layoutNew;
 	private String iconUrl;
 	private Bitmap btIcon;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.qqlogin_reg);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
+	}
+
+	@Override
+	public void after()
+	{
+		enableBackButton();
 		btnOK = (Button) findViewById(R.id.btn_qqComplete);
 		qqIcon = (ImageView) findViewById(R.id.img_qqIcon);
 		qqNick = (TextView) findViewById(R.id.txt_qqNick);
@@ -89,18 +93,8 @@ public class QQLoginReg extends AppCompatActivity
 		edtPassword = (EditText) findViewById(R.id.edt_qqPassword);
 		layoutNew = (LinearLayout) findViewById(R.id.qqlayout_newuser);
 		layoutOld = (LinearLayout) findViewById(R.id.qqlayout_olduser);
-		setSupportActionBar(tool);
 		mInfo = new UserInfo(QQLoginReg.this, SocialShare.mTencent.getQQToken());
 		mHandler.sendEmptyMessage(0);
-		
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
 		
 		edtUsername.addTextChangedListener(new TextWatcher()
 		{

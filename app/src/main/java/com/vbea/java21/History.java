@@ -33,7 +33,7 @@ import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.TimeAgo;
 import com.vbea.java21.classes.ExceptionHandler;
 
-public class History extends AppCompatActivity
+public class History extends BaseActivity
 {
 	private RecyclerView recyclerView;
 	private HistoryAdapter mAdapter;
@@ -41,34 +41,26 @@ public class History extends AppCompatActivity
 	private List<Histories> mList;
 	private List<Histime> dataList;
 	private HistoryDecoration hisDecoration;
+
 	@Override
-	public void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.musiclist);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
-		recyclerView = (RecyclerView) findViewById(R.id.music_recyclerView);
-		setSupportActionBar(tool);
+	}
+
+	@Override
+	public void after()
+	{
+		enableBackButton();
+		recyclerView = bind(R.id.music_recyclerView);
 		mAdapter = new HistoryAdapter();
 		init();
-		MyDividerDecoration decoration = new MyDividerDecoration(History.this);
-		recyclerView.addItemDecoration(decoration);
+		recyclerView.addItemDecoration(new MyDividerDecoration(this));
 		hisDecoration = new HistoryDecoration(this, dataList, new DecorationLis());
 		recyclerView.addItemDecoration(hisDecoration);
 		recyclerView.setAdapter(mAdapter);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				setResult(RESULT_CANCELED);
-				supportFinishAfterTransition();
-			}
-		});
 
 		mAdapter.setOnItemClickListener(new HistoryAdapter.OnItemClickListener()
 		{
@@ -150,6 +142,12 @@ public class History extends AppCompatActivity
 			}
 		});
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected void onFinish()
+	{
+		setResult(RESULT_CANCELED);
 	}
 
 	@Override

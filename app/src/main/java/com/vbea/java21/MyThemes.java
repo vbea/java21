@@ -82,7 +82,7 @@ public class MyThemes
 		R.style.AppThemeHome25,R.style.AppThemeHome26
 	};*/
 	public static int[] drawerImages = {
-		R.mipmap.bg_java,
+		R.mipmap.background00,
 		R.mipmap.background01,
 		R.mipmap.background02,
 		R.mipmap.background03,
@@ -92,10 +92,7 @@ public class MyThemes
 		R.mipmap.background07,
 		R.mipmap.background08,
 		R.mipmap.background09,
-		R.mipmap.background10,
-		R.mipmap.background11,
-		R.mipmap.background12,
-		R.mipmap.background13
+		R.mipmap.background10
 	};
 	/*static final int[] resources = {
 		R.drawable.ui_item_13,
@@ -200,7 +197,7 @@ public class MyThemes
 	public static int getDrawerBack(int id)
 	{
 		if (id >= drawerImages.length)
-			id = 1;
+			id = 0;
 		return drawerImages[id];
 	}
 	

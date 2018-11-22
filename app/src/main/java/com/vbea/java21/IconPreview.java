@@ -60,7 +60,7 @@ public class IconPreview extends AppCompatActivity
 		{
 			public void onClick(View v)
 			{
-				if (!Util.hasAllPermissions(IconPreview.this, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+				if (Util.hasAllPermissions(IconPreview.this, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
 					Matisse.from(IconPreview.this).choose(MimeType.ofImage()).imageEngine(new GlideEngine()).thumbnailScale(0.85f).forResult(1);
 				else
 					Util.requestPermission(IconPreview.this, 1001, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);

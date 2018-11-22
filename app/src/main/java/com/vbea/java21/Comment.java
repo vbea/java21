@@ -73,13 +73,22 @@ public class Comment extends AppCompatActivity
 		url = getIntent().getStringExtra("url");
 		type = getIntent().getIntExtra("type", 0);
 		refreshLayout.setColorSchemeResources(MyThemes.getColorPrimary(), MyThemes.getColorAccent());
-		if (resId == null || type == 0)
+		if (Util.isNullOrEmpty(resId) || type == 0)
 		{
 			Util.toastShortMessage(this, "不支持的参数");
 			supportFinishAfterTransition();
 		}
 		else
-			getData(true);
+		{
+			try
+			{
+				getData(true);
+			}
+			catch (Exception e)
+			{
+				mHandler.sendEmptyMessage(6);
+			}
+		}
 		if (title != null)
 			tool.setTitle(title + " 的评论");
 		reference = "";
@@ -91,7 +100,14 @@ public class Comment extends AppCompatActivity
 		recyclerView.setAdapter(mAdapter);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		if (Common.mUser.role == 0)
+		if (!Common.isLogin())
+		{
+			hideInput();
+			btnComment.setEnabled(false);
+			edtComment.setEnabled(false);
+			edtComment.setHint("登录后可发表评论");
+		}
+		else if (Common.mUser.role == 0)
 		{
 			edtComment.setEnabled(false);
 			edtComment.setHint("您已被禁言，无法评论，请联系管理员解禁");
@@ -144,10 +160,17 @@ public class Comment extends AppCompatActivity
 			@Override
 			public void onRefresh()
 			{
-				if (Common.isNet(Comment.this))
-					getData(false);
-				else
-					Util.toastShortMessage(getApplicationContext(), "咦，网络去哪儿了？");
+				try
+				{
+					if (Common.isNet(Comment.this))
+						getData(false);
+					else
+						Util.toastShortMessage(getApplicationContext(), "咦，网络去哪儿了？");
+				}
+				catch(Exception e)
+				{
+					mHandler.sendEmptyMessage(6);
+				}
 			}
 		});
 		
@@ -224,7 +247,7 @@ public class Comment extends AppCompatActivity
 		}
 	}
 	
-	private void getData(boolean cache)
+	private void getData(boolean cache) throws Exception
 	{
 		emptyView.setText("请稍候...");
 		BmobQuery<Comments> sql = new BmobQuery<Comments>();
@@ -282,8 +305,11 @@ public class Comment extends AppCompatActivity
 	
 	private void showInput()
 	{
-		edtComment.requestFocus();
-		imm.showSoftInput(edtComment, InputMethodManager.SHOW_FORCED);
+		if (Common.isLogin())
+		{
+			edtComment.requestFocus();
+			imm.showSoftInput(edtComment, InputMethodManager.SHOW_FORCED);
+		}
 	}
 	
 	private void hideInput()

@@ -871,14 +871,20 @@ public class Common
 	
 	public static Bitmap getDrawerBack()
 	{
-		File path = new File(getIconPath());
-		if (!path.exists())
+		try
 		{
-			path.mkdirs();
+			File path = new File(getIconPath());
+			if (!path.exists())
+			{
+				path.mkdirs();
+			}
+			File file = new File(getDrawImagePath());
+			if (file.exists())
+				return BitmapFactory.decodeFile(file.getAbsolutePath());
 		}
-		File file = new File(getDrawImagePath());
-		if (file.exists())
-			return BitmapFactory.decodeFile(file.getAbsolutePath());
+		catch (Exception e) {
+			
+		}
 		return null;
 	}
 	

@@ -28,8 +28,8 @@ public class DrawerAdapter extends RecyclerView.Adapter<DrawerAdapter.MyViewHold
 	public DrawerAdapter()
 	{
 		mList = new ArrayList<DrawItem>();
-		addItem(new DrawItem(0, MyThemes.getColorPrimary()));
-		for (int i = 1; i < MyThemes.drawerImages.length; i++)
+		//addItem(new DrawItem(0, MyThemes.getColorPrimary()));
+		for (int i = 0; i < MyThemes.drawerImages.length; i++)
 		{
 			addItem(new DrawItem(i, MyThemes.getDrawerBack(i)));
 		}

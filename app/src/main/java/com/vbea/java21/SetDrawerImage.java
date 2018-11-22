@@ -127,7 +127,7 @@ public class SetDrawerImage extends AppCompatActivity
 	{
 		if (item.getItemId() == R.id.item_drawer)
 		{
-			if (!Util.hasAllPermissions(SetDrawerImage.this, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+			if (Util.hasAllPermissions(SetDrawerImage.this, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
 				Matisse.from(this).choose(MimeType.ofAll()).imageEngine(new GlideEngine()).thumbnailScale(0.85f).forResult(1);
 			else
 				Util.requestPermission(SetDrawerImage.this, 1001, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);

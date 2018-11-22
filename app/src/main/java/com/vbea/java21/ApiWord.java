@@ -48,10 +48,13 @@ public class ApiWord extends AppCompatActivity
 	private WebView myweb;
 	private ProgressBar proGro;
 	private TextView NightView;
+	private final String api11Url = "http://docs.oracle.com/en/java/javase/11/docs/api/index.html";
+	private final String api10Url = "http://docs.oracle.com/javase/10/docs/api/overview-summary.html";
+	private final String api9Url = "http://docs.oracle.com/javase/9/docs/api/overview-summary.html";
 	private final String api8Url = "http://docs.oracle.com/javase/8/docs/api/overview-summary.html";
 	private final String api7Url = "http://docs.oracle.com/javase/7/docs/api/overview-summary.html";
 	private final String api6Url = "http://docs.oracle.com/javase/6/docs/api/overview-summary.html";
-	//private final String apiUrlCH = "http://download.java.net/jdk/jdk-api-localizations/jdk-api-zh-cn/publish/1.6.0/html/zh_CN/api/overview-summary.html";
+	private final String apiUrlCH = "http://www.javaweb.cc/help/JavaAPI1.6/overview-summary.html";
 	private final String apiAndroid = "http://androiddoc.qiniudn.com/reference/packages.html";
 	private final String sub = "API文档";
 	private BottomSheetDialog mBSDialog;
@@ -93,7 +96,18 @@ public class ApiWord extends AppCompatActivity
 		/*myweb.setFocusable(true);
 		myweb.setFocusableInTouchMode(true);
 		myweb.requestFocus();*/
-		myweb.setWebViewClient(new WebViewClient());
+		myweb.setWebViewClient(new WebViewClient()
+		{
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView v, final String url)
+			{
+				if (!url.startsWith("http"))
+				{
+					return true;
+				}
+				return super.shouldOverrideUrlLoading(v, url);
+			}
+		});
 		
 		myweb.setWebChromeClient(new WebChromeClient()
 		{
@@ -172,9 +186,9 @@ public class ApiWord extends AppCompatActivity
 			case R.id.item_share:
 				doShare();
 				break;
-			/*case R.id.item_apiCN:
+			case R.id.item_apiCN:
 				myweb.loadUrl(apiUrlCH);
-				break;*/
+				break;
 			case R.id.item_api6:
 				myweb.loadUrl(api6Url);
 				break;
@@ -183,6 +197,15 @@ public class ApiWord extends AppCompatActivity
 				break;
 			case R.id.item_api8:
 				myweb.loadUrl(api8Url);
+				break;
+			case R.id.item_api9:
+				myweb.loadUrl(api9Url);
+				break;
+			case R.id.item_api10:
+				myweb.loadUrl(api10Url);
+				break;
+			case R.id.item_api11:
+				myweb.loadUrl(api11Url);
 				break;
 			case R.id.item_apiand:
 				myweb.loadUrl(apiAndroid);
@@ -336,14 +359,14 @@ public class ApiWord extends AppCompatActivity
 	
 	private void initBanner()
 	{
-		bannerView = new BannerView(this, ADSize.BANNER, AdvConfig.APPID, AdvConfig.Banner2);
+		bannerView = new BannerView(this, ADSize.BANNER, AdvConfig.APPID, AdvConfig.BannerSecond);
 		bannerView.setRefresh(30);
 		bannerView.setADListener(new AbstractBannerADListener()
 		{
 			@Override
 			public void onNoAD(AdError e)
 			{
-				ExceptionHandler.log("ad:"+e.getErrorCode(), e.getErrorMsg());
+				//ExceptionHandler.log("ad:"+e.getErrorCode(), e.getErrorMsg());
 			}
 
 			@Override

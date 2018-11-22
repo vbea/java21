@@ -66,8 +66,13 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 		//holder.endorse.setEnabled(!isMy);
 		//holder.oppose.setEnabled(!isMy);
 		//holder.img_vip.setVisibility(item.isVip ? View.VISIBLE : View.GONE);
-		holder.reply.setVisibility(isMy?View.GONE:View.VISIBLE);
-		holder.delete.setVisibility(isMy || Common.isAdminUser() ? View.VISIBLE : View.GONE);
+		if (Common.isLogin()) {
+			holder.btnGroup.setVisibility(View.VISIBLE);
+			holder.reply.setVisibility(isMy?View.GONE:View.VISIBLE);
+			holder.delete.setVisibility(isMy || Common.isAdminUser() ? View.VISIBLE : View.GONE);
+		} else {
+			holder.btnGroup.setVisibility(View.GONE);
+		}
 		getActcount(item.endorse, holder.txt_endorse, holder.img_endorse);
 		getActcount(item.oppose, holder.txt_oppose, holder.img_oppose);
 		if (isMy)
@@ -192,6 +197,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 		ImageView icon,img_endorse,img_oppose;
 		TableRow endorse, oppose;
 		RelativeLayout end;
+		View btnGroup;
 		public MyViewHolder(View v)
 		{
 			super(v);
@@ -210,7 +216,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 			txt_oppose = (TextView) v.findViewById(R.id.txt_oppose);
 			endorse = (TableRow) v.findViewById(R.id.comm_endorse);
 			oppose = (TableRow) v.findViewById(R.id.comm_oppose);
-			//img_vip = (TextView) v.findViewById(R.id.comm_vip);
+			btnGroup = v.findViewById(R.id.comm_btngroup);
 		}
 	}
 

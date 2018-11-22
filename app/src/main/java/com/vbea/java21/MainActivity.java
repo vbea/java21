@@ -283,7 +283,7 @@ public class MainActivity extends AppCompatActivity
 		@Override
 		public void onNoAD(AdError e)
 		{
-			ExceptionHandler.log("splash_noad", e.getErrorCode() + ":" + e.getErrorMsg());
+			//ExceptionHandler.log("splash_noad", e.getErrorCode() + ":" + e.getErrorMsg());
 			new MainThread().start();
 		}
 

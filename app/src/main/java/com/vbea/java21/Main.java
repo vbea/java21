@@ -616,15 +616,10 @@ public class Main extends AppCompatActivity
 		if (MyThemes.ISCHANGED)
 		{
 			MyThemes.ISCHANGED = false;
-			if (Common.APP_BACK_ID == 0)
-				drawUser.setBackgroundResource(MyThemes.getColorPrimary());
+			if (Common.APP_BACK_ID == 100)
+				drawUser.setBackground(Common.getHomeBack());
 			else
-			{
-				if (Common.APP_BACK_ID == 100)
-					drawUser.setBackground(Common.getHomeBack());
-				else
-					drawUser.setBackgroundResource(MyThemes.getDrawerBack());
-			}
+				drawUser.setBackgroundResource(MyThemes.getDrawerBack());
 			if (MyThemes.homeTextColor != 0)
 			{
 				txtUserName.setTextColor(MyThemes.homeTextColor);
@@ -671,14 +666,14 @@ public class Main extends AppCompatActivity
 	
 	private void initBanner()
 	{
-		bannerView = new BannerView(this, ADSize.BANNER, AdvConfig.APPID, AdvConfig.Banner2);
+		bannerView = new BannerView(this, ADSize.BANNER, AdvConfig.APPID, AdvConfig.BannerHome);
 		bannerView.setRefresh(30);
 		bannerView.setADListener(new AbstractBannerADListener()
 		{
 			@Override
 			public void onNoAD(AdError e)
 			{
-				ExceptionHandler.log("ad:"+e.getErrorCode(), e.getErrorMsg());
+				//ExceptionHandler.log("ad:"+e.getErrorCode(), e.getErrorMsg());
 			}
 
 			@Override

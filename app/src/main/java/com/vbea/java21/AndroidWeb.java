@@ -188,24 +188,18 @@ public class AndroidWeb extends AppCompatActivity
 			initBanner();
 		if (Common.isHuluxiaAd())
 			initInterstitial();
-		if (!Common.isLogin())
-		{
-			btnComment.setEnabled(false);
-			edtComment.setEnabled(false);
-			edtComment.setHint("登录后可发表评论");
-		}
 	}
 	
 	private void initBanner()
 	{
-		bannerView = new BannerView(this, ADSize.BANNER, AdvConfig.APPID, AdvConfig.Banner2);
+		bannerView = new BannerView(this, ADSize.BANNER, AdvConfig.APPID, AdvConfig.BannerSecond);
 		bannerView.setRefresh(30);
 		bannerView.setADListener(new AbstractBannerADListener()
 		{
 			@Override
 			public void onNoAD(AdError e)
 			{
-				ExceptionHandler.log("ad:"+e.getErrorCode(), e.getErrorMsg());
+				//ExceptionHandler.log("ad:"+e.getErrorCode(), e.getErrorMsg());
 			}
 			
 			@Override
@@ -226,7 +220,7 @@ public class AndroidWeb extends AppCompatActivity
 			@Override
 			public void onNoAD(AdError e)
 			{
-				ExceptionHandler.log("in-ad:"+e.getErrorCode(), e.getErrorMsg());
+				//ExceptionHandler.log("in-ad:"+e.getErrorCode(), e.getErrorMsg());
 			}
 
 			@Override

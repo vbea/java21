@@ -425,7 +425,10 @@ public class HtmlViewer extends AppCompatActivity
 	
 	private void loadUrls(String url)
 	{
-		tool.setTitle(url);
+		if (url.indexOf("//") >= 0)
+			tool.setTitle(url.substring(url.indexOf("//")+2));
+		else
+			tool.setTitle(url);
 		//SH_url = url;
 		if (Util.isNullOrEmpty(url))
 			return;

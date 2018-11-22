@@ -94,7 +94,7 @@ public class Knowledge extends AppCompatActivity
 	
 	private void initBanner()
 	{
-		BannerView bannerView = new BannerView(this, ADSize.BANNER, AdvConfig.APPID, AdvConfig.Banner2);
+		BannerView bannerView = new BannerView(this, ADSize.BANNER, AdvConfig.APPID, AdvConfig.BannerSecond);
 		bannerView.setRefresh(30);
 		bannerView.setADListener(null);
 		bannerLayout.addView(bannerView);

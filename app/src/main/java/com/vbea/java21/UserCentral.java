@@ -89,20 +89,18 @@ public class UserCentral extends AppCompatActivity
 		TableRow btnMobile = (TableRow) findViewById(R.id.btn_info_mobile);
 		TableRow btnQQ = (TableRow) findViewById(R.id.btn_info_qq);
 		TableRow btnInfo = (TableRow) findViewById(R.id.btn_info_user);
-		titleName.setText(Common.mUser.nickname);
+		if (Common.isLogin())
+			titleName.setText(Common.mUser.nickname);
+		else
+			return;
 		ViewGroup.LayoutParams para = appbar.getLayoutParams();
 		para.height = (int)(getWindowManager().getDefaultDisplay().getWidth() / 1.4);
 		appbar.setLayoutParams(para);
 		setSupportActionBar(tool);
-		if (Common.APP_BACK_ID != 0)
-		{
-			if (Common.APP_BACK_ID == 100)
-				userTop.setBackground(Common.getHomeBack());
-			else
-				userTop.setBackgroundResource(MyThemes.getDrawerBack());
-		}
+		if (Common.APP_BACK_ID == 100)
+			userTop.setBackground(Common.getHomeBack());
 		else
-			userTop.setBackgroundResource(MyThemes.getColorPrimary());
+			userTop.setBackgroundResource(MyThemes.getDrawerBack());
 		if (MyThemes.homeTextColor != 0)
 		{
 			titleName.setTextColor(MyThemes.homeTextColor);
@@ -314,6 +312,8 @@ public class UserCentral extends AppCompatActivity
 	public void init()
 	{
 		Users user = Common.mUser;
+		if (user == null)
+			return;
 		username.setText(getString(user.name));
 		//nickname.setText(_nick);
 		titleName.setText(getString(user.nickname));

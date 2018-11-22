@@ -130,20 +130,19 @@
 	<string name="donateinfo">您可以通过支付宝转账、微信转账，或者付费加入Q群222876252或49321718，也可以加入邠心工作室开发组QQ群135482843。您的支持给我们提供了动力，是对我们最大的鼓励！
 		\n（加入邠心工作室开发组Q群(135482843)的作为回报我们将送出5.2.1版本源码一份以及自学大礼包，包括文字教程、视频、源码实例等）\n二维码见下面，点击可放大
 	</string>
-	<string name="version">V 7.1.1 Build 1511
+	<string name="version">V 7.1.2 Build 1521
 	</string>
-	<string name="update">7.1.1 (1511)
+	<string name="update">7.1.2 (1521)
 	</string>
-	<integer name="versionCode">1500</integer>
-	<string name="abt_ver">当前版本：v7.1.1
-		\n1.修复Java基础教程部分事例代码错误的问题
+	<integer name="versionCode">1511</integer>
+	<string name="abt_ver">当前版本：v7.1.2
+		\n1.紧急修复：修复部分设备闪退的问题
 		\n2.修复无法访问在线教程的问题
-		\n3.修复其他已知问题
 	</string>
 	<string name="shared">share_image</string>
 	<string name="about_us">作者的话：\n2013年5月20日，邠心工作室成立，至今已有五年时间，目前团队有三人，我是在2012年(高中)开始自学Java，花了21天学完基础知识之后开始研究并开发Android，并于2014年发布此APP，帮助那些也想要自学Java的朋友，目前正在朝着全栈开发的方向前进，希望能找到志同道合的朋友。
 	</string>
-	<string name="about_join">加入我们：\n邮箱：vbea@oxmail.com
+	<string name="about_join">加入我们：\n邮箱：vbea@foxmail.com
 		\nQ  Q：248104237\nQQ群：222876252
 		\n官网：http://vbea.wicp.net\n微博：@邠心工作室\n微信公众号：邠心工作室(VbeStudio)\n地址：四川省成都市"
 	</string>

@@ -31,7 +31,6 @@ import com.vbea.java21.audio.AudioService;
 import com.vbea.java21.data.Users;
 import com.vbea.java21.data.Tips;
 import com.vbea.java21.data.Copys;
-import com.vbea.java21.MyThemes;
 import com.vbea.secret.*;
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobQuery;
@@ -49,12 +48,12 @@ public class Common
 	public static int APP_THEME_ID = -1;//主题
 	public static int APP_BACK_ID = 0;//背景图片
 	public static int VERSION_CODE = 0;//版本号
-	public static int AUTO_LOGIN_MODE = 0;//自动登录类型，1为普通，2为QQ
+	private static int AUTO_LOGIN_MODE = 0;//自动登录类型，1为普通，2为QQ
 	public static String SDATE;//激活凭证
 	public static String KEY;//密钥
 	public static String SID;//激活时间
 	public static String USERID;//用户名
-	public static String USERPASS;//加密密码
+	private static String USERPASS;//加密密码
 	public static boolean IS_ACTIVE = false;//是否注册
 	public static boolean NO_ADV = false;//去广告
 	public static boolean WEL_ADV = true;//欢迎页广告
@@ -74,7 +73,7 @@ public class Common
 	public static final String FileProvider = "com.vbea.java21.fileprovider";
 	public static final String ExterPath = Environment.getExternalStorageDirectory().getAbsolutePath();
 	private static final String LocalPath = ExterPath + "/ZDApp/";
-	public static List<Tips> mTips = null;
+	private static List<Tips> mTips = null;
 	public static List<String> READ_Java, READ_Android, READ_J2EE, READ_AndroidAdvance;
 	public static InboxManager myInbox;
 	private static long lastTipsTime;
@@ -82,7 +81,9 @@ public class Common
 	public static String OldSerialNo, OldLoginDate;
 	public static void start(Context context)
 	{
-		startBmob(context);
+		//startBmob(context);
+		if (BmobWrapper.getInstance() == null)
+			Bmob.initialize(context, "1aa46b02605279e1a84935073af9fc82");
 		if (IsRun)
 			return;
 		IsRun = true;
@@ -108,7 +109,7 @@ public class Common
 		}
 		if (getDrawerBack() == null)
 			editor.putInt("back", 0);
-		editor.commit();
+		editor.apply();
 		init(spf);
 		SocialShare.onStart(context);
 		if (isNet(context))
@@ -119,12 +120,6 @@ public class Common
 	{
 		IsRun = false;
 		start(context);
-	}
-	
-	private static void startBmob(Context context)
-	{
-		if (BmobWrapper.getInstance() == null)
-			Bmob.initialize(context, "1aa46b02605279e1a84935073af9fc82");
 	}
 	
 	public static void update(Context context, boolean check)

@@ -6,8 +6,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.os.Binder;
 import android.os.IBinder;
-import android.os.Handler;
-import android.os.Message;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -15,7 +13,6 @@ import android.content.BroadcastReceiver;
 import android.widget.RemoteViews;
 import android.media.AudioManager;
 
-import android.content.Intent;
 import com.vbea.java21.More;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
@@ -107,7 +104,12 @@ public class AudioService extends Service
 		RemoteViews view = new RemoteViews(getPackageName(), R.layout.music_noti);
 		Notification.Builder builder = new Notification.Builder(this);
 		builder.setSmallIcon(R.mipmap.ic_launcher);
-		builder.setOngoing(true).setContent(view);
+		builder.setOngoing(true);
+		if (Util.isAndroidN()) {
+			builder.setCustomContentView(view);
+		} else {
+			builder.setContent(view);
+		}
 		builder.setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, More.class), PendingIntent.FLAG_CANCEL_CURRENT));
 		view.setTextViewText(R.id.noti_text, getMusicName());
 		view.setTextViewText(R.id.noti_sub, isPaused ? "已暂停" : "正在播放");

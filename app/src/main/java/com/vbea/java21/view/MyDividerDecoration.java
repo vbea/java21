@@ -1,11 +1,10 @@
-package com.vbea.java21.list;
+package com.vbea.java21.view;
 
 import android.view.View;
 import android.graphics.Rect;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ItemDecoration;

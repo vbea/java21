@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.Button; 
@@ -16,12 +15,7 @@ import android.view.KeyEvent;
 import android.view.inputmethod.InputMethodManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.content.Intent;
 import android.content.DialogInterface;
-import android.net.Uri;
-import android.graphics.Bitmap;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -36,7 +30,6 @@ import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.exception.BmobException;
-//import org.json.JSONObject;
 
 public class Comment extends BaseActivity
 {
@@ -66,11 +59,11 @@ public class Comment extends BaseActivity
 	@Override
 	public void after()
 	{
-		recyclerView = (RecyclerView) findViewById(R.id.com_recyclerView);
-		edtComment = (EditText) findViewById(R.id.edt_comment);
-		btnComment = (Button) findViewById(R.id.btnComment);
-		emptyView = (TextView) findViewById(R.id.comment_emptyview);
-		refreshLayout = (SwipeRefreshLayout) findViewById(R.id.comm_refresh);
+		recyclerView = bind(R.id.com_recyclerView);
+		edtComment = bind(R.id.edt_comment);
+		btnComment = bind(R.id.btnComment);
+		emptyView = bind(R.id.comment_emptyview);
+		refreshLayout = bind(R.id.comm_refresh);
 		title = getIntent().getStringExtra("title");
 		resId = getIntent().getStringExtra("id");
 		url = getIntent().getStringExtra("url");

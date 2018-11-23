@@ -1,9 +1,8 @@
-package com.vbea.java21;
+package com.vbea.java21.fragment;
 
 import java.util.List;
 import java.util.ArrayList;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.content.Intent;
-import android.content.DialogInterface;
 import android.widget.TextView;
 import android.widget.ProgressBar;
 import android.support.annotation.Nullable;
@@ -19,12 +17,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.DividerItemDecoration;
-import com.vbea.java21.data.AndroidIDE;
-import com.vbea.java21.list.AideAdapter;
-import com.vbea.java21.list.MyDividerDecoration;
-import com.vbea.java21.classes.Util;
+
+import com.vbea.java21.AndroidWeb;
+import com.vbea.java21.MyThemes;
+import com.vbea.java21.data.AndroidHtml;
+import com.vbea.java21.list.AndroidAdapter;
+import com.vbea.java21.view.MyDividerDecoration;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
 import cn.bmob.v3.BmobQuery;
@@ -33,17 +31,17 @@ import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.exception.BmobException;
 
-public class AideFragment extends Fragment
+public class AndroidFragment extends Fragment
 {
 	private SwipeRefreshLayout refreshLayout;
 	private RecyclerView recyclerView;
 	private TextView errorText;
 	private ProgressBar proRefresh;
-	private AideAdapter mAdapter;
-	private List<AndroidIDE> mList;
+	private AndroidAdapter mAdapter;
+	private List<AndroidHtml> mList;
 	private View rootView;
-	private int mCount = -1;
-	//private ProgressDialog mPdialog;
+	private int mCount = 0;
+	private final int type = 1;
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -58,16 +56,13 @@ public class AideFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
 		if (recyclerView == null)
 		{
-			mList = new ArrayList<AndroidIDE>();
-			mAdapter = new AideAdapter();
+			mList = new ArrayList<AndroidHtml>();
+			mAdapter = new AndroidAdapter();
 			errorText = (TextView) view.findViewById(R.id.txt_andError);
 			proRefresh = (ProgressBar) view.findViewById(R.id.refreshProgress);
         	recyclerView = (RecyclerView) view.findViewById(R.id.cpt_recyclerView);
 			refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swp_refresh);
-
-			DividerItemDecoration decoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-			decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
-			recyclerView.addItemDecoration(decoration);
+			recyclerView.addItemDecoration(new MyDividerDecoration(getContext()));
 			recyclerView.setAdapter(mAdapter);
 			recyclerView.setHasFixedSize(true);
 			recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -80,27 +75,25 @@ public class AideFragment extends Fragment
 				errorText.setVisibility(View.VISIBLE);
 				errorText.setText("请登录后下拉刷新获取章节列表");
 			}*/
-			
-			mAdapter.setOnItemClickListener(new AideAdapter.OnItemClickListener()
+			mAdapter.setOnItemClickListener(new AndroidAdapter.OnItemClickListener()
 			{
 				@Override
 				public void onItemClick(String id, String title, String sub, String url)
 				{
-					//更新数据
-					/*update();
-					 if (true)return;*/
-					//Common.addJavaEeRead(id);
+					//update();
+					//if (true)return;
+					Common.addAndroidRead(id);
 					Intent intent = new Intent(getActivity(), AndroidWeb.class);
 					intent.putExtra("id", id);
 					intent.putExtra("url", url);
 					intent.putExtra("title", title);
 					intent.putExtra("sub", sub);
-					intent.putExtra("type", 4);
+					intent.putExtra("type", type);
 					Common.startActivityOptions(getActivity(), intent);
 					mAdapter.notifyDataSetChanged();
 				}
 			});
-
+				
 			refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
 			{
 				@Override
@@ -116,7 +109,7 @@ public class AideFragment extends Fragment
 						getCount();
 				}
 			});
-
+				
 			recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
 			{
 				@Override
@@ -131,7 +124,19 @@ public class AideFragment extends Fragment
 			});
 		}
 	}
-
+	
+	/*public void update()
+	{
+		Util.showConfirmCancelDialog(getActivity(), "数据更新", "你确定要更新数据吗", new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface d, int s)
+			{
+				mPdialog = ProgressDialog.show(getActivity(), null, "请稍候...");
+				new UpdateThread().start();
+			}
+		});
+	}*/
+	
 	private void getCount()
 	{
 		if (!Common.isNet(getContext()))
@@ -139,9 +144,14 @@ public class AideFragment extends Fragment
 			init();
 			return;
 		}
-		BmobQuery<AndroidIDE> query = new BmobQuery<AndroidIDE>();
+		/*if (!Common.IS_ACTIVE)
+		{
+			mHandler.sendEmptyMessage(3);
+			return;
+		}*/
+		BmobQuery<AndroidHtml> query = new BmobQuery<AndroidHtml>();
 		query.addWhereEqualTo("enable", true);
-		query.count(AndroidIDE.class, new CountListener()
+		query.count(AndroidHtml.class, new CountListener()
 		{
 			@Override
 			public void done(Integer count, BmobException e)
@@ -161,22 +171,10 @@ public class AideFragment extends Fragment
 			}
 		});
 	}
-
-	/*public void update()
-	 {
-	 Util.showConfirmCancelDialog(getActivity(), "数据更新", "你确定要更新数据吗", new DialogInterface.OnClickListener()
-	 {
-	 public void onClick(DialogInterface d, int s)
-	 {
-	 mPdialog = ProgressDialog.show(getActivity(), null, "请稍候...");
-	 new UpdateThread().start();
-	 }
-	 });
-	 }*/
-
+	
 	private void refresh()
 	{
-		if (mCount < 0 || !Common.isNet(getContext()) || mCount == mList.size())
+		if (mCount <= 0 || !Common.isNet(getContext()) || mCount == mList.size())
 		{
 			init();
 			return;
@@ -186,42 +184,41 @@ public class AideFragment extends Fragment
 			errorText.setVisibility(View.VISIBLE);
 			errorText.setText("正在加载，请稍候");
 		}
-		BmobQuery<AndroidIDE> query = new BmobQuery<AndroidIDE>();
+		BmobQuery<AndroidHtml> query = new BmobQuery<AndroidHtml>();
 		query.addWhereEqualTo("enable", true);
 		query.order("order");
 		query.setLimit(15);
-		query.findObjects(new FindListener<AndroidIDE>()
+		query.findObjects(new FindListener<AndroidHtml>()
 		{
 			@Override
-			public void done(List<AndroidIDE> list, BmobException e)
+			public void done(List<AndroidHtml> list, BmobException e)
 			{
 				if (e == null)
 				{
 					if (list.size() > 0)
 					{
 						mList = list;
-						mAdapter.setEnd(false);
 					}
 				}
 				mHandler.sendEmptyMessage(1);
 			}
 		});
 	}
-
+	
 	private void addItem()
 	{
 		if (mCount > mList.size())
 		{
 			proRefresh.setVisibility(View.VISIBLE);
-			BmobQuery<AndroidIDE> query = new BmobQuery<AndroidIDE>();
+			BmobQuery<AndroidHtml> query = new BmobQuery<AndroidHtml>();
 			query.addWhereEqualTo("enable", true);
 			query.order("order");
 			query.setLimit(15);
 			query.setSkip(mList.size());
-			query.findObjects(new FindListener<AndroidIDE>()
+			query.findObjects(new FindListener<AndroidHtml>()
 			{
 				@Override
-				public void done(List<AndroidIDE> list, BmobException e)
+				public void done(List<AndroidHtml> list, BmobException e)
 				{
 					if (e == null)
 					{
@@ -235,7 +232,7 @@ public class AideFragment extends Fragment
 			});
 		}
 	}
-
+	
 	private void init()
 	{
 		errorText.setText("加载失败\n请检查你的网络连接");
@@ -251,67 +248,18 @@ public class AideFragment extends Fragment
 		mAdapter.setList(mList);
 		mAdapter.notifyDataSetChanged();
 	}
-
-	Handler mHandler = new Handler()
-	{
-		@Override
-		public void handleMessage(Message msg)
-		{
-			switch (msg.what)
-			{
-				case 1:
-					init();
-					break;
-				case 2:
-					mAdapter.setList(mList);
-					if (mList.size() == mCount)
-						mAdapter.setEnd(true);
-					mAdapter.notifyItemInserted(mAdapter.getItemCount());
-					proRefresh.setVisibility(View.GONE);
-					break;
-				case 3:
-					errorText.setText("敬请期待");
-					errorText.setVisibility(View.VISIBLE);
-					recyclerView.setVisibility(View.GONE);
-					if (refreshLayout.isRefreshing())
-						refreshLayout.setRefreshing(false);
-					break;
-				/*case 4:
-					 Util.toastShortMessage(getActivity(), "更新成功");
-					 mPdialog.dismiss();
-					 break;
-				 case 5:
-					 Util.toastShortMessage(getActivity(), "更新失败");
-					 mPdialog.dismiss();
-					 break;*/
-			}
-			super.handleMessage(msg);
-		}
-	};
-
-	@Override
-	public void onResume()
-	{
-		/*if (!Common.isLogin())
-		{
-			recyclerView.setVisibility(View.GONE);
-		}*/
-		if (refreshLayout.isRefreshing())
-			refreshLayout.setRefreshing(false);
-		super.onResume();
-	}
-
+	
 	class UpdateThread extends Thread implements Runnable
 	{
 		public void run()
 		{
 			try
 			{
-				for (AndroidIDE item : mList)
+				for (AndroidHtml item : mList)
 				{
 					if (item.isTitle)
 						continue;
-					item.url = item.url.replace("http://vbea.wicp.net/","");
+					item.url = item.url.replace("coderboy.cn", "vbea.wicp.net");
 					item.update(new UpdateListener()
 					{
 						public void done(BmobException e)
@@ -330,5 +278,54 @@ public class AideFragment extends Fragment
 				ExceptionHandler.log("update", e.toString());
 			}
 		}
+	}
+	
+	Handler mHandler = new Handler()
+	{
+		@Override
+		public void handleMessage(Message msg)
+		{
+			switch (msg.what)
+			{
+				case 1:
+					init();
+					break;
+				case 2:
+					mAdapter.setList(mList);
+					mAdapter.notifyItemInserted(mAdapter.getItemCount());
+					proRefresh.setVisibility(View.GONE);
+					if (mList.size() == mCount)
+						mAdapter.setEnd(true);
+					break;
+				case 3:
+					errorText.setText("敬请期待");
+					errorText.setVisibility(View.VISIBLE);
+					recyclerView.setVisibility(View.GONE);
+					if (refreshLayout.isRefreshing())
+						refreshLayout.setRefreshing(false);
+					break;
+				/*case 4:
+					Util.toastShortMessage(getActivity(), "更新成功");
+					mPdialog.dismiss();
+					break;
+				case 5:
+					Util.toastShortMessage(getActivity(), "更新失败");
+					mPdialog.dismiss();
+					break;*/
+			}
+			super.handleMessage(msg);
+		}
+	};
+
+	@Override
+	public void onResume()
+	{
+		/*if (!Common.isLogin())
+		{
+			recyclerView.setVisibility(View.GONE);
+		}*/
+		if (refreshLayout.isRefreshing())
+			refreshLayout.setRefreshing(false);
+		super.onResume();
 	}
 }

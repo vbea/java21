@@ -1,19 +1,12 @@
 package com.vbea.java21;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.os.Bundle;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
-import android.widget.Toast;
-import android.widget.ImageButton;
 import android.content.pm.PackageInfo;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.data.Feedbacks;
@@ -37,9 +30,9 @@ public class Feedback extends BaseActivity
 	public void after()
 	{
 		enableBackButton();
-		btnFeed = (Button) findViewById(R.id.btn_feed);
-		txtFeedback = (EditText) findViewById(R.id.txt_feed);
-		txtContact = (EditText) findViewById(R.id.txt_feedCon);
+		btnFeed = bind(R.id.btn_feed);
+		txtFeedback = bind(R.id.txt_feed);
+		txtContact = bind(R.id.txt_feedCon);
 		
 		btnFeed.setOnClickListener(new View.OnClickListener()
 		{

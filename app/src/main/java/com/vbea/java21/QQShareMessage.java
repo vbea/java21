@@ -2,7 +2,6 @@ package com.vbea.java21;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -12,19 +11,15 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import com.vbea.java21.classes.Util;
-import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.SocialShare;
-import com.vbea.java21.classes.ExceptionHandler;
 import com.tencent.connect.common.Constants;
 import com.tencent.connect.share.QQShare;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
-public class QQShareMessage extends AppCompatActivity
+public class QQShareMessage extends BaseActivity
 {
     private View mContainer_title, mContainer_summary, mContainer_audioUrl, mContainer_targetUrl, mContainer_imgUrl, mContainer_appName;
     private TextView title, imageUrl, targetUrl, summary, appName = null;// app名称，用于手Q显示返回
@@ -34,46 +29,39 @@ public class QQShareMessage extends AppCompatActivity
     private EditText mEditTextAudioUrl;
     private int mExtarFlag = 0x00;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+	@Override
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.qq_share_activity);
+		setContentView(R.layout.qq_share_activity);
+	}
 
-        title = (TextView) findViewById(R.id.shareqq_title);
-        imageUrl = (TextView) findViewById(R.id.shareqq_image_url);
-        targetUrl = (TextView) findViewById(R.id.shareqq_target_url);
-        summary = (TextView) findViewById(R.id.shareqq_summary);
-        appName = (TextView) findViewById(R.id.shareqq_app_name);
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
-		Button btnCommit = (Button) findViewById(R.id.shareqq_commit);
-        mEditTextAudioUrl = (EditText) findViewById(R.id.et_shareqq_audioUrl);
-        // mContainer_qzone_special = findViewById(R.id.qzone_specail_radio_container);
-        mContainer_title = findViewById(R.id.qqshare_title_container);
-        mContainer_summary = findViewById(R.id.qqshare_summary_container);
-        mContainer_audioUrl = findViewById(R.id.qqshare_audioUrl_container);
-        mContainer_targetUrl = findViewById(R.id.qqshare_targetUrl_container);
-        mContainer_imgUrl = findViewById(R.id.qqshare_imageUrl_container);
-        mContainer_appName = findViewById(R.id.qqshare_appName_container);
-        mRadioBtn_localImage = (RadioButton) findViewById(R.id.radioBtn_local_image);
-		mRadioBtn_netImage = (RadioButton) findViewById(R.id.radioBtn_net_image);
-        mRadioBtnShareTypeDefault = (RadioButton) findViewById(R.id.radioBtn_share_type_default);
-        mRadioBtnShareTypeAudio = (RadioButton) findViewById(R.id.radioBtn_share_type_audio);
-        mRadioBtnShareTypeImg = (RadioButton)findViewById(R.id.radioBtn_share_type_image);
-        mRadioBtnShareTypeApp = (RadioButton)findViewById(R.id.radioBtn_share_type_app);
-        mCheckBox_qzoneItemHide = (CheckBox) findViewById(R.id.checkBox_qzone_item_hide);
-        mCheckBox_qzoneAutoOpen = (CheckBox) findViewById(R.id.checkBox_qzone_auto_open);
-		setSupportActionBar(tool);
+	@Override
+    protected void after()
+	{
+		enableBackButton();
+        title = bind(R.id.shareqq_title);
+        imageUrl = bind(R.id.shareqq_image_url);
+        targetUrl = bind(R.id.shareqq_target_url);
+        summary = bind(R.id.shareqq_summary);
+        appName = bind(R.id.shareqq_app_name);
+		Button btnCommit = bind(R.id.shareqq_commit);
+        mEditTextAudioUrl = bind(R.id.et_shareqq_audioUrl);
+        // mContainer_qzone_special = bind(R.id.qzone_specail_radio_container);
+        mContainer_title = bind(R.id.qqshare_title_container);
+        mContainer_summary = bind(R.id.qqshare_summary_container);
+        mContainer_audioUrl = bind(R.id.qqshare_audioUrl_container);
+        mContainer_targetUrl = bind(R.id.qqshare_targetUrl_container);
+        mContainer_imgUrl = bind(R.id.qqshare_imageUrl_container);
+        mContainer_appName = bind(R.id.qqshare_appName_container);
+        mRadioBtn_localImage = bind(R.id.radioBtn_local_image);
+		mRadioBtn_netImage = bind(R.id.radioBtn_net_image);
+        mRadioBtnShareTypeDefault = bind(R.id.radioBtn_share_type_default);
+        mRadioBtnShareTypeAudio = bind(R.id.radioBtn_share_type_audio);
+        mRadioBtnShareTypeImg = bind(R.id.radioBtn_share_type_image);
+        mRadioBtnShareTypeApp = bind(R.id.radioBtn_share_type_app);
+        mCheckBox_qzoneItemHide = bind(R.id.checkBox_qzone_item_hide);
+        mCheckBox_qzoneAutoOpen = bind(R.id.checkBox_qzone_auto_open);
 		initShareUI(shareType);
-		
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			public void onClick(View v)
-			{
-				supportFinishAfterTransition();
-			}
-		});
 			
 		btnCommit.setOnClickListener(new View.OnClickListener()
 		{

@@ -6,7 +6,6 @@ import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;
 import java.math.BigInteger;
 
-import android.content.Context;
 import android.content.pm.Signature;
 import android.graphics.Bitmap;
 

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
@@ -20,20 +19,16 @@ import android.content.DialogInterface;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.design.widget.FloatingActionButton;
 
 import com.vbea.java21.data.FileItem;
 import com.vbea.java21.list.FileAdapter;
-import com.vbea.java21.list.MyDividerDecoration;
+import com.vbea.java21.view.MyDividerDecoration;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
-import com.vbea.java21.classes.ExceptionHandler;
-import com.vbea.java21.classes.MyAlertDialog;
+import com.vbea.java21.view.MyAlertDialog;
 
 public class FileSelect extends BaseActivity
 {
@@ -62,12 +57,11 @@ public class FileSelect extends BaseActivity
 	public void after()
 	{
 		enableBackButton();
-		recyclerView = (RecyclerView) findViewById(R.id.file_recyclerView);
-		btnDone = (FloatingActionButton) findViewById(R.id.fbtn_done);
-		txtLocation = (TextView) findViewById(R.id.file_location);
+		recyclerView = bind(R.id.file_recyclerView);
+		btnDone = bind(R.id.fbtn_done);
+		txtLocation = bind(R.id.file_location);
 		mAdapter = new FileAdapter();
-		MyDividerDecoration decoration = new MyDividerDecoration(FileSelect.this);
-		recyclerView.addItemDecoration(decoration);
+		recyclerView.addItemDecoration(new MyDividerDecoration(this));
 		recyclerView.setAdapter(mAdapter);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));

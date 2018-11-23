@@ -1,23 +1,19 @@
 package com.vbea.java21;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.widget.Toast;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.content.DialogInterface;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.data.Users;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.MD5Util;
 import com.vbea.java21.classes.Common;
-import com.vbea.java21.classes.MyAlertDialog;
-import com.vbea.java21.classes.ExceptionHandler;
+import com.vbea.java21.view.MyAlertDialog;
+
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.exception.BmobException;
 
@@ -36,10 +32,10 @@ public class ResetPassword extends BaseActivity
 	@Override
 	protected void after()
 	{
-		reset = (Button) findViewById(R.id.btnReset);
-		TextView username = (TextView) findViewById(R.id.resUsername);
-		newPsd = (EditText) findViewById(R.id.resNewPassword);
-		queryPsd = (EditText) findViewById(R.id.resQuerPsd);
+		reset = bind(R.id.btnReset);
+		newPsd = bind(R.id.resNewPassword);
+		queryPsd = bind(R.id.resQuerPsd);
+		TextView username = bind(R.id.resUsername);
 		username.setText(getIntent().getExtras().getString("user", ""));
 		objectId = getIntent().getExtras().getString("oid", "");
 		if (objectId.equals(""))
@@ -112,7 +108,7 @@ public class ResetPassword extends BaseActivity
 		exitDialog();
 	}
 	
-	class MyThread extends Thread implements Runnable
+	private class MyThread extends Thread implements Runnable
 	{
 		public void run()
 		{

@@ -1,27 +1,15 @@
 package com.vbea.java21;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import android.app.AlertDialog;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.os.Environment;
 import android.net.Uri;
-import android.view.View;
 import android.content.Intent;
 import android.content.DialogInterface;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.DividerItemDecoration;
 
 import com.vbea.java21.data.WebHelper;
 import com.vbea.java21.list.BookAdapter;
-import com.vbea.java21.list.MyDividerDecoration;
-import com.vbea.java21.classes.Common;
+import com.vbea.java21.view.MyDividerDecoration;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.ExceptionHandler;
 
@@ -42,9 +30,7 @@ public class Bookmark extends BaseActivity
 	{
 		enableBackButton();
 		recyclerView = bind(R.id.music_recyclerView);
-		MyDividerDecoration decoration = new MyDividerDecoration(Bookmark.this);
-		//decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
-		recyclerView.addItemDecoration(decoration);
+		recyclerView.addItemDecoration(new MyDividerDecoration(this));
 		recyclerView.setAdapter(mAdapter);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));

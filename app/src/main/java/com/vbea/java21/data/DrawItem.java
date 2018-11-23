@@ -1,6 +1,4 @@
-package com.vbea.java21.list;
-
-import android.graphics.drawable.Drawable;
+package com.vbea.java21.data;
 
 public class DrawItem
 {

@@ -3,7 +3,6 @@ package com.vbea.java21.classes;
 import java.util.Date;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
-import java.text.ParseException;
 
 public class AstroUtil
 {
@@ -20,9 +19,11 @@ public class AstroUtil
 				return "0岁";
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			Date _date = format.parse(date);
-			year = _date.getYear();
-			monh = _date.getMonth() + 1;
-			day = _date.getDate();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(_date);
+			year = calendar.get(Calendar.YEAR);
+			monh = calendar.get(Calendar.MONTH) + 1;
+			day = calendar.get(Calendar.DATE);
 			sb.append(getAge());
 			sb.append("岁 ");
 			sb.append(getAstro());
@@ -37,9 +38,13 @@ public class AstroUtil
 	
 	private int getAge()
 	{
-		Date now = new Date();
-		int nowyear = now.getYear(); //获取年份
-		int nowmonth = now.getMonth() + 1; //获取月份
+		//Date now = new Date();
+		//int nowyear = now.getYear(); //获取年份
+		//int nowmonth = now.getMonth() + 1; //获取月份
+		//Change on 2018/11/23
+		Calendar calendar = Calendar.getInstance();
+		int nowyear = calendar.get(Calendar.YEAR);
+		int nowmonth = calendar.get(Calendar.MONTH) + 1;
 		// 用文本框输入年龄
 		int age = nowyear - year;
 		if (monh > nowmonth)

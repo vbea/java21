@@ -2,7 +2,6 @@ package com.vbea.java21.list;
 
 import java.util.ArrayList;
 
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -12,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 
 import com.vbea.java21.R;
+import com.vbea.java21.data.Knowledges;
 
 public class KnowledgeAdapter extends RecyclerView.Adapter<KnowledgeAdapter.MyViewHolder>
 {
@@ -49,7 +49,7 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<KnowledgeAdapter.MyVi
 			{
 				if(onItemClickListener != null)
 				{
-					onItemClickListener.onItemClick(kow.TITLE, kow.URL);
+					onItemClickListener.onItemClick(kow);
 				}
 			}
 		});
@@ -93,6 +93,6 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<KnowledgeAdapter.MyVi
 
 	public interface OnItemClickListener
 	{
-        void onItemClick(String title, String url);
+        void onItemClick(Knowledges knowledge);
     }
 }

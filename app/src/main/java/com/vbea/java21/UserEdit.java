@@ -1,26 +1,12 @@
 package com.vbea.java21;
 
 import android.app.Dialog;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.widget.TextView;
 import android.widget.DatePicker;
 import android.widget.Button; 
 import android.widget.RadioButton;
-import android.widget.TableRow;
 import android.widget.EditText;
 import android.view.View;
-import android.view.LayoutInflater;
-import android.content.Intent;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
@@ -48,14 +34,14 @@ public class UserEdit extends BaseActivity
 	public void after()
 	{
 		enableBackButton();
-		btnSave = (Button) findViewById(R.id.btnSave);
-		//username = (TextView) findViewById(R.id.info_username);
-		edtRemark = (EditText) findViewById(R.id.udt_mark);
-		edtNick = (EditText) findViewById(R.id.udt_nick);
-		edtBirthday = (EditText) findViewById(R.id.udt_birthday);
-		rdbMale = (RadioButton) findViewById(R.id.rdbMale);
-		rdbFemale = (RadioButton) findViewById(R.id.rdbFemale);
-		edtAddress = (EditText) findViewById(R.id.udt_address);
+		btnSave = bind(R.id.btnSave);
+		//username = bind(R.id.info_username);
+		edtRemark = bind(R.id.udt_mark);
+		edtNick = bind(R.id.udt_nick);
+		edtBirthday = bind(R.id.udt_birthday);
+		rdbMale = bind(R.id.rdbMale);
+		rdbFemale = bind(R.id.rdbFemale);
+		edtAddress = bind(R.id.udt_address);
 		//chPassword = (TextView) findViewById(R.id.udt_password);
 		
 		edtBirthday.setOnFocusChangeListener(new View.OnFocusChangeListener()

@@ -2,12 +2,10 @@ package com.vbea.java21;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.AttributeSet;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
-import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.net.http.SslError;
 import android.widget.EditText;
@@ -15,23 +13,16 @@ import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableRow;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MenuInflater;
 import android.view.ViewGroup;
-import android.view.LayoutInflater;
 import android.content.Intent;
-import android.content.Context;
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.graphics.Bitmap;
 
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.support.design.widget.BottomSheetDialog;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
@@ -79,13 +70,13 @@ public class AndroidWeb extends BaseActivity
 	protected void after()
 	{
 		enableBackButton();
-		proGro = (ProgressBar) findViewById(R.id.artProgress);
-		myweb = (WebView) findViewById(R.id.artWebView);
-		NightView = (TextView) findViewById(R.id.art_nightView);
-		CommentView = (TextView) findViewById(R.id.art_comment);
-		bannerLayout = (ViewGroup) findViewById(R.id.webBanner);
-		TableRow btnComment = (TableRow) findViewById(R.id.art_editbtn);
-		EditText edtComment = (EditText) findViewById(R.id.art_editText);
+		proGro = bind(R.id.artProgress);
+		myweb = bind(R.id.artWebView);
+		NightView = bind(R.id.art_nightView);
+		CommentView = bind(R.id.art_comment);
+		bannerLayout = bind(R.id.webBanner);
+		TableRow btnComment = bind(R.id.art_editbtn);
+		EditText edtComment = bind(R.id.art_editText);
 		if (MyThemes.isNightTheme()) NightView.setVisibility(View.VISIBLE);
 		url = getIntent().getExtras().getString("url", "");
 		title = getIntent().getExtras().getString("title", "");
@@ -246,11 +237,9 @@ public class AndroidWeb extends BaseActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		if (type != 0)
+		if (type > 0 && type < 5)
 		{
 			getMenuInflater().inflate(R.menu.android_item, menu);
-			if (type == 5)
-				menu.findItem(R.id.item_androidshare).setVisible(false);
 		}
 		return super.onCreateOptionsMenu(menu);
 	}

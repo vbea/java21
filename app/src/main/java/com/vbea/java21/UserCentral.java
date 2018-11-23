@@ -1,12 +1,9 @@
 package com.vbea.java21;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 import java.lang.reflect.Field;
 
 import android.app.AlertDialog;
 import android.os.Handler;
-import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,19 +21,14 @@ import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.content.Intent;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.AppBarLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.AstroUtil;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.MD5Util;
 import com.vbea.java21.classes.SocialShare;
-import com.vbea.java21.classes.MyAlertDialog;
+import com.vbea.java21.view.MyAlertDialog;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.data.Users;
 import com.tencent.tauth.Tencent;
@@ -72,26 +64,26 @@ public class UserCentral extends BaseActivity
 	public void after()
 	{
 		enableBackButton();
-		appbar = (AppBarLayout) findViewById(R.id.appbar);
-		userTop = (RelativeLayout) findViewById(R.id.user_top);
-		topLayout = (LinearLayout) findViewById(R.id.topLayout);
-		icon = (ImageView) findViewById(R.id.user_icon);
-		titleName = (TextView) findViewById(R.id.user_topName);
-		username = (TextView) findViewById(R.id.info_username);
-		//nickname = (TextView) findViewById(R.id.info_nickname);
-		gender = (TextView) findViewById(R.id.info_gender);
-		level = (TextView) findViewById(R.id.info_level);
-		mobile = (TextView) findViewById(R.id.info_mobile);
-		email = (TextView) findViewById(R.id.info_email);
-		qq = (TextView) findViewById(R.id.info_qq);
-		birthday = (TextView) findViewById(R.id.info_birthday);
-		address = (TextView) findViewById(R.id.info_address);
-		roles = (TextView) findViewById(R.id.info_role);
-		mark = (TextView) findViewById(R.id.info_mark);
-		Button logout = (Button) findViewById(R.id.btn_logout);
-		TableRow btnMobile = (TableRow) findViewById(R.id.btn_info_mobile);
-		TableRow btnQQ = (TableRow) findViewById(R.id.btn_info_qq);
-		TableRow btnInfo = (TableRow) findViewById(R.id.btn_info_user);
+		appbar = bind(R.id.appbar);
+		userTop = bind(R.id.user_top);
+		topLayout = bind(R.id.topLayout);
+		icon = bind(R.id.user_icon);
+		titleName = bind(R.id.user_topName);
+		username = bind(R.id.info_username);
+		//nickname = bind(R.id.info_nickname);
+		gender = bind(R.id.info_gender);
+		level = bind(R.id.info_level);
+		mobile = bind(R.id.info_mobile);
+		email = bind(R.id.info_email);
+		qq = bind(R.id.info_qq);
+		birthday = bind(R.id.info_birthday);
+		address = bind(R.id.info_address);
+		roles = bind(R.id.info_role);
+		mark = bind(R.id.info_mark);
+		Button logout = bind(R.id.btn_logout);
+		TableRow btnMobile = bind(R.id.btn_info_mobile);
+		TableRow btnQQ = bind(R.id.btn_info_qq);
+		TableRow btnInfo = bind(R.id.btn_info_user);
 		if (Common.isLogin())
 			titleName.setText(Common.mUser.nickname);
 		else

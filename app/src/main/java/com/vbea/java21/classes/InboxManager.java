@@ -1,7 +1,6 @@
 package com.vbea.java21.classes;
 
 import java.util.List;
-import android.content.Context;
 import com.vbea.java21.data.Messages;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.CountListener;

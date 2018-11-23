@@ -1,4 +1,4 @@
-package com.vbea.java21;
+package com.vbea.java21.fragment;
 
 import java.util.ArrayList;
 
@@ -7,24 +7,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.content.Intent;
-import android.widget.AdapterView;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.DividerItemDecoration;
 
-import com.vbea.java21.list.Knowledges;
+import com.vbea.java21.AndroidWeb;
+import com.vbea.java21.data.Knowledges;
 import com.vbea.java21.list.KnowledgeAdapter;
 import com.vbea.java21.classes.Common;
-import com.vbea.java21.classes.Util;
+import com.vbea.java21.view.MyDividerDecoration;
 
 public class KnowFragment extends Fragment
 {
 	private RecyclerView recyclerView;
 	private KnowledgeAdapter mAdapter;
 	private View rootView;
+	private final int type = 0;
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -42,9 +41,7 @@ public class KnowFragment extends Fragment
 			recyclerView = (RecyclerView) view.findViewById(R.id.cpt_recyclerView);
 			recyclerView.setHasFixedSize(true);
 			recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-			DividerItemDecoration decoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-			decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
-			recyclerView.addItemDecoration(decoration);
+			recyclerView.addItemDecoration(new MyDividerDecoration(getContext()));
 			
 			ArrayList<Knowledges> list = new ArrayList<Knowledges>();
 			String[] titles = getResources().getStringArray(R.array.array_shizhan);
@@ -66,16 +63,19 @@ public class KnowFragment extends Fragment
 			mAdapter.setOnItemClickListener(new KnowledgeAdapter.OnItemClickListener()
 			{
 				@Override
-				public void onItemClick(String title, String url)
+				public void onItemClick(Knowledges item)
 				{
 					/*if (Common.isNotLogin())
 					{
 						Util.toastShortMessage(getContext(), "请先登录！");
 						return;
 					}*/
-					Intent intent = new Intent(getActivity(), Knowledge.class);
-					intent.putExtra("url", url);
-					intent.putExtra("title", title);
+					Intent intent = new Intent(getActivity(), AndroidWeb.class);
+					intent.putExtra("id", id);
+					intent.putExtra("url", item.URL);
+					intent.putExtra("title", item.TITLE);
+					intent.putExtra("sub", item.SUB);
+					intent.putExtra("type", type);
 					Common.startActivityOptions(getActivity(), intent);
 				}
 			});

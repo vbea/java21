@@ -1,9 +1,7 @@
 package com.vbea.java21;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.AttributeSet;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
@@ -16,22 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MenuInflater;
-import android.view.LayoutInflater;
 import android.content.Intent;
-import android.content.Context;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.net.Uri;
 import android.graphics.Bitmap;
 
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.support.design.widget.BottomSheetDialog;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.AdvConfig;
-import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.SocialShare;
 import com.tencent.connect.share.QQShare;
 import com.tencent.connect.common.Constants;
@@ -73,10 +65,10 @@ public class ApiWord extends BaseActivity
 	protected void after()
 	{
 		enableBackButton();
-		proGro = (ProgressBar) findViewById(R.id.apiProgress);
-		myweb = (WebView) findViewById(R.id.WebViewApi);
-		NightView = (TextView) findViewById(R.id.api_nightView);
-		bannerLayout = (ViewGroup) findViewById(R.id.webBanner);
+		proGro = bind(R.id.apiProgress);
+		myweb = bind(R.id.WebViewApi);
+		NightView = bind(R.id.api_nightView);
+		bannerLayout = bind(R.id.webBanner);
 		if (MyThemes.isNightTheme()) NightView.setVisibility(View.VISIBLE);
 		WebSettings set = myweb.getSettings();
 		set.setJavaScriptEnabled(true);

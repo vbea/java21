@@ -1,24 +1,14 @@
 package com.vbea.java21;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
-import android.widget.SeekBar;
-import android.widget.ImageButton;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.content.Intent;
 import android.text.TextWatcher;
 import android.text.Editable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
-import com.vbea.java21.classes.ExceptionHandler;
 
 public class MusicTrans extends BaseActivity
 {
@@ -36,9 +26,9 @@ public class MusicTrans extends BaseActivity
 	public void after()
 	{
 		enableBackButton();
-		btnTrans = (Button) findViewById(R.id.btn_musicTrans);
-		txtMusic = (EditText) findViewById(R.id.txt_musicNew);
-		txtCode = (EditText) findViewById(R.id.txt_musicOld);
+		btnTrans = bind(R.id.btn_musicTrans);
+		txtMusic = bind(R.id.txt_musicNew);
+		txtCode = bind(R.id.txt_musicOld);
 		
 		btnTrans.setOnClickListener(new View.OnClickListener()
 		{

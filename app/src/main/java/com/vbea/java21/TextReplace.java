@@ -1,22 +1,14 @@
 package com.vbea.java21;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import android.os.Bundle;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.CheckBox;
-import android.widget.Toast;
 import android.content.DialogInterface;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.support.design.widget.Snackbar;
 
-import com.vbea.java21.classes.MyAlertDialog;
-import com.vbea.java21.classes.Common;
+import com.vbea.java21.view.MyAlertDialog;
 import com.vbea.java21.classes.Util;
 
 public class TextReplace extends BaseActivity
@@ -36,9 +28,9 @@ public class TextReplace extends BaseActivity
 	protected void after()
 	{
 		enableBackButton();
-		edit = (EditText) findViewById(R.id.edt_replace);
-		Button btnPlace = (Button) findViewById(R.id.btn_replace);
-		baseView = findViewById(R.id.txtreplaceRelativeLayout);
+		edit = bind(R.id.edt_replace);
+		Button btnPlace = bind(R.id.btn_replace);
+		baseView = bind(R.id.txtreplaceRelativeLayout);
 		
 		btnPlace.setOnClickListener(new View.OnClickListener()
 		{
@@ -93,7 +85,7 @@ public class TextReplace extends BaseActivity
 			return;
 		}
 		final String old = edit.getText().toString();
-		if (!ignore && old.indexOf(res) < 0)
+		if (!ignore && !old.contains(res))
 		{
 			Snackbar.make(baseView, "未能找到源文本", Snackbar.LENGTH_SHORT).show();
 			return;

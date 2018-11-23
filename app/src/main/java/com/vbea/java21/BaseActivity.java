@@ -6,8 +6,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.vbea.java21.classes.Common;
-import com.vbea.java21.classes.Util;
-import com.vbea.java21.classes.ExceptionHandler;
 
 public abstract class BaseActivity extends AppCompatActivity
 {
@@ -15,6 +13,7 @@ public abstract class BaseActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
 	{
+        Common.start(getApplicationContext());
         setTheme(MyThemes.getTheme());
         super.onCreate(savedInstanceState);
         before();

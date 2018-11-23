@@ -3,7 +3,6 @@ package com.vbea.java21.list;
 import java.util.List;
 import java.util.ArrayList;
 
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;

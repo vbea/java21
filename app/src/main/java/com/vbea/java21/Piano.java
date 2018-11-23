@@ -1,15 +1,13 @@
 package com.vbea.java21;
 
-import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.MotionEvent;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
-import android.widget.Button;
 import android.widget.TextView;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
@@ -202,7 +200,7 @@ public class Piano extends AppCompatActivity
 	@Override
 	protected void onResume()
 	{
-		setRequestedOrientation(0);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		super.onResume();
 	}
 }

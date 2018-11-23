@@ -6,23 +6,14 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.RelativeLayout;
-import android.widget.LinearLayout;
 import android.widget.Button; 
 import android.widget.RadioButton;
-import android.widget.Toast;
 import android.widget.EditText;
-import android.widget.Switch;
 import android.view.View;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
@@ -53,13 +44,13 @@ public class Sign extends BaseActivity
 	@Override
 	public void after()
 	{
-		btnSign = (Button) findViewById(R.id.btnSign);
-		edtUsername = (EditText) findViewById(R.id.signUsername);
-		edtPass1 = (EditText) findViewById(R.id.signPassword);
-		edtPass2 = (EditText) findViewById(R.id.signQuerPass);
-		edtEmail = (EditText) findViewById(R.id.signEmail);
-		edtNick = (EditText) findViewById(R.id.signNick);
-		rdbMale = (RadioButton) findViewById(R.id.rdbMale);
+		btnSign = bind(R.id.btnSign);
+		edtUsername = bind(R.id.signUsername);
+		edtPass1 = bind(R.id.signPassword);
+		edtPass2 = bind(R.id.signQuerPass);
+		edtEmail = bind(R.id.signEmail);
+		edtNick = bind(R.id.signNick);
+		rdbMale = bind(R.id.rdbMale);
 		
 		toolbar.setNavigationOnClickListener(new View.OnClickListener()
 		{

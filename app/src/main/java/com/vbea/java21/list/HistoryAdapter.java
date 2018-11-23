@@ -3,17 +3,13 @@ package com.vbea.java21.list;
 import java.util.List;
 import android.widget.TextView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import com.vbea.java21.R;
-import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.data.Histories;
-import com.vbea.java21.data.Histime;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHolder>
 {

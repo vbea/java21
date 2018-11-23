@@ -1,38 +1,20 @@
 package com.vbea.java21;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Date;
-import java.text.SimpleDateFormat;
-
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 import android.content.Intent;
-import android.content.DialogInterface;
-import android.net.Uri;
-import android.graphics.Bitmap;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.InboxManager;
-import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.data.Messages;
 import com.vbea.java21.list.InboxAdapter;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.UpdateListener;
-import cn.bmob.v3.exception.BmobException;
-import com.vbea.java21.list.*;
+import com.vbea.java21.view.MyDividerDecoration;
 
 public class MyInbox extends BaseActivity
 {
@@ -57,9 +39,9 @@ public class MyInbox extends BaseActivity
 	public void after()
 	{
 		enableBackButton();
-		recyclerView = (RecyclerView) findViewById(R.id.inbox_recyclerView);
-		emptyView = (TextView) findViewById(R.id.inbox_emptyview);
-		refreshLayout = (SwipeRefreshLayout) findViewById(R.id.inbox_refresh);
+		recyclerView = bind(R.id.inbox_recyclerView);
+		emptyView = bind(R.id.inbox_emptyview);
+		refreshLayout = bind(R.id.inbox_refresh);
 		refreshLayout.setColorSchemeResources(MyThemes.getColorPrimary(), MyThemes.getColorAccent());
 		mAdapter = new InboxAdapter();
 		recyclerView.addItemDecoration(new MyDividerDecoration(this));

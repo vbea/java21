@@ -1,10 +1,7 @@
 package com.vbea.java21;
 
-import android.os.Bundle;
 import android.widget.RelativeLayout;
 import android.widget.LinearLayout;
-import android.widget.Button; 
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Switch;
 import android.widget.CompoundButton;
@@ -13,14 +10,11 @@ import android.content.Intent;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.DataCleanManager;
 import com.vbea.java21.classes.Util;
-import com.vbea.java21.classes.MyAlertDialog;
+import com.vbea.java21.view.MyAlertDialog;
 
 public class Setting extends BaseActivity
 {
@@ -41,31 +35,27 @@ public class Setting extends BaseActivity
 	public void after()
 	{
 		enableBackButton();
-		btnAdver = (LinearLayout) findViewById(R.id.btnSetadv);
-		btnSetheme = (TextView) findViewById(R.id.btn_setTheme);
-		btnSetimg = (TextView) findViewById(R.id.btn_setImage);
-		btnScore = (TextView) findViewById(R.id.btn_setScore);
-		btnJoin = (TextView) findViewById(R.id.btn_setJoin);
-		btnFeed = (TextView) findViewById(R.id.btn_setHelp);
-		btnHistory = (TextView) findViewById(R.id.btn_setHistory);
-		btnDonate = (TextView) findViewById(R.id.btn_setDonate);
-		btnTextsize = (TextView) findViewById(R.id.btn_setTextsize);
-		btnUpdate = (LinearLayout) findViewById(R.id.btnUpdate);
-		RelativeLayout btnCache = (RelativeLayout) findViewById(R.id.btn_setClearCache);
-		RelativeLayout btnImageCache = (RelativeLayout) findViewById(R.id.btn_setClearCacheImage);
-		btnMusic = (LinearLayout) findViewById(R.id.btnSetmusic);
-		btnTips = (LinearLayout) findViewById(R.id.btnSettips);
-		btnWelAdv = (LinearLayout) findViewById(R.id.btnSetadvwel);
-		swiMusic = (Switch) findViewById(R.id.swtMusic);
-		swiTips = (Switch) findViewById(R.id.swtTips);
-		swiAdv = (Switch) findViewById(R.id.swtAdv);
-		swiWelAdv = (Switch) findViewById(R.id.swtAdvwel);
-		/*title = (RelativeLayout) findViewById(R.id.bg_title);
-		sldGift = (SlidButton) findViewById(R.id.slid_gift);
-		sldSkip = (SlidButton) findViewById(R.id.slid_skip);
-		sldEyes = (SlidButton) findViewById(R.id.slid_eyes);*/
-		txtCacheSize = (TextView) findViewById(R.id.txt_setCacheSize);
-		txtImageSize = (TextView) findViewById(R.id.txt_setCacheImageSize);
+		btnAdver = bind(R.id.btnSetadv);
+		btnSetheme = bind(R.id.btn_setTheme);
+		btnSetimg = bind(R.id.btn_setImage);
+		btnScore = bind(R.id.btn_setScore);
+		btnJoin = bind(R.id.btn_setJoin);
+		btnFeed = bind(R.id.btn_setHelp);
+		btnHistory = bind(R.id.btn_setHistory);
+		btnDonate = bind(R.id.btn_setDonate);
+		btnTextsize = bind(R.id.btn_setTextsize);
+		btnUpdate = bind(R.id.btnUpdate);
+		RelativeLayout btnCache = bind(R.id.btn_setClearCache);
+		RelativeLayout btnImageCache = bind(R.id.btn_setClearCacheImage);
+		btnMusic = bind(R.id.btnSetmusic);
+		btnTips = bind(R.id.btnSettips);
+		btnWelAdv = bind(R.id.btnSetadvwel);
+		swiMusic = bind(R.id.swtMusic);
+		swiTips = bind(R.id.swtTips);
+		swiAdv = bind(R.id.swtAdv);
+		swiWelAdv = bind(R.id.swtAdvwel);
+		txtCacheSize = bind(R.id.txt_setCacheSize);
+		txtImageSize = bind(R.id.txt_setCacheImageSize);
 		spf = getSharedPreferences("java21", MODE_PRIVATE);
 		
 		btnMusic.setOnClickListener(new View.OnClickListener()

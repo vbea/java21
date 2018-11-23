@@ -1,27 +1,18 @@
 package com.vbea.java21;
 
-import java.util.List;
-import java.util.ArrayList;
-
 import android.app.ProgressDialog;
 import android.animation.Animator;
 import android.content.Intent;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Button; 
 import android.widget.TextView;
 import android.widget.EditText;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.net.Uri;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.graphics.Point;
 
 import com.vbea.java21.classes.Common;
@@ -30,11 +21,7 @@ import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.SocialShare;
 import com.vbea.java21.classes.SettingUtil;
 import com.vbea.java21.classes.ExceptionHandler;
-import com.vbea.java21.data.Users;
 import com.vbea.java21.widget.RippleColorView;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.exception.BmobException;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
@@ -59,13 +46,13 @@ public class Login extends BaseActivity
 	@Override
 	public void after()
 	{
-		forget = (TextView) findViewById(R.id.btn_forgetpsd);
-		btnSign = (TextView) findViewById(R.id.btnSign);
-		ImageView qqLogin = (ImageView) findViewById(R.id.btn_qqLogin);
-		btnLogin = (Button) findViewById(R.id.btnLogin);
-		edtUid = (EditText) findViewById(R.id.loginUid);
-		edtPass = (EditText) findViewById(R.id.loginPassword);
-		rippleColorView = (RippleColorView)findViewById(R.id.rippleColorView);
+		forget = bind(R.id.btn_forgetpsd);
+		btnSign = bind(R.id.btnSign);
+		ImageView qqLogin = bind(R.id.btn_qqLogin);
+		btnLogin = bind(R.id.btnLogin);
+		edtUid = bind(R.id.loginUid);
+		edtPass = bind(R.id.loginPassword);
+		rippleColorView = bind(R.id.rippleColorView);
 		if (Common.HULUXIA)// && !Common.IS_ACTIVE)
 		{
 			//btnSign.setVisibility(View.GONE);

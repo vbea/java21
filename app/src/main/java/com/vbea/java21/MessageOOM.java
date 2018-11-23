@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.webkit.WebView;
 

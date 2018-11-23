@@ -3,20 +3,14 @@ package com.vbea.java21;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-import android.app.Activity;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.SeekBar;
-import android.widget.ImageButton;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.TableRow;
-import android.widget.RelativeLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.Util;
@@ -44,16 +38,16 @@ public class MusicTest extends BaseActivity
 	public void after()
 	{
 		enableBackButton();
-		seekVelo = (SeekBar) findViewById(R.id.seekVelocity);
-		seekVelo2 = (SeekBar) findViewById(R.id.seekVelocity2);
-		txtVelocity = (TextView) findViewById(R.id.txtVelocity);
-		txtVelocity2 = (TextView) findViewById(R.id.txtVelocity2);
-		velUpper = (TextView) findViewById(R.id.volUpper);
-		velLower = (TextView) findViewById(R.id.volLower);
-		btnPlay = (Button) findViewById(R.id.btn_musicPlays);
-		txtMusic = (EditText) findViewById(R.id.txt_musicTest);
-		tabRow1 = (TableRow) findViewById(R.id.testMusic_tb1);
-		tabRow2 = (TableRow) findViewById(R.id.testMusic_tb2);
+		seekVelo = bind(R.id.seekVelocity);
+		seekVelo2 = bind(R.id.seekVelocity2);
+		txtVelocity = bind(R.id.txtVelocity);
+		txtVelocity2 = bind(R.id.txtVelocity2);
+		velUpper = bind(R.id.volUpper);
+		velLower = bind(R.id.volLower);
+		btnPlay = bind(R.id.btn_musicPlays);
+		txtMusic = bind(R.id.txt_musicTest);
+		tabRow1 = bind(R.id.testMusic_tb1);
+		tabRow2 = bind(R.id.testMusic_tb2);
 		//txtMusic.setText(""+velocity);
 		String codes = getIntent().getStringExtra("music");
 		if (codes != null)
@@ -294,7 +288,7 @@ public class MusicTest extends BaseActivity
 		super.onDestroy();
 	}
 	
-	class MusicThread extends Thread implements Runnable
+	private class MusicThread extends Thread implements Runnable
 	{
 		private String[] codes;
 		private int log = 0;

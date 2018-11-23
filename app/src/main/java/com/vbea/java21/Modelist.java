@@ -1,19 +1,11 @@
 package com.vbea.java21;
 
-import android.os.Bundle;
-import android.view.View;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.DividerItemDecoration;
 
 import com.vbea.java21.data.SQLHelper;
 import com.vbea.java21.list.ModeAdapter;
-import com.vbea.java21.classes.Common;
-import com.vbea.java21.classes.Util;
-import com.vbea.java21.classes.ExceptionHandler;
+import com.vbea.java21.view.MyDividerDecoration;
 
 public class Modelist extends BaseActivity
 {
@@ -38,9 +30,7 @@ public class Modelist extends BaseActivity
 		enableBackButton();
 		recyclerView = bind(R.id.mode_recyclerView);
 		mAdapter = new ModeAdapter(new SQLHelper(this).select());
-		DividerItemDecoration decoration = new DividerItemDecoration(Modelist.this, DividerItemDecoration.VERTICAL);
-		decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
-		recyclerView.addItemDecoration(decoration);
+		recyclerView.addItemDecoration(new MyDividerDecoration(this));
 		recyclerView.setAdapter(mAdapter);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));

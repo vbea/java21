@@ -1,20 +1,11 @@
 package com.vbea.java21.audio;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ByteArrayInputStream;
-import java.io.FileOutputStream;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 import java.util.HashMap;
 
-import android.os.Environment;
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.content.res.AssetFileDescriptor;
 import android.media.SoundPool;
 import android.media.AudioManager;
 import android.media.AudioAttributes;
@@ -24,32 +15,29 @@ import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 
-import org.apache.commons.io.FileUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 
 public class SoundLoad
 {
 	private SoundPool mSoundPool1;//,mSoundPool2;//,mSoundPool3;
 	private AssetManager am;
 	private List<Music> musicTop;
-	private String[] sound_alpha = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};//常用音源26
-	private String[] sound_bass = {"A1","A2","A3","A4","A5","A6","A7","A8","A9","A10","A11","A12","A13","A14","A15","A16"};//低音16
-	private String[] sound_pitch = {"B1","B2","B3","B4","B5","B6","B7","B8","B9","B10"};//高音10
-	private String[] sound_tone = {"C1","C2","C3","C4","C5","C6","C7","C8","C9","C10","C11","C12","C13","C14","C15","C16","C17","C18","C19","C20","C21","C22","C23","C24","C25","C26","C27","C28","C29","C30","C31","C32","C33","C34","C35","C36"};//升降调36
+	private final String[] sound_alpha = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};//常用音源26
+	private final String[] sound_bass = {"A1","A2","A3","A4","A5","A6","A7","A8","A9","A10","A11","A12","A13","A14","A15","A16"};//低音16
+	private final String[] sound_pitch = {"B1","B2","B3","B4","B5","B6","B7","B8","B9","B10"};//高音10
+	private final String[] sound_tone = {"C1","C2","C3","C4","C5","C6","C7","C8","C9","C10","C11","C12","C13","C14","C15","C16","C17","C18","C19","C20","C21","C22","C23","C24","C25","C26","C27","C28","C29","C30","C31","C32","C33","C34","C35","C36"};//升降调36
 	private HashMap<String, Integer> hash_music;//,hash_music2,hash_tone;
 	private String path = "sound/%1$s.ogg";
-	public boolean isCometed = false;
+	public boolean isCompeted = false;
 	//private int playCode = 0;
 	//private boolean soDown;
 	public SoundLoad(Context context) throws Exception
 	{
 		am = context.getAssets();
-		isCometed = false;
+		isCompeted = false;
 		//start new Auduo 20170810
 		mSoundPool1 = getSoundPool();
 		hash_music = new HashMap<String, Integer>(88);
@@ -150,7 +138,7 @@ public class SoundLoad
 		}
 		finally
 		{
-			Common.AUDIO = isCometed = true;
+			Common.AUDIO = isCompeted = true;
 		}
 	}
 	
@@ -173,7 +161,7 @@ public class SoundLoad
 			play(id);
 	}
 	
-	public void synaxMusic()
+	private void synaxMusic()
 	{
 		try
 		{
@@ -201,7 +189,7 @@ public class SoundLoad
 		}
 	}
 	
-	public void synaxMusic2()
+	private void synaxMusic2()
 	{
 		try
 		{

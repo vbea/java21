@@ -1,16 +1,11 @@
 package com.vbea.java21;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.IBinder;
 import android.view.View;
-import android.view.LayoutInflater;
-import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TableRow;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.CompoundButton;
@@ -18,17 +13,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ComponentName;
 import android.content.ServiceConnection;
-import android.content.ClipboardManager;
-import android.content.ClipData;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.audio.SoundLoad;
 import com.vbea.java21.audio.AudioService;
 
-public class More extends AppCompatActivity
+public class More extends BaseActivity
 {
 	private TextView txtCode, txtName;
 	private Switch swtLoop, swtOrder;
@@ -36,35 +26,29 @@ public class More extends AppCompatActivity
 	private SoundLoad soundLoad = null;
 	private PlayThread mThread = null;
 	private String MusicName;
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.more);
-		
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
-		setSupportActionBar(tool);
-		RelativeLayout btnLoop = (RelativeLayout) findViewById(R.id.btn_setLoop);
-		RelativeLayout btnOrder = (RelativeLayout) findViewById(R.id.btn_setOrder);
-		TextView btnPiano = (TextView) findViewById(R.id.btn_musicPiano);
-		TextView btnTest = (TextView) findViewById(R.id.btn_musicTest);
-		TextView btnTrans = (TextView) findViewById(R.id.btn_musicTrans);
-		TextView btnList = (TextView) findViewById(R.id.btn_musicList);
-		txtCode = (TextView) findViewById(R.id.more_musicCode);
-		txtName = (TextView) findViewById(R.id.more_musicName);
-		proMusic = (ProgressBar) findViewById(R.id.pro_micMore);
-		swtLoop = (Switch) findViewById(R.id.slid_setLoop);
-		swtOrder = (Switch) findViewById(R.id.slid_setOrder);
-		
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
+	}
+
+	@Override
+	protected void after()
+	{
+		enableBackButton();
+		RelativeLayout btnLoop = bind(R.id.btn_setLoop);
+		RelativeLayout btnOrder = bind(R.id.btn_setOrder);
+		TextView btnPiano = bind(R.id.btn_musicPiano);
+		TextView btnTest = bind(R.id.btn_musicTest);
+		TextView btnTrans = bind(R.id.btn_musicTrans);
+		TextView btnList = bind(R.id.btn_musicList);
+		txtCode = bind(R.id.more_musicCode);
+		txtName = bind(R.id.more_musicName);
+		proMusic = bind(R.id.pro_micMore);
+		swtLoop = bind(R.id.slid_setLoop);
+		swtOrder = bind(R.id.slid_setOrder);
+
 		btnLoop.setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View v)

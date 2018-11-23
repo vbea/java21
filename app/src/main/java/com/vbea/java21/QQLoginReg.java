@@ -4,17 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.FileOutputStream;
 import java.io.BufferedOutputStream;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.RelativeLayout;
 import android.widget.LinearLayout;
 import android.widget.Button; 
 import android.widget.TextView;
@@ -22,16 +19,10 @@ import android.widget.ImageView;
 import android.widget.EditText;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
-import android.widget.CompoundButton;
 import android.view.View;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.graphics.Bitmap;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.MD5Util;
@@ -81,18 +72,18 @@ public class QQLoginReg extends BaseActivity
 	public void after()
 	{
 		enableBackButton();
-		btnOK = (Button) findViewById(R.id.btn_qqComplete);
-		qqIcon = (ImageView) findViewById(R.id.img_qqIcon);
-		qqNick = (TextView) findViewById(R.id.txt_qqNick);
-		useQQinfo = (CheckBox) findViewById(R.id.chk_useQqIcon);
-		radioNew = (RadioButton) findViewById(R.id.rdbNewUser);
-		radioOld = (RadioButton) findViewById(R.id.rdbOldUser);
-		edtUsername = (EditText) findViewById(R.id.edt_qqUsername);
-		edtUserbind = (EditText) findViewById(R.id.edt_qqUsernameBinding);
-		edtEmail = (EditText) findViewById(R.id.edt_qqEmail);
-		edtPassword = (EditText) findViewById(R.id.edt_qqPassword);
-		layoutNew = (LinearLayout) findViewById(R.id.qqlayout_newuser);
-		layoutOld = (LinearLayout) findViewById(R.id.qqlayout_olduser);
+		btnOK = bind(R.id.btn_qqComplete);
+		qqIcon = bind(R.id.img_qqIcon);
+		qqNick = bind(R.id.txt_qqNick);
+		useQQinfo = bind(R.id.chk_useQqIcon);
+		radioNew = bind(R.id.rdbNewUser);
+		radioOld = bind(R.id.rdbOldUser);
+		edtUsername = bind(R.id.edt_qqUsername);
+		edtUserbind = bind(R.id.edt_qqUsernameBinding);
+		edtEmail = bind(R.id.edt_qqEmail);
+		edtPassword = bind(R.id.edt_qqPassword);
+		layoutNew = bind(R.id.qqlayout_newuser);
+		layoutOld = bind(R.id.qqlayout_olduser);
 		mInfo = new UserInfo(QQLoginReg.this, SocialShare.mTencent.getQQToken());
 		mHandler.sendEmptyMessage(0);
 		
@@ -156,56 +147,49 @@ public class QQLoginReg extends BaseActivity
 		{
 			public void onClick(View v)
 			{
-				try
+				if (radioNew.isChecked())
 				{
-					if (radioNew.isChecked())
+					if (edtUsername.getError() != null)
+						return;
+					if (edtEmail.getError() != null)
+						return;
+					if (isEmpty(edtUsername, true, "请输入用户名"))
+						return;
+					if (!isUsername(edtUsername.getText().toString()))
 					{
-						if (edtUsername.getError() != null)
-							return;
-						if (edtEmail.getError() != null)
-							return;
-						if (isEmpty(edtUsername, true, "请输入用户名"))
-							return;
-						if (!isUsername(edtUsername.getText().toString()))
-						{
-							edtUsername.requestFocus();
-							edtUsername.setError("用户名填写不规范");
-							return;
-						}
-						if (!isEmail(edtEmail.getText().toString()))
-						{
-							edtEmail.requestFocus();
-							edtEmail.setError("邮箱格式不正确");
-							return;
-						}
-					}
-					else
-					{
-						if (isEmpty(edtUserbind, true, "请输入用户名"))
-							return;
-						if (isEmpty(edtPassword, false, "请输入密码"))
-							return;
-					}
-					if (!Common.isNet(QQLoginReg.this))
-					{
-						Util.toastShortMessage(getApplicationContext(), "请检查你的网络连接");
+						edtUsername.requestFocus();
+						edtUsername.setError("用户名填写不规范");
 						return;
 					}
-					btnOK.setEnabled(false);
-					if (radioNew.isChecked())
+					if (!isEmail(edtEmail.getText().toString()))
 					{
-						btnOK.setText("注册中...");
-						new SignThread().start();
-					}
-					else
-					{
-						btnOK.setText("登录中...");
-						new BindThread().start();
+						edtEmail.requestFocus();
+						edtEmail.setError("邮箱格式不正确");
+						return;
 					}
 				}
-				catch (Exception e)
+				else
 				{
-					
+					if (isEmpty(edtUserbind, true, "请输入用户名"))
+						return;
+					if (isEmpty(edtPassword, false, "请输入密码"))
+						return;
+				}
+				if (!Common.isNet(QQLoginReg.this))
+				{
+					Util.toastShortMessage(getApplicationContext(), "请检查你的网络连接");
+					return;
+				}
+				btnOK.setEnabled(false);
+				if (radioNew.isChecked())
+				{
+					btnOK.setText("注册中...");
+					new SignThread().start();
+				}
+				else
+				{
+					btnOK.setText("登录中...");
+					new BindThread().start();
 				}
 			}
 		});

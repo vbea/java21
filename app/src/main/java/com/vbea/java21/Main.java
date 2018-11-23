@@ -2,44 +2,30 @@ package com.vbea.java21;
 
 import java.util.List;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.LayoutInflater;
 import android.view.KeyEvent;
-import android.view.WindowManager;
 import android.net.Uri;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.DialogInterface;
-//import android.widget.AdapterView;
-//import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-//import android.graphics.Bitmap;
-//import android.graphics.BitmapFactory;
-//import android.graphics.Canvas;
-//import android.graphics.Paint;
-//import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.TabLayout;
-//import android.support.design.widget.CircularBorderDrawable;
 import android.support.v4.util.Pair;
 import android.support.v4.view.ViewPager;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
-import android.support.v7.widget.RecyclerView;
 
 import cn.bmob.v3.update.BmobUpdateAgent;
 import com.tencent.stat.StatService;
@@ -47,27 +33,30 @@ import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.BannerView;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.comm.util.AdError;
+import com.vbea.java21.fragment.AideFragment;
+import com.vbea.java21.fragment.Android2Fragment;
+import com.vbea.java21.fragment.AndroidFragment;
+import com.vbea.java21.fragment.ChapterFragment;
+import com.vbea.java21.fragment.DatabaseFragment;
+import com.vbea.java21.fragment.JavaFragment;
+import com.vbea.java21.fragment.KnowFragment;
 import com.vbea.java21.list.FragmentAdapter;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.AdvConfig;
 import com.vbea.java21.classes.InboxManager;
-import com.vbea.java21.classes.MyAlertDialog;
+import com.vbea.java21.view.MyAlertDialog;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.widget.CustomTextView;
 import com.vbea.java21.audio.SoundLoad;
 import com.vbea.java21.data.Copys;
 import com.vbea.java21.data.Tips;
-import com.vbea.java21.classes.*;
 
-public class Main extends AppCompatActivity
+public class Main extends BaseActivity
 {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle drawerToggle;
-	private ViewPager viewpager;
-	private ImageView mImgHead;//,imgTheme,imgMusic,imgApi,imgReplace,imgSetting,imgHelp,imgWifi,imgSMS;//imgExit;
-    private Toolbar toolbar;
-	private TabLayout tabLayout;
+	private ImageView mImgHead;
 	private long exitTime = 0;
 	private LinearLayout drawMuic, drawTheme, drawHelp, drawWifi, drawCodeEditor, layoutTips;
 	private RelativeLayout drawUser;
@@ -79,46 +68,36 @@ public class Main extends AppCompatActivity
 	private BannerView bannerView;
 	private InboxCallback myCallback;
 	private boolean menuReady = false;
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+
+	@Override
+	protected void before()
 	{
-		Common.start(getApplicationContext());
 		MyThemes.initBackColor(this);
-		setTheme(MyThemes.getTheme());
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+		setContentView(R.layout.main);
 		StatService.trackCustomEvent(this, "onCreate", "");
+	}
+
+	@Override
+    protected void after()
+	{
 		START = getIntent().getBooleanExtra("start", false);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mImgHead = (ImageView) findViewById(R.id.img_head);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-		viewpager = (ViewPager) findViewById(R.id.viewpager);
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-		drawMuic = (LinearLayout) findViewById(R.id.drawer_music);
-		drawTheme = (LinearLayout) findViewById(R.id.draw_item1);
-		drawHelp = (LinearLayout) findViewById(R.id.drawer_helpLayout);
-		drawWifi = (LinearLayout) findViewById(R.id.drawer_wifiLayout);
-		drawCodeEditor = (LinearLayout) findViewById(R.id.drawer_codeEditor);
-		drawUser = (RelativeLayout) findViewById(R.id.draw_user);
-		layoutTips = (LinearLayout) findViewById(R.id.layout_tips);
-		txtUserName = (TextView) findViewById(R.id.draw_txtName);
-		txtSignature = (TextView) findViewById(R.id.draw_txtMark);
-		txtAudioCode = (TextView) findViewById(R.id.main_showAudioCode);
-		bannerLayout = (ViewGroup) findViewById(R.id.mainBanner);
-		/*imgTheme = (ImageView) findViewById(R.id.draw_image1);
-		imgMusic = (ImageView) findViewById(R.id.draw_image2);
-		imgApi = (ImageView) findViewById(R.id.draw_image3);
-		imgReplace = (ImageView) findViewById(R.id.draw_image4);
-		imgSetting = (ImageView) findViewById(R.id.draw_image5);
-		imgHelp = (ImageView) findViewById(R.id.draw_image6);
-		imgWifi = (ImageView) findViewById(R.id.draw_image7);
-		imgSMS = (ImageView) findViewById(R.id.draw_image8);*/
-		//btnTips = (TextView) findViewById(R.id.txt_mainTipsbtn);
-		txtCotation = (CustomTextView) findViewById(R.id.txt_quotation);
-		txtVip = (TextView) findViewById(R.id.draw_isVIP);
-		setSupportActionBar(toolbar);
-		//toolbar.setNavigationIcon(R.mipmap.ic_ab_drawer);
-		//toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        mDrawerLayout = bind(R.id.drawer_layout);
+		mImgHead = bind(R.id.img_head);
+		ViewPager viewpager = bind(R.id.viewpager);
+		TabLayout tabLayout = bind(R.id.tabLayout);
+		drawMuic = bind(R.id.drawer_music);
+		drawTheme = bind(R.id.draw_item1);
+		drawHelp = bind(R.id.drawer_helpLayout);
+		drawWifi = bind(R.id.drawer_wifiLayout);
+		drawCodeEditor = bind(R.id.drawer_codeEditor);
+		drawUser = bind(R.id.draw_user);
+		layoutTips = bind(R.id.layout_tips);
+		txtUserName = bind(R.id.draw_txtName);
+		txtSignature = bind(R.id.draw_txtMark);
+		txtAudioCode = bind(R.id.main_showAudioCode);
+		bannerLayout = bind(R.id.mainBanner);
+		txtCotation = bind(R.id.txt_quotation);
+		txtVip = bind(R.id.draw_isVIP);
 		mHandler.sendEmptyMessageDelayed(2, 2000);
 		FragmentAdapter fa = new FragmentAdapter(getSupportFragmentManager());
 		fa.addItem(new ChapterFragment(), getString(R.string.contacts));
@@ -133,7 +112,7 @@ public class Main extends AppCompatActivity
 		}
         viewpager.setAdapter(fa);
         tabLayout.setupWithViewPager(viewpager);
-		tabLayout.setTabTextColors(getResources().getColor(R.color.white), getResources().getColor(R.color.gray2));
+		tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.white), ContextCompat.getColor(this, R.color.gray2));
 		MyThemes.ISCHANGED = true;
 		Common.IsChangeICON = true;
         drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
@@ -366,7 +345,7 @@ public class Main extends AppCompatActivity
 		mHandler.sendEmptyMessageDelayed(1, 500);
 	}
 	
-	public void goSms(View v)
+	/*public void goSms(View v)
 	{
 		if (!Common.isLogin())
 		{
@@ -381,7 +360,7 @@ public class Main extends AppCompatActivity
 				mHandler.sendEmptyMessageDelayed(1, 500);
 			}
 		});
-	}
+	}*/
 	
 	private void showPlugin()
 	{
@@ -715,7 +694,7 @@ public class Main extends AppCompatActivity
 				RUN = true;
 				if (Common.SOUND == null)
 					Common.SOUND = new SoundLoad(Main.this);
-				if (!Common.SOUND.isCometed)
+				if (!Common.SOUND.isCompeted)
 				{
 					Common.SOUND.load();
 				}
@@ -824,7 +803,7 @@ public class Main extends AppCompatActivity
 		Util.toastShortMessage(getApplicationContext(), "登录失败(" + code + ")");
 	}
 	
-	class InboxCallback implements InboxManager.InboxCallback
+	private class InboxCallback implements InboxManager.InboxCallback
 	{
 		@Override
 		public void onSuccess()

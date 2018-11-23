@@ -1,6 +1,5 @@
 package com.vbea.java21;
 
-import java.net.URLEncoder;
 import java.io.File;
 import java.io.IOException;
 
@@ -11,48 +10,33 @@ import android.app.Instrumentation;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.util.AttributeSet;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
 import android.webkit.JavascriptInterface;
-import android.widget.TextView;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MenuInflater;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.InputDevice;
 import android.content.Intent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import com.vbea.java21.widget.TouchWebView;
+
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
-import com.vbea.java21.classes.MyAlertDialog;
+import com.vbea.java21.view.MyAlertDialog;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.data.SQLHelper;
-import com.vbea.java21.data.CodeMode;
 
 import org.apache.commons.io.FileUtils;
-import org.w3c.dom.*;
-/*import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebStorage;
-import com.tencent.smtt.sdk.WebViewClient;
-import com.tencent.smtt.sdk.WebChromeClient;*/
 
 public class CodeEditor extends AppCompatActivity
 {

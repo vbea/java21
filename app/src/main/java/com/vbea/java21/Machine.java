@@ -3,31 +3,19 @@ package com.vbea.java21;
 import java.util.Date;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
-import java.net.SocketTimeoutException;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Button;
-import android.widget.Toast;
 import android.view.View;
-import android.content.Intent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ClickableSpan;
 import android.text.method.LinkMovementMethod;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.Common;
@@ -55,10 +43,10 @@ public class Machine extends BaseActivity
 	{
 		enableBackButton();
 		//START = getIntent().getBooleanExtra("start", false);
-		Button btnSubm = (Button) findViewById(R.id.btn_commitRegist);
-		//TextView txtCheck = (TextView) findViewById(R.id.text_probation);
-		TextView txtGroup = (TextView) findViewById(R.id.txt_macgroup);
-		edtKey = (EditText) findViewById(R.id.edt_key);
+		Button btnSubm = bind(R.id.btn_commitRegist);
+		//TextView txtCheck = bind(R.id.text_probation);
+		TextView txtGroup = bind(R.id.txt_macgroup);
+		edtKey = bind(R.id.edt_key);
 		spf = getSharedPreferences("java21", MODE_PRIVATE);
 		try
 		{

@@ -2,14 +2,12 @@ package com.vbea.java21;
 
 import android.view.View;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.graphics.Palette;
 import android.support.v7.app.AppCompatDelegate;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
-import android.graphics.*;
 
 public class MyThemes
 {
@@ -116,7 +114,7 @@ public class MyThemes
 		ISCHANGED = true;
 		if (Common.APP_BACK_ID != 100)
 		{
-			homeTextColor = context.getResources().getColor(R.color.white);
+			homeTextColor = ContextCompat.getColor(context, R.color.white);
 			homeTextShadow = 0;
 		}
 		else
@@ -130,8 +128,8 @@ public class MyThemes
 					return;
 				}
 				//changed on 20170616
-				homeTextShadow = context.getResources().getColor(R.color.black);
-				Palette p1 = Palette.generate(back, 8);
+				homeTextShadow = ContextCompat.getColor(context, R.color.black);
+				Palette p1 = new Palette.Builder(back).maximumColorCount(8).generate();
 				Palette.Swatch sw = p1.getLightVibrantSwatch();
 				if (sw != null)
 				{
@@ -139,7 +137,7 @@ public class MyThemes
 					//homeTextShadow = context.getResources().getColor(R.color.white);
 				}
 				else
-					homeTextColor = context.getResources().getColor(R.color.white);
+					homeTextColor = ContextCompat.getColor(context, R.color.white);
 			}
 			catch (Exception e)
 			{
@@ -156,15 +154,16 @@ public class MyThemes
 			try
 			{
 				//changed on 20180201
-				homeTextShadow = context.getResources().getColor(R.color.black);
-				Palette p1 = Palette.generate(bitmap, 8);
+				homeTextShadow = ContextCompat.getColor(context, R.color.black);
+				Palette p1 = new Palette.Builder(bitmap).maximumColorCount(8).generate();
+						//.generate(bitmap, 8);
 				Palette.Swatch sw = p1.getLightVibrantSwatch();
 				if (sw != null)
 				{
 					homeTextColor = sw.getRgb();
 				}
 				else
-					homeTextColor = context.getResources().getColor(R.color.white);
+					homeTextColor = ContextCompat.getColor(context, R.color.white);
 			}
 			catch (Exception e)
 			{
@@ -240,7 +239,7 @@ public class MyThemes
 	public static int getColorAccent(Context context)
 	{
 		if (Common.APP_THEME_ID < colorAccent.length)
-			return context.getResources().getColor(colorAccent[Common.APP_THEME_ID]);
+			return ContextCompat.getColor(context, colorAccent[Common.APP_THEME_ID]);
 		else
 			return colorAccent[0];
 	}
@@ -248,7 +247,7 @@ public class MyThemes
 	public static int getColorPrimary(Context context)
 	{
 		if (Common.APP_THEME_ID < colorAccent.length)
-			return context.getResources().getColor(colorPrimary[Common.APP_THEME_ID]);
+			return ContextCompat.getColor(context, colorPrimary[Common.APP_THEME_ID]);
 		else
 			return colorPrimary[0];
 	}
@@ -269,7 +268,7 @@ public class MyThemes
 			return colorAccent[0];
 	}
 	
-	public static void checkThemeId()
+	private static void checkThemeId()
 	{
 		if (Common.APP_THEME_ID == -1 || Common.APP_THEME_ID >= style.length)
 			Common.APP_THEME_ID = 0;

@@ -1,25 +1,17 @@
 package com.vbea.java21;
 
-import java.util.List;
-
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.content.SharedPreferences;
 import android.widget.LinearLayout;
 import android.content.ClipboardManager;
 import android.content.ClipData;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.DividerItemDecoration;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.WifiManage;
 import com.vbea.java21.classes.ExceptionHandler;
-import com.vbea.java21.list.WifiItem;
+import com.vbea.java21.view.MyDividerDecoration;
 import com.vbea.java21.list.WifiAdapter;
 
 public class WifiViews extends BaseActivity
@@ -42,9 +34,7 @@ public class WifiViews extends BaseActivity
 		recyclerView = (RecyclerView) findViewById(R.id.wifi_recyclerView);
 		mLayout = (LinearLayout) findViewById(R.id.wifi_proLayout);
 		mAdapter = new WifiAdapter(this);
-		//DividerItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-		//decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
-		//recyclerView.addItemDecoration(decoration);
+		recyclerView.addItemDecoration(new MyDividerDecoration(this));
 		recyclerView.setAdapter(mAdapter);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));

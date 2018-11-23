@@ -1,4 +1,4 @@
-package com.vbea.java21;
+package com.vbea.java21.fragment;
 
 import java.util.ArrayList;
 
@@ -12,17 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.vbea.java21.list.Chapter;
+import com.vbea.java21.AndroidWeb;
+import com.vbea.java21.data.Chapter;
 import com.vbea.java21.list.ChapterAdapter;
-import com.vbea.java21.list.MyDividerDecoration;
+import com.vbea.java21.view.MyDividerDecoration;
 import com.vbea.java21.classes.Common;
-import com.vbea.java21.classes.Util;
 
 public class ChapterFragment extends Fragment
 {
 	private RecyclerView recyclerView;
 	private ChapterAdapter mAdapter;
 	private View rootView;
+	private final int type = 5;
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -39,9 +40,7 @@ public class ChapterFragment extends Fragment
 		if (recyclerView == null)
 		{
 			recyclerView = (RecyclerView) view.findViewById(R.id.cpt_recyclerView);
-			MyDividerDecoration decoration = new MyDividerDecoration(getContext());
-			//decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
-			recyclerView.addItemDecoration(decoration);
+			recyclerView.addItemDecoration(new MyDividerDecoration(getContext()));
 			recyclerView.setHasFixedSize(true);
 			recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
 
@@ -71,7 +70,7 @@ public class ChapterFragment extends Fragment
  					intent.putExtra("url", "file:///android_asset/java/chapter" + id + ".html");
  					intent.putExtra("title", title);
  					intent.putExtra("sub", sub);
- 					intent.putExtra("type", 5);
+ 					intent.putExtra("type", type);
 					Common.startActivityOptions(getActivity(), intent);
 					mAdapter.notifyDataSetChanged();
 				}

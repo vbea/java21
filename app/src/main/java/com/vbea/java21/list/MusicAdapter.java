@@ -4,7 +4,6 @@ import java.util.List;
 
 import android.widget.TextView;
 import android.widget.TableRow;
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.LayoutInflater;

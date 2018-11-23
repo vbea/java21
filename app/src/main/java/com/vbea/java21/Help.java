@@ -1,12 +1,8 @@
 package com.vbea.java21;
 
-import android.os.Bundle;
-import android.view.View;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.webkit.WebView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.classes.Common;
 

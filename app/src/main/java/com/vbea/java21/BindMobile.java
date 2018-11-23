@@ -15,10 +15,7 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.exception.BmobException;
 import com.vbea.java21.data.Users;
@@ -46,11 +43,11 @@ public class BindMobile extends BaseActivity
 	@Override
 	protected void after()
 	{
-		edtPhone = (EditText) findViewById(R.id.edt_bdphone);
-		edtOldPhone = (EditText) findViewById(R.id.edt_oldphone);
-		tabOldPhone = (TableRow) findViewById(R.id.tab_oldPhone);
-		btnCheck = (TextView) findViewById(R.id.bd_getcheck);
-		btnBinding = (Button) findViewById(R.id.btn_bdingPhone);
+		edtPhone = bind(R.id.edt_bdphone);
+		edtOldPhone = bind(R.id.edt_oldphone);
+		tabOldPhone = bind(R.id.tab_oldPhone);
+		btnCheck = bind(R.id.bd_getcheck);
+		btnBinding = bind(R.id.btn_bdingPhone);
 		
 		btnCheck.setOnClickListener(new View.OnClickListener()
 		{

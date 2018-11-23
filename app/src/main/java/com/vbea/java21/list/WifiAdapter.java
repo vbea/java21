@@ -6,7 +6,6 @@ import java.util.Collections;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.view.LayoutInflater;
@@ -16,6 +15,7 @@ import android.text.format.Formatter;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import com.vbea.java21.R;
+import com.vbea.java21.data.WifiItem;
 
 public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.MyViewHolder>
 {

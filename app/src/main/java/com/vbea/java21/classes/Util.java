@@ -18,7 +18,6 @@ import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import junit.framework.Assert;
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.ContentUris;
@@ -38,13 +37,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.text.TextUtils;
 import android.widget.Toast;
 import android.webkit.MimeTypeMap;
-import android.support.design.widget.Snackbar;
 import android.telephony.TelephonyManager;
-import com.vbea.java21.R;
 import org.apache.commons.io.FileUtils;
+import com.vbea.java21.R;
+import com.vbea.java21.view.MyAlertDialog;
 
 public class Util
 {

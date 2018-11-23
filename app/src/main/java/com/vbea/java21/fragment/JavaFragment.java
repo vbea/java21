@@ -1,9 +1,8 @@
-package com.vbea.java21;
+package com.vbea.java21.fragment;
 
 import java.util.List;
 import java.util.ArrayList;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.content.Intent;
-import android.content.DialogInterface;
 import android.widget.TextView;
 import android.widget.ProgressBar;
 import android.support.annotation.Nullable;
@@ -19,14 +17,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.DividerItemDecoration;
+
+import com.vbea.java21.AndroidWeb;
+import com.vbea.java21.MyThemes;
 import com.vbea.java21.data.JavaEE;
 import com.vbea.java21.list.J2EEAdapter;
-import com.vbea.java21.list.MyDividerDecoration;
-import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
+import com.vbea.java21.view.MyDividerDecoration;
+
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.CountListener;
@@ -43,7 +42,7 @@ public class JavaFragment extends Fragment
 	private List<JavaEE> mList;
 	private View rootView;
 	private int mCount = -1;
-	//private ProgressDialog mPdialog;
+	private final int type = 3;
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -64,10 +63,7 @@ public class JavaFragment extends Fragment
 			proRefresh = (ProgressBar) view.findViewById(R.id.refreshProgress);
         	recyclerView = (RecyclerView) view.findViewById(R.id.cpt_recyclerView);
 			refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swp_refresh);
-
-			DividerItemDecoration decoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-			decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
-			recyclerView.addItemDecoration(decoration);
+			recyclerView.addItemDecoration(new MyDividerDecoration(getContext()));
 			recyclerView.setAdapter(mAdapter);
 			recyclerView.setHasFixedSize(true);
 			recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -94,7 +90,7 @@ public class JavaFragment extends Fragment
 					intent.putExtra("url", url);
 					intent.putExtra("title", title);
 					intent.putExtra("sub", sub);
-					intent.putExtra("type", 3);
+					intent.putExtra("type", type);
 					Common.startActivityOptions(getActivity(), intent);
 					mAdapter.notifyDataSetChanged();
 				}

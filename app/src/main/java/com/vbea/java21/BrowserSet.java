@@ -1,7 +1,6 @@
 package com.vbea.java21;
 
 import android.app.ActivityOptions;
-import android.os.Bundle;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.widget.TextView;
@@ -10,13 +9,10 @@ import android.widget.LinearLayout;
 import android.content.Intent;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.widget.TextView;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
-import com.vbea.java21.classes.MyAlertDialog;
+import com.vbea.java21.view.MyAlertDialog;
 
 public class BrowserSet extends BaseActivity
 {
@@ -36,14 +32,14 @@ public class BrowserSet extends BaseActivity
 	protected void after()
 	{
 		enableBackButton();
-		txtSearch = (TextView) findViewById(R.id.txt_webSearch);
-		txtUserAgent = (TextView) findViewById(R.id.txt_webUa);
-		txtSavePath = (TextView) findViewById(R.id.txt_webSavePath);
-		TextView btnHome = (TextView) findViewById(R.id.btnSetHome);
-		LinearLayout btnSearch = (LinearLayout) findViewById(R.id.btnSetSearch);
-		LinearLayout btnUserAgent = (LinearLayout) findViewById(R.id.btnSetUa);
-		LinearLayout btnSavePath = (LinearLayout) findViewById(R.id.btnSetSavePath);
-		//btnHistory = (TextView) findViewById(R.id.btnSetHistory);
+		txtSearch = bind(R.id.txt_webSearch);
+		txtUserAgent = bind(R.id.txt_webUa);
+		txtSavePath = bind(R.id.txt_webSavePath);
+		TextView btnHome = bind(R.id.btnSetHome);
+		LinearLayout btnSearch = bind(R.id.btnSetSearch);
+		LinearLayout btnUserAgent = bind(R.id.btnSetUa);
+		LinearLayout btnSavePath = bind(R.id.btnSetSavePath);
+		//btnHistory = bind(R.id.btnSetHistory);
 
 		btnHome.setOnClickListener(new View.OnClickListener()
 		{

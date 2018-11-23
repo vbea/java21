@@ -8,9 +8,9 @@ import com.google.gson.JsonObject;
 public class SettingUtil
 {
 	private HashMap<String,Object> mMap;
-	public static final String SET_BACKIMG = "BackImage";
-	public static final String SET_THEME = "Theme";
-	public static final String SET_FONTSIZE = "FontSize";
+	static final String SET_BACKIMG = "BackImage";
+	static final String SET_THEME = "Theme";
+	static final String SET_FONTSIZE = "FontSize";
 	//public static final String
 	public SettingUtil()
 	{

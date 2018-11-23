@@ -1,4 +1,4 @@
-package com.vbea.java21;
+package com.vbea.java21.fragment;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -17,12 +17,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.DividerItemDecoration;
-import com.vbea.java21.data.AndroidHtml;
-import com.vbea.java21.list.AndroidAdapter;
-import com.vbea.java21.list.MyDividerDecoration;
-import com.vbea.java21.classes.Util;
+import com.vbea.java21.AndroidWeb;
+import com.vbea.java21.MyThemes;
+import com.vbea.java21.data.AndroidAdvance;
+import com.vbea.java21.list.Android2Adapter;
+import com.vbea.java21.view.MyDividerDecoration;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
 import cn.bmob.v3.BmobQuery;
@@ -31,17 +30,18 @@ import cn.bmob.v3.listener.CountListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.exception.BmobException;
 
-public class AndroidFragment extends Fragment
+public class Android2Fragment extends Fragment
 {
+	//邠心工作室 2017.07.14
 	private SwipeRefreshLayout refreshLayout;
 	private RecyclerView recyclerView;
 	private TextView errorText;
 	private ProgressBar proRefresh;
-	private AndroidAdapter mAdapter;
-	private List<AndroidHtml> mList;
+	private Android2Adapter mAdapter;
+	private List<AndroidAdvance> mList;
 	private View rootView;
 	private int mCount = 0;
-	//private ProgressDialog mPdialog;
+	private final int type = 2;
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -56,16 +56,13 @@ public class AndroidFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
 		if (recyclerView == null)
 		{
-			mList = new ArrayList<AndroidHtml>();
-			mAdapter = new AndroidAdapter();
+			mList = new ArrayList<AndroidAdvance>();
+			mAdapter = new Android2Adapter();
 			errorText = (TextView) view.findViewById(R.id.txt_andError);
 			proRefresh = (ProgressBar) view.findViewById(R.id.refreshProgress);
         	recyclerView = (RecyclerView) view.findViewById(R.id.cpt_recyclerView);
 			refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swp_refresh);
-			
-			MyDividerDecoration decoration = new MyDividerDecoration(getContext());
-			//decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
-			recyclerView.addItemDecoration(decoration);
+			recyclerView.addItemDecoration(new MyDividerDecoration(getContext()));
 			recyclerView.setAdapter(mAdapter);
 			recyclerView.setHasFixedSize(true);
 			recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -78,20 +75,21 @@ public class AndroidFragment extends Fragment
 				errorText.setVisibility(View.VISIBLE);
 				errorText.setText("请登录后下拉刷新获取章节列表");
 			}*/
-			mAdapter.setOnItemClickListener(new AndroidAdapter.OnItemClickListener()
+			mAdapter.setOnItemClickListener(new Android2Adapter.OnItemClickListener()
 			{
 				@Override
 				public void onItemClick(String id, String title, String sub, String url)
 				{
-					//update();
-					//if (true)return;
-					Common.addAndroidRead(id);
+					//更新数据
+					/*update();
+					if (true)return;*/
+					Common.addAndroid2Read(id);
 					Intent intent = new Intent(getActivity(), AndroidWeb.class);
 					intent.putExtra("id", id);
 					intent.putExtra("url", url);
 					intent.putExtra("title", title);
 					intent.putExtra("sub", sub);
-					intent.putExtra("type", 1);
+					intent.putExtra("type", type);
 					Common.startActivityOptions(getActivity(), intent);
 					mAdapter.notifyDataSetChanged();
 				}
@@ -128,18 +126,6 @@ public class AndroidFragment extends Fragment
 		}
 	}
 	
-	/*public void update()
-	{
-		Util.showConfirmCancelDialog(getActivity(), "数据更新", "你确定要更新数据吗", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface d, int s)
-			{
-				mPdialog = ProgressDialog.show(getActivity(), null, "请稍候...");
-				new UpdateThread().start();
-			}
-		});
-	}*/
-	
 	private void getCount()
 	{
 		if (!Common.isNet(getContext()))
@@ -152,9 +138,9 @@ public class AndroidFragment extends Fragment
 			mHandler.sendEmptyMessage(3);
 			return;
 		}*/
-		BmobQuery<AndroidHtml> query = new BmobQuery<AndroidHtml>();
+		BmobQuery<AndroidAdvance> query = new BmobQuery<AndroidAdvance>();
 		query.addWhereEqualTo("enable", true);
-		query.count(AndroidHtml.class, new CountListener()
+		query.count(AndroidAdvance.class, new CountListener()
 		{
 			@Override
 			public void done(Integer count, BmobException e)
@@ -187,14 +173,14 @@ public class AndroidFragment extends Fragment
 			errorText.setVisibility(View.VISIBLE);
 			errorText.setText("正在加载，请稍候");
 		}
-		BmobQuery<AndroidHtml> query = new BmobQuery<AndroidHtml>();
+		BmobQuery<AndroidAdvance> query = new BmobQuery<AndroidAdvance>();
 		query.addWhereEqualTo("enable", true);
 		query.order("order");
 		query.setLimit(15);
-		query.findObjects(new FindListener<AndroidHtml>()
+		query.findObjects(new FindListener<AndroidAdvance>()
 		{
 			@Override
-			public void done(List<AndroidHtml> list, BmobException e)
+			public void done(List<AndroidAdvance> list, BmobException e)
 			{
 				if (e == null)
 				{
@@ -213,15 +199,15 @@ public class AndroidFragment extends Fragment
 		if (mCount > mList.size())
 		{
 			proRefresh.setVisibility(View.VISIBLE);
-			BmobQuery<AndroidHtml> query = new BmobQuery<AndroidHtml>();
+			BmobQuery<AndroidAdvance> query = new BmobQuery<AndroidAdvance>();
 			query.addWhereEqualTo("enable", true);
 			query.order("order");
 			query.setLimit(15);
 			query.setSkip(mList.size());
-			query.findObjects(new FindListener<AndroidHtml>()
+			query.findObjects(new FindListener<AndroidAdvance>()
 			{
 				@Override
-				public void done(List<AndroidHtml> list, BmobException e)
+				public void done(List<AndroidAdvance> list, BmobException e)
 				{
 					if (e == null)
 					{
@@ -250,37 +236,6 @@ public class AndroidFragment extends Fragment
 			refreshLayout.setRefreshing(false);
 		mAdapter.setList(mList);
 		mAdapter.notifyDataSetChanged();
-	}
-	
-	class UpdateThread extends Thread implements Runnable
-	{
-		public void run()
-		{
-			try
-			{
-				for (AndroidHtml item : mList)
-				{
-					if (item.isTitle)
-						continue;
-					item.url = item.url.replace("coderboy.cn", "vbea.wicp.net");
-					item.update(new UpdateListener()
-					{
-						public void done(BmobException e)
-						{
-							if (e!=null)
-								ExceptionHandler.log("update", e.toString());
-						}
-					});
-					sleep(500);
-				}
-				mHandler.sendEmptyMessage(4);
-			}
-			catch (Exception e)
-			{
-				mHandler.sendEmptyMessage(5);
-				ExceptionHandler.log("update", e.toString());
-			}
-		}
 	}
 	
 	Handler mHandler = new Handler()
@@ -330,5 +285,48 @@ public class AndroidFragment extends Fragment
 		if (refreshLayout.isRefreshing())
 			refreshLayout.setRefreshing(false);
 		super.onResume();
+	}
+	
+	/*public void update()
+	{
+		Util.showConfirmCancelDialog(getActivity(), "数据更新", "你确定要更新数据吗", new DialogInterface.OnClickListener()
+		{
+			public void onClick(DialogInterface d, int s)
+			{
+				mPdialog = ProgressDialog.show(getActivity(), null, "请稍候...");
+				new UpdateThread().start();
+			}
+		});
+	}*/
+	
+	class UpdateThread extends Thread implements Runnable
+	{
+		public void run()
+		{
+			try
+			{
+				for (AndroidAdvance item : mList)
+				{
+					if (item.isTitle)
+						continue;
+					item.url = item.url.replace("http://vbea.wicp.net/","");
+					item.update(new UpdateListener()
+					{
+						public void done(BmobException e)
+						{
+							if (e!=null)
+								ExceptionHandler.log("update", e.toString());
+						}
+					});
+					sleep(500);
+				}
+				mHandler.sendEmptyMessage(4);
+			}
+			catch (Exception e)
+			{
+				mHandler.sendEmptyMessage(5);
+				ExceptionHandler.log("update", e.toString());
+			}
+		}
 	}
 }

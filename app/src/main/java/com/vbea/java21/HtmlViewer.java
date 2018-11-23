@@ -1,6 +1,5 @@
 package com.vbea.java21;
 
-import java.net.URL;
 import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,15 +11,14 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
-import android.webkit.WebStorage;
 import android.webkit.URLUtil;
 import android.webkit.ValueCallback;
 import android.webkit.DownloadListener;
-import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,9 +27,7 @@ import android.widget.TextView;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MenuInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.content.Intent;
 import android.content.Context;
 import android.content.ContentValues;
@@ -43,15 +39,10 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.net.http.SslCertificate;
 import android.net.http.SslError;
-import android.text.TextUtils;
 import android.graphics.Bitmap;
 import android.provider.MediaStore;
 import android.annotation.SuppressLint;
-//import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.SearchView;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.content.FileProvider;
 import android.support.design.widget.BottomSheetDialog;
 import com.vbea.java21.data.WebHelper;
@@ -59,7 +50,7 @@ import com.vbea.java21.widget.MyWebView;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.SocialShare;
-import com.vbea.java21.classes.MyAlertDialog;
+import com.vbea.java21.view.MyAlertDialog;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.tencent.connect.common.Constants;
 import com.tencent.connect.share.QQShare;
@@ -67,11 +58,10 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
-public class HtmlViewer extends AppCompatActivity
+public class HtmlViewer extends BaseActivity
 {
 	private SearchView searchView;
 	private MenuItem searchItem;
-	private Toolbar tool;
 	private MyWebView webView;
 	private WebView souceView;
 	private TextView NightView;
@@ -92,25 +82,25 @@ public class HtmlViewer extends AppCompatActivity
 	private ValueCallback<Uri> mUploadMessage;
 	private ValueCallback<Uri[]> mUploadMessages;
 	private String[] headItems = {"拍照","相册"};
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		Common.start(getApplicationContext());
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.browser);
-		
-		webView = (MyWebView) findViewById(R.id.WebViewPage);
-		souceView = (WebView) findViewById(R.id.WebViewSource);
-		tool = (Toolbar) findViewById(R.id.toolbar);
-		NightView = (TextView) findViewById(R.id.api_nightView);
-		webProgress = (ProgressBar) findViewById(R.id.apiProgress);
-		sourceProgress = (ProgressBar) findViewById(R.id.sourceProgress);
-		tool.setTitle("点此输入网址或搜索");
-		setSupportActionBar(tool);
-		if (MyThemes.isNightTheme()) NightView.setVisibility(View.VISIBLE);
-		//if (Common.isSupportMD())
-			//web.removeJavascriptInterface("searchBoxJavaBridge_");
+	}
+
+	@Override
+	protected void after()
+	{
+		webView = bind(R.id.WebViewPage);
+		souceView = bind(R.id.WebViewSource);
+		NightView = bind(R.id.api_nightView);
+		webProgress = bind(R.id.apiProgress);
+		sourceProgress = bind(R.id.sourceProgress);
+		toolbar.setTitle("点此输入网址或搜索");
+		if (MyThemes.isNightTheme()) {
+			NightView.setVisibility(View.VISIBLE);
+		}
 		wset = webView.getSettings();
 		UA_Default = wset.getUserAgentString();
 		wset.setJavaScriptEnabled(true);
@@ -134,7 +124,6 @@ public class HtmlViewer extends AppCompatActivity
 		wset.setAppCacheMaxSize(1024*1024*10);
 		wset.setAllowFileAccess(true);
 		wset.setRenderPriority(WebSettings.RenderPriority.HIGH);
-		//wset.setGeolocationEnabled(true);
 		//wset.setJavaScriptCanOpenWindowsAutomatically(true);
 		wset.setSupportMultipleWindows(false);
 		//webView.addJavascriptInterface(new JavaScriptShowCode(), "showcode");
@@ -145,8 +134,9 @@ public class HtmlViewer extends AppCompatActivity
 		webView.setWebViewClient(new WebViewClient()
 		{
 			@Override
-			public boolean shouldOverrideUrlLoading(WebView v, final String url)
+			public boolean shouldOverrideUrlLoading(WebView v, final WebResourceRequest request)
 			{
+				String url = request.getUrl().toString();
 				if (!URLUtil.isValidUrl(url))
 				{
 					if (url.toLowerCase().startsWith("vbea://"))
@@ -158,13 +148,13 @@ public class HtmlViewer extends AppCompatActivity
 					{
 						if (Common.isAdminUser())
 							Util.addClipboard(HtmlViewer.this, url);
-						Util.showConfirmCancelDialog(HtmlViewer.this, "提示", "网页想要打开第三方应用，是否继续？", new DialogInterface.OnClickListener()
+						Util.showConfirmCancelDialog(HtmlViewer.this, "提示", request.getUrl().getHost() + "想要打开第三方应用，是否继续？", new DialogInterface.OnClickListener()
 						{
 							public void onClick(DialogInterface d, int s)
 							{
 								try
 								{
-									Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+									Intent intent = new Intent(Intent.ACTION_VIEW, request.getUrl());
 									intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 									startActivity(intent);
 								}
@@ -185,7 +175,7 @@ public class HtmlViewer extends AppCompatActivity
 					mHandler.sendEmptyMessageDelayed(1, 300);
 					//return true;
 				}*/
-				return super.shouldOverrideUrlLoading(v, url);
+				return super.shouldOverrideUrlLoading(v, request);
 			}
 			
 			@Override
@@ -203,7 +193,7 @@ public class HtmlViewer extends AppCompatActivity
 				SH_url = url;
 				addHistory();
 				//view.loadUrl("javascript:window.showcode.show(document.getElementsByTagName('html')[0].outerHTML);");
-				tool.setTitle(view.getTitle());
+				toolbar.setTitle(view.getTitle());
 				//view.loadUrl("javascript:close_adtip();");
 				super.onPageFinished(view, url);
 			}
@@ -213,23 +203,23 @@ public class HtmlViewer extends AppCompatActivity
 				String message = "";
 				switch (e.getPrimaryError())
 				{
-					case e.SSL_EXPIRED:
+					case SslError.SSL_EXPIRED:
 						message = "该网站证书已过期，确定继续？";
 						break;
-					case e.SSL_IDMISMATCH:
+					case SslError.SSL_IDMISMATCH:
 						message = "该网站的名称与证书上的名称不一致，确定继续？";
 						break;
-					case e.SSL_UNTRUSTED:
+					case SslError.SSL_UNTRUSTED:
 						message = "该网站证书不被信任，确认继续？";
 						break;
-					case e.SSL_DATE_INVALID:
+					case SslError.SSL_DATE_INVALID:
 						message = "该网站证书日期无效，确认继续？";
 						break;
-					case e.SSL_INVALID:
+					case SslError.SSL_INVALID:
 						message = "该网站证书不可用，确认继续？";
 						break;
 				}
-				showSecurityDialod(message, e.getCertificate(), h);
+				showSecurityDialog(message, e.getCertificate(), h);
 			}
 		});
 		
@@ -247,7 +237,7 @@ public class HtmlViewer extends AppCompatActivity
 			@Override
 			public void onDownloadStart(final String url, String userAgent, String disposition, String mimetype, long length)
 			{
-				Util.showConfirmCancelDialog(HtmlViewer.this, "下载文件", "文件名："+getDowloadFileName(disposition, url).trim() + "\n大小：" + Util.getFormatSize(length) + "\n确定要下载该文件？", new DialogInterface.OnClickListener()
+				Util.showConfirmCancelDialog(HtmlViewer.this, "下载文件", "文件名："+ getDownloadFileName(disposition, url).trim() + "\n大小：" + Util.getFormatSize(length) + "\n确定要下载该文件？", new DialogInterface.OnClickListener()
 				{
 					public void onClick(DialogInterface d, int s)
 					{
@@ -266,7 +256,7 @@ public class HtmlViewer extends AppCompatActivity
 			}
 		});
 		
-		tool.setNavigationOnClickListener(new View.OnClickListener()
+		toolbar.setNavigationOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View view)
@@ -278,7 +268,7 @@ public class HtmlViewer extends AppCompatActivity
 			}
 		});
 		
-		tool.setOnClickListener(new View.OnClickListener()
+		toolbar.setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View v)
 			{
@@ -339,7 +329,7 @@ public class HtmlViewer extends AppCompatActivity
 				}
 				
 			}
-			else if (intent.getAction().equals(intent.ACTION_WEB_SEARCH))
+			else if (intent.getAction().equals(Intent.ACTION_WEB_SEARCH))
 				loadUrlsSearch(intent.getStringExtra(SearchManager.QUERY));
 		}
 		else
@@ -349,7 +339,7 @@ public class HtmlViewer extends AppCompatActivity
 		}
 	}
 	
-	private void showSecurityDialod(final String msg, final SslCertificate sert, final SslErrorHandler handle)
+	private void showSecurityDialog(final String msg, final SslCertificate sert, final SslErrorHandler handle)
 	{
 		MyAlertDialog builder = new MyAlertDialog(this);
 		builder.setTitle("安全警告");
@@ -381,7 +371,7 @@ public class HtmlViewer extends AppCompatActivity
 				{
 					public void onClick(DialogInterface d, int s)
 					{
-						showSecurityDialod(msg, sert, handle);
+						showSecurityDialog(msg, sert, handle);
 					}
 				});
 			}
@@ -426,9 +416,9 @@ public class HtmlViewer extends AppCompatActivity
 	private void loadUrls(String url)
 	{
 		if (url.indexOf("//") >= 0)
-			tool.setTitle(url.substring(url.indexOf("//")+2));
+			toolbar.setTitle(url.substring(url.indexOf("//")+2));
 		else
-			tool.setTitle(url);
+			toolbar.setTitle(url);
 		//SH_url = url;
 		if (Util.isNullOrEmpty(url))
 			return;
@@ -688,17 +678,19 @@ public class HtmlViewer extends AppCompatActivity
 		ISSOURCE = false;
 	}
 	
-	public String getDowloadFileName(String disposition, String url)
+	public String getDownloadFileName(String disposition, String url)
 	{
 		Pattern pattern = Pattern.compile("\"(.*)\"");
 		Matcher matcher = pattern.matcher(disposition);
-		while (matcher.find())
+		while (matcher.find()) {
 			return Util.trim(matcher.group(), '"');
+		}
 		String suffixes="avi|mpeg|3gp|mp3|mp4|wav|jpeg|gif|jpg|png|apk|exe|pdf|rar|zip|docx|doc";  
 		Pattern pat=Pattern.compile("[\\w]+[\\.]("+suffixes+")");
 		matcher = pat.matcher(url);
-		while(matcher.find())
+		while(matcher.find()) {
 			return matcher.group();
+		}
 		return disposition;
 	}
 	
@@ -958,7 +950,7 @@ public class HtmlViewer extends AppCompatActivity
 		public void onReceivedTitle(WebView view, String title)
 		{
 			super.onReceivedTitle(view, title);
-			tool.setTitle(title);
+			toolbar.setTitle(title);
 		}
 
 		@Override
@@ -968,11 +960,6 @@ public class HtmlViewer extends AppCompatActivity
 			webProgress.setVisibility(newProgress >= 100 ? View.INVISIBLE : View.VISIBLE);
 		}
 
-		public void onExceededDatabaseQuota(String url, String databasein, long quota, long estime, long totalq, WebStorage.QuotaUpdater update)
-		{
-			update.updateQuota(5 * 1024 * 1024);
-		}
-		
 		public void onGeolocationPermissionsShowPrompt(final String origin, final android.webkit.GeolocationPermissions.Callback callback)
 		{
 			Util.showConfirmCancelDialog(HtmlViewer.this, "提示", "来自"+origin+"的网页正在请求定位，请确认是否允许？", new DialogInterface.OnClickListener()
@@ -982,6 +969,11 @@ public class HtmlViewer extends AppCompatActivity
 					callback.invoke(origin, true, false);
 				}
 			});
+		}
+
+		/*public void onExceededDatabaseQuota(String url, String databasein, long quota, long estime, long totalq, WebStorage.QuotaUpdater update)
+		{
+			update.updateQuota(5 * 1024 * 1024);
 		}
 
 		// For Android 3.0-
@@ -994,15 +986,15 @@ public class HtmlViewer extends AppCompatActivity
 		public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType)
 		{
 			openFileChooser(uploadMsg, acceptType, "");
-		}
+		}*/
 
 		// For Android 4.1
-		public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture)
+		/*public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture)
 		{
 			if (mUploadMessage != null)
 				mUploadMessage.onReceiveValue(null);
 			mUploadMessage = uploadMsg;
-			String type = Util.isNullOrEmpty(acceptType) ? "*/*" : acceptType;
+			String type = Util.isNullOrEmpty(acceptType) ? "*//*" : acceptType;
 			if (type.equals("image/*"))
 				selectImage();
 			else
@@ -1012,7 +1004,7 @@ public class HtmlViewer extends AppCompatActivity
 				i.setType(type);
 				startActivityForResult(Intent.createChooser(i, "上传文件"), FILECHOOSER_RESULTCODE);
 			}
-		}
+		}*/
 
 		//Android 5.0+
 		@Override
@@ -1057,7 +1049,7 @@ public class HtmlViewer extends AppCompatActivity
 					souceView.setVisibility(View.VISIBLE);
 					webView.setVisibility(View.GONE);
 					souceView.loadData(SH_html, "text/plain; charset=UTF-8", null);
-					tool.setTitle("view-source:"+webView.getUrl());
+					toolbar.setTitle("view-source:"+webView.getUrl());
 					searchView.setQuery(webView.getUrl(), false);
 				} else
 					sourceProgress.setVisibility(View.GONE);
@@ -1089,15 +1081,6 @@ public class HtmlViewer extends AppCompatActivity
 			{
 				mHandler.sendEmptyMessage(2);
 			}
-		}
-	}
-	
-	class JavaScriptShowCode
-	{
-		@JavascriptInterface
-		public void show(String html)
-		{
-			SH_html = "<!DOCTYPE html>"+html;
 		}
 	}
 }

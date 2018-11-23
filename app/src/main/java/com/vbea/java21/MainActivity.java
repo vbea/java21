@@ -2,10 +2,8 @@ package com.vbea.java21;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Random;
 
 import android.Manifest;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,9 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.Common;

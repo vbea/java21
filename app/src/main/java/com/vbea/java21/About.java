@@ -1,19 +1,16 @@
 package com.vbea.java21;
 
 import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 import android.content.SharedPreferences;
 import android.content.DialogInterface;
 import android.widget.TextView;
 import android.widget.TableRow;
 import android.widget.LinearLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
-import com.vbea.java21.classes.MyAlertDialog;
+import com.vbea.java21.view.MyAlertDialog;
 import com.vbea.secret.k;
 
 import cn.bmob.v3.update.BmobUpdateAgent;
@@ -34,17 +31,17 @@ public class About extends BaseActivity
 	{
 		enableBackButton();
 		actLayout = bind(R.id.abt_actLayout);
-		TextView newv = (TextView) findViewById(R.id.about_new);
-		TableRow rowStatus = (TableRow) findViewById(R.id.tab_actStatus);
-		install = (TextView) findViewById(R.id.about_install);
-		active = (TextView) findViewById(R.id.about_active);
-		txt_key = (TextView) findViewById(R.id.about_key);
-		scrip = (TextView) findViewById(R.id.about_scrip);
-		type = (TextView) findViewById(R.id.about_type);
-		sign = (TextView) findViewById(R.id.about_sign);
-		android = (TextView) findViewById(R.id.about_android);
-		status = (TextView) findViewById(R.id.about_status);
-		channel = (TextView) findViewById(R.id.about_channel);
+		TextView newv = bind(R.id.about_new);
+		TableRow rowStatus = bind(R.id.tab_actStatus);
+		install = bind(R.id.about_install);
+		active = bind(R.id.about_active);
+		txt_key = bind(R.id.about_key);
+		scrip = bind(R.id.about_scrip);
+		type = bind(R.id.about_type);
+		sign = bind(R.id.about_sign);
+		android = bind(R.id.about_android);
+		status = bind(R.id.about_status);
+		channel = bind(R.id.about_channel);
 		if (Common.isHuluxiaUser())
 			rowStatus.setVisibility(View.GONE);
 		BmobUpdateAgent.forceUpdate(this);

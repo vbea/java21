@@ -1,4 +1,4 @@
-package com.vbea.java21.classes;
+package com.vbea.java21.view;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -8,8 +8,8 @@ import com.vbea.java21.MyThemes;
 
 public class MyAlertDialog extends AlertDialog.Builder
 {
-	Context context;
-	boolean isButton;
+	private Context context;
+	private boolean isButton;
 	public MyAlertDialog(Context _context)
 	{
 		super(_context);

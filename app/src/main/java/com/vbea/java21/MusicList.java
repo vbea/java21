@@ -1,62 +1,34 @@
 package com.vbea.java21;
 
-import android.os.Bundle;
-import android.os.Handler;
-import android.widget.TextView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MenuInflater;
-import android.view.LayoutInflater;
-import android.content.Intent;
-import android.content.Context;
-import android.net.Uri;
-import android.graphics.Bitmap;
-
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.DividerItemDecoration;
-import com.vbea.java21.audio.Music;
+
 import com.vbea.java21.list.MusicAdapter;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
-import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.audio.*;
+import com.vbea.java21.view.MyDividerDecoration;
 
-public class MusicList extends AppCompatActivity
+public class MusicList extends BaseActivity
 {
 	private RecyclerView recyclerView;
 	private MusicAdapter mAdapter;
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
+	protected void before()
 	{
-		setTheme(MyThemes.getTheme());
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.musiclist);
-	
-		Toolbar tool = (Toolbar) findViewById(R.id.toolbar);
-		recyclerView = (RecyclerView) findViewById(R.id.music_recyclerView);
-		setSupportActionBar(tool);
-		
-		tool.setNavigationOnClickListener(new View.OnClickListener()
-		{
-			@Override
-			public void onClick(View view)
-			{
-				supportFinishAfterTransition();
-			}
-		});
+	}
+
+	@Override
+	protected void after()
+	{
+		enableBackButton();
+		recyclerView = bind(R.id.music_recyclerView);
 		
 		mAdapter = new MusicAdapter(Common.SOUND.getMusicList());
 		mAdapter.setIsVip(Common.isVipUser());
-		DividerItemDecoration decoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-		decoration.setDrawable(getResources().getDrawable(R.drawable.ic_divider));
-		recyclerView.addItemDecoration(decoration);
+		recyclerView.addItemDecoration(new MyDividerDecoration(this));
 		recyclerView.setAdapter(mAdapter);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));

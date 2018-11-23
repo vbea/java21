@@ -1,4 +1,4 @@
-package com.vbea.java21.list;
+package com.vbea.java21.data;
 
 public class Knowledges
 {

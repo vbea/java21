@@ -39,10 +39,10 @@ public class ForgetPassword extends BaseActivity
 	protected void after()
 	{
 		enableBackButton();
-		btnForget = (Button) findViewById(R.id.btnForget);
-		edtUsername = (EditText) findViewById(R.id.forUsername);
-		edtEmail = (EditText) findViewById(R.id.forEmail);
-		edtPhone = (EditText) findViewById(R.id.forPhone);
+		btnForget = bind(R.id.btnForget);
+		edtUsername = bind(R.id.forUsername);
+		edtEmail = bind(R.id.forEmail);
+		edtPhone = bind(R.id.forPhone);
 		
 		btnForget.setOnClickListener(new View.OnClickListener()
 		{

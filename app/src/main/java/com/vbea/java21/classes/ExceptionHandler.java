@@ -10,7 +10,6 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
-import android.widget.Toast;
 
 public class ExceptionHandler extends Application implements UncaughtExceptionHandler
 {

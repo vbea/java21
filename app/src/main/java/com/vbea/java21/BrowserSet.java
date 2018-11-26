@@ -152,6 +152,7 @@ public class BrowserSet extends BaseActivity
 	protected void onFinish()
 	{
 		setSetting();
+		super.onFinish();
 	}
 	
 	@Override

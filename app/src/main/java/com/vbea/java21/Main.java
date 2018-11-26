@@ -165,6 +165,8 @@ public class Main extends BaseActivity
 				}
 				else
 				{
+					if (txtUserName.getText().toString().equals("正在登录..."))
+						return;
 					Common.startActivityOptions(Main.this, Login.class);
 					mHandler.sendEmptyMessageDelayed(1, 500);
 				}
@@ -183,13 +185,16 @@ public class Main extends BaseActivity
 				});
 			}
 		});
-		setHead();
 		myCallback = new InboxCallback();
 		if (START)
+		{
+			if (Common.isNet(this) && Common.canLogin())
+				onAutoLogin();
 			mHandler.sendEmptyMessageDelayed(6, 500);
+		}
     }
 	
-	private void setHead()
+	/*private void setHead()
 	{
 		if (Common.isNet(this) && Common.canLogin())
 			onAutoLogin();
@@ -218,8 +223,8 @@ public class Main extends BaseActivity
 				View rootLayout = findViewById(R.id.mainRootLayout);
 				rootLayout.setPadding(0, -statusBarHeight * 2, 0, 0);
 			}
-		}*/
-	}
+		}
+	}*/
 	
 	public void setIcon()
 	{
@@ -725,41 +730,38 @@ public class Main extends BaseActivity
 	{
 		try
 		{
-			if (Common.canLogin())
+			if (!Common.isLogin())
 			{
-				txtUserName.setText("正在登录...");
-				if (Common.mUser == null)
+				mHandler.sendEmptyMessage(10);
+				Common.Login(Main.this, new Common.LoginListener()
 				{
-					Common.Login(Main.this, new Common.LoginListener()
+					@Override
+					public void onLogin(int code)
 					{
-						@Override
-						public void onLogin(int code)
+						if (code == 1)
 						{
-							if (code == 1)
+							if (!Common.OldSerialNo.equals(Common.mUser.serialNo) && !Util.isNullOrEmpty(Common.OldSerialNo))
 							{
-								if (!Common.OldSerialNo.equals(Common.mUser.serialNo) && !Util.isNullOrEmpty(Common.OldSerialNo))
-								{
-									Util.toastShortMessage(Main.this, "帐号在其他设备登录，您的登录态已失效，请重新登录");
-									Common.Logout(Main.this);
-								}
-								else
-									Common.IsChangeICON = true;
-								showUserInfo();
-							}	
-							if (code == 0 || code == 2)
-							{
-								toastLoginError("0x000"+code);
+								Util.toastShortMessage(Main.this, "帐号在其他设备登录，您的登录态已失效，请重新登录");
+								Common.Logout(Main.this);
 							}
-						}
-
-						@Override
-						public void onError(String error)
+							else
+								Common.IsChangeICON = true;
+							showUserInfo();
+						}	
+						if (code == 0 || code == 2)
 						{
-							ExceptionHandler.log("mainLogin", error);
-							toastLoginError("0x0001");
+							toastLoginError("0x000"+code);
 						}
-					});
-				}
+					}
+
+					@Override
+					public void onError(String error)
+					{
+						ExceptionHandler.log("mainLogin", error);
+						toastLoginError("0x0001");
+					}
+				});
 			}
 		}
 		catch (Exception er)
@@ -801,6 +803,7 @@ public class Main extends BaseActivity
 	private void toastLoginError(String code)
 	{
 		Util.toastShortMessage(getApplicationContext(), "登录失败(" + code + ")");
+		txtUserName.setText("请登录");
 	}
 	
 	private class InboxCallback implements InboxManager.InboxCallback
@@ -854,6 +857,9 @@ public class Main extends BaseActivity
 					break;
 				case 7:
 					setIcon();
+					break;
+				case 10:
+					txtUserName.setText("正在登录...");
 					break;
 			}
 			super.handleMessage(msg);

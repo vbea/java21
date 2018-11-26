@@ -87,22 +87,10 @@ public class MainActivity extends AppCompatActivity
 		{
 			Common.update(this, false);
 		}
-		if (Common.isWeladv())
-		{
-			if (Util.isAndroidN())
-				checkAndRequestPermission();
-			else
-				fetchSplashAD();
-		}
+		if (Util.isAndroidM())
+			checkAndRequestPermission();
 		else
-		{
-			if (Util.isAndroidN())
-			{
-				if (!Util.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE))
-					Util.requestPermission(this, 100, Manifest.permission.READ_EXTERNAL_STORAGE);
-			}
-			new MainThread().start();
-		}
+			startSplashAD();
 		/*try
 		{
 			//StatService.startStatService(this, "Aqc1150078134", com.tencent.stat.common.StatConstants.VERSION);
@@ -135,15 +123,7 @@ public class MainActivity extends AppCompatActivity
 				case 2:
 					Intent intent = new Intent();
 					intent.putExtra("start", true);
-					//update on 20170606
-					//if (Common.IS_ACTIVE)
 					intent.setClass(MainActivity.this, Main.class);
-					/*else
-					{
-						if (Common.isSupportMD())
-							txtTitle.setText(R.string.actived);
-						intent.setClass(MainActivity.this, Machine.class);
-					}*/
 					Common.startActivityOption(MainActivity.this, intent, based, getString(R.string.shared));
 					break;
 				case 3:
@@ -209,39 +189,54 @@ public class MainActivity extends AppCompatActivity
 	@Override
 	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
 	{
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		if (requestCode == 1024 && Util.hasAllPermissionsGranted(grantResults))
-			fetchSplashAD();
+		//ExceptionHandler.log("main", "result:" + Util.Join(",", permissions));
+		if (Util.hasAllPermissionsGranted(grantResults))
+			startSplashAD();
 		else
-			new MainThread().start();
+			checkAndRequestPermission();
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 	}
 	
-	private void fetchSplashAD()
+	private void startSplashAD()
 	{
-		txtSkip.setVisibility(View.VISIBLE);
-		splashAD = new SplashAD(this, container, txtSkip, AdvConfig.APPID, AdvConfig.Splash, new MySplashListener(), 0);
+		try
+		{
+			//ExceptionHandler.log("main", "startSplashAD");
+			if (Common.isWeladv())
+			{
+				txtSkip.setVisibility(View.VISIBLE);
+				splashAD = new SplashAD(this, container, txtSkip, AdvConfig.APPID, AdvConfig.Splash, new MySplashListener(), 0);
+			}
+			else
+			{
+				new MainThread().start();
+			}
+		} catch (Exception e) {
+			ExceptionHandler.log("startSplashMain", e);
+			new MainThread().start();
+		}
 	}
 	
 	private void checkAndRequestPermission()
 	{
 		List<String> lackedPermission = new ArrayList<String>();
-		if (!Util.hasPermission(this, Manifest.permission.READ_PHONE_STATE))
-			lackedPermission.add(Manifest.permission.READ_PHONE_STATE);
 		if (!Util.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE))
 			lackedPermission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
 		if (!Util.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
 			lackedPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+		if (!Util.hasPermission(this, Manifest.permission.READ_PHONE_STATE))
+			lackedPermission.add(Manifest.permission.READ_PHONE_STATE);
 		if (!Util.hasPermission(this, Manifest.permission.ACCESS_FINE_LOCATION))
 			lackedPermission.add(Manifest.permission.ACCESS_FINE_LOCATION);
     	// 权限都已经有了，那么直接调用SDK
-		if (lackedPermission.size() == 0)
-			fetchSplashAD();
-		else
+		if (lackedPermission.size() == 0) {
+			startSplashAD();
+		} else
 		{
 			// 请求所缺少的权限，在onRequestPermissionsResult中再看是否获得权限，如果获得权限就可以调用SDK，否则不要调用SDK。
-			String[] requestPermissions = new String[lackedPermission.size()];
-			lackedPermission.toArray(requestPermissions);
-			requestPermissions(requestPermissions, 1024);
+			String[] requestPermission = new String[lackedPermission.size()];
+			requestPermission = lackedPermission.toArray(requestPermission);
+			requestPermissions(requestPermission, 1024);
 		}
 	}
 	
@@ -270,10 +265,18 @@ public class MainActivity extends AppCompatActivity
 	
 	class MySplashListener implements SplashADListener
 	{
+
+		@Override
+		public void onADExposure()
+		{
+			
+		}
+
 		@Override
 		public void onADDismissed()
 		{
-			mHandler.sendEmptyMessage(3);
+			canJump = true;
+			mHandler.sendEmptyMessageDelayed(3, 500);
 		}
 
 		@Override

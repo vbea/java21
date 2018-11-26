@@ -26,7 +26,6 @@ public class SetDrawerImage extends BaseActivity
 {
 	private DrawerAdapter adapter;
 	private SharedPreferences spf;
-	private SharedPreferences.Editor edt;
 	//private String[] headItems = {"拍照","相册"};
 	//private Uri TEMP_URI;
 
@@ -47,7 +46,6 @@ public class SetDrawerImage extends BaseActivity
 		adapter = new DrawerAdapter();
 		recyclerView.setAdapter(adapter);
 		spf = getSharedPreferences("java21", MODE_PRIVATE);
-		edt = spf.edit();
 
 		adapter.setOnItemClickListener(new DrawerAdapter.OnItemClickListener()
 		{
@@ -79,6 +77,7 @@ public class SetDrawerImage extends BaseActivity
 	protected void onFinish()
 	{
 		goBack();
+		super.onFinish();
 	}
 
 	@Override
@@ -91,6 +90,7 @@ public class SetDrawerImage extends BaseActivity
 	{
 		if (MyThemes.ISCHANGED)
 		{
+			SharedPreferences.Editor edt = spf.edit();
 			edt.putInt("back", Common.APP_BACK_ID);
 			edt.commit();
 		}

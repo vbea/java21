@@ -24,6 +24,7 @@ public class Knowledge extends BaseActivity
 	protected void before()
 	{
 		setContentView(R.layout.apiword);
+		setToolbarTitle(getIntent().getExtras().getString("title", ""));
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class Knowledge extends BaseActivity
 		if (Common.isSupportMD())
 			myweb.removeJavascriptInterface("searchBoxJavaBridge_");
 		String index = getIntent().getExtras().getString("url", "");
-		toolbar.setTitle(getIntent().getExtras().getString("title", ""));
+		
 		myweb.loadUrl(getUrl(index));
 		WebSettings set = myweb.getSettings();
 		switch (Common.JAVA_TEXT_SIZE)

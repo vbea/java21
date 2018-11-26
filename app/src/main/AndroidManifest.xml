@@ -25,11 +25,6 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
 		</activity>
-		<service
-			android:name=".audio.AudioService"/>
-		<service
-			android:name="com.qq.e.comm.DownloadService"
-			android:exported="false"/>
 		<activity
 			android:name=".Themes"
 			android:label="@string/setheme"
@@ -258,8 +253,22 @@
 			android:name="com.qq.e.ads.ADActivity"
 			android:configChanges="keyboard|keyboardHidden|orientation|screenSize"/>
 		<activity
+			android:name="com.qq.e.ads.PortraitADActivity"
+			android:screenOrientation="portrait"
+			android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+		<activity
+			android:name="com.qq.e.ads.LandscapeADActivity"
+			android:screenOrientation="landscape"
+			android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+		<activity
 			android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
 			android:theme="@style/CropBlack"/>
+		<service
+			android:name=".audio.AudioService"
+			android:exported="false"/>
+		<service
+			android:name="com.qq.e.comm.DownloadService"
+			android:exported="false"/>
 		<provider
 			android:name="com.tencent.mid.api.MidProvider"
 			android:authorities="com.vbea.java21.TENCENT.MID.V3"
@@ -279,7 +288,7 @@
 			android:value="A1M46EZRJ7WI"/>
 		<meta-data
 			android:name="InstallChannel"
-			android:value="Tencent"/>
+			android:value="Test"/>
 		<meta-data
 			android:name="android.max_aspect"
 			android:value="2.2"/>
@@ -289,12 +298,13 @@
 	<uses-permission android:name="android.permission.WAKE_LOCK"/>
 	<uses-permission android:name="android.permission.CAMERA"/>
 	<uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 	<uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-	<!--uses-permission android:name="android.permission.GET_TASKS"/-->
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 	<uses-permission android:name="android.permission.SIGNAL_PERSISTENT_PROCESSES"/>
 	<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 </manifest>

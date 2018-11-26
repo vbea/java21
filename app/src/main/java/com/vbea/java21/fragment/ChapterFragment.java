@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.vbea.java21.R;
 import com.vbea.java21.AndroidWeb;
 import com.vbea.java21.data.Chapter;
 import com.vbea.java21.list.ChapterAdapter;
@@ -49,27 +50,27 @@ public class ChapterFragment extends Fragment
 			String[] review = getResources().getStringArray(R.array.array_review);
 			for (int i=0; i<titles.length; i++)
 			{
-				list.add(new Chapter(titles[i], review[i]));
+				list.add(new Chapter(i, titles[i], review[i]));
 			}
 			mAdapter = new ChapterAdapter(list);
 			recyclerView.setAdapter(mAdapter);
 			mAdapter.setOnItemClickListener(new ChapterAdapter.OnItemClickListener()
 			{
 				@Override
-				public void onItemClick(int resId, String title, String sub)
+				public void onItemClick(Chapter item)
 				{
 					/*if (!Common.isLogin())
 					{
 						Util.toastShortMessage(getContext(), "请先登录！");
 						return;
 					}*/
-					String id = String.valueOf(resId);
+					String id = String.valueOf(item.id);
  					Common.addJavaRead(id);
  					Intent intent = new Intent(getActivity(), AndroidWeb.class);
  					intent.putExtra("id", id);
  					intent.putExtra("url", "file:///android_asset/java/chapter" + id + ".html");
- 					intent.putExtra("title", title);
- 					intent.putExtra("sub", sub);
+ 					intent.putExtra("title", item.title);
+ 					//intent.putExtra("sub", item.review);
  					intent.putExtra("type", type);
 					Common.startActivityOptions(getActivity(), intent);
 					mAdapter.notifyDataSetChanged();

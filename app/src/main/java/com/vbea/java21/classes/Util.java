@@ -46,6 +46,11 @@ import com.vbea.java21.view.MyAlertDialog;
 
 public class Util
 {
+	public static boolean isServerDataId(int id)
+	{
+		return id == -1;
+	}
+	
 	//byte转为字符串
     public static String bytesToHexString(byte[] src)
 	{
@@ -875,6 +880,16 @@ public class Util
 		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N);
 	}
 	
+	public static boolean isAndroidO()
+	{
+		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O);
+	}
+	
+	public static boolean isAndroidP()
+	{
+		return (Build.VERSION.SDK_INT >= 28);
+	}
+	
 	public static boolean hasPermission(Context c, String p)
 	{
 		//ExceptionHandler.log(p, "permission:"+ (c.checkSelfPermission(p) == PackageManager.PERMISSION_GRANTED));
@@ -898,12 +913,18 @@ public class Util
 	
 	public static boolean hasAllPermissionsGranted(int[] grantResults)
 	{
-		for (int grantResult : grantResults)
+		try
 		{
-			if (grantResult == PackageManager.PERMISSION_DENIED)
-				return false;
+			for (int grantResult : grantResults)
+			{
+				if (grantResult == PackageManager.PERMISSION_DENIED)
+					return false;
+			}
+			return true;
+		} catch (Exception e) {
+			ExceptionHandler.log("Util.hasAllPermissionsGranted", e);
+			return false;
 		}
-		return true;
 	}
 	
 	public static void addClipboard(Context c, String lebel, String msg)
@@ -953,9 +974,14 @@ public class Util
 		}
 		catch (Exception e)
 		{
-			deviceId.append(getDeviceModel());
+			deviceId.append(getSerialNo());
 			return deviceId.toString();
 		}
+	}
+	
+	public static String getSerialNo()
+	{
+		return Build.getSerial();
 	}
 	
 	//获取设备标识

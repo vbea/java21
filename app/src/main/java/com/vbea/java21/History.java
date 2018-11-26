@@ -138,6 +138,7 @@ public class History extends BaseActivity
 	protected void onFinish()
 	{
 		setResult(RESULT_CANCELED);
+		super.onFinish();
 	}
 
 	@Override

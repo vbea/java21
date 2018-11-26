@@ -87,6 +87,7 @@ public class HtmlViewer extends BaseActivity
 	protected void before()
 	{
 		setContentView(R.layout.browser);
+		setToolbarTitle("点此输入网址或搜索");
 	}
 
 	@Override
@@ -97,7 +98,6 @@ public class HtmlViewer extends BaseActivity
 		NightView = bind(R.id.api_nightView);
 		webProgress = bind(R.id.apiProgress);
 		sourceProgress = bind(R.id.sourceProgress);
-		toolbar.setTitle("点此输入网址或搜索");
 		if (MyThemes.isNightTheme()) {
 			NightView.setVisibility(View.VISIBLE);
 		}
@@ -673,7 +673,7 @@ public class HtmlViewer extends BaseActivity
 		souceView.setVisibility(View.GONE);
 		souceView.loadData("", "text/plain", null);
 		sourceProgress.setVisibility(View.GONE);
-		tool.setTitle(webView.getTitle());
+		toolbar.setTitle(webView.getTitle());
 		searchItem.collapseActionView();
 		ISSOURCE = false;
 	}

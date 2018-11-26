@@ -122,7 +122,7 @@ public class Setting extends BaseActivity
 			@Override
 			public void onCheckedChanged(CompoundButton p1, boolean p2)
 			{
-				if (!p2 || Common.IS_ACTIVE)
+				if (!p2 || Common.IS_ACTIVE || Common.isVipUser())
 				{
 					Common.NO_ADV = p2;
 					if (p2 && Common.isVipUser())
@@ -133,7 +133,7 @@ public class Setting extends BaseActivity
 				}
 				else
 				{
-					Util.toastShortMessage(getApplicationContext(), "你需要激活后才能做此操作");
+					toastShortMessage("你需要激活后才能做此操作");
 					swiAdv.setChecked(false);
 				}
 			}
@@ -185,7 +185,7 @@ public class Setting extends BaseActivity
 				}
 				catch (Exception e)
 				{
-					Util.toastShortMessage(getApplicationContext(), "未检测到应用商店");
+					toastShortMessage("未检测到应用商店");
 				}
 			}
 		});
@@ -224,10 +224,10 @@ public class Setting extends BaseActivity
 						if (saveState(true))
 						{
 							Common.clearReadHistory();
-							Util.toastShortMessage(getApplicationContext(), "操作成功");
+							toastShortMessage("操作成功");
 						}
 						else
-							Util.toastShortMessage(getApplicationContext(), "清除失败，请重试");
+							toastShortMessage("清除失败，请重试");
 					}
 				});
 			}
@@ -267,7 +267,7 @@ public class Setting extends BaseActivity
 			{
 				if (txtCacheSize.getText().toString().equals("0.0B"))
 				{
-					Util.toastShortMessage(getApplicationContext(), "已经很干净了，不需要再清咯");
+					toastShortMessage("已经很干净了，不需要再清咯");
 					return;
 				}
 				Util.showConfirmCancelDialog(Setting.this, android.R.string.dialog_alert_title, "您确定要清除缓存？此操作将清空所有网页和图片缓存。",

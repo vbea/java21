@@ -64,6 +64,12 @@ public class AndroidWeb extends BaseActivity
 	protected void before()
 	{
 		setContentView(R.layout.article);
+		url = getIntent().getExtras().getString("url", "");
+		title = getIntent().getExtras().getString("title", "");
+		sub = getIntent().getExtras().getString("sub", "");
+		id = getIntent().getExtras().getString("id", "");
+		type = getIntent().getIntExtra("type", -1);
+		setToolbarTitle(title);
 	}
 
 	@Override
@@ -78,12 +84,6 @@ public class AndroidWeb extends BaseActivity
 		TableRow btnComment = bind(R.id.art_editbtn);
 		EditText edtComment = bind(R.id.art_editText);
 		if (MyThemes.isNightTheme()) NightView.setVisibility(View.VISIBLE);
-		url = getIntent().getExtras().getString("url", "");
-		title = getIntent().getExtras().getString("title", "");
-		sub = getIntent().getExtras().getString("sub", "");
-		id = getIntent().getExtras().getString("id", "");
-		type = getIntent().getIntExtra("type", 0);
-		toolbar.setTitle(title);
 		WebSettings set = myweb.getSettings();
 		set.setJavaScriptEnabled(true);
 		set.setUseWideViewPort(true);

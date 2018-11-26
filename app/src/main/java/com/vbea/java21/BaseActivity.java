@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.vbea.java21.classes.Common;
+import com.vbea.java21.classes.Util;
 
 public abstract class BaseActivity extends AppCompatActivity
 {
     protected Toolbar toolbar;
+	private String _title;
     @Override
     protected void onCreate(Bundle savedInstanceState)
 	{
@@ -17,13 +20,22 @@ public abstract class BaseActivity extends AppCompatActivity
         setTheme(MyThemes.getTheme());
         super.onCreate(savedInstanceState);
         before();
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        toolbar = bind(R.id.toolbar);
+		if (!Util.isNullOrEmpty(_title)) {
+			toolbar.setTitle(_title);
+			_title = null;
+		}
+		setSupportActionBar(toolbar);
         after();
     }
 
     protected abstract void before();
     protected abstract void after();
+
+	public void setToolbarTitle(String t)
+	{
+		_title = t;
+	}
 
     public <T extends View> T bind(int id)
 	{
@@ -39,14 +51,13 @@ public abstract class BaseActivity extends AppCompatActivity
             public void onClick(View view)
 			{
 				onFinish();
-                supportFinishAfterTransition();
             }
         });
     }
 	
 	protected void onFinish()
 	{
-		
+		supportFinishAfterTransition();
 	}
 
     @Override
@@ -55,4 +66,14 @@ public abstract class BaseActivity extends AppCompatActivity
         super.onDestroy();
         ActivityManager.getInstance().finishActivity(this);
     }
+	
+	protected void toastShortMessage(String message)
+	{
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+	}
+
+	protected void toastLongMessage(String message)
+	{
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+	}
 }

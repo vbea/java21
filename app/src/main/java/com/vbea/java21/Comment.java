@@ -54,6 +54,12 @@ public class Comment extends BaseActivity
 	protected void before()
 	{
 		setContentView(R.layout.comment);
+		title = getIntent().getStringExtra("title");
+		resId = getIntent().getStringExtra("id");
+		url = getIntent().getStringExtra("url");
+		type = getIntent().getIntExtra("type", -1);
+		if (!Util.isNullOrEmpty(title))
+			setToolbarTitle(title + " 的评论");
 	}
 
 	@Override
@@ -64,14 +70,10 @@ public class Comment extends BaseActivity
 		btnComment = bind(R.id.btnComment);
 		emptyView = bind(R.id.comment_emptyview);
 		refreshLayout = bind(R.id.comm_refresh);
-		title = getIntent().getStringExtra("title");
-		resId = getIntent().getStringExtra("id");
-		url = getIntent().getStringExtra("url");
-		type = getIntent().getIntExtra("type", 0);
 		refreshLayout.setColorSchemeResources(MyThemes.getColorPrimary(), MyThemes.getColorAccent());
-		if (Util.isNullOrEmpty(resId) || type == 0)
+		if (Util.isNullOrEmpty(resId) || type == -1)
 		{
-			Util.toastShortMessage(this, "不支持的参数");
+			Util.toastShortMessage(this, "不支持的参数: " + type);
 			supportFinishAfterTransition();
 		}
 		else
@@ -85,8 +87,6 @@ public class Comment extends BaseActivity
 				mHandler.sendEmptyMessage(6);
 			}
 		}
-		if (title != null)
-			toolbar.setTitle(title + " 的评论");
 		reference = "";
 		reply = "";
 		imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);

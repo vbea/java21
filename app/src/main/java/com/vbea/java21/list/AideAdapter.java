@@ -93,7 +93,7 @@ public class AideAdapter extends RecyclerView.Adapter<AideAdapter.MyViewHolder>
 	{
 		mList.clear();
 		mList.addAll(list);
-		if (mList.get(0).order == -1)
+		if (Util.isServerDataId(mList.get(0).order))
 		{
 			server = mList.get(0).url;
 			mList.remove(0);

@@ -12,10 +12,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.vbea.java21.R;
 import com.vbea.java21.AndroidWeb;
 import com.vbea.java21.data.Knowledges;
 import com.vbea.java21.list.KnowledgeAdapter;
 import com.vbea.java21.classes.Common;
+import com.vbea.java21.classes.Util;
 import com.vbea.java21.view.MyDividerDecoration;
 
 public class KnowFragment extends Fragment
@@ -65,16 +67,16 @@ public class KnowFragment extends Fragment
 				@Override
 				public void onItemClick(Knowledges item)
 				{
-					/*if (Common.isNotLogin())
+					/*if (Common.isLogin())
 					{
-						Util.toastShortMessage(getContext(), "请先登录！");
+						Util.toastShortMessage(getContext(), "id:" + item.ID);
 						return;
 					}*/
 					Intent intent = new Intent(getActivity(), AndroidWeb.class);
-					intent.putExtra("id", id);
-					intent.putExtra("url", item.URL);
+					intent.putExtra("id", item.getId());
+					intent.putExtra("url", item.getUrl());
 					intent.putExtra("title", item.TITLE);
-					intent.putExtra("sub", item.SUB);
+					//intent.putExtra("sub", item.SUB);
 					intent.putExtra("type", type);
 					Common.startActivityOptions(getActivity(), intent);
 				}

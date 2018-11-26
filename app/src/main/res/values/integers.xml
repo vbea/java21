@@ -2,4 +2,5 @@
 <resources>
     <integer name="animationDurationReveal">420</integer>
     <integer name="animationDurationHide">420</integer>
+	<integer name="serverDataId">-1</integer>
 </resources>

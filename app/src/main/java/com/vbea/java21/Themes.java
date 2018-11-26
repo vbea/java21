@@ -18,7 +18,6 @@ public class Themes extends BaseActivity
 	private List<ThemeItem> mItem;
 	private ThemeAdapter adapter;
 	private SharedPreferences spf;
-	private SharedPreferences.Editor edt;
 
 	@Override
 	protected void before()
@@ -34,7 +33,6 @@ public class Themes extends BaseActivity
 		recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
 		spf = getSharedPreferences("java21", MODE_PRIVATE);
-		edt = spf.edit();
 		mItem = new ArrayList<ThemeItem>();
 		String[] color = getResources().getStringArray(R.array.array_theme1);
 		for (int i=0; i<color.length;i++)
@@ -52,6 +50,7 @@ public class Themes extends BaseActivity
 				if (Common.APP_THEME_ID == id)
 					return;
 				Common.APP_THEME_ID = id;
+				SharedPreferences.Editor edt = spf.edit();
 				edt.putInt("theme", id);
 				edt.commit();
 				//MyThemes.ISCHANGED = true;

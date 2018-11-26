@@ -18,6 +18,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.vbea.java21.R;
 import com.vbea.java21.AndroidWeb;
 import com.vbea.java21.MyThemes;
 import com.vbea.java21.data.AndroidHtml;

@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import com.vbea.java21.data.Database;
 import com.vbea.java21.R;
+import com.vbea.java21.classes.Util;
 
 public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.MyViewHolder>
 {
@@ -86,7 +87,7 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.MyView
 	{
 		mList.clear();
 		mList.addAll(list);
-		if (mList.get(0).order == -1)
+		if (Util.isServerDataId(mList.get(0).order))
 		{
 			server = mList.get(0).url;
 			mList.remove(0);

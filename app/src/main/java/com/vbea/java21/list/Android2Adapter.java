@@ -88,7 +88,8 @@ public class Android2Adapter extends RecyclerView.Adapter<Android2Adapter.MyView
 		mList.clear();
 		mList.addAll(list);
 		isEnd = false;
-		if (mList.get(0).order == -1) {
+		if (Util.isServerDataId(mList.get(0).order))
+		{
 			server = mList.get(0).url;
 			mList.remove(0);
 		}

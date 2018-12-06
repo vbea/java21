@@ -259,7 +259,8 @@ public class TouchImageView extends ImageView
                 Config.ARGB_8888); // 背景图片  
         Canvas canvas = new Canvas(bitmap); // 新建画布  
         canvas.drawBitmap(gintama, matrix, null); // 画图片  
-        canvas.save(Canvas.ALL_SAVE_FLAG); // 保存画布  
+        //canvas.save(Canvas.ALL_SAVE_FLAG); // 保存画布
+        canvas.save();
         canvas.restore();
         return bitmap;
     }

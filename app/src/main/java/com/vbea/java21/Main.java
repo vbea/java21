@@ -2,6 +2,7 @@ package com.vbea.java21;
 
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -45,6 +46,7 @@ import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.AdvConfig;
 import com.vbea.java21.classes.InboxManager;
+import com.vbea.java21.update.MyUpdateAgent;
 import com.vbea.java21.view.MyAlertDialog;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.widget.CustomTextView;
@@ -817,7 +819,8 @@ public class Main extends BaseActivity
 		public void onFailure(){}
 	}
 	
-	Handler mHandler = new Handler()
+	@SuppressLint("HandlerLeak")
+	private Handler mHandler = new Handler()
 	{
 		@Override
 		public void handleMessage(Message msg)
@@ -851,8 +854,9 @@ public class Main extends BaseActivity
 					showPlugin();
 					break;
 				case 6:
-					BmobUpdateAgent.setUpdateOnlyWifi(false);
-					BmobUpdateAgent.update(getApplicationContext());
+					//BmobUpdateAgent.setUpdateOnlyWifi(false);
+					//BmobUpdateAgent.update(getApplicationContext());
+					new MyUpdateAgent(Main.this);
 					//QbSdk.initX5Environment(Main.this, null);
 					break;
 				case 7:

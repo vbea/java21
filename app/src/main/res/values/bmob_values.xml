@@ -16,7 +16,7 @@
     <string name="BMUpdateTitle">发现新版本</string>
     <string name="bmob_common_action_cancel">取消</string>
     <string name="bmob_common_action_continue">继续</string>
-    <string name="bmob_common_action_info_exist">正在下载中.</string>
+    <string name="bmob_common_action_info_exist">已下载</string>
     <string name="bmob_common_action_pause">暂停</string>
     <string name="bmob_common_download_failed">下载失败</string>
     <string name="bmob_common_download_finish">下载完成，请点击安装</string>

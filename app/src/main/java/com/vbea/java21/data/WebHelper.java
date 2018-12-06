@@ -16,19 +16,18 @@ import com.vbea.java21.classes.ExceptionHandler;
  */
 public class WebHelper extends SQLiteOpenHelper
 {
-	public static final String DATABASE_NAME = "WebView.db";
-	public static final int DATA_VERSION = 2;
-	public static final String TABLE_BOOK = "bookmark";
-	public static final String TABLE_HISTORY = "history";
+	private static final String DATABASE_NAME = "WebView.db";
+	private static final int DATA_VERSION = 2;
+	private static final String TABLE_BOOK = "bookmark";
+	private static final String TABLE_HISTORY = "history";
 	public static final String COL_ID = "id";
 	public static final String COL_TITLE = "title";
 	public static final String COL_URL = "url";
 	public static final String COL_CREATEON = "createOn";
-	private Context context;
+
 	public WebHelper(Context c)
 	{
 		super(c, DATABASE_NAME, null, DATA_VERSION);
-		context = c;
 	}
 
 	@Override

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 import android.Manifest;
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -19,13 +21,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.Common;
+import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.AdvConfig;
 import com.tencent.stat.StatService;
-import com.tencent.stat.StatConfig;
 import com.qq.e.ads.splash.SplashAD;
 import com.qq.e.ads.splash.SplashADListener;
 import com.qq.e.comm.util.AdError;
-import com.vbea.java21.classes.*;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -215,6 +216,7 @@ public class MainActivity extends AppCompatActivity
 		}
 	}
 	
+	@TargetApi(Build.VERSION_CODES.M)
 	private void checkAndRequestPermission()
 	{
 		List<String> lackedPermission = new ArrayList<String>();

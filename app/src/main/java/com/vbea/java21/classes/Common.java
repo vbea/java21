@@ -696,6 +696,10 @@ public class Common
 		}
 		return false;
 	}
+
+	public static String getUpdatePath() {
+		return LocalPath + "apk/";
+	}
 	
 	public static String getCachePath()
 	{

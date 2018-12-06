@@ -11,9 +11,9 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
 
-public class ExceptionHandler extends Application implements UncaughtExceptionHandler
+public class ExceptionHandler implements UncaughtExceptionHandler
 {
-	private Context mContext;
+	//private Context mContext;
 	private static ExceptionHandler instance; //单例模式
 	private ExceptionHandler(){}
 
@@ -26,9 +26,9 @@ public class ExceptionHandler extends Application implements UncaughtExceptionHa
 		}
 		return instance;
 	}
-	public void init(Context context)
+	public void init()
 	{
-		this.mContext = context;
+		//this.mContext = context;
 		Thread.setDefaultUncaughtExceptionHandler(this);
 	}
 

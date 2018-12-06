@@ -64,7 +64,7 @@ public abstract class BaseActivity extends AppCompatActivity
     protected void onDestroy()
 	{
         super.onDestroy();
-        ActivityManager.getInstance().finishActivity(this);
+        ActivityManager.getInstance().removeActivity(this);
     }
 	
 	protected void toastShortMessage(String message)

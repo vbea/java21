@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-		ExceptionHandler exc = ExceptionHandler.getInstance();
-		exc.init(MainActivity.this);
 		Common.start(getApplicationContext());
 		setTheme(MyThemes.getTheme());
 		getWindow().setFlags(1024, 1024);

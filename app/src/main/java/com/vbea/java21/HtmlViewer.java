@@ -148,7 +148,7 @@ public class HtmlViewer extends BaseActivity
 					{
 						if (Common.isAdminUser())
 							Util.addClipboard(HtmlViewer.this, url);
-						Util.showConfirmCancelDialog(HtmlViewer.this, "提示", request.getUrl().getHost() + "想要打开第三方应用，是否继续？", new DialogInterface.OnClickListener()
+						Util.showConfirmCancelDialog(HtmlViewer.this, "提示", "网页想要打开第三方应用，是否继续？", new DialogInterface.OnClickListener()
 						{
 							public void onClick(DialogInterface d, int s)
 							{

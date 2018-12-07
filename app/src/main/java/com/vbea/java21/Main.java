@@ -856,7 +856,7 @@ public class Main extends BaseActivity
 				case 6:
 					//BmobUpdateAgent.setUpdateOnlyWifi(false);
 					//BmobUpdateAgent.update(getApplicationContext());
-					new MyUpdateAgent(Main.this);
+					MyUpdateAgent.update(Main.this);
 					//QbSdk.initX5Environment(Main.this, null);
 					break;
 				case 7:

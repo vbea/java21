@@ -10,10 +10,9 @@ import android.widget.LinearLayout;
 
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
+import com.vbea.java21.update.MyUpdateAgent;
 import com.vbea.java21.view.MyAlertDialog;
 import com.vbea.secret.k;
-
-import cn.bmob.v3.update.BmobUpdateAgent;
 
 public class About extends BaseActivity
 {
@@ -44,7 +43,7 @@ public class About extends BaseActivity
 		channel = bind(R.id.about_channel);
 		if (Common.isHuluxiaUser())
 			rowStatus.setVisibility(View.GONE);
-		BmobUpdateAgent.forceUpdate(this);
+		MyUpdateAgent.update(this);
 		status.setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View v)

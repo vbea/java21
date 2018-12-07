@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.vbea.java21.classes.Common;
+import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.Util;
 
 public abstract class BaseActivity extends AppCompatActivity
@@ -64,7 +65,11 @@ public abstract class BaseActivity extends AppCompatActivity
     protected void onDestroy()
 	{
         super.onDestroy();
-        ActivityManager.getInstance().removeActivity(this);
+        try {
+			ActivityManager.getInstance().removeActivity(this);
+		} catch (Exception | Error e) {
+			ExceptionHandler.log("Base:onDestroy", e.toString());
+		}
     }
 	
 	protected void toastShortMessage(String message)

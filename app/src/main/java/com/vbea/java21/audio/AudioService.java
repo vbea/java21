@@ -1,5 +1,6 @@
 package com.vbea.java21.audio;
 
+import android.app.NotificationChannel;
 import android.app.Service;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -48,6 +49,11 @@ public class AudioService extends Service
 		super.onCreate();
 		notiManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+		if (Util.isAndroidO()) {
+			NotificationChannel channel = new NotificationChannel("22", "Audio", NotificationManager.IMPORTANCE_LOW);
+			channel.enableVibration(false);
+			notiManager.createNotificationChannel(channel);
+		}
 	}
 
 	@Override
@@ -103,12 +109,15 @@ public class AudioService extends Service
 			return;
 		RemoteViews view = new RemoteViews(getPackageName(), R.layout.music_noti);
 		Notification.Builder builder = new Notification.Builder(this);
-		builder.setSmallIcon(R.mipmap.ic_launcher);
+		builder.setSmallIcon(R.mipmap.wel_icon);
 		builder.setOngoing(true);
 		if (Util.isAndroidN()) {
 			builder.setCustomContentView(view);
 		} else {
 			builder.setContent(view);
+		}
+		if (Util.isAndroidO()) {
+			builder.setChannelId("22");
 		}
 		builder.setContentIntent(PendingIntent.getActivity(this, 0, new Intent(this, More.class), PendingIntent.FLAG_CANCEL_CURRENT));
 		view.setTextViewText(R.id.noti_text, getMusicName());

@@ -63,7 +63,7 @@ public class MyUpdateAgent {
     }
 
     private void queryData() {
-        BmobQuery query = new BmobQuery();
+        BmobQuery<AppVersion> query = new BmobQuery<>();
         query.addWhereEqualTo("platform", "Android");
         query.addWhereEqualTo("channel", "app");
         query.addWhereGreaterThan("version_i", The.Code());
@@ -85,7 +85,7 @@ public class MyUpdateAgent {
     }
 
     private void showUpdateDialog(final AppVersion appVersion) {
-        UpdateResponse response = new UpdateResponse(appVersion);
+        final UpdateResponse response = new UpdateResponse(appVersion);
         if (response.target_size <= 0L) {
             Util.toastShortMessage(context,"target_size为空或格式不对，请填写apk文件大小(long类型)。");
             return;
@@ -97,7 +97,7 @@ public class MyUpdateAgent {
         }
 
         filename = response.path_md5 + ".apk";
-        File file = new File(Common.getUpdatePath(), filename);
+        final File file = new File(Common.getUpdatePath(), filename);
         if (file.exists() && file.length() == response.target_size) {
             isExist = true;
         }
@@ -160,19 +160,19 @@ public class MyUpdateAgent {
         activity.startActivity(intent);
     }
 
-    private void downloadApk(BmobFile bmobFile, File file) {
+    private void downloadApk(BmobFile bmobFile, final File file) {
         if (bmobFile != null) {
             bmobFile.download(file, new DownloadFileListener() {
                 @Override
                 public void done(String s, BmobException e) {
-                    ExceptionHandler.log("done", s);
+                    //ExceptionHandler.log("done", s);
                     notificationManager.cancelAll();
                     installApk(file);
                 }
 
                 @Override
                 public void onProgress(Integer integer, long l) {
-                    int ds = integer / 10;
+                    int ds = integer / 5;
                     if (percents != ds) {
                         createNotification(context.getString(R.string.bmob_common_action_info_exist) + integer + "%");
                         percents = ds;

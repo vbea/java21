@@ -7,17 +7,14 @@ import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.StrictMode;
-import android.support.v4.app.NotificationManagerCompat;
 
 import com.vbea.java21.ActivityManager;
-import com.vbea.java21.MainActivity;
 import com.vbea.java21.R;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
@@ -30,8 +27,6 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.DownloadFileListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.update.AppVersion;
-import cn.bmob.v3.update.UpdateResponse;
-import cn.bmob.v3.util.The;
 
 /**
  * Created by Vbe on 2018/12/6.
@@ -66,7 +61,7 @@ public class MyUpdateAgent {
         BmobQuery<AppVersion> query = new BmobQuery<>();
         query.addWhereEqualTo("platform", "Android");
         query.addWhereEqualTo("channel", "app");
-        query.addWhereGreaterThan("version_i", The.Code());
+        query.addWhereGreaterThan("version_i", getVersionCode());
         query.order("-version_i");
         query.findObjects(new FindListener<AppVersion>() {
             public final void done(List<AppVersion> objects, BmobException e) {
@@ -74,7 +69,7 @@ public class MyUpdateAgent {
                     if (objects != null && objects.size() > 0) {
                         AppVersion appVersion = objects.get(0);
                         if (appVersion != null) {
-                            showUpdateDialog(appVersion);
+                            showUpdateDialog(new UpdateResponse(appVersion));
                         }
                     }
                 } else {
@@ -84,15 +79,14 @@ public class MyUpdateAgent {
         });
     }
 
-    private void showUpdateDialog(final AppVersion appVersion) {
-        final UpdateResponse response = new UpdateResponse(appVersion);
+    private void showUpdateDialog(final UpdateResponse response) {
         if (response.target_size <= 0L) {
             Util.toastShortMessage(context,"target_size为空或格式不对，请填写apk文件大小(long类型)。");
             return;
         }
 
-        if (Util.isNullOrEmpty(response.path)) {
-            Util.toastShortMessage(context, "path/android_url需填写其中之一。");
+        if (response.path == null) {
+            Util.toastShortMessage(context, "更新文件不存在");
             return;
         }
 
@@ -106,7 +100,7 @@ public class MyUpdateAgent {
         builder.append(response.version);
         builder.append("\n");
         builder.append(context.getString(R.string.BMTargetSize));
-        builder.append(Util.getFormatSize(response.target_size));
+        builder.append(response.format_size);
         builder.append("\n\n");
         builder.append(context.getString(R.string.BMUpdateContent));
         builder.append("\n");
@@ -137,7 +131,7 @@ public class MyUpdateAgent {
                 if (isExist) {
                     installApk(file);
                 } else {
-                    downloadApk(appVersion.getPath(), file);
+                    downloadApk(response.path, file);
                 }
             }
         });
@@ -195,5 +189,14 @@ public class MyUpdateAgent {
         builder.setOngoing(false);
         //builder.setContentIntent(PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), PendingIntent.FLAG_CANCEL_CURRENT));
         notificationManager.notify(0, builder.build());
+    }
+
+    private int getVersionCode() {
+        try {
+            return context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionCode;
+        } catch (Exception e) {
+            ExceptionHandler.log("update:getVersionCode", e);
+        }
+        return 0;
     }
 }

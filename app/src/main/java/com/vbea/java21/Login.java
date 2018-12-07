@@ -209,11 +209,13 @@ public class Login extends BaseActivity
 					resetButton();
 					break;
 				case 3:
-					if (Common.isNet(Login.this))
+					Util.toastShortMessage(getApplicationContext(), "用户不存在，请注册成功后绑定QQ");
+					resetButton();
+					/*if (Common.isNet(Login.this))
 					{
 						Common.startActivityOptions(Login.this, QQLoginReg.class);
 						mHandler.sendEmptyMessageDelayed(5, 300);
-					}
+					}*/
 					break;
 				case 4:
 					Util.toastShortMessage(getApplicationContext(), "该帐号已被封禁，无法登录！");

@@ -115,7 +115,7 @@ public class MyUpdateAgent {
             builder.append("\n\n");
             builder.append(context.getString(R.string.bmob_common_silent_download_finish));
         }
-        builder.append("\n\n");
+        builder.append("\n");
         MyAlertDialog dialog = new MyAlertDialog(activity);
         dialog.setTitle(R.string.BMUpdateTitle);
         dialog.setMessage(builder.toString());
@@ -190,7 +190,7 @@ public class MyUpdateAgent {
         }
         builder.setSmallIcon(R.mipmap.wel_icon);
         builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
-        builder.setContentTitle(context.getString(R.string.bmob_common_start_patch_notification));
+        builder.setContentTitle(context.getString(R.string.bmob_common_download_notification_prefix));
         builder.setContentText(percent);
         builder.setOngoing(false);
         //builder.setContentIntent(PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), PendingIntent.FLAG_CANCEL_CURRENT));

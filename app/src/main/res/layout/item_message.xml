@@ -19,7 +19,7 @@
 				android:textSize="16sp"
 				android:padding="10dp"
 				android:gravity="center"
-				android:text="设为已读"
+				android:text="@string/txt_setreaded"
 				android:textColor="@color/white"
 				android:background="?attr/colorAccent"/>
 			<LinearLayout
@@ -64,33 +64,20 @@
 				android:padding="12dp"
 				android:textSize="16sp"
 				android:gravity="center"
-				android:text="删除"
+				android:text="@string/txt_delete"
 				android:textColor="@color/white"
 				android:background="@color/alred"/>
 		</LinearLayout>
 	</com.vbea.java21.widget.SlidingView>
-	<RelativeLayout
+	<TextView
 		android:id="@+id/item_end"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:paddingLeft="8dp"
-		android:paddingRight="8dp"
-		android:visibility="gone">
-		<TextView
-			android:layout_width="match_parent"
-			android:layout_height="0.5dp"
-			android:layout_centerVertical="true"
-			android:background="#AAAAAA"/>
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_centerInParent="true"
-			android:paddingLeft="5dp"
-			android:paddingRight="5dp"
-			android:background="@color/dividers"
-			android:text="我是有底线的"
-			android:textSize="12sp"
-			android:textColor="#9A9A9A"/>
-	</RelativeLayout>
+		android:gravity="center"
+		android:padding="10dp"
+		android:text="@string/txt_lastrow"
+		android:textSize="12sp"
+		android:textColor="?attr/textSecondary"
+		android:visibility="gone"/>
 </LinearLayout>
 

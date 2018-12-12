@@ -5,13 +5,11 @@
 		<item name="colorPrimaryDark">@color/title19</item>
 		<item name="colorAccent">@color/title19_3</item>
 		<item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-		<item name="textPrimary">@color/grey3</item>
-		<item name="textSecondary">@color/grey2</item>
+		<item name="textPrimary">@color/white</item>
+		<item name="textSecondary">#b3ffffff</item>
 		<item name="titleColor">@color/nightback</item>
-		<item name="android:navigationBarColor">@color/nightback</item>
 		<item name="actionStyle">@style/ThemeOverlay.AppCompat.ActionBar</item>
 		<item name="popupStyle">@style/ThemeOverlay.AppCompat</item>
-		<item name="javaTextSize">@dimen/text_middle</item>
 		<item name="btnColor">#4CB5B5B5</item>
 	</style>
 	<style name="AppTheme25" parent="AppTheme.TranStatusBar">

@@ -4,16 +4,14 @@
         <item name="windowNoTitle">true</item>
 		<item name="textPrimary">@color/textPrimary</item>
 		<item name="textSecondary">@color/textSecondary</item>
-		<item name="titleColor">@color/white</item>
-		<item name="android:navigationBarColor">@color/white</item>
+		<item name="titleColor">#fffafafa</item>
 		<item name="actionStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
 		<item name="popupStyle">@style/ThemeOverlay.AppCompat.Light</item>
-		<item name="javaTextSize">@dimen/text_middle</item>
 		<item name="android:textColor">#444444</item>
 		<item name="btnColor">#DCDCDC</item>
 	</style>
 	
-	<style name="Theme_TextSize_Small">
+	<!--style name="Theme_TextSize_Small">
 		<item name="javaTextSize">@dimen/text_small</item>
 	</style>
 	
@@ -27,7 +25,7 @@
 	
 	<style name="Theme_TextSize_nLarge">
 		<item name="javaTextSize">@dimen/text_nlarge</item>
-	</style>
+	</style-->
 	
 	<style name="AppTheme.Black">
 		<item name="colorPrimary">@color/black</item>

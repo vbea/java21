@@ -2,7 +2,7 @@ package com.vbea.java21.data;
 
 public class Histime
 {
-	String date;
+	private String date;
 
 	public void setDate(String date)
 	{

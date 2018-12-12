@@ -8,13 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.TableRow;
-import android.widget.RelativeLayout;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
+
+import com.vbea.java21.classes.UserImageLoad;
 import com.vbea.java21.data.Comments;
 import com.vbea.java21.R;
 import com.vbea.java21.MyThemes;
@@ -49,7 +50,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 		if (context == null)
 			context = p1.getContext();
 		LayoutInflater inflate = LayoutInflater.from(context);
-		View v = inflate.inflate(R.layout.java8, p1, false);
+		View v = inflate.inflate(R.layout.item_comment, p1, false);
 		MyViewHolder holder = new MyViewHolder(v);
 		return holder;
 	}
@@ -74,15 +75,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 		}
 		getActcount(item.endorse, holder.txt_endorse, holder.img_endorse);
 		getActcount(item.oppose, holder.txt_oppose, holder.img_oppose);
-		if (isMy)
+		if (isMy) {
 			Common.setMyIcon(holder.icon, context, defalteIcon);
-		else
-		{
-			Bitmap icon = Common.getIcon(item.user);
-			if (icon != null)
-				holder.icon.setImageDrawable(Common.getRoundedIconDrawable(context, icon));
-			else
-				holder.icon.setImageDrawable(defalteIcon);
+		} else {
+			loadImage(item.user, holder.icon, true);
 		}
 		if (mList.size() > 5 && p == mList.size() - 1)
 			holder.end.setVisibility(View.VISIBLE);
@@ -134,6 +130,21 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 				}
 			}
 		});
+	}
+
+	private void loadImage(String user, ImageView v, boolean force) {
+		Bitmap icon = Common.getUserIcon(user);
+		if (icon != null) {
+			v.setImageDrawable(Common.getRoundedIconDrawable(context, icon));
+		} else if (force) {
+			v.setImageDrawable(defalteIcon);
+			new UserImageLoad(user, new UserImageLoad.OnLoadListener() {
+				@Override
+				public void onComplete() {
+					loadImage(user, v, false);
+				}
+			});
+		}
 	}
 	
 	public void unLock()
@@ -195,8 +206,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 		TextView name, date, comment, reference, delete, reply, txt_endorse, txt_oppose, device;
 		ImageView icon,img_endorse,img_oppose;
 		TableRow endorse, oppose;
-		RelativeLayout end;
-		View btnGroup;
+		View btnGroup, end;
 		public MyViewHolder(View v)
 		{
 			super(v);
@@ -208,7 +218,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
 			icon = (ImageView) v.findViewById(R.id.comm_icon);
 			reply = (TextView) v.findViewById(R.id.comm_reply);
 			device = (TextView) v.findViewById(R.id.comm_device);
-			end = (RelativeLayout) v.findViewById(R.id.item_end);
+			end = v.findViewById(R.id.item_end);
 			img_endorse = (ImageView) v.findViewById(R.id.img_endorse);
 			img_oppose = (ImageView) v.findViewById(R.id.img_oppose);
 			txt_endorse = (TextView) v.findViewById(R.id.txt_endorse);

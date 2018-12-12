@@ -13,6 +13,7 @@ import android.net.Uri;
 
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.DataCleanManager;
+import com.vbea.java21.classes.ReadUtil;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.view.MyAlertDialog;
 
@@ -223,7 +224,7 @@ public class Setting extends BaseActivity
 					{
 						if (saveState(true))
 						{
-							Common.clearReadHistory();
+							ReadUtil.getInstance().clearAllData(getApplicationContext());
 							toastShortMessage("操作成功");
 						}
 						else

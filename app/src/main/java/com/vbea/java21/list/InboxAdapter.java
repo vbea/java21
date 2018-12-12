@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.view.LayoutInflater;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -32,7 +31,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MyViewHolder
 	public MyViewHolder onCreateViewHolder(ViewGroup p1, int p2)
 	{
 		LayoutInflater inflate = LayoutInflater.from(p1.getContext());
-		View v = inflate.inflate(R.layout.message, p1, false);
+		View v = inflate.inflate(R.layout.item_message, p1, false);
 		MyViewHolder holder = new MyViewHolder(v);
 		return holder;
 	}
@@ -150,7 +149,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MyViewHolder
 		TextView leftMenu, rightMenu, title, content, date;
 		SlidingView slidingView;
 		LinearLayout layout;
-		RelativeLayout end;
+		View end;
 		public MyViewHolder(View v)
 		{
 			super(v);
@@ -161,7 +160,7 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MyViewHolder
 			content = (TextView) v.findViewById(R.id.item_messageContent);
 			date = (TextView) v.findViewById(R.id.item_messageDate);
 			slidingView = (SlidingView) v.findViewById(R.id.item_slidingBox);
-			end = (RelativeLayout) v.findViewById(R.id.item_end);
+			end = v.findViewById(R.id.item_end);
 		}
 	}
 

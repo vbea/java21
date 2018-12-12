@@ -5,8 +5,8 @@
     <color name="colorPrimaryDark">#2299Ff</color>
     <color name="colorAccent">#FF66CC</color>
 
-    <color name="textPrimary">#212121</color>
-    <color name="textSecondary">#757575</color>
+    <color name="textPrimary">#de000000</color>
+    <color name="textSecondary">#8a000000</color>
     <color name="dividers">#E1E1E1</color>
 	<color name="vipColor">#d21a32</color>
 	<!--一般色-->
@@ -39,7 +39,7 @@
 	<color name="lty">#66CCFF</color><!--天依蓝-->
 	<color name="trans">#00FFFFFF</color><!--透明色-->
 	<color name="eyeshield">#C7EDCC</color>
-	<color name="nightback">#424242</color><!--暗宝石绿-->
+	<color name="nightback">#424242</color><!--夜间模式背景-->
 	<color name="android_disable">#4FCCCCCC</color>
 	<color name="transparent">#00000000</color>
 	<!--标题色-->

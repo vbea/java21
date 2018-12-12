@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/pianoX1"
+	android:layout_width="70dp"
+	android:layout_height="fill_parent"
+	android:paddingBottom="10dp"
+	android:background="@drawable/btn_piano_w"
+	android:clickable="true"
+	android:gravity="center_horizontal|bottom"/>

@@ -3,6 +3,7 @@ package com.vbea.java21.fragment;
 import java.util.List;
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,8 +22,9 @@ import android.support.v7.widget.RecyclerView;
 import com.vbea.java21.R;
 import com.vbea.java21.AndroidWeb;
 import com.vbea.java21.MyThemes;
+import com.vbea.java21.classes.ReadUtil;
 import com.vbea.java21.data.AndroidHtml;
-import com.vbea.java21.list.AndroidAdapter;
+import com.vbea.java21.list.LearnListAdapter;
 import com.vbea.java21.view.MyDividerDecoration;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
@@ -38,7 +40,7 @@ public class AndroidFragment extends Fragment
 	private RecyclerView recyclerView;
 	private TextView errorText;
 	private ProgressBar proRefresh;
-	private AndroidAdapter mAdapter;
+	private LearnListAdapter<AndroidHtml> mAdapter;
 	private List<AndroidHtml> mList;
 	private View rootView;
 	private int mCount = 0;
@@ -58,7 +60,7 @@ public class AndroidFragment extends Fragment
 		if (recyclerView == null)
 		{
 			mList = new ArrayList<AndroidHtml>();
-			mAdapter = new AndroidAdapter();
+			mAdapter = new LearnListAdapter<>();
 			errorText = (TextView) view.findViewById(R.id.txt_andError);
 			proRefresh = (ProgressBar) view.findViewById(R.id.refreshProgress);
         	recyclerView = (RecyclerView) view.findViewById(R.id.cpt_recyclerView);
@@ -76,14 +78,14 @@ public class AndroidFragment extends Fragment
 				errorText.setVisibility(View.VISIBLE);
 				errorText.setText("请登录后下拉刷新获取章节列表");
 			}*/
-			mAdapter.setOnItemClickListener(new AndroidAdapter.OnItemClickListener()
+			mAdapter.setOnItemClickListener(new LearnListAdapter.OnItemClickListener()
 			{
 				@Override
 				public void onItemClick(String id, String title, String sub, String url)
 				{
 					//update();
 					//if (true)return;
-					Common.addAndroidRead(id);
+					ReadUtil.getInstance().addItemAndroid(id);
 					Intent intent = new Intent(getActivity(), AndroidWeb.class);
 					intent.putExtra("id", id);
 					intent.putExtra("url", url);
@@ -180,7 +182,7 @@ public class AndroidFragment extends Fragment
 			init();
 			return;
 		}
-		if (mList == null || mList.size() == 0)
+		if (mList.size() == 0)
 		{
 			errorText.setVisibility(View.VISIBLE);
 			errorText.setText("正在加载，请稍候");
@@ -188,7 +190,7 @@ public class AndroidFragment extends Fragment
 		BmobQuery<AndroidHtml> query = new BmobQuery<AndroidHtml>();
 		query.addWhereEqualTo("enable", true);
 		query.order("order");
-		query.setLimit(15);
+		query.setLimit(20);
 		query.findObjects(new FindListener<AndroidHtml>()
 		{
 			@Override
@@ -214,7 +216,7 @@ public class AndroidFragment extends Fragment
 			BmobQuery<AndroidHtml> query = new BmobQuery<AndroidHtml>();
 			query.addWhereEqualTo("enable", true);
 			query.order("order");
-			query.setLimit(15);
+			query.setLimit(20);
 			query.setSkip(mList.size());
 			query.findObjects(new FindListener<AndroidHtml>()
 			{
@@ -250,7 +252,7 @@ public class AndroidFragment extends Fragment
 		mAdapter.notifyDataSetChanged();
 	}
 	
-	class UpdateThread extends Thread implements Runnable
+	/*class UpdateThread extends Thread implements Runnable
 	{
 		public void run()
 		{
@@ -258,9 +260,9 @@ public class AndroidFragment extends Fragment
 			{
 				for (AndroidHtml item : mList)
 				{
-					if (item.isTitle)
+					if (item.isTitle())
 						continue;
-					item.url = item.url.replace("coderboy.cn", "vbea.wicp.net");
+					item.url = item.getUrl().replace("coderboy.cn", "vbea.wicp.net"));
 					item.update(new UpdateListener()
 					{
 						public void done(BmobException e)
@@ -279,8 +281,9 @@ public class AndroidFragment extends Fragment
 				ExceptionHandler.log("update", e.toString());
 			}
 		}
-	}
+	}*/
 	
+	@SuppressLint("HandlerLeak")
 	Handler mHandler = new Handler()
 	{
 		@Override

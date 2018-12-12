@@ -2,7 +2,6 @@ package com.vbea.java21.list;
 
 import android.widget.TextView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.database.Cursor;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +24,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder>
 	public MyViewHolder onCreateViewHolder(ViewGroup p1, int p2)
 	{
 		LayoutInflater inflate = LayoutInflater.from(p1.getContext());
-		View v = inflate.inflate(R.layout.java9, p1, false);
+		View v = inflate.inflate(R.layout.item_normal, p1, false);
 		MyViewHolder holder = new MyViewHolder(v);
 		return holder;
 	}
@@ -93,14 +92,14 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder>
 		TextView title;
 		TextView sub;
 		LinearLayout layout;
-		RelativeLayout end;
+		View end;
 		public MyViewHolder(View v)
 		{
 			super(v);
 			title = (TextView) v.findViewById(R.id.item_title);
 			sub = (TextView) v.findViewById(R.id.item_sub);
 			layout = (LinearLayout) v.findViewById(R.id.itemLayout);
-			end = (RelativeLayout) v.findViewById(R.id.item_end);
+			end = v.findViewById(R.id.item_end);
 		}
 	}
 

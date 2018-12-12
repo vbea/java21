@@ -3,6 +3,7 @@ package com.vbea.java21.fragment;
 import java.util.List;
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,8 +22,9 @@ import android.support.v7.widget.RecyclerView;
 import com.vbea.java21.R;
 import com.vbea.java21.AndroidWeb;
 import com.vbea.java21.MyThemes;
+import com.vbea.java21.classes.ReadUtil;
 import com.vbea.java21.data.JavaEE;
-import com.vbea.java21.list.J2EEAdapter;
+import com.vbea.java21.list.LearnListAdapter;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.view.MyDividerDecoration;
@@ -39,7 +41,7 @@ public class JavaFragment extends Fragment
 	private RecyclerView recyclerView;
 	private TextView errorText;
 	private ProgressBar proRefresh;
-	private J2EEAdapter mAdapter;
+	private LearnListAdapter<JavaEE> mAdapter;
 	private List<JavaEE> mList;
 	private View rootView;
 	private int mCount = -1;
@@ -59,7 +61,7 @@ public class JavaFragment extends Fragment
 		if (recyclerView == null)
 		{
 			mList = new ArrayList<JavaEE>();
-			mAdapter = new J2EEAdapter();
+			mAdapter = new LearnListAdapter<>();
 			errorText = (TextView) view.findViewById(R.id.txt_andError);
 			proRefresh = (ProgressBar) view.findViewById(R.id.refreshProgress);
         	recyclerView = (RecyclerView) view.findViewById(R.id.cpt_recyclerView);
@@ -77,7 +79,7 @@ public class JavaFragment extends Fragment
 				errorText.setVisibility(View.VISIBLE);
 				errorText.setText("请登录后下拉刷新获取章节列表");
 			}*/
-			mAdapter.setOnItemClickListener(new J2EEAdapter.OnItemClickListener()
+			mAdapter.setOnItemClickListener(new LearnListAdapter.OnItemClickListener()
 			{
 				@Override
 				public void onItemClick(String id, String title, String sub, String url)
@@ -85,7 +87,7 @@ public class JavaFragment extends Fragment
 					//更新数据
 					/*update();
 					if (true)return;*/
-					Common.addJavaEeRead(id);
+					ReadUtil.getInstance().addItemJavaEE(id);
 					Intent intent = new Intent(getActivity(), AndroidWeb.class);
 					intent.putExtra("id", id);
 					intent.putExtra("url", url);
@@ -177,7 +179,7 @@ public class JavaFragment extends Fragment
 			init();
 			return;
 		}
-		if (mList == null || mList.size() == 0)
+		if (mList.size() == 0)
 		{
 			errorText.setVisibility(View.VISIBLE);
 			errorText.setText("正在加载，请稍候");
@@ -248,6 +250,7 @@ public class JavaFragment extends Fragment
 		mAdapter.notifyDataSetChanged();
 	}
 
+	@SuppressLint("HandlerLeak")
 	Handler mHandler = new Handler()
 	{
 		@Override

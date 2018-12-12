@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.KeyEvent;
 import android.net.Uri;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.DialogInterface;
 import android.widget.ImageView;
@@ -28,12 +27,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 
-import cn.bmob.v3.update.BmobUpdateAgent;
 import com.tencent.stat.StatService;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.BannerView;
 import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.comm.util.AdError;
+import com.vbea.java21.classes.ReadUtil;
 import com.vbea.java21.fragment.AideFragment;
 import com.vbea.java21.fragment.Android2Fragment;
 import com.vbea.java21.fragment.AndroidFragment;
@@ -583,10 +582,11 @@ public class Main extends BaseActivity
 		return bmp;
 	}*/
 	
-	private boolean saveStatus()
+	private void saveStatus()
 	{
+		ReadUtil.getInstance().saveData();
 		/*if (Common.isCanUploadUserSetting())
-			Common.updateUser();*/
+			Common.updateUser();
 		//Common.getCopyMsg(this);
 		SharedPreferences spf = getSharedPreferences("java21", MODE_PRIVATE);
 		SharedPreferences.Editor editor = spf.edit();
@@ -594,7 +594,7 @@ public class Main extends BaseActivity
 		editor.putString("read_android", Util.Join(",", Common.READ_Android));
 		editor.putString("read_android2", Util.Join(",", Common.READ_AndroidAdvance));
 		editor.putString("read_javaee", Util.Join(",", Common.READ_J2EE));
-		return editor.commit();
+		return editor.commit();*/
 	}
 	
 	private void showDrawerImage()

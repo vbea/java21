@@ -18,7 +18,7 @@ public class Knowledges
 		return this.URL;
 		//String.valueOf(ID);
 	}
-	
+
 	public String getUrl()
 	{
 		return "file:///android_asset/java/" + this.URL + ".html";

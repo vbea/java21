@@ -12,5 +12,5 @@
 	<attr name="btnColor" format="color"/>
 	<attr name="popupStyle" format="reference"/>
 	<attr name="actionStyle" format="reference"/>
-	<attr name="javaTextSize" format="dimension"/>
+	<!--attr name="javaTextSize" format="dimension"/-->
 </resources>

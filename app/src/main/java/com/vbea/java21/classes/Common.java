@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.ImageView;
 import android.content.Intent;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.graphics.Bitmap;
@@ -63,6 +62,7 @@ public class Common
 	public static boolean AUDIO = false;//是否显示音乐
 	public static boolean MUSIC = true;//是否开启音乐
 	public static boolean TIPS = true;//是否开启消息通知
+	public static int PIANO_SIZE = 0;
 	public final static boolean HULUXIA = false;//是否葫芦侠特别版
 	public static Users mUser;
 	public static boolean IsChangeICON = false;
@@ -74,7 +74,6 @@ public class Common
 	public static final String ExterPath = Environment.getExternalStorageDirectory().getAbsolutePath();
 	private static final String LocalPath = ExterPath + "/ZDApp/";
 	private static List<Tips> mTips = null;
-	public static List<String> READ_Java, READ_Android, READ_J2EE, READ_AndroidAdvance;
 	public static InboxManager myInbox;
 	private static long lastTipsTime;
 	private static List<Copys> copyMsgs;
@@ -87,29 +86,28 @@ public class Common
 		if (IsRun)
 			return;
 		IsRun = true;
-		SharedPreferences spf = context.getSharedPreferences("java21", Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = spf.edit();
+		ReadUtil.init(context);
+		EasyPreferences spf = new EasyPreferences(context);
 		init(spf);
 		if (spf.getString("key", "").trim().equals("") || spf.getString("date","").trim().equals(""))
 		{
 			IS_ACTIVE = false;
-			editor.putBoolean("app", false);
+			spf.putBoolean("app", false);
 		}
 		if (IS_ACTIVE && regist(KEY))
 		{
-			editor.putBoolean("app", true);
-			editor.putBoolean("active", true);
+            spf.putBoolean("app", true).putBoolean("active", true);
 		}
 		else
 		{
 			IS_ACTIVE = false;
-			editor.putBoolean("app", false);
-			editor.putBoolean("active", false);
-			editor.putString("key", defaultKey);
+            spf.putBoolean("app", false)
+               .putBoolean("active", false)
+               .putString("key", defaultKey);
 		}
 		if (getDrawerBack() == null)
-			editor.putInt("back", 0);
-		editor.apply();
+            spf.putInt("back", 0);
+        spf.commit();
 		init(spf);
 		SocialShare.onStart(context);
 		if (isNet(context))
@@ -125,12 +123,11 @@ public class Common
 	public static void update(Context context, boolean check)
 	{
 		int code = 0;
-		SharedPreferences spf = context.getSharedPreferences("java21", Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = spf.edit();
+		EasyPreferences spf = new EasyPreferences(context);
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		code = context.getResources().getInteger(R.integer.versionCode);
 		if (check)
-			editor.putInt("check", code);
+			spf.putInt("check", code);
 		else
 		{
 			String codes = "";
@@ -145,12 +142,10 @@ public class Common
 			catch (Exception e)
 			{
 			}
-			editor.putInt("check", code);
-			editor.putString("checkCode", codes);
+			spf.putInt("check", code);
+			spf.putString("checkCode", codes);
 		}
-		//editor.putBoolean("chartip", false);
-		//editor.putBoolean("androidtip", false);
-		editor.commit();
+		spf.commit();
 		init(spf);
 	}
 	
@@ -270,7 +265,7 @@ public class Common
 		}
 	}
 	
-	private static void init(SharedPreferences spf)
+	private static void init(EasyPreferences spf)
 	{
 		VERSION_CODE = spf.getInt("check", 0);
 		APP_THEME_ID = spf.getInt("theme", 0);
@@ -287,34 +282,7 @@ public class Common
 		AUTO_LOGIN_MODE = spf.getInt("loginmode", 0);
 		TIPS = spf.getBoolean("tips", true);
 		JAVA_TEXT_SIZE = spf.getInt("java_size", 2);
-		READ_Java = new ArrayList<String>();
-		READ_Android = new ArrayList<String>();
-		READ_J2EE = new ArrayList<String>();
-		READ_AndroidAdvance = new ArrayList<String>();
-		String[] java = spf.getString("read_java", "").split(",");
- 		if (java != null && java.length > 0)
- 		{
- 			for (String s : java)
- 				READ_Java.add(s);
- 		}
-		String[] android = spf.getString("read_android", "").split(",");
-		if (android != null && android.length > 0)
-		{
-			for (String s : android)
-				READ_Android.add(s);
-		}
-		String[] android2 = spf.getString("read_android2", "").split(",");
-		if (android2 != null && android2.length > 0)
-		{
-			for (String s : android2)
-				READ_AndroidAdvance.add(s);
-		}
-		String[] javaee = spf.getString("read_javaee", "").split(",");
-		if (javaee != null && javaee.length > 0)
-		{
-			for (String s : javaee)
-				READ_J2EE.add(s);
-		}
+		PIANO_SIZE = spf.getInt("piano_size", 0);
 	}
 	
 	public static InboxManager getInbox()
@@ -322,46 +290,6 @@ public class Common
 		if (myInbox == null)
 			myInbox = new InboxManager();
 		return myInbox;
-	}
-
-	public static void addJavaRead(String num)
- 	{
- 		AUDIO_STUDY_STATE+=2;
- 		if (READ_Java.contains(num))
- 			return;
- 		READ_Java.add(num);
- 	}
-	
-	public static void addAndroidRead(String num)
-	{
-		AUDIO_STUDY_STATE+=1;
-		if (READ_Android.contains(num))
-			return;
-		READ_Android.add(num);
-	}
-	
-	public static void addAndroid2Read(String num)
-	{
-		AUDIO_STUDY_STATE+=1;
-		if (READ_AndroidAdvance.contains(num))
-			return;
-		READ_AndroidAdvance.add(num);
-	}
-	
-	public static void addJavaEeRead(String num)
-	{
-		AUDIO_STUDY_STATE+=1;
-		if (READ_J2EE.contains(num))
-			return;
-		READ_J2EE.add(num);
-	}
-	
-	public static void clearReadHistory()
-	{
-		READ_Java.clear();
-		READ_J2EE.clear();
-		READ_Android.clear();
-		READ_AndroidAdvance.clear();
 	}
 	
 	public static boolean canLogin()
@@ -461,20 +389,7 @@ public class Common
 		return HULUXIA;
 	}
 	
-	public static void saveUserIconByName(String name)
-	{
-		BmobQuery<Users> sql = new BmobQuery<Users>();
-		sql.addWhereEqualTo("name", name);
-		sql.findObjects(new FindListener<Users>()
-		{
-			@Override
-			public void done(List<Users> list, BmobException e)
-			{
-				if (e == null && list.size() > 0)
-					saveIcon(list.get(0));
-			}
-		});
-	}
+
 
 	//自动登录
 	public static void Login(Context context, LoginListener listener) throws Exception
@@ -506,15 +421,14 @@ public class Common
 								listener.onLogin(2);
 							return;
 						}
-						SharedPreferences spf = context.getSharedPreferences("java21", Context.MODE_PRIVATE);
-						SharedPreferences.Editor editor = spf.edit();
-						editor.putString("uid", Common.mUser.name);
-						editor.putString("sid", Common.mUser.qqId);
-						editor.putInt("loginmode", 2);
 						USERID = mUser.name;
-						editor.putString("key", KEY);
+						EasyPreferences spf = new EasyPreferences(context);
+                        spf.putString("uid", Common.mUser.name);
+                        spf.putString("sid", Common.mUser.qqId);
+                        spf.putInt("loginmode", 2);
+                        spf.putString("key", KEY);
 						if (!isVipUser())
-							editor.putBoolean("weladv", true);
+                            spf.putBoolean("weladv", true);
 						if (!IS_ACTIVE)//自动激活
 						{
 							KEY = mUser.key;
@@ -522,12 +436,12 @@ public class Common
 							{
 								SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 								IS_ACTIVE = true;
-								editor.putBoolean("autok", true);
-								editor.putString("date", format.format(new Date()));
-								editor.putBoolean("app", true);
+                                spf.putBoolean("autok", true);
+                                spf.putString("date", format.format(new Date()));
+                                spf.putBoolean("app", true);
 							}
 						}
-						editor.commit();
+                        spf.commit();
 						updateUserLogin(context);
 						if (listener != null)
 							listener.onLogin(1);
@@ -574,13 +488,12 @@ public class Common
 					if (list.size() > 0)
 					{
 						Common.mUser = list.get(0);
-						SharedPreferences spf = context.getSharedPreferences("java21", Context.MODE_PRIVATE);
-						SharedPreferences.Editor editor = spf.edit();
+						EasyPreferences spf = new EasyPreferences(context);
 						if (!isAuto)
 						{
-							editor.putString("uid", Common.mUser.name);
-							editor.putString("sid", Common.mUser.psd);
-							editor.putInt("loginmode", 1);
+                            spf.putString("uid", Common.mUser.name);
+                            spf.putString("sid", Common.mUser.psd);
+                            spf.putInt("loginmode", 1);
 							USERID = username;
 							if (!IS_ACTIVE)//自动激活
 							{
@@ -589,9 +502,9 @@ public class Common
 								{
 									SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 									IS_ACTIVE = true;
-									editor.putBoolean("autok", true);
-									editor.putString("date", format.format(new Date()));
-									editor.putBoolean("app", true);
+                                    spf.putBoolean("autok", true);
+                                    spf.putString("date", format.format(new Date()));
+                                    spf.putBoolean("app", true);
 								}
 							}
 						}
@@ -603,9 +516,9 @@ public class Common
 							return;
 						}
 						if (!isVipUser())
-							editor.putBoolean("weladv", true);
-						editor.putString("key", KEY);
-						editor.commit();
+                            spf.putBoolean("weladv", true);
+                        spf.putString("key", KEY);
+                        spf.commit();
 						updateUserLogin(context);
 						if (listener != null)
 							listener.onLogin(1);
@@ -642,10 +555,7 @@ public class Common
 	{
 		mUser = null;
 		IsChangeICON = true;
-		SharedPreferences spf = context.getSharedPreferences("java21", Context.MODE_PRIVATE);
-		SharedPreferences.Editor editor = spf.edit();
-		editor.putInt("loginmode", 0);
-		editor.commit();
+		new EasyPreferences(context).putInt("loginmode", 0).commit();
 		AUTO_LOGIN_MODE = 0;
 	}
 	
@@ -761,50 +671,6 @@ public class Common
 		return null;
 	}
 	
-	public static Bitmap getIcon(String username)
-	{
-		File file = new File(getCachePath(), username + ".png");
-		if (file.exists())
-			return BitmapFactory.decodeFile(file.getAbsolutePath());
-		else
-			saveUserIconByName(username);
-		return null;
-	}
-	
-	public static void saveIcon(Users user)
-	{
-		if (user.icon == null)
-			return;
-		File path = new File(getCachePath());
-		if (!path.exists())
-			path.mkdirs();
-		File file = new File(path, user.name + ".png");
-		if (!file.exists())
-		{
-			try
-			{
-				user.icon.download(file, new DownloadFileListener()
-				{
-					@Override
-					public void done(String p1, BmobException p2)
-					{
-
-					}
-
-					@Override
-					public void onProgress(Integer p1, long p2)
-					{
-
-					}
-				});
-			}
-			catch (Exception e)
-			{
-				ExceptionHandler.log("saveIcon", e.toString());
-			}
-		}
-	}
-	
 	public static void setIcon(final ImageView v, final Context context, boolean downed)
 	{
 		if (!downed)
@@ -886,7 +752,16 @@ public class Common
 		}
 		return null;
 	}
-	
+
+	public static Bitmap getUserIcon(String username)
+	{
+		File file = new File(Common.getCachePath(), username + ".png");
+		if (file.exists())
+			return BitmapFactory.decodeFile(file.getAbsolutePath());
+		return null;
+	}
+
+
 	public static RoundedBitmapDrawable getRoundedIconDrawable(Context context, Bitmap src)
 	{
 		if (src != null)
@@ -1125,9 +1000,6 @@ public class Common
 		SOUND = null;//音乐池
 		mUser = null;//登录用户
 		mTips = null;//通知中心
-		READ_Android = null;
-		READ_J2EE = null;
-		READ_AndroidAdvance = null;
 		myInbox = null;//消息中心
 		copyMsgs.clear();
 		copyMsgs = null;

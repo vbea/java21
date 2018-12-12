@@ -8,7 +8,7 @@
 		android:layout_width="wrap_content">
 		<TextView
 			android:id="@+id/piano5_1"
-			android:layout_width="60dp"
+			android:layout_width="70dp"
 			android:layout_height="fill_parent"
 			android:paddingBottom="10dp"
 			android:background="@drawable/btn_piano_w"
@@ -16,7 +16,7 @@
 			android:clickable="true"/>
 		<TextView
 			android:id="@+id/piano5_2"
-			android:layout_width="60dp"
+			android:layout_width="70dp"
 			android:layout_height="fill_parent"
 			android:paddingBottom="10dp"
 			android:background="@drawable/btn_piano_w"
@@ -24,7 +24,7 @@
 			android:clickable="true"/>
 		<TextView
 			android:id="@+id/piano5_3"
-			android:layout_width="60dp"
+			android:layout_width="70dp"
 			android:layout_height="fill_parent"
 			android:paddingBottom="10dp"
 			android:background="@drawable/btn_piano_w"
@@ -34,11 +34,11 @@
 	<TableRow
 		android:layout_width="wrap_content"
 		android:layout_height="fill_parent"
-		android:paddingLeft="27dp"
-		android:paddingBottom="160dp">
+		android:paddingLeft="30dp"
+		android:paddingBottom="180dp">
 		<TextView
 			android:id="@+id/piano5_c1"
-			android:layout_width="50dp"
+			android:layout_width="60dp"
 			android:layout_height="fill_parent"
 			android:paddingBottom="10dp"
 			android:background="@drawable/btn_piano_b"
@@ -47,9 +47,9 @@
 			android:clickable="true"/>
 		<TextView
 			android:id="@+id/piano5_c2"
-			android:layout_width="50dp"
+			android:layout_width="60dp"
 			android:layout_height="fill_parent"
-			android:layout_marginLeft="26dp"
+			android:layout_marginLeft="30dp"
 			android:paddingBottom="10dp"
 			android:background="@drawable/btn_piano_b"
 			android:textColor="@color/text_piano"

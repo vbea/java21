@@ -48,7 +48,7 @@ public class Util
 {
 	public static boolean isServerDataId(int id)
 	{
-		return id == -1;
+		return id == -2;
 	}
 	
 	//byte转为字符串

@@ -95,8 +95,6 @@
 	</string>
 	<string name="wifiview">Wi-Fi密码查看器
 	</string>
-	<string name="smsplugin">短信轰炸机
-	</string>
 	<string name="changed"><u>更换序列号</u>
 	</string>
 	<string name="cnext"><u>下一章</u>
@@ -130,19 +128,19 @@
 	<string name="donateinfo">您可以通过支付宝转账、微信转账，或者付费加入Q群222876252或49321718，也可以加入邠心工作室开发组QQ群135482843。您的支持给我们提供了动力，是对我们最大的鼓励！
 		\n（加入邠心工作室开发组Q群(135482843)的作为回报我们将送出5.2.1版本源码一份以及自学大礼包，包括文字教程、视频、源码实例等）\n二维码见下面，点击可放大
 	</string>
-	<string name="version">V 7.2.0 Build 1600 Beta
+	<string name="version">V 7.2.0 Build 1600
 	</string>
 	<string name="update">7.2.0 (1600)
 	</string>
-	<integer name="versionCode">1550</integer>
+	<integer name="versionCode">1600</integer>
 	<string name="abt_ver">当前版本：v7.2.0
-		\n1.所有页面重构、整理，提升稳定性
+		\n1.所有页面重构、优化，提升稳定性
 		\n2.新增Java进阶教程的评论功能
 		\n3.修复部分设备闪退的问题
-		\n4.兼容安卓O以上设备的通知栏
-		\n5.修复应用内更新闪退的问题
-		\n6.未激活的VIP用户也可设置去广告
-		\n7.修复安卓P的兼容性问题
+		\n4.修复应用内更新闪退的问题
+		\n5.未激活的VIP用户也可设置去广告
+		\n6.修复安卓P的兼容性问题
+		\n7.钢琴键盘支持调节大小
 		\n8.其他问题修复
 	</string>
 	<string name="shared">share_image</string>
@@ -166,4 +164,10 @@
 	<string name="default_encoding">text/plain</string>
 	<string name="codejson">[{\"name\":\"ABAP\",\"mode\":\"ABAP\",\"path\":\"abap\"},{\"name\":\"ActionScript\",\"mode\":\"ActionScript\",\"path\":\"as\"},{\"name\":\"ADA\",\"mode\":\"ADA\",\"path\":\"ada|adb\"},{\"name\":\"Config\",\"mode\":\"INI\",\"path\":\"ini|conf|cfg|prefs\"},{\"name\":\"Config Text\",\"mode\":\"Apache_Conf\",\"path\":\"htaccess|htgroups|htpasswd|htaccess|htgroups|htpasswd\"},{\"name\":\"A\u8BED\u8A00\",\"mode\":\"Assembly_x86\",\"path\":\"asm|a\"},{\"name\":\"ASP.NET\",\"mode\":\"HTML_Elixir\",\"path\":\"asp|aspx\"},{\"name\":\"BacthScript\",\"mode\":\"BatchFile\",\"path\":\"bat|cmd\"},{\"name\":\"C&amp;C++\",\"mode\":\"C_Cpp\",\"path\":\"cpp|c|cc|cxx|h|hh|hpp|ino\"},{\"name\":\"Clojure Lisp\",\"mode\":\"Clojure\",\"path\":\"clj|cljs\"},{\"name\":\"Cobol\",\"mode\":\"Cobol\",\"path\":\"cbl|cob\"},{\"name\":\"Coffee\",\"mode\":\"coffee\",\"path\":\"coffee|cf|cson|Cakefile\"},{\"name\":\"C#\",\"mode\":\"CSharp\",\"path\":\"cs\"},{\"name\":\"CSS\",\"mode\":\"CSS\",\"path\":\"css\"},{\"name\":\"D\u8BED\u8A00\",\"mode\":\"D\",\"path\":\"d|di\"},{\"name\":\"Diff\",\"mode\":\"Diff\",\"path\":\"diff|patch\"},{\"name\":\"EJS\",\"mode\":\"EJS\",\"path\":\"ejs\"},{\"name\":\"Erlang\",\"mode\":\"Erlang\",\"path\":\"erl|hrl\"},{\"name\":\"Forth\",\"mode\":\"Forth\",\"path\":\"frt|fs|ldr|fth|4th\"},{\"name\":\"G\u7801\",\"mode\":\"Gcode\",\"path\":\"gcode\"},{\"name\":\"Gitignore\",\"mode\":\"Gitignore\",\"path\":\"gitignore\"},{\"name\":\"GLSL\",\"mode\":\"Glsl\",\"path\":\"glsl|frag|vert\"},{\"name\":\"GO\u8BED\u8A00\",\"mode\":\"golang\",\"path\":\"go\"},{\"name\":\"Groovy\",\"mode\":\"Groovy\",\"path\":\"go|gradle\"},{\"name\":\"HAML\",\"mode\":\"HAML\",\"path\":\"haml\"},{\"name\":\"Handlebars\",\"mode\":\"Handlebars\",\"path\":\"hbs|handlebars|tpl|mustache\"},{\"name\":\"Haskell\",\"mode\":\"Haskell\",\"path\":\"hs\"},{\"name\":\"Haskell Cabal\",\"mode\":\"Haskell_Cabal\",\"path\":\"cabal\"},{\"name\":\"HaXe\",\"mode\":\"haXe\",\"path\":\"cabal\"},{\"name\":\"Hjson\",\"mode\":\"Hjson\",\"path\":\"hjson\"},{\"name\":\"HTML\",\"mode\":\"HTML\",\"path\":\"html|htm|xhtml|vue|we|wpy\"},{\"name\":\"HTML Elixir\",\"mode\":\"HTML_Elixir\",\"path\":\"eex\"},{\"name\":\"HTML Ruby\",\"mode\":\"HTML_Ruby\",\"path\":\"erb|rhtml\"},{\"name\":\"Java\",\"mode\":\"Java\",\"path\":\"java|class\"},{\"name\":\"JavaScript\",\"mode\":\"JavaScript\",\"path\":\"js|jsm|jsx\"},{\"name\":\"JSON\",\"mode\":\"JSON\",\"path\":\"json\"},{\"name\":\"JSP\",\"mode\":\"JSP\",\"path\":\"jsp\"},{\"name\":\"JSX\",\"mode\":\"JSX\",\"path\":\"jsx\"},{\"name\":\"Kotlin\",\"mode\":\"Kotlin\",\"path\":\"kt|kts\"},{\"name\":\"LESS\",\"mode\":\"LESS\",\"path\":\"less\"},{\"name\":\"LISP\",\"mode\":\"Lisp\",\"path\":\"lisp\"},{\"name\":\"LiveScript\",\"mode\":\"LiveScript\",\"path\":\"ls\"},{\"name\":\"LSL\",\"mode\":\"LSL\",\"path\":\"lsl\"},{\"name\":\"Lua\",\"mode\":\"Lua\",\"path\":\"lua\"},{\"name\":\"LuaPage\",\"mode\":\"LuaPage\",\"path\":\"lp\"},{\"name\":\"Makefile\",\"mode\":\"Makefile\",\"path\":\"makefile|gnumakefile|makefile|ocamlmakefile|make\"},{\"name\":\"Markdown\",\"mode\":\"Markdown\",\"path\":\"md|markdown\"},{\"name\":\"MEL\",\"mode\":\"MEL\",\"path\":\"mel\"},{\"name\":\"MySQL\",\"mode\":\"MySQL\",\"path\":\"mysql\"},{\"name\":\"Objective-C\",\"mode\":\"ObjectiveC\",\"path\":\"m|mm\"},{\"name\":\"OCaml\",\"mode\":\"OCaml\",\"path\":\"ml|mli\"},{\"name\":\"Pascal\",\"mode\":\"Pascal\",\"path\":\"pas|p\"},{\"name\":\"Perl\",\"mode\":\"Perl\",\"path\":\"pl|pm\"},{\"name\":\"pgSQL\",\"mode\":\"pgSQL\",\"path\":\"pgsql\"},{\"name\":\"PHP\",\"mode\":\"PHP\",\"path\":\"php|phtml|shtml|php3|php4|php5|phps|phpt|aw|ctp|module\"},{\"name\":\"Powershell\",\"mode\":\"Powershell\",\"path\":\"ps1\"},{\"name\":\"Properties\",\"mode\":\"Properties\",\"path\":\"properties\"},{\"name\":\"Protobuf\",\"mode\":\"Protobuf\",\"path\":\"proto\"},{\"name\":\"Python\",\"mode\":\"Python\",\"path\":\"py\"},{\"name\":\"R\u8BED\u8A00\",\"mode\":\"R\",\"path\":\"r\"},{\"name\":\"Razor\",\"mode\":\"Razor\",\"path\":\"cshtml|asp\"},{\"name\":\"RHTML\",\"mode\":\"RHTML\",\"path\":\"rhtml\"},{\"name\":\"Ruby\",\"mode\":\"Ruby\",\"path\":\"rb|ru|gemspec|rake|guardfile|rakefile|gemfile\"},{\"name\":\"SASS\",\"mode\":\"SASS\",\"path\":\"sass\"},{\"name\":\"Scala\",\"mode\":\"Scala\",\"path\":\"scala\"},{\"name\":\"Scheme\",\"mode\":\"Scheme\",\"path\":\"scm|sm|rkt|oak|scheme\"},{\"name\":\"SCSS\",\"mode\":\"SCSS\",\"path\":\"scss\"},{\"name\":\"SH\",\"mode\":\"SH\",\"path\":\"sh|bash|bashrc\"},{\"name\":\"Space\",\"mode\":\"Space\",\"path\":\"space\"},{\"name\":\"SQL\",\"mode\":\"SQL\",\"path\":\"sql\"},{\"name\":\"SQLServer\",\"mode\":\"SQLServer\",\"path\":\"sqlserver\"},{\"name\":\"SVG\",\"mode\":\"SVG\",\"path\":\"svg\"},{\"name\":\"Swift\",\"mode\":\"Swift\",\"path\":\"swift\"},{\"name\":\"Tex\",\"mode\":\"Tex\",\"path\":\"tex\"},{\"name\":\"Textile\",\"mode\":\"Textile\",\"path\":\"textile\"},{\"name\":\"TypeScript\",\"mode\":\"Typescript\",\"path\":\"ts|typescript|str\"},{\"name\":\"VBScript\",\"mode\":\"VBScript\",\"path\":\"vbs|vb|vbe\"},{\"name\":\"XML\",\"mode\":\"XML\",\"path\":\"xml|rdf|rss|wsdl|xslt|atom|mathml|mml|xul|xbl|xaml|config|pom\"},{\"name\":\"XQuery\",\"mode\":\"XQuery\",\"path\":\"xq\"},{\"name\":\"\u70ED\u952E\u811A\u672C\",\"mode\":\"AutoHotKey\",\"path\":\"ahk\"},{\"name\":\"\u7EAF\u6587\u672C\",\"mode\":\"Text\",\"path\":\"txt|text|log|settings|\"}]</string>
 	<string name="pianojson">[{\"count\":3,\"key\":\"A1,A2\",\"tone\":\"C1\"},{\"count\":5,\"key\":\"A3,A4,A5\",\"tone\":\"C2,C3\"},{\"count\":7,\"key\":\"A6,A7,A8,A9\",\"tone\":\"C4,C5,C6\"},{\"count\":5,\"key\":\"A10,A11,A12\",\"tone\":\"C7,C8\"},{\"count\":7,\"key\":\"A13,A14,A15,A16\",\"tone\":\"C9,C10,C11\"},{\"count\":5,\"key\":\"A,B,C\",\"tone\":\"C12,C13\"},{\"count\":7,\"key\":\"D,E,F,G\",\"tone\":\"C14,C15,C16\"},{\"count\":5,\"key\":\"H,I,J\",\"tone\":\"C17,C18\"},{\"count\":7,\"key\":\"K,L,M,N\",\"tone\":\"C19,C20,C21\"},{\"count\":5,\"key\":\"O,P,Q\",\"tone\":\"C22,C23\"},{\"count\":7,\"key\":\"R,S,T,U\",\"tone\":\"C24,C25,C26\"},{\"count\":5,\"key\":\"V,W,X\",\"tone\":\"C27,C28\"},{\"count\":7,\"key\":\"Y,Z,B1,B2\",\"tone\":\"C29,C30,C31\"},{\"count\":5,\"key\":\"B3,B4,B5\",\"tone\":\"C32,C33\"},{\"count\":7,\"key\":\"B6,B7,B8,B9\",\"tone\":\"C34,C35,C36\"},{\"count\":1,\"key\":\"B10\",\"tone\":\"\"}]</string>
+    <string name="txt_delete">删除</string>
+    <string name="txt_reply">回复</string>
+    <string name="load_failed">加载失败\n请检查你的网络连接</string>
+	<string name="txt_lastrow">我是有底线的</string>
+	<string name="txt_lastload">玩命加载中</string>
+	<string name="txt_setreaded">设为已读</string>
 </resources>

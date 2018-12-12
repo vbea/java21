@@ -2,7 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	package="com.vbea.java21">
-
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+	<uses-permission android:name="android.permission.INTERNET"/>
+	<uses-permission android:name="android.permission.WAKE_LOCK"/>
+	<uses-permission android:name="android.permission.CAMERA"/>
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+	<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
     <application
 		tools:replace="android:allowBackup"
 		android:name=".BaseApplication"
@@ -54,8 +64,6 @@
 				<data android:mimeType="*/*" />
             </intent-filter-->
 		</activity>
-		<activity
-			android:name=".ChapterText"/>
 		<activity
 			android:name=".Comment"
 			android:screenOrientation="portrait"
@@ -231,11 +239,6 @@
 			android:label="@string/decord"
 			android:screenOrientation="portrait"/>
 		<activity
-			android:name=".SmsBomb"
-			android:label="@string/smsplugin"
-			android:screenOrientation="portrait"
-			android:windowSoftInputMode="adjustPan"/>
-		<activity
 			android:name="cn.bmob.v3.update.UpdateDialogActivity"
 			android:theme="@style/Theme.AppCompat.Light.Dialog"/>
 		<activity
@@ -293,23 +296,9 @@
 			android:value="A1M46EZRJ7WI"/>
 		<meta-data
 			android:name="InstallChannel"
-			android:value="Test"/>
+			android:value="${InstallChannel}"/>
 		<meta-data
 			android:name="android.max_aspect"
 			android:value="2.2"/>
     </application>
-	<uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-	<uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.WAKE_LOCK"/>
-	<uses-permission android:name="android.permission.CAMERA"/>
-	<uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-	<uses-permission android:name="android.permission.SIGNAL_PERSISTENT_PROCESSES"/>
-	<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 </manifest>

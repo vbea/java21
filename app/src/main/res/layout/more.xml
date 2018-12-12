@@ -56,7 +56,7 @@
 				android:textColor="?attr/textPrimary"
 				android:textSize="17sp"/>
 			<RelativeLayout
-				android:id="@+id/btn_setPianSize"
+				android:id="@+id/btn_setPianoSize"
 				android:layout_width="fill_parent"
 				android:layout_height="56dp"
 				android:background="@drawable/btn_menu">

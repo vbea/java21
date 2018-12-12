@@ -2,8 +2,10 @@ package com.vbea.java21.list;
 
 import java.util.ArrayList;
 
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.LayoutInflater;
@@ -11,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 
 import com.vbea.java21.R;
+import com.vbea.java21.classes.ReadUtil;
 import com.vbea.java21.data.Knowledges;
 
 public class KnowledgeAdapter extends RecyclerView.Adapter<KnowledgeAdapter.MyViewHolder>
@@ -32,13 +35,12 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<KnowledgeAdapter.MyVi
 	public MyViewHolder onCreateViewHolder(ViewGroup p1, int p2)
 	{
 		LayoutInflater inflate = LayoutInflater.from(p1.getContext());
-		View v = inflate.inflate(R.layout.java6, p1, false);
-		MyViewHolder holder = new MyViewHolder(v);
-		return holder;
+		View v = inflate.inflate(R.layout.item_learn, p1, false);
+		return new MyViewHolder(v);
 	}
 
 	@Override
-	public void onBindViewHolder(MyViewHolder holder, int p)
+	public void onBindViewHolder(@NonNull MyViewHolder holder, int p)
 	{
 		final Knowledges kow = mList.get(p);
 		holder.title.setText(kow.TITLE);
@@ -53,6 +55,7 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<KnowledgeAdapter.MyVi
 				}
 			}
 		});
+		holder.read.setVisibility(ReadUtil.getInstance().isReadJavaAdvance(kow.getId()) ? View.VISIBLE : View.GONE);
 	}
 
 	@Override
@@ -82,12 +85,14 @@ public class KnowledgeAdapter extends RecyclerView.Adapter<KnowledgeAdapter.MyVi
 		TextView title;
 		TextView sub;
 		LinearLayout layout;
+		ImageView read;
 		public MyViewHolder(View v)
 		{
 			super(v);
-			title = (TextView) v.findViewById(R.id.know_title);
-			sub = (TextView) v.findViewById(R.id.know_subTitle);
-			layout = (LinearLayout) v.findViewById(R.id.itemLayout);
+			title = v.findViewById(R.id.item_title);
+			sub = v.findViewById(R.id.item_subTitle);
+			layout = v.findViewById(R.id.item_layout);
+			read = v.findViewById(R.id.item_readImg);
 		}
 	}
 

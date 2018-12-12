@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.vbea.java21.R;
 import com.vbea.java21.AndroidWeb;
+import com.vbea.java21.classes.ReadUtil;
 import com.vbea.java21.data.Knowledges;
 import com.vbea.java21.list.KnowledgeAdapter;
 import com.vbea.java21.classes.Common;
@@ -72,6 +73,7 @@ public class KnowFragment extends Fragment
 						Util.toastShortMessage(getContext(), "id:" + item.ID);
 						return;
 					}*/
+					ReadUtil.getInstance().addItemJavaAdvance(item.getId());
 					Intent intent = new Intent(getActivity(), AndroidWeb.class);
 					intent.putExtra("id", item.getId());
 					intent.putExtra("url", item.getUrl());
@@ -79,6 +81,7 @@ public class KnowFragment extends Fragment
 					//intent.putExtra("sub", item.SUB);
 					intent.putExtra("type", type);
 					Common.startActivityOptions(getActivity(), intent);
+					mAdapter.notifyDataSetChanged();
 				}
 			});
 		}

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.vbea.java21.R;
 import com.vbea.java21.AndroidWeb;
+import com.vbea.java21.classes.ReadUtil;
 import com.vbea.java21.data.Chapter;
 import com.vbea.java21.list.ChapterAdapter;
 import com.vbea.java21.view.MyDividerDecoration;
@@ -65,7 +66,7 @@ public class ChapterFragment extends Fragment
 						return;
 					}*/
 					String id = String.valueOf(item.id);
- 					Common.addJavaRead(id);
+					ReadUtil.getInstance().addItemJava(id);
  					Intent intent = new Intent(getActivity(), AndroidWeb.class);
  					intent.putExtra("id", id);
  					intent.putExtra("url", "file:///android_asset/java/chapter" + id + ".html");

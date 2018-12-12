@@ -11,42 +11,42 @@
 		android:orientation="vertical"
 		android:background="?attr/colorPrimary"
 		android:fitsSystemWindows="true">
-			<android.support.design.widget.CoordinatorLayout
-				android:id="@+id/mainRootLayout"
+		<android.support.design.widget.CoordinatorLayout
+			android:id="@+id/mainRootLayout"
+			android:layout_width="match_parent"
+			android:layout_height="0dp"
+			android:layout_weight="1">
+			<android.support.design.widget.AppBarLayout
+				android:id="@+id/appbarLayout"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content">
+				<android.support.v7.widget.Toolbar
+					android:id="@+id/toolbar"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="?attr/colorPrimary"
+					app:layout_scrollFlags="scroll|enterAlways"
+					android:transitionName="@string/shared"
+					app:navigationIcon="@mipmap/ic_menu"
+					app:theme="?attr/actionStyle"
+					app:popupTheme="?attr/popupStyle"/>
+				<android.support.design.widget.TabLayout
+					android:id="@+id/tabLayout"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:background="?attr/colorPrimary"
+					app:tabIndicatorColor="?attr/titleColor"
+					app:tabIndicatorHeight="3dp"
+					app:tabGravity="fill"
+					app:tabMode="scrollable"/>
+			</android.support.design.widget.AppBarLayout>
+			<android.support.v4.view.ViewPager
+				android:id="@+id/viewpager"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:layout_weight="1">
-				<android.support.design.widget.AppBarLayout
-					android:id="@+id/appbarLayout"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content">
-					<android.support.v7.widget.Toolbar
-						android:id="@+id/toolbar"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:background="?attr/colorPrimary"
-						app:layout_scrollFlags="scroll|enterAlways"
-						android:transitionName="@string/shared"
-						app:navigationIcon="@mipmap/ic_menu"
-						app:theme="?attr/actionStyle"
-						app:popupTheme="?attr/popupStyle"/>
-					<android.support.design.widget.TabLayout
-						android:id="@+id/tabLayout"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:background="?attr/colorPrimary"
-						app:tabIndicatorColor="?attr/titleColor"
-						app:tabIndicatorHeight="3dp"
-						app:tabGravity="fill"
-						app:tabMode="scrollable"/>
-				</android.support.design.widget.AppBarLayout>
-				<android.support.v4.view.ViewPager
-					android:id="@+id/viewpager"
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:background="?attr/titleColor"
-					app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
-			</android.support.design.widget.CoordinatorLayout>
+				android:background="?attr/titleColor"
+				app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+		</android.support.design.widget.CoordinatorLayout>
 		<LinearLayout
 			android:id="@+id/layout_tips"
 			android:layout_width="fill_parent"

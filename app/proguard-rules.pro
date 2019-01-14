@@ -15,14 +15,17 @@
 -keepclassmembers class fqcn.of.javascript.interface.for.webview {
    public *;
 }
-#-keepclassmembers class com.vbea.java21.data.* {
-#   public *;
-#}
+-keepclassmembers class com.vbea.java21.data.* {
+   public *;
+}
 -keep public class * extends android.support.v7.app.AppCompatActivity
+-keep public class * extends com.vbea.java21.BaseActivity
+-keep public class com.vbea.java21.BaseApplication
 -keep class cn.bmob.v3.**
--keep class com.vbea.java21.data.**
+#-keep class com.vbea.java21.data.**
+-keep class com.vbea.java21.classes.**
 -keep class com.tencent.stat.** {* ;}
-#-keep class com.tencent.mid.** {* ;}
+-keep class com.tencent.mid.** {* ;}
 -keepattributes Signature
 -keepattributes EnclosingMethod
 #apk包内所有class的内部结构
@@ -33,3 +36,4 @@
 -printusage unused.txt
 #混淆前后的映射
 -printmapping mapping.txt
+-ignorewarnings # 抑制警告

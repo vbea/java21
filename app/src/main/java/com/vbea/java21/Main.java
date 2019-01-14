@@ -325,12 +325,7 @@ public class Main extends BaseActivity
 	
 	public void goCodeEditor(View v)
 	{
-		if (!Common.isLogin())
-		{
-			Util.toastShortMessage(getApplicationContext(), "请先登录！");
-			return;
-		}
-		Common.startActivityOptions(Main.this, CodeEditor.class);
+		Common.startActivityOptions(Main.this, AdminActivity.class);
 		mHandler.sendEmptyMessageDelayed(1, 500);
 	}
 	
@@ -376,7 +371,7 @@ public class Main extends BaseActivity
 		{
 			//drawSms.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
 			drawWifi.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
-			drawCodeEditor.setVisibility(Common.isSVipUser() ? View.VISIBLE : View.GONE);
+			drawCodeEditor.setVisibility(Common.isAdminUser() ? View.VISIBLE : View.GONE);
 		}
 		else
 		{

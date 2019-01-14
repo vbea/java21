@@ -3,7 +3,8 @@
 
     <dimen name="fab_size_normal">56dp</dimen>
     <dimen name="fab_shadow_size">8dp</dimen>
-
+	<dimen name="activity_margin">16dp</dimen>
+	<dimen name="item_size">56dp</dimen>
     <dimen name="fab_elevation_lollipop">4dp</dimen>
 	<dimen name="text_small">12sp</dimen>
 	<dimen name="text_nsmall">15sp</dimen>

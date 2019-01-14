@@ -170,4 +170,5 @@
 	<string name="txt_lastrow">我是有底线的</string>
 	<string name="txt_lastload">玩命加载中</string>
 	<string name="txt_setreaded">设为已读</string>
+	<string name="activity_admin">管理工具</string>
 </resources>

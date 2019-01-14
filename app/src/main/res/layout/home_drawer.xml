@@ -256,7 +256,7 @@
 					android:layout_width="40dp"
 					android:layout_height="40dp"
 					android:src="@mipmap/ic_code"
-					android:tint="?attr/colorPrimary"/>
+					android:tint="?attr/colorPrimary" />
 				<TextView
 					android:layout_width="match_parent"
 					android:layout_height="60dp"
@@ -264,7 +264,7 @@
 					android:gravity="center_vertical"
 					android:paddingEnd="0dp"
 					android:paddingStart="16dp"
-					android:text="@string/codeEditor"
+					android:text="@string/activity_admin"
 					android:textColor="?attr/textPrimary"
 					android:textSize="16sp"
 					android:singleLine="true"/>

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 
+import android.app.AlertDialog;
 import android.net.Uri;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,7 +26,6 @@ import com.vbea.java21.classes.ExceptionHandler;
 
 public class History extends BaseActivity
 {
-	private RecyclerView recyclerView;
 	private HistoryAdapter mAdapter;
 	private WebHelper query;
 	private List<Histories> mList;
@@ -42,7 +42,7 @@ public class History extends BaseActivity
 	public void after()
 	{
 		enableBackButton();
-		recyclerView = bind(R.id.music_recyclerView);
+		RecyclerView recyclerView = bind(R.id.music_recyclerView);
 		mAdapter = new HistoryAdapter();
 		init();
 		recyclerView.addItemDecoration(new MyDividerDecoration(this));
@@ -62,7 +62,33 @@ public class History extends BaseActivity
 				setResult(RESULT_OK, intent);
 				supportFinishAfterTransition();
 			}
-		});
+
+            @Override
+            public void onItemLongClick(String title, String url) {
+                new AlertDialog.Builder(History.this)
+                    .setTitle(R.string.history)
+                    .setItems(R.array.array_hisaction, new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface v, int b) {
+                            v.dismiss();
+                            switch (b) {
+                                case 0:
+                                    Intent intent = new Intent();
+                                    intent.setData(Uri.parse(url));
+                                    setResult(RESULT_OK, intent);
+                                    supportFinishAfterTransition();
+                                    break;
+                                case 1:
+                                    if (query.addBookmark(title, url) > 0)
+                                        toastShortMessage("添加书签成功");
+                                    else
+                                        toastShortMessage("添加失败");
+                            }
+                        }
+                    }).show();
+            }
+        });
 	}
 
 	private void init()
@@ -73,11 +99,11 @@ public class History extends BaseActivity
 				query = new WebHelper(this);
 			Cursor cursor = query.listHistory();
 			if (mList == null)
-				mList = new ArrayList<Histories>();
+				mList = new ArrayList<>();
 			else
 				mList.clear();
 			if (dataList == null)
-				dataList = new ArrayList<Histime>();
+				dataList = new ArrayList<>();
 			else
 				dataList.clear();
 			TimeAgo timeAgo = new TimeAgo(new SimpleDateFormat("MM月dd日 E"));

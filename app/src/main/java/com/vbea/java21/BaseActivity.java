@@ -35,12 +35,16 @@ public abstract class BaseActivity extends AppCompatActivity
 
 	public void setToolbarTitle(String t)
 	{
-		_title = t;
+		if (toolbar == null)
+			_title = t;
+		else
+			toolbar.setTitle(t);
 	}
 
     public <T extends View> T bind(int id)
 	{
-        return (T)findViewById(id);
+        //return (T)findViewById(id);
+		return findViewById(id);
     }
 
     protected void enableBackButton()
@@ -78,6 +82,16 @@ public abstract class BaseActivity extends AppCompatActivity
 	}
 
 	protected void toastLongMessage(String message)
+	{
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+	}
+
+	protected void toastShortMessage(int message)
+	{
+		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+	}
+
+	protected void toastLongMessage(int message)
 	{
 		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 	}

@@ -48,7 +48,7 @@ public class Util
 {
 	public static boolean isServerDataId(int id)
 	{
-		return id == -2;
+		return id == -3;
 	}
 	
 	//byte转为字符串
@@ -797,23 +797,23 @@ public class Util
 		double kiloByte = bytes / 1024;
 		if (kiloByte < 1024)
 		{  
-            BigDecimal result1 = new BigDecimal(Double.toString(kiloByte));  
+            BigDecimal result1 = new BigDecimal(kiloByte);
             return result1.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "KB";  
         }  
         double megaByte = kiloByte / 1024;  
         if (megaByte < 1024)
 		{
-            BigDecimal result2 = new BigDecimal(Double.toString(megaByte));
+            BigDecimal result2 = new BigDecimal(megaByte);
             return result2.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "MB";  
         }
         double gigaByte = megaByte / 1024;  
         if (gigaByte < 1024)
 		{
-            BigDecimal result3 = new BigDecimal(Double.toString(gigaByte));  
+            BigDecimal result3 = new BigDecimal(gigaByte);
             return result3.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "GB";  
         }
         double teraByte = gigaByte / 1024;  
-        BigDecimal result4 = new BigDecimal(teraByte);  
+        BigDecimal result4 = new BigDecimal(teraByte);
         return result4.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "TB";  
     }  
 

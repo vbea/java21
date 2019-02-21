@@ -89,14 +89,28 @@
 			android:gravity="center"
 			android:textColor="@color/gray"
 			android:text="第三方快捷登录"/>
-		<ImageView
-			android:id="@+id/btn_qqLogin"
-			android:layout_width="60dp"
-			android:layout_height="60dp"
-			android:layout_margin="32dp"
-			android:layout_gravity="center_horizontal"
-			android:tint="?attr/colorAccent"
-			android:src="@mipmap/share_btn_qq"/>
+		<TableRow
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center_horizontal"
+			android:layout_marginTop="@dimen/activity_margin"
+			android:layout_marginBottom="@dimen/activity_margin_double">
+			<ImageView
+				android:id="@+id/btn_qqLogin"
+				android:layout_width="66dp"
+				android:layout_height="66dp"
+				android:layout_marginRight="@dimen/activity_margin"
+				android:padding="8dp"
+				android:src="@mipmap/share_btn_qq"
+				android:background="@drawable/btn_menu"/>
+			<ImageView
+				android:id="@+id/btn_wxLogin"
+				android:layout_width="66dp"
+				android:layout_height="66dp"
+				android:padding="8dp"
+				android:src="@mipmap/share_btn_wechat"
+				android:background="@drawable/btn_menu"/>
+		</TableRow>
 	</LinearLayout>
 	<com.vbea.java21.widget.RippleColorView
 		android:id="@+id/rippleColorView"

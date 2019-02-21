@@ -50,7 +50,7 @@ public class AudioService extends Service
 		notiManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		if (Util.isAndroidO()) {
-			NotificationChannel channel = new NotificationChannel("22", "Audio", NotificationManager.IMPORTANCE_LOW);
+			NotificationChannel channel = new NotificationChannel("22", "AudioPlayer", NotificationManager.IMPORTANCE_LOW);
 			channel.enableVibration(false);
 			notiManager.createNotificationChannel(channel);
 		}

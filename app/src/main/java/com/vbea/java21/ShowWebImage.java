@@ -8,6 +8,8 @@ import java.net.URLConnection;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.TextView;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,28 +22,19 @@ import com.vbea.java21.classes.Util;
 
 public class ShowWebImage extends AppCompatActivity
 {
-	private String imagePath = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.imageviews);
-		this.imagePath = getIntent().getStringExtra("image");
-		if (imagePath == null)
-			imagePath = "null";
-		TouchImageView img = (TouchImageView) findViewById(R.id.imgTouch);
-		img.setImageResource(R.mipmap.img_default);
-		//ExceptionHandler.log("Util.toastShortMessage", imagePath);
-		try
-		{
-			LoadImageAsyncTask task = new LoadImageAsyncTask();
-			task.setImageView(img); 
-			task.execute(this.imagePath);
-		}
-		catch (Exception e)
-		{
-			Util.toastShortMessage(getApplicationContext(), "加载失败");
-		}
+		setContentView(R.layout.imagewebs);
+		WebView web = findViewById(R.id.imgWebView);
+		WebSettings wset = web.getSettings();
+		wset.setSupportZoom(true);
+		wset.setBuiltInZoomControls(true);
+		wset.setDisplayZoomControls(false);
+		wset.setUseWideViewPort(true);
+		wset.setLoadWithOverviewMode(true);
+		web.loadUrl(getIntent().getStringExtra("url"));
 	}
 	
 	public static Drawable loadImageFromUrl(String url) throws IOException

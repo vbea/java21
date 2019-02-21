@@ -1,7 +1,10 @@
 package com.vbea.java21;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.os.Handler;
 import android.os.Message;
@@ -23,11 +26,15 @@ import android.content.Intent;
 import android.content.DialogInterface;
 import android.support.design.widget.AppBarLayout;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.AstroUtil;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.MD5Util;
 import com.vbea.java21.classes.SocialShare;
+import com.vbea.java21.net.ApiCallback;
+import com.vbea.java21.net.ApiRequest;
 import com.vbea.java21.view.MyAlertDialog;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.data.Users;
@@ -46,10 +53,8 @@ public class UserCentral extends BaseActivity
 	private ImageView icon;
 	private LayoutInflater inflat;
 	private LinearLayout topLayout;
-	private RelativeLayout userTop;
-	private AppBarLayout appbar;
 	private AlphaAnimation appears, disappears;
-	private TextView titleName, username, level, gender, mobile, email, qq, birthday, address, mark, roles;
+	private TextView titleName, level, gender, mobile, email, qq, weChat, birthday, address, mark, roles;
 	private View dialogView;
 	private EditText oldpass, newpass, querpass;
 	private StringBuilder sb;
@@ -64,18 +69,19 @@ public class UserCentral extends BaseActivity
 	public void after()
 	{
 		enableBackButton();
-		appbar = bind(R.id.appbar);
-		userTop = bind(R.id.user_top);
+		AppBarLayout appbar = bind(R.id.appbar);
+		RelativeLayout userTop = bind(R.id.user_top);
 		topLayout = bind(R.id.topLayout);
 		icon = bind(R.id.user_icon);
 		titleName = bind(R.id.user_topName);
-		username = bind(R.id.info_username);
+		//username = bind(R.id.info_username);
 		//nickname = bind(R.id.info_nickname);
 		gender = bind(R.id.info_gender);
 		level = bind(R.id.info_level);
 		mobile = bind(R.id.info_mobile);
 		email = bind(R.id.info_email);
 		qq = bind(R.id.info_qq);
+		weChat = bind(R.id.info_wx);
 		birthday = bind(R.id.info_birthday);
 		address = bind(R.id.info_address);
 		roles = bind(R.id.info_role);
@@ -84,6 +90,7 @@ public class UserCentral extends BaseActivity
 		TableRow btnMobile = bind(R.id.btn_info_mobile);
 		TableRow btnQQ = bind(R.id.btn_info_qq);
 		TableRow btnInfo = bind(R.id.btn_info_user);
+		TableRow btnWX = bind(R.id.btn_info_wx);
 		if (Common.isLogin())
 			titleName.setText(Common.mUser.nickname);
 		else
@@ -156,10 +163,35 @@ public class UserCentral extends BaseActivity
 		{
 			public void onClick(View v)
 			{
-				if (!Util.isNullOrEmpty(Common.mUser.qq))// != null && Common.mUser.qq.length() > 0)
-					qqDialog();
+				if (!Util.isNullOrEmpty(Common.mUser.qqId))// != null && Common.mUser.qq.length() > 0)
+					socialDialog("绑定QQ", true);
 				else
 					SocialShare.mTencent.login(UserCentral.this, "all", new MyIListener());
+			}
+		});
+
+		btnWX.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (!Util.isNullOrEmpty(Common.mUser.wxId)) {
+					socialDialog("绑定微信", false);
+					return;
+				}
+				if (!SocialShare.isWXInstall()) {
+					toastShortMessage(R.string.err_wxnoinstall);
+					return;
+				}
+				SocialShare.loginFromWeixin(new SocialShare.OnWxLoginListener() {
+					@Override
+					public void onSuccess(String code) {
+						loginWXUser(code);
+					}
+
+					@Override
+					public void onError() {
+						mHandler.sendEmptyMessage(0);
+					}
+				});
 			}
 		});
 		
@@ -217,10 +249,10 @@ public class UserCentral extends BaseActivity
 		});
 	}
 	
-	private void qqDialog()
+	private void socialDialog(String title, boolean qq)
 	{
 		MyAlertDialog dialogBuild = new MyAlertDialog(this);
-		dialogBuild.setTitle("绑定QQ");
+		dialogBuild.setTitle(title);
 		dialogBuild.setItems(new String[] {"换绑","取消绑定"}, new DialogInterface.OnClickListener()
 		{
 			public void onClick(DialogInterface dialog, int item)
@@ -229,23 +261,52 @@ public class UserCentral extends BaseActivity
 				switch (item)
 				{
 					case 0:
-						SocialShare.mTencent.login(UserCentral.this, "all", new MyIListener());
+						if (qq) {
+							SocialShare.mTencent.login(UserCentral.this, "all", new MyIListener());
+						} else {
+							if (!SocialShare.isWXInstall()) {
+								toastShortMessage(R.string.err_wxnoinstall);
+								return;
+							}
+							SocialShare.loginFromWeixin(new SocialShare.OnWxLoginListener() {
+								@Override
+								public void onSuccess(String code) {
+									loginWXUser(code);
+								}
+
+								@Override
+								public void onError() {
+									mHandler.sendEmptyMessage(0);
+								}
+							});
+						}
 						break;
 					case 1:
-					{
-						unbindDialog("QQ", new DialogInterface.OnClickListener()
-						{
-							@Override
-							public void onClick(DialogInterface p1, int p2)
+						if (qq)
+							unbindDialog("QQ", new DialogInterface.OnClickListener()
 							{
-								Common.mUser.qq = "";
-								Common.mUser.qqId = "";
-								Common.updateUser();
-								inicBind(Common.mUser);
-							}
-						});
+								@Override
+								public void onClick(DialogInterface p1, int p2)
+								{
+									Common.mUser.qq = "";
+									Common.mUser.qqId = "";
+									Common.updateUser();
+									inicBind(Common.mUser);
+								}
+							});
+						else
+							unbindDialog("微信", new DialogInterface.OnClickListener()
+							{
+								@Override
+								public void onClick(DialogInterface p1, int p2)
+								{
+									Common.mUser.weixin = "";
+									Common.mUser.wxId = "";
+									Common.updateUser();
+									inicBind(Common.mUser);
+								}
+							});
 						break;
-					}
 				}
 			}
 		});
@@ -296,7 +357,7 @@ public class UserCentral extends BaseActivity
 		Users user = Common.mUser;
 		if (user == null)
 			return;
-		username.setText(getString(user.name));
+		//username.setText(getString(user.name));
 		//nickname.setText(_nick);
 		titleName.setText(getString(user.nickname));
 		level.setText(getUserLevel(user.dated));
@@ -312,10 +373,14 @@ public class UserCentral extends BaseActivity
 		if (sb == null)
 		{
 			sb = new StringBuilder();
-			sb.append("用户名：");
+			sb.append("　用户名：");
 			sb.append(user.name);
-			sb.append("\n等级：");
+			sb.append("\n　昵　称：");
+			sb.append(user.nickname);
+			sb.append("\n　等　级：");
 			sb.append(level.getText().toString());
+			sb.append("\n　用户组：");
+			sb.append(roles.getText().toString());
 			sb.append("\n注册时间：");
 			sb.append(user.getCreatedAt());
 			sb.append("\n上次登录：");
@@ -323,6 +388,8 @@ public class UserCentral extends BaseActivity
 			sb.append("\n累计登录：");
 			sb.append(user.dated);
 			sb.append("天");
+			sb.append("\n登录方式：");
+			sb.append(getLoginType());
 		}
 	}
 	
@@ -336,10 +403,14 @@ public class UserCentral extends BaseActivity
 			mobile.setText(Util.getSecstr(user.mobile, 3, 4));
 		else
 			mobile.setText("未绑定");
-		if (!Util.isNullOrEmpty(user.qq))
+		if (!Util.isNullOrEmpty(user.qqId))
 			qq.setText(user.qq);
 		else
 			qq.setText("未绑定");
+		if (!Util.isNullOrEmpty(user.wxId))
+			weChat.setText(user.weixin);
+		else
+			weChat.setText("未绑定");
 	}
 	
 	//获取用户等级
@@ -393,6 +464,9 @@ public class UserCentral extends BaseActivity
 				case 5:
 					role = "测试账号";
 					break;
+				case 6:
+					role = "微信用户";
+					break;
 				case 10:
 					role = "管理员";
 					break;
@@ -408,6 +482,19 @@ public class UserCentral extends BaseActivity
 			}
 		}
 		return role;
+	}
+
+	private String getLoginType() {
+		switch (Common.AUTO_LOGIN_MODE) {
+			case 1:
+				return "普通登录";
+			case 2:
+				return "QQ登录";
+			case 3:
+				return "微信登录";
+			default:
+				return "未知";
+		}
 	}
 
 	@Override
@@ -610,36 +697,10 @@ public class UserCentral extends BaseActivity
 				{
 					String token = json.getString(Constants.PARAM_ACCESS_TOKEN);
 					String expires = json.getString(Constants.PARAM_EXPIRES_IN);
-					final String openId = json.getString(Constants.PARAM_OPEN_ID);
+					String openId = json.getString(Constants.PARAM_OPEN_ID);
 					SocialShare.mTencent.setAccessToken(token, expires);
 					SocialShare.mTencent.setOpenId(openId);
-					BmobQuery<Users> sql = new BmobQuery<Users>();
-					sql.addWhereEqualTo("qqId", openId);
-					sql.addWhereEqualTo("valid", true);
-					sql.count(Users.class, new CountListener()
-					{
-						@Override
-						public void done(Integer count, BmobException e)
-						{
-							if (e == null)
-							{
-								if (count > 0)
-								{
-									if (Common.mUser.qqId.equals(openId))
-										mHandler.sendEmptyMessage(1);
-									else
-										mHandler.sendEmptyMessage(2);
-								}
-								else
-								{
-									UserInfo mInfo = new UserInfo(UserCentral.this, SocialShare.mTencent.getQQToken());
-									mInfo.getUserInfo(new MyIListener());
-								}
-							}
-							else
-								mHandler.sendEmptyMessage(0);
-						}
-					});
+					validateUser("qqId", openId, "");
 				}
 				else if (json.has("nickname"))
 				{
@@ -687,17 +748,93 @@ public class UserCentral extends BaseActivity
 		}
 		super.onFinish();
 	}
-	
-	
-	
-	Handler mHandler = new Handler()
-	{
 
-		@Override
-		public void handleMessage(Message msg)
-		{
-			switch (msg.what)
+	public void loginWXUser (String code) {
+		ApiRequest api = new ApiRequest("https://api.weixin.qq.com/sns/");
+		Map<String, Object> queries = new HashMap<>();
+		queries.put("appid", SocialShare.WX_APPID);
+		queries.put("secret", SocialShare.WX_SECRET);
+		queries.put("code", code);
+		queries.put("grant_type", "authorization_code");
+		api.request("oauth2/access_token", queries, new ApiCallback() {
+			@Override
+			public void onSuccess(JsonElement data) {
+				JsonObject json = data.getAsJsonObject();
+				if (json.has("openid")) {
+					loginWxUser(api, json.get("access_token").getAsString(), json.get("openid").getAsString());
+				}
+			}
+
+			@Override
+			public void onFailed(String msg) {
+				mHandler.sendEmptyMessage(0);
+			}
+		});
+	}
+
+	private void loginWxUser(ApiRequest request, String accessToken, String openid) {
+		Map<String, Object> params = new HashMap<>();
+		params.put("access_token", accessToken);
+		params.put("openid", openid);
+		request.request("userinfo", params, new ApiCallback() {
+			@Override
+			public void onSuccess(JsonElement data) {
+				JsonObject obj = data.getAsJsonObject();
+				if (obj.has("nickname")) {
+					validateUser("wxId", openid, obj.get("nickname").getAsString());
+				}
+			}
+
+			@Override
+			public void onFailed(String msg) {
+				mHandler.sendEmptyMessage(0);
+			}
+		});
+	}
+
+	public void validateUser(String key, String openId, String other) {
+		BmobQuery<Users> sql = new BmobQuery<>();
+		sql.addWhereEqualTo(key, openId);
+		sql.addWhereEqualTo("valid", true);
+		sql.count(Users.class, new CountListener() {
+			@Override
+			public void done(Integer count, BmobException e)
 			{
+				if (e == null)
+				{
+					if (count > 0)
+					{
+						if (Common.mUser.qqId.equals(openId))
+							mHandler.sendEmptyMessage(1);
+						else if (Common.mUser.wxId.equals(openId))
+							mHandler.sendEmptyMessage(5);
+						else
+							mHandler.sendEmptyMessage(2);
+					}
+					else
+					{
+						if (key.equals("qqId")) {
+							UserInfo mInfo = new UserInfo(UserCentral.this, SocialShare.mTencent.getQQToken());
+							mInfo.getUserInfo(new MyIListener());
+						} else {
+							Common.mUser.weixin = other;
+							Common.mUser.wxId = openId;
+							Common.updateUser();
+							mHandler.sendEmptyMessage(4);
+						}
+					}
+				}
+				else
+					mHandler.sendEmptyMessage(0);
+			}
+		});
+	}
+	
+	@SuppressLint("HandlerLeak")
+	Handler mHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
 				case 0:
 					Util.toastShortMessage(getApplicationContext(), "操作失败");
 					break;
@@ -705,11 +842,18 @@ public class UserCentral extends BaseActivity
 					Util.toastShortMessage(getApplicationContext(), "已绑定此QQ，不需要重新绑定");
 					break;
 				case 2:
-					Util.toastShortMessage(getApplicationContext(), "此QQ已绑定到其他用户，不能再次绑定");
+					Util.toastShortMessage(getApplicationContext(), "此账号已绑定到其他用户，不能再次绑定");
 					break;
 				case 3:
 					Util.toastShortMessage(getApplicationContext(), "绑定成功，以后可用此QQ快捷登录");
 					inicBind(Common.mUser);
+					break;
+				case 4:
+					Util.toastShortMessage(getApplicationContext(), "绑定成功，以后可用此微信快捷登录");
+					inicBind(Common.mUser);
+					break;
+				case 5:
+					Util.toastShortMessage(getApplicationContext(), "已绑定此微信，不需要重新绑定");
 					break;
 			}
 			super.handleMessage(msg);

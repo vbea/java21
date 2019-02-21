@@ -1,5 +1,6 @@
 package com.vbea.java21.list;
 
+import android.support.annotation.NonNull;
 import android.widget.TextView;
 import android.widget.LinearLayout;
 import android.database.Cursor;
@@ -20,13 +21,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder>
 		cursor = data;
 	}
 
+	@NonNull
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup p1, int p2)
 	{
 		LayoutInflater inflate = LayoutInflater.from(p1.getContext());
 		View v = inflate.inflate(R.layout.item_normal, p1, false);
-		MyViewHolder holder = new MyViewHolder(v);
-		return holder;
+		return new MyViewHolder(v);
 	}
 
 	@Override

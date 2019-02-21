@@ -1,5 +1,6 @@
 package com.vbea.java21;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.view.View;
 import android.view.LayoutInflater;
@@ -8,15 +9,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.content.Intent;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 
 import com.vbea.java21.classes.Common;
+import com.vbea.java21.classes.EasyPreferences;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.view.MyAlertDialog;
 
 public class BrowserSet extends BaseActivity
 {
-	private SharedPreferences spf;
+	private EasyPreferences spf;
 	private String SH_home, SH_savePath;
 	private String[] Searchs, UserAgents;
 	private int SH_UA, SH_search;
@@ -56,8 +57,6 @@ public class BrowserSet extends BaseActivity
 					public void onClick(DialogInterface d, int s)
 					{
 						SH_home = edt.getText().toString();
-						if (SH_home.equalsIgnoreCase("http://") || SH_home.equalsIgnoreCase("https://"))
-							SH_home = "";
 					}
 				});
 				dialog.setNegativeButton(android.R.string.cancel, null);
@@ -102,6 +101,7 @@ public class BrowserSet extends BaseActivity
 		});
 		btnSavePath.setOnClickListener(new View.OnClickListener()
 		{
+			@SuppressLint("RestrictedApi")
 			public void onClick(View v)
 			{
 				Intent intent = new Intent(BrowserSet.this, FileSelect.class);
@@ -114,7 +114,7 @@ public class BrowserSet extends BaseActivity
 	
 	public void onSettings()
 	{
-		spf = getSharedPreferences("java21", MODE_PRIVATE);
+		spf = new EasyPreferences(this);
 		SH_home = spf.getString("web_home", "http://");
 		SH_savePath = spf.getString("web_savepath", Common.ExterPath + "/DCIM/Java21");
 		SH_search = spf.getInt("web_search", 0);
@@ -128,12 +128,13 @@ public class BrowserSet extends BaseActivity
 
 	public void setSetting()
 	{
-		SharedPreferences.Editor edt = spf.edit();
-		edt.putString("web_home", SH_home);
-		edt.putInt("web_search", SH_search);
-		edt.putInt("web_ua", SH_UA);
-		edt.putString("web_savepath", SH_savePath);
-		edt.commit();
+		if (SH_home.equalsIgnoreCase("http://") || SH_home.equalsIgnoreCase("https://") || SH_home.equalsIgnoreCase("ftp://"))
+			SH_home = "";
+		spf.putString("web_home", SH_home);
+		spf.putInt("web_search", SH_search);
+		spf.putInt("web_ua", SH_UA);
+		spf.putString("web_savepath", SH_savePath);
+		spf.commit();
 	}
 	
 	private void showSavePath()

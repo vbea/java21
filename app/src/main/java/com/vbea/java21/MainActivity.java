@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity
 	private ViewGroup container;
 	private final String SKIP_TEXT = "跳过 %d";
 	private boolean canJump = false;
+	private int requestOnce = 0;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -100,6 +102,7 @@ public class MainActivity extends AppCompatActivity
 		}*/
     }
 	
+	@SuppressLint("HandlerLeak")
 	Handler mHandler = new Handler()
 	{
 		@Override
@@ -219,6 +222,11 @@ public class MainActivity extends AppCompatActivity
 	@TargetApi(Build.VERSION_CODES.M)
 	private void checkAndRequestPermission()
 	{
+		requestOnce+=1;
+		if (requestOnce > 2) {
+			new MainThread().start();
+			return;
+		}
 		List<String> lackedPermission = new ArrayList<String>();
 		if (!Util.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE))
 			lackedPermission.add(Manifest.permission.READ_EXTERNAL_STORAGE);

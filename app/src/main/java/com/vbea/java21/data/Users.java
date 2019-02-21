@@ -19,6 +19,8 @@ public class Users extends BmobObject
 	public String mark;
 	public String qq;
 	public String qqId;
+	public String weixin;
+	public String wxId;
 	public String mobile;
 	public String address;
 	public Integer role;
@@ -27,5 +29,4 @@ public class Users extends BmobObject
 	public BmobDate lastLogin;
 	public String device;
 	public String serialNo;
-	//public Boolean Set_Music;
 }

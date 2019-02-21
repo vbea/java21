@@ -121,10 +121,16 @@ public class AndroidWeb extends BaseActivity
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView v, String url)
 			{
-				Intent intent = new Intent(AndroidWeb.this, HtmlViewer.class);
-				intent.setAction(Intent.ACTION_VIEW);
-				intent.setData(Uri.parse(url));
-				Common.startActivityOptions(AndroidWeb.this, intent);
+				if (url.startsWith("img://")) {
+					Intent intent = new Intent(AndroidWeb.this, ShowWebImage.class);
+					intent.putExtra("url", url.replace("img://", ""));
+					Common.startActivityOptions(AndroidWeb.this, intent);
+				} else {
+					Intent intent = new Intent(AndroidWeb.this, HtmlViewer.class);
+					intent.setAction(Intent.ACTION_VIEW);
+					intent.setData(Uri.parse(url));
+					Common.startActivityOptions(AndroidWeb.this, intent);
+				}
 				return true;
 			}
 			
@@ -237,7 +243,7 @@ public class AndroidWeb extends BaseActivity
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		if (type > 0 && type < 5)
+		if (type != 0 && type != 5)
 		{
 			getMenuInflater().inflate(R.menu.android_item, menu);
 		}
@@ -391,7 +397,7 @@ public class AndroidWeb extends BaseActivity
 						"{" + 
 						"    objs[i].onclick=function()  "+
 						"    { "  + 
-						"        window.location.href = this.src;" +
+						"        window.location.href = 'img://'+this.src;" +
 						"    } " +
 						"}" + 
 						"})()");

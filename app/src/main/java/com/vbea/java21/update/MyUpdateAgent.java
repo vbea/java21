@@ -45,7 +45,7 @@ public class MyUpdateAgent {
         //notificationManager = NotificationManagerCompat.from(context);
         notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (Util.isAndroidO()) {
-            NotificationChannel channel = new NotificationChannel("21", "Java21", NotificationManager.IMPORTANCE_LOW);
+            NotificationChannel channel = new NotificationChannel("21", "UpdateAgent", NotificationManager.IMPORTANCE_LOW);
             channel.enableVibration(false);
             notificationManager.createNotificationChannel(channel);
         }

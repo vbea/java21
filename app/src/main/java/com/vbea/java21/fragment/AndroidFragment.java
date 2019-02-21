@@ -41,9 +41,8 @@ public class AndroidFragment extends Fragment
 	private TextView errorText;
 	private ProgressBar proRefresh;
 	private LearnListAdapter<AndroidHtml> mAdapter;
-	private List<AndroidHtml> mList;
 	private View rootView;
-	private int mCount = 0;
+	private int mCount = -1;
 	private final int type = 1;
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -59,7 +58,6 @@ public class AndroidFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
 		if (recyclerView == null)
 		{
-			mList = new ArrayList<AndroidHtml>();
 			mAdapter = new LearnListAdapter<>();
 			errorText = (TextView) view.findViewById(R.id.txt_andError);
 			proRefresh = (ProgressBar) view.findViewById(R.id.refreshProgress);
@@ -147,42 +145,38 @@ public class AndroidFragment extends Fragment
 			init();
 			return;
 		}
-		/*if (!Common.IS_ACTIVE)
-		{
-			mHandler.sendEmptyMessage(3);
-			return;
-		}*/
-		BmobQuery<AndroidHtml> query = new BmobQuery<AndroidHtml>();
-		query.addWhereEqualTo("enable", true);
-		query.count(AndroidHtml.class, new CountListener()
-		{
-			@Override
-			public void done(Integer count, BmobException e)
-			{
-				if (e == null)
-				{
-					mCount = count;
-					if (count == 0)
-					{
-						mHandler.sendEmptyMessage(3);
-						return;
+		if (mCount < 0) {
+			BmobQuery<AndroidHtml> query = new BmobQuery<AndroidHtml>();
+			query.addWhereEqualTo("enable", true);
+			query.count(AndroidHtml.class, new CountListener() {
+				@Override
+				public void done(Integer count, BmobException e) {
+					if (e == null) {
+						mCount = count;
+						if (count == 0) {
+							mHandler.sendEmptyMessage(3);
+							return;
+						}
+					} else {
+						mCount = -1;
+						ExceptionHandler.log("AndroidFragment-count", e);
 					}
+					refresh();
 				}
-				else
-					mCount = -1;
-				refresh();
-			}
-		});
+			});
+		} else {
+			refresh();
+		}
 	}
 	
 	private void refresh()
 	{
-		if (mCount <= 0 || !Common.isNet(getContext()) || mCount == mList.size())
+		if (mCount <= 0 || !Common.isNet(getContext()))
 		{
 			init();
 			return;
 		}
-		if (mList.size() == 0)
+		if (mAdapter.getItemCount() == 0)
 		{
 			errorText.setVisibility(View.VISIBLE);
 			errorText.setText("正在加载，请稍候");
@@ -196,12 +190,10 @@ public class AndroidFragment extends Fragment
 			@Override
 			public void done(List<AndroidHtml> list, BmobException e)
 			{
-				if (e == null)
-				{
-					if (list.size() > 0)
-					{
-						mList = list;
-					}
+				if (e == null) {
+					mAdapter.setList(list);
+				} else {
+					ExceptionHandler.log("AndroidFragment-refresh", e);
 				}
 				mHandler.sendEmptyMessage(1);
 			}
@@ -210,14 +202,15 @@ public class AndroidFragment extends Fragment
 	
 	private void addItem()
 	{
-		if (mCount > mList.size())
+		if (mCount > mAdapter.size())
 		{
+			recyclerView.stopScroll();
 			proRefresh.setVisibility(View.VISIBLE);
 			BmobQuery<AndroidHtml> query = new BmobQuery<AndroidHtml>();
 			query.addWhereEqualTo("enable", true);
 			query.order("order");
 			query.setLimit(20);
-			query.setSkip(mList.size());
+			query.setSkip(mAdapter.size());
 			query.findObjects(new FindListener<AndroidHtml>()
 			{
 				@Override
@@ -227,10 +220,13 @@ public class AndroidFragment extends Fragment
 					{
 						if (list.size() > 0)
 						{
-							mList.addAll(list);
+							mAdapter.notifyItemInserted(mAdapter.addList(list));
+							proRefresh.setVisibility(View.GONE);
+							mAdapter.setEnd(mCount);
 						}
+					} else {
+						ExceptionHandler.log("AndroidFragment-add", e);
 					}
-					mHandler.sendEmptyMessage(2);
 				}
 			});
 		}
@@ -239,17 +235,17 @@ public class AndroidFragment extends Fragment
 	private void init()
 	{
 		errorText.setText("加载失败\n请检查你的网络连接");
-		if (mList.size() > 0)
+		if (refreshLayout.isRefreshing())
+			refreshLayout.setRefreshing(false);
+		if (mAdapter.getItemCount() > 0)
 		{
 			errorText.setVisibility(View.GONE);
 			recyclerView.setVisibility(View.VISIBLE);
-		}
-		else
+			mAdapter.notifyDataSetChanged();
+		} else {
+			recyclerView.setVisibility(View.GONE);
 			errorText.setVisibility(View.VISIBLE);
-		if (refreshLayout.isRefreshing())
-			refreshLayout.setRefreshing(false);
-		mAdapter.setList(mList);
-		mAdapter.notifyDataSetChanged();
+		}
 	}
 	
 	/*class UpdateThread extends Thread implements Runnable
@@ -293,13 +289,6 @@ public class AndroidFragment extends Fragment
 			{
 				case 1:
 					init();
-					break;
-				case 2:
-					mAdapter.setList(mList);
-					mAdapter.notifyItemInserted(mAdapter.getItemCount());
-					proRefresh.setVisibility(View.GONE);
-					if (mList.size() == mCount)
-						mAdapter.setEnd(true);
 					break;
 				case 3:
 					errorText.setText("敬请期待");

@@ -3,11 +3,12 @@ package com.vbea.java21.data;
 import com.vbea.java21.classes.ReadUtil;
 
 import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.datatype.BmobFile;
 
-public class Database extends BmobObject implements ILearnList
+public class SQLHtml extends BmobObject implements ILearnList
 {
 	public String title;
-	public String url;
+	public BmobFile file;
 	public Integer order;
 	public Boolean isTitle;
 	public Boolean enable;
@@ -29,7 +30,9 @@ public class Database extends BmobObject implements ILearnList
 
 	@Override
 	public String getUrl() {
-		return url;
+		if (file != null)
+			return file.getFileUrl();
+		return "";
 	}
 
 	@Override

@@ -20,7 +20,6 @@ import android.webkit.URLUtil;
 import android.webkit.ValueCallback;
 import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,7 +30,6 @@ import android.view.View;
 import android.content.Intent;
 import android.content.Context;
 import android.content.ContentValues;
-import android.content.SharedPreferences;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.DialogInterface;
@@ -45,11 +43,13 @@ import android.annotation.SuppressLint;
 import android.support.v7.widget.SearchView;
 import android.support.v4.content.FileProvider;
 import android.support.design.widget.BottomSheetDialog;
-import com.vbea.java21.data.WebHelper;
-import com.vbea.java21.widget.MyWebView;
+
+import com.vbea.java21.classes.EasyPreferences;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.SocialShare;
+import com.vbea.java21.data.WebHelper;
+import com.vbea.java21.widget.MyWebView;
 import com.vbea.java21.view.MyAlertDialog;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.tencent.connect.common.Constants;
@@ -58,23 +58,25 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
+import org.wlf.filedownloader.DownloadConfiguration;
+import org.wlf.filedownloader.FileDownloader;
+import org.wlf.filedownloader.listener.OnDetectBigUrlFileListener;
+import org.wlf.filedownloader.util.UrlUtil;
+
 public class HtmlViewer extends BaseActivity
 {
 	private SearchView searchView;
 	private MenuItem searchItem;
 	private MyWebView webView;
 	private WebView souceView;
-	private TextView NightView;
 	private ProgressBar webProgress, sourceProgress;
 	private BottomSheetDialog mBSDialog;
-	private LinearLayout share_qq, share_qzone, share_wx, share_wxpy;
-	private LinearLayout share_sina, share_web, share_link, share_more;
 	private String SH_html, SH_url = "", SH_history = "", SH_hisName = "", SH_home, UA_Default, SH_savePath;
 	private int SH_search = 0, SH_UA = 0, SOURCE_LOAD = -1;
 	private Uri cameraUri;
 	private String[] Searchs, UAurls;
 	private boolean ISSOURCE = false;
-	private SharedPreferences spf;
+	private EasyPreferences spf;
 	private WebSettings wset;
 	private WebHelper webHelper;
 	private static final int FILECHOOSER_RESULTCODE = 1;
@@ -90,16 +92,17 @@ public class HtmlViewer extends BaseActivity
 		setToolbarTitle("点此输入网址或搜索");
 	}
 
+	@SuppressLint("SetJavaScriptEnabled")
 	@Override
 	protected void after()
 	{
 		webView = bind(R.id.WebViewPage);
 		souceView = bind(R.id.WebViewSource);
-		NightView = bind(R.id.api_nightView);
+		TextView nightView = bind(R.id.api_nightView);
 		webProgress = bind(R.id.apiProgress);
 		sourceProgress = bind(R.id.sourceProgress);
 		if (MyThemes.isNightTheme()) {
-			NightView.setVisibility(View.VISIBLE);
+			nightView.setVisibility(View.VISIBLE);
 		}
 		wset = webView.getSettings();
 		UA_Default = wset.getUserAgentString();
@@ -111,19 +114,19 @@ public class HtmlViewer extends BaseActivity
 		//html5
 		wset.setDomStorageEnabled(true);
 		wset.setDatabaseEnabled(true);
-		wset.setDatabasePath(getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath());
+		//wset.setDatabasePath(getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath());
 		wset.setAppCacheEnabled(true);
 		wset.setAppCachePath(getApplicationContext().getDir("cache", Context.MODE_PRIVATE).getPath());
-		wset.setPluginState(WebSettings.PluginState.ON);
+		//wset.setPluginState(WebSettings.PluginState.ON);
 		wset.setUseWideViewPort(true);
 		wset.setLoadWithOverviewMode(true);
 		wset.setUserAgentString(wset.getUserAgentString());
 		wset.setGeolocationEnabled(true);
 		wset.setGeolocationDatabasePath(getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath());
 		wset.setCacheMode(WebSettings.LOAD_DEFAULT);
-		wset.setAppCacheMaxSize(1024*1024*10);
+		//wset.setAppCacheMaxSize(1024*1024*10);
 		wset.setAllowFileAccess(true);
-		wset.setRenderPriority(WebSettings.RenderPriority.HIGH);
+		//wset.setRenderPriority(WebSettings.RenderPriority.HIGH);
 		//wset.setJavaScriptCanOpenWindowsAutomatically(true);
 		wset.setSupportMultipleWindows(false);
 		//webView.addJavascriptInterface(new JavaScriptShowCode(), "showcode");
@@ -193,14 +196,14 @@ public class HtmlViewer extends BaseActivity
 				SH_url = url;
 				addHistory();
 				//view.loadUrl("javascript:window.showcode.show(document.getElementsByTagName('html')[0].outerHTML);");
-				toolbar.setTitle(view.getTitle());
+                setToolbarTitle(view.getTitle());
 				//view.loadUrl("javascript:close_adtip();");
 				super.onPageFinished(view, url);
 			}
 			@Override
 			public void onReceivedSslError(WebView v, SslErrorHandler h, SslError e)
 			{
-				String message = "";
+				String message = "该网站证书无效，确认继续？";
 				switch (e.getPrimaryError())
 				{
 					case SslError.SSL_EXPIRED:
@@ -237,11 +240,34 @@ public class HtmlViewer extends BaseActivity
 			@Override
 			public void onDownloadStart(final String url, String userAgent, String disposition, String mimetype, long length)
 			{
-				Util.showConfirmCancelDialog(HtmlViewer.this, "下载文件", "文件名："+ getDownloadFileName(disposition, url).trim() + "\n大小：" + Util.getFormatSize(length) + "\n确定要下载该文件？", new DialogInterface.OnClickListener()
+				String filename = UrlUtil.decode(getDownloadFileName(disposition, url).trim(), "UTF-8");
+				Util.showConfirmCancelDialog(HtmlViewer.this, "下载文件", "文件名："+ filename + "\n大小：" + Util.getFormatSize(length) + "\n确定要下载该文件？", new DialogInterface.OnClickListener()
 				{
 					public void onClick(DialogInterface d, int s)
 					{
-						try
+						DownloadConfiguration.Builder builder = new DownloadConfiguration.Builder();
+						builder.addHeader("Content-Type", "application/octet-stream");
+						builder.addHeader("Content-Disposition", disposition);
+						//builder.addHeader("Refere", url);
+						FileDownloader.detect(url, new OnDetectBigUrlFileListener() {
+							@Override
+							public void onDetectNewDownloadFile(String url, String fileName, String saveDir, long fileSize) {
+								FileDownloader.createAndStart(url, saveDir, filename);
+								toastShortMessage("已创建下载任务");
+							}
+
+							@Override
+							public void onDetectUrlFileExist(String url) {
+								toastShortMessage("任务已存在");
+							}
+
+							@Override
+							public void onDetectUrlFileFailed(String url, DetectBigUrlFileFailReason failReason) {
+								toastShortMessage("新建下载失败");
+								ExceptionHandler.log("新建下载失败", failReason.getLocalizedMessage() + "\n(" + url + ")\n" + "Type:" + failReason.getType());
+							}
+						}, builder.build());
+						/*try
 						{
 							Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 							intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -250,7 +276,7 @@ public class HtmlViewer extends BaseActivity
 						catch (Exception e)
 						{
 							Util.toastShortMessage(getApplicationContext(), "未安装下载管理器");
-						}
+						}*/
 					}
 				});
 			}
@@ -315,22 +341,26 @@ public class HtmlViewer extends BaseActivity
 		Intent intent = getIntent();
 		if (intent != null && intent.getAction() != null)
 		{
-			if (intent.getAction().equals(Intent.ACTION_VIEW))
-				loadUrls(intent.getDataString());
-			else if (intent.getAction().equals(Intent.ACTION_SEND))
-			{
-				String share = intent.getStringExtra(Intent.EXTRA_TEXT);
-				if (!Util.isNullOrEmpty(share))
-				{
-					if (share.indexOf("http") > 0)
-						loadUrls(share.substring(share.indexOf("http")));
-					else
-						loadUrls(share);
-				}
-				
+			switch (intent.getAction()) {
+				case Intent.ACTION_VIEW:
+					loadUrls(intent.getDataString());
+					break;
+				case Intent.ACTION_SEND:
+					String share = intent.getStringExtra(Intent.EXTRA_TEXT);
+					if (!Util.isNullOrEmpty(share)) {
+						if (share.indexOf("http") > 0)
+							loadUrls(share.substring(share.indexOf("http")));
+						else
+							loadUrls(share);
+					}
+					break;
+				case Intent.ACTION_WEB_SEARCH:
+					loadUrlsSearch(intent.getStringExtra(SearchManager.QUERY));
+					break;
+				case Intent.ACTION_PICK_ACTIVITY:
+					Common.startActivityOptions(this, DownloadFile.class);
+					break;
 			}
-			else if (intent.getAction().equals(Intent.ACTION_WEB_SEARCH))
-				loadUrlsSearch(intent.getStringExtra(SearchManager.QUERY));
 		}
 		else
 		{
@@ -365,7 +395,7 @@ public class HtmlViewer extends BaseActivity
 				sb.append(sert.getIssuedBy().getCName());
 				sb.append("\n有效期：");
 				sb.append(sert.getValidNotBefore());
-				sb.append("至");
+				sb.append("\n至");
 				sb.append(sert.getValidNotAfter());
 				Util.showResultDialog(HtmlViewer.this, sb.toString(), "安全证书", "确定", new DialogInterface.OnClickListener()
 				{
@@ -415,13 +445,13 @@ public class HtmlViewer extends BaseActivity
 	
 	private void loadUrls(String url)
 	{
-		if (url.indexOf("//") >= 0)
-			toolbar.setTitle(url.substring(url.indexOf("//")+2));
-		else
-			toolbar.setTitle(url);
-		//SH_url = url;
 		if (Util.isNullOrEmpty(url))
 			return;
+		if (url.contains("//"))
+            setToolbarTitle(url.substring(url.indexOf("//")+2));
+		else
+            setToolbarTitle(url);
+		//SH_url = url;
 		//if (url.indexOf("http://") == 0 || url.indexOf("https://") == 0 || url.indexOf("ftp://") == 0 || url.indexOf("file://") == 0)
 		if (URLUtil.isValidUrl(url))
 			webView.loadUrl(url);
@@ -455,6 +485,7 @@ public class HtmlViewer extends BaseActivity
 	{
 		if (SH_home.length() > 0)
 		{
+			ExceptionHandler.log("home", SH_home);
 			int begin = SH_home.indexOf("://");
 			if (begin > 0)
 			{
@@ -484,8 +515,8 @@ public class HtmlViewer extends BaseActivity
 					searchItem.collapseActionView();
 			}
 		});
-		ImageView image = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
-		image.setVisibility(View.GONE);
+		searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon)
+		.setVisibility(View.GONE);
 		searchItem.setVisible(false);
 		searchView.setQueryHint("搜索或输入网址");
 		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
@@ -541,18 +572,20 @@ public class HtmlViewer extends BaseActivity
 			showBookmark();
 		else if (item.getItemId() == R.id.item_history)
 			Common.startActivityForResult(HtmlViewer.this, History.class, 520);
+		else if (item.getItemId() == R.id.item_download)
+			Common.startActivityOptions(HtmlViewer.this, DownloadFile.class);
 		else if (item.getItemId() == R.id.item_androidshare)
 		{
 			mBSDialog = new BottomSheetDialog(this);
 			View view = getLayoutInflater().inflate(R.layout.sharelayout, null);
-			share_qq = (LinearLayout) view.findViewById(R.id.btn_share_qq);
-			share_qzone = (LinearLayout) view.findViewById(R.id.btn_share_qzone);
-			share_wx = (LinearLayout) view.findViewById(R.id.btn_share_wx);
-			share_wxpy = (LinearLayout) view.findViewById(R.id.btn_share_wxline);
-			share_sina = (LinearLayout) view.findViewById(R.id.btn_share_sina);
-			share_web = (LinearLayout) view.findViewById(R.id.btn_share_browser);
-			share_link = (LinearLayout) view.findViewById(R.id.btn_share_copylink);
-			share_more = (LinearLayout) view.findViewById(R.id.btn_share_more);
+			LinearLayout share_qq = (LinearLayout) view.findViewById(R.id.btn_share_qq);
+			LinearLayout share_qzone = (LinearLayout) view.findViewById(R.id.btn_share_qzone);
+			LinearLayout share_wx = (LinearLayout) view.findViewById(R.id.btn_share_wx);
+			LinearLayout share_wxpy = (LinearLayout) view.findViewById(R.id.btn_share_wxline);
+			LinearLayout share_sina = (LinearLayout) view.findViewById(R.id.btn_share_sina);
+			LinearLayout share_web = (LinearLayout) view.findViewById(R.id.btn_share_browser);
+			LinearLayout share_link = (LinearLayout) view.findViewById(R.id.btn_share_copylink);
+			LinearLayout share_more = (LinearLayout) view.findViewById(R.id.btn_share_more);
 			mBSDialog.setContentView(view);
 			mBSDialog.show();
 			share_qq.setOnClickListener(new QQShareListener());
@@ -584,7 +617,9 @@ public class HtmlViewer extends BaseActivity
 				{
 					mBSDialog.dismiss();
 					ClipboardManager cm = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-					cm.setPrimaryClip(ClipData.newRawUri("url", Uri.parse(SH_url)));
+					if (cm != null) {
+						cm.setPrimaryClip(ClipData.newRawUri("url", Uri.parse(SH_url)));
+					}
 					Util.toastShortMessage(getApplicationContext(), "已复制到剪贴板");
 				}
 			});
@@ -673,7 +708,7 @@ public class HtmlViewer extends BaseActivity
 		souceView.setVisibility(View.GONE);
 		souceView.loadData("", "text/plain", null);
 		sourceProgress.setVisibility(View.GONE);
-		toolbar.setTitle(webView.getTitle());
+        setToolbarTitle(webView.getTitle());
 		searchItem.collapseActionView();
 		ISSOURCE = false;
 	}
@@ -749,16 +784,16 @@ public class HtmlViewer extends BaseActivity
 	private void onSetting()
 	{
 		if (spf == null)
-			spf = getSharedPreferences("java21", MODE_PRIVATE);
+			spf = new EasyPreferences(this);
 		if (Searchs == null)
 			Searchs = getResources().getStringArray(R.array.array_search_url);
 		if (UAurls == null)
 		{
 			UAurls = getResources().getStringArray(R.array.array_ua);
-			UAurls[0] = UA_Default;
+			UAurls[0] = UA_Default + " VbeBrowser/1.0";
 		}
 		if (webHelper == null)
-			webHelper = new WebHelper(this);
+			webHelper = new WebHelper(getApplicationContext());
 		SH_home = spf.getString("web_home", "");
 		SH_search = spf.getInt("web_search", 0);
 		SH_savePath = spf.getString("web_savepath", Common.ExterPath + "/DCIM/Java21");
@@ -768,6 +803,7 @@ public class HtmlViewer extends BaseActivity
 			SH_UA = ua;
 			wset.setUserAgentString(UAurls[ua]);
 		}
+		startService(new Intent(getApplicationContext(), DownloadService.class));
 	}
 
 	@Override
@@ -925,7 +961,7 @@ public class HtmlViewer extends BaseActivity
 					break;
 				case 520://History & Bookmark
 					if (data != null)
-						webView.loadUrl(data.getDataString());
+						loadUrls(data.getDataString());
 					break;
 			}
 		}
@@ -950,7 +986,7 @@ public class HtmlViewer extends BaseActivity
 		public void onReceivedTitle(WebView view, String title)
 		{
 			super.onReceivedTitle(view, title);
-			toolbar.setTitle(title);
+            setToolbarTitle(title);
 		}
 
 		@Override
@@ -1031,6 +1067,7 @@ public class HtmlViewer extends BaseActivity
 		}
 	}
 	
+	@SuppressLint("HandlerLeak")
 	Handler mHandler = new Handler()
 	{
 
@@ -1049,7 +1086,7 @@ public class HtmlViewer extends BaseActivity
 					souceView.setVisibility(View.VISIBLE);
 					webView.setVisibility(View.GONE);
 					souceView.loadData(SH_html, "text/plain; charset=UTF-8", null);
-					toolbar.setTitle("view-source:"+webView.getUrl());
+                    setToolbarTitle("view-source:"+webView.getUrl());
 					searchView.setQuery(webView.getUrl(), false);
 				} else
 					sourceProgress.setVisibility(View.GONE);

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Environment;
@@ -23,6 +24,8 @@ import android.support.v4.util.Pair;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+
+import com.vbea.java21.DownloadService;
 import com.vbea.java21.R;
 import com.vbea.java21.ActivityManager;
 import com.vbea.java21.audio.SoundLoad;
@@ -47,7 +50,7 @@ public class Common
 	public static int APP_THEME_ID = -1;//主题
 	public static int APP_BACK_ID = 0;//背景图片
 	public static int VERSION_CODE = 0;//版本号
-	private static int AUTO_LOGIN_MODE = 0;//自动登录类型，1为普通，2为QQ
+	public static int AUTO_LOGIN_MODE = 0;//自动登录类型，1为普通，2为QQ，3为微信
 	public static String SDATE;//激活凭证
 	public static String KEY;//密钥
 	public static String SID;//激活时间
@@ -107,11 +110,15 @@ public class Common
 		}
 		if (getDrawerBack() == null)
             spf.putInt("back", 0);
-        spf.commit();
+        spf.apply();
 		init(spf);
 		SocialShare.onStart(context);
 		if (isNet(context))
 			getTips();
+	}
+
+	public static boolean isRun() {
+		return IsRun;
 	}
 	
 	public static void reStart(Context context)
@@ -244,6 +251,8 @@ public class Common
 			user.icon = mUser.icon;
 			user.qq = mUser.qq;
 			user.qqId = mUser.qqId;
+			user.wxId = mUser.wxId;
+			user.weixin = mUser.weixin;
 			user.mobile = mUser.mobile;
 			user.settings = mUser.settings;
 			user.lastLogin = mUser.lastLogin;
@@ -388,8 +397,6 @@ public class Common
 			return mUser.role == 3;
 		return HULUXIA;
 	}
-	
-
 
 	//自动登录
 	public static void Login(Context context, LoginListener listener) throws Exception
@@ -397,14 +404,23 @@ public class Common
 		if (AUTO_LOGIN_MODE == 1)
 			Login(context, USERID, USERPASS, true, listener);
 		else if (AUTO_LOGIN_MODE == 2)
-			qqLogin(context, USERPASS, listener);
+			qqLogin(context, USERPASS, true, listener);
+		else if (AUTO_LOGIN_MODE == 3)
+			wxLogin(context, USERPASS, true, listener);
+	}
+
+	public static void qqLogin(Context context, String openId, boolean isAuto, LoginListener listener) throws Exception {
+		socialLogin(context, "qqId", openId, isAuto, 2, listener);
+	}
+
+	public static void wxLogin(Context context, String wxId, boolean isAuto, LoginListener listener) throws Exception {
+		socialLogin(context, "wxId", wxId, isAuto, 3, listener);
 	}
 	
-	public static void qqLogin(final Context context, String openId, final LoginListener listener) throws Exception
+	private static void socialLogin(final Context context, String column, String openId, boolean isAuto, int mode, final LoginListener listener) throws Exception
 	{
 		BmobQuery<Users> sql = new BmobQuery<Users>();
-		sql.addWhereEqualTo("qqId", openId);
-		//sql.addWhereEqualTo("valid", true);
+		sql.addWhereEqualTo(column, openId);
 		sql.findObjects(new FindListener<Users>()
 		{
 			@Override
@@ -415,33 +431,17 @@ public class Common
 					if (list.size() > 0)
 					{
 						mUser = list.get(0);
+						USERID = mUser.name;
 						if (!mUser.valid)
 						{
 							if (listener != null)
 								listener.onLogin(2);
 							return;
 						}
-						USERID = mUser.name;
-						EasyPreferences spf = new EasyPreferences(context);
-                        spf.putString("uid", Common.mUser.name);
-                        spf.putString("sid", Common.mUser.qqId);
-                        spf.putInt("loginmode", 2);
-                        spf.putString("key", KEY);
-						if (!isVipUser())
-                            spf.putBoolean("weladv", true);
-						if (!IS_ACTIVE)//自动激活
+						if (!isAuto)
 						{
-							KEY = mUser.key;
-							if (regist(KEY))
-							{
-								SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-								IS_ACTIVE = true;
-                                spf.putBoolean("autok", true);
-                                spf.putString("date", format.format(new Date()));
-                                spf.putBoolean("app", true);
-							}
+							saveLoginData(context, openId, mode);
 						}
-                        spf.commit();
 						updateUserLogin(context);
 						if (listener != null)
 							listener.onLogin(1);
@@ -488,37 +488,18 @@ public class Common
 					if (list.size() > 0)
 					{
 						Common.mUser = list.get(0);
-						EasyPreferences spf = new EasyPreferences(context);
-						if (!isAuto)
-						{
-                            spf.putString("uid", Common.mUser.name);
-                            spf.putString("sid", Common.mUser.psd);
-                            spf.putInt("loginmode", 1);
-							USERID = username;
-							if (!IS_ACTIVE)//自动激活
-							{
-								KEY = mUser.key;
-								if (regist(KEY))
-								{
-									SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-									IS_ACTIVE = true;
-                                    spf.putBoolean("autok", true);
-                                    spf.putString("date", format.format(new Date()));
-                                    spf.putBoolean("app", true);
-								}
-							}
-						}
-						else if (!mUser.valid)
+						USERID = mUser.name;
+						if (!mUser.valid)
 						{
 							if (listener != null)
 								listener.onLogin(2);
 							mUser = null;
 							return;
 						}
-						if (!isVipUser())
-                            spf.putBoolean("weladv", true);
-                        spf.putString("key", KEY);
-                        spf.commit();
+						if (!isAuto)
+						{
+                            saveLoginData(context, Common.mUser.psd, 1);
+						}
 						updateUserLogin(context);
 						if (listener != null)
 							listener.onLogin(1);
@@ -538,6 +519,30 @@ public class Common
 				}
 			}
 		});
+	}
+
+	public static void saveLoginData(Context context, String sid, int mode) {
+		EasyPreferences spf = new EasyPreferences(context);
+		spf.putString("uid", Common.mUser.name);
+		spf.putString("sid", sid);
+		spf.putInt("loginmode", mode);
+		if (!IS_ACTIVE)//自动激活
+		{
+			KEY = mUser.key;
+			if (regist(KEY))
+			{
+				@SuppressLint("SimpleDateFormat")
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				IS_ACTIVE = true;
+				spf.putBoolean("autok", true);
+				spf.putString("date", format.format(new Date()));
+				spf.putBoolean("app", true);
+			}
+		}
+		if (!isVipUser())
+			spf.putBoolean("weladv", true);
+		spf.putString("key", KEY);
+		spf.commit();
 	}
 	
 	public static void Logout()
@@ -614,6 +619,11 @@ public class Common
 	public static String getCachePath()
 	{
 		return LocalPath + "Cache/";
+	}
+
+	public static String getDownloadPath()
+	{
+		return LocalPath + "Download/";
 	}
 	
 	public static String getIconPath()
@@ -1009,6 +1019,7 @@ public class Common
 			if (audioService.isPlay())
 				audioService.Stop();
 			c.stopService(new Intent(c, AudioService.class));
+			c.stopService(new Intent(c, DownloadService.class));
 		}
 		//清空音节码加载池
 		if (SOUND != null)

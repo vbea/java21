@@ -9,11 +9,14 @@ import java.text.SimpleDateFormat;
 import java.lang.Thread.UncaughtExceptionHandler;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Environment;
+
+import com.vbea.java21.Main;
 
 public class ExceptionHandler implements UncaughtExceptionHandler
 {
-	//private Context mContext;
+	private Context mContext;
 	private static ExceptionHandler instance; //单例模式
 	private ExceptionHandler(){}
 
@@ -26,9 +29,9 @@ public class ExceptionHandler implements UncaughtExceptionHandler
 		}
 		return instance;
 	}
-	public void init()
+	public void init(Context context)
 	{
-		//this.mContext = context;
+		this.mContext = context;
 		Thread.setDefaultUncaughtExceptionHandler(this);
 	}
 
@@ -59,7 +62,8 @@ public class ExceptionHandler implements UncaughtExceptionHandler
 				android.os.Process.killProcess(android.os.Process.myPid());
 			}
 		}
-		android.os.Process.killProcess(android.os.Process.myPid());
+		//android.os.Process.killProcess(android.os.Process.myPid());
+		mContext.startActivity(new Intent(mContext, Main.class));
 	}
 	
 	public static void log(String name, Exception e)

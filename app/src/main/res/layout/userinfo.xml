@@ -77,12 +77,10 @@
 			<TableRow
 				android:id="@+id/btn_info_user"
 				android:layout_width="fill_parent"
-				android:layout_height="76dp"
+				android:layout_height="56dp"
 				android:paddingLeft="10dp"
 				android:paddingRight="10dp"
-				android:paddingTop="20dp"
-				android:background="@drawable/btn_menu"
-				android:clickable="true">
+				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="wrap_content"
 					android:layout_height="fill_parent"
@@ -91,30 +89,6 @@
 					android:textSize="16sp"
 					android:textColor="?attr/textPrimary"
 					android:text="@string/java_person"/>
-				<TextView
-					android:id="@+id/info_username"
-					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
-					android:gravity="center_vertical"
-					android:textSize="14sp"
-					android:singleLine="true"
-					android:textColor="?attr/colorAccent"/>
-			</TableRow>
-			<TableRow
-				android:layout_width="fill_parent"
-				android:layout_height="56dp"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp"
-				android:background="@drawable/btn_menu"
-				android:clickable="true">
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
-					android:layout_weight="1"
-					android:gravity="center_vertical"
-					android:textSize="16sp"
-					android:textColor="?attr/textPrimary"
-					android:text="@string/java_level"/>
 				<TextView
 					android:id="@+id/info_level"
 					android:layout_width="wrap_content"
@@ -129,8 +103,7 @@
 				android:layout_height="56dp"
 				android:paddingLeft="10dp"
 				android:paddingRight="10dp"
-				android:background="@drawable/btn_menu"
-				android:clickable="true">
+				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="wrap_content"
 					android:layout_height="fill_parent"
@@ -153,8 +126,7 @@
 				android:layout_height="56dp"
 				android:paddingLeft="10dp"
 				android:paddingRight="10dp"
-				android:background="@drawable/btn_menu"
-				android:clickable="true">
+				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="wrap_content"
 					android:layout_height="fill_parent"
@@ -177,8 +149,7 @@
 				android:layout_height="56dp"
 				android:paddingLeft="10dp"
 				android:paddingRight="10dp"
-				android:background="@drawable/btn_menu"
-				android:clickable="true">
+				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="wrap_content"
 					android:layout_height="fill_parent"
@@ -201,8 +172,7 @@
 				android:layout_height="56dp"
 				android:paddingLeft="10dp"
 				android:paddingRight="10dp"
-				android:background="@drawable/btn_menu"
-				android:clickable="true">
+				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="wrap_content"
 					android:layout_height="fill_parent"
@@ -248,7 +218,6 @@
 				android:layout_width="fill_parent"
 				android:layout_height="56dp"
 				android:background="@drawable/btn_menu"
-				android:clickable="true"
 				android:paddingLeft="10dp"
 				android:paddingRight="10dp">
 				<TextView
@@ -292,6 +261,30 @@
 					android:singleLine="true"
 					android:textColor="?attr/colorAccent"/>
 			</TableRow>
+			<TableRow
+				android:id="@+id/btn_info_wx"
+				android:layout_width="fill_parent"
+				android:layout_height="56dp"
+				android:background="@drawable/btn_menu"
+				android:paddingLeft="10dp"
+				android:paddingRight="10dp">
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:layout_weight="1"
+					android:gravity="center_vertical"
+					android:textSize="16sp"
+					android:textColor="?attr/textPrimary"
+					android:text="@string/java_wx"/>
+				<TextView
+					android:id="@+id/info_wx"
+					android:layout_width="wrap_content"
+					android:layout_height="fill_parent"
+					android:gravity="center_vertical"
+					android:textSize="14sp"
+					android:singleLine="true"
+					android:textColor="?attr/colorAccent"/>
+			</TableRow>
 			<LinearLayout
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
@@ -299,8 +292,7 @@
 				android:maxHeight="80dp"
 				android:padding="5dp"
 				android:orientation="vertical"
-				android:background="@drawable/btn_menu"
-				android:clickable="true">
+				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"

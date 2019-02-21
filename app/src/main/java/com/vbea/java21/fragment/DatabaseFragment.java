@@ -22,8 +22,9 @@ import android.support.v7.widget.RecyclerView;
 import com.vbea.java21.R;
 import com.vbea.java21.AndroidWeb;
 import com.vbea.java21.MyThemes;
+import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.ReadUtil;
-import com.vbea.java21.data.Database;
+import com.vbea.java21.data.SQLHtml;
 import com.vbea.java21.list.LearnListAdapter;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.view.MyDividerDecoration;
@@ -39,8 +40,7 @@ public class DatabaseFragment extends Fragment
 	private RecyclerView recyclerView;
 	private TextView errorText;
 	private ProgressBar proRefresh;
-	private LearnListAdapter<Database> mAdapter;
-	private List<Database> mList;
+	private LearnListAdapter<SQLHtml> mAdapter;
 	private View rootView;
 	private int mCount = -1;
 	private final int type = 6;
@@ -58,7 +58,6 @@ public class DatabaseFragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
 		if (recyclerView == null)
 		{
-			mList = new ArrayList<Database>();
 			mAdapter = new LearnListAdapter<>();
 			errorText = (TextView) view.findViewById(R.id.txt_andError);
 			proRefresh = (ProgressBar) view.findViewById(R.id.refreshProgress);
@@ -69,14 +68,7 @@ public class DatabaseFragment extends Fragment
 			recyclerView.setHasFixedSize(true);
 			recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 			refreshLayout.setColorSchemeResources(MyThemes.getColorPrimary(), MyThemes.getColorAccent());
-			//mList = new ArrayList<AndroidHtml>();
-			//if (Common.isLogin())
-				getCount();
-			/*else
-			{
-				errorText.setVisibility(View.VISIBLE);
-				errorText.setText("请登录后下拉刷新获取章节列表");
-			}*/
+			getCount();
 			
 			mAdapter.setOnItemClickListener(new LearnListAdapter.OnItemClickListener()
 			{
@@ -103,14 +95,7 @@ public class DatabaseFragment extends Fragment
 				@Override
 				public void onRefresh()
 				{
-					/*if (!Common.isLogin())
-					{
-						recyclerView.setVisibility(View.GONE);
-						errorText.setVisibility(View.VISIBLE);
-						errorText.setText("加载失败，请登录后重试");
-					}
-					else*/
-						getCount();
+					getCount();
 				}
 			});
 
@@ -136,70 +121,56 @@ public class DatabaseFragment extends Fragment
 			init();
 			return;
 		}
-		BmobQuery<Database> query = new BmobQuery<Database>();
-		query.addWhereEqualTo("enable", true);
-		query.count(Database.class, new CountListener()
-		{
-			@Override
-			public void done(Integer count, BmobException e)
-			{
-				if (e == null)
-				{
-					mCount = count;
-					if (count == 0)
-					{
-						mHandler.sendEmptyMessage(3);
-						return;
+		if (mCount < 0) {
+			BmobQuery<SQLHtml> query = new BmobQuery<SQLHtml>();
+			query.addWhereEqualTo("enable", true);
+			query.count(SQLHtml.class, new CountListener() {
+				@Override
+				public void done(Integer count, BmobException e) {
+					if (e == null) {
+						mCount = count;
+						if (count == 0) {
+							mHandler.sendEmptyMessage(3);
+							return;
+						}
+					} else {
+						mCount = -1;
+						ExceptionHandler.log("DatabaseFragment-count", e);
 					}
+					refresh();
 				}
-				else
-					mCount = -1;
-				refresh();
-			}
-		});
+			});
+		} else {
+			refresh();
+		}
 	}
-
-	/*public void update()
-	 {
-	 Util.showConfirmCancelDialog(getActivity(), "数据更新", "你确定要更新数据吗", new DialogInterface.OnClickListener()
-	 {
-	 public void onClick(DialogInterface d, int s)
-	 {
-	 mPdialog = ProgressDialog.show(getActivity(), null, "请稍候...");
-	 new UpdateThread().start();
-	 }
-	 });
-	 }*/
 
 	private void refresh()
 	{
-		if (mCount < 0 || !Common.isNet(getContext()) || mCount == mList.size())
+		if (mCount < 0 || !Common.isNet(getContext()))
 		{
 			init();
 			return;
 		}
-		if (mList.size() == 0)
+		if (mAdapter.getItemCount() == 0)
 		{
 			errorText.setVisibility(View.VISIBLE);
 			errorText.setText("正在加载，请稍候");
 		}
-		BmobQuery<Database> query = new BmobQuery<Database>();
+		BmobQuery<SQLHtml> query = new BmobQuery<SQLHtml>();
 		query.addWhereEqualTo("enable", true);
 		query.order("order");
 		query.setLimit(15);
-		query.findObjects(new FindListener<Database>()
+		query.findObjects(new FindListener<SQLHtml>()
 		{
 			@Override
-			public void done(List<Database> list, BmobException e)
+			public void done(List<SQLHtml> list, BmobException e)
 			{
 				if (e == null)
 				{
-					if (list.size() > 0)
-					{
-						mList = list;
-						mAdapter.setEnd(false);
-					}
-				}
+					mAdapter.setList(list);
+				} else
+					ExceptionHandler.log("DatabaseFragment-refresh", e);
 				mHandler.sendEmptyMessage(1);
 			}
 		});
@@ -207,26 +178,30 @@ public class DatabaseFragment extends Fragment
 
 	private void addItem()
 	{
-		if (mCount > mList.size())
+		if (mCount > mAdapter.size())
 		{
+			recyclerView.stopScroll();
 			proRefresh.setVisibility(View.VISIBLE);
-			BmobQuery<Database> query = new BmobQuery<Database>();
+			BmobQuery<SQLHtml> query = new BmobQuery<SQLHtml>();
 			query.addWhereEqualTo("enable", true);
 			query.order("order");
 			query.setLimit(15);
-			query.setSkip(mList.size());
-			query.findObjects(new FindListener<Database>()
+			query.setSkip(mAdapter.size());
+			query.findObjects(new FindListener<SQLHtml>()
 			{
 				@Override
-				public void done(List<Database> list, BmobException e)
+				public void done(List<SQLHtml> list, BmobException e)
 				{
 					if (e == null)
 					{
 						if (list.size() > 0)
 						{
-							mList.addAll(list);
+							mAdapter.notifyItemInserted(mAdapter.addList(list));
+							proRefresh.setVisibility(View.GONE);
+							mAdapter.setEnd(mCount);
 						}
-					}
+					} else
+						ExceptionHandler.log("DatabaseFragment-add", e);
 					mHandler.sendEmptyMessage(2);
 				}
 			});
@@ -235,18 +210,18 @@ public class DatabaseFragment extends Fragment
 
 	private void init()
 	{
+		if (refreshLayout.isRefreshing())
+			refreshLayout.setRefreshing(false);
 		errorText.setText("加载失败\n请检查你的网络连接");
-		if (mList.size() > 0)
+		if (mAdapter.getItemCount() > 0)
 		{
 			errorText.setVisibility(View.GONE);
 			recyclerView.setVisibility(View.VISIBLE);
-		}
-		else
+			mAdapter.notifyDataSetChanged();
+		} else {
+			recyclerView.setVisibility(View.GONE);
 			errorText.setVisibility(View.VISIBLE);
-		if (refreshLayout.isRefreshing())
-			refreshLayout.setRefreshing(false);
-		mAdapter.setList(mList);
-		mAdapter.notifyDataSetChanged();
+		}
 	}
 
 	@SuppressLint("HandlerLeak")
@@ -259,13 +234,6 @@ public class DatabaseFragment extends Fragment
 			{
 				case 1:
 					init();
-					break;
-				case 2:
-					mAdapter.setList(mList);
-					if (mList.size() == mCount)
-						mAdapter.setEnd(true);
-					mAdapter.notifyItemInserted(mAdapter.getItemCount());
-					proRefresh.setVisibility(View.GONE);
 					break;
 				case 3:
 					errorText.setText("敬请期待");
@@ -290,10 +258,6 @@ public class DatabaseFragment extends Fragment
 	@Override
 	public void onResume()
 	{
-		/*if (!Common.isLogin())
-		{
-			recyclerView.setVisibility(View.GONE);
-		}*/
 		if (refreshLayout.isRefreshing())
 			refreshLayout.setRefreshing(false);
 		super.onResume();

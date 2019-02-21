@@ -15,7 +15,6 @@ import com.vbea.java21.classes.ExceptionHandler;
 
 public class Bookmark extends BaseActivity
 {
-	private RecyclerView recyclerView;
 	private BookAdapter mAdapter;
 	private WebHelper query;
 
@@ -29,13 +28,13 @@ public class Bookmark extends BaseActivity
 	public void after()
 	{
 		enableBackButton();
-		recyclerView = bind(R.id.music_recyclerView);
+		init();
+		RecyclerView recyclerView = bind(R.id.music_recyclerView);
 		recyclerView.addItemDecoration(new MyDividerDecoration(this));
 		recyclerView.setAdapter(mAdapter);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		init();
-		
+
 		mAdapter.setOnItemClickListener(new BookAdapter.OnItemClickListener()
 		{
 			@Override

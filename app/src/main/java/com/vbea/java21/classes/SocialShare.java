@@ -1,11 +1,14 @@
 package com.vbea.java21.classes;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.content.Context;
 import android.graphics.Bitmap;
 import com.tencent.connect.common.Constants;
 import com.tencent.connect.share.QQShare;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
+import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -17,17 +20,19 @@ import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 public class SocialShare
 {
 	public static Tencent mTencent;
-	public static IWXAPI mWeiXin;
+	public static IWXAPI mWeiXin, wxLogin;
 	//public static AuthInfo mSina;
 	//public static IWeiboShareAPI mSinaShare;
 	public static final String QQ_AppKey = "1101326556";
 	public static final String Sina_AppKey = "309212800";
-	public static final String WeiXin_AppKey = "wx4073ed26b640eb16";
-	//aa6bf263bb94528f3674bdb308762016";
+	public static final String WeiXin_AppKey = "wx4073ed26b640eb16";//aa6bf263bb94528f3674bdb308762016";
+	public static final String WX_APPID = "wxbc12a3bddf2ea5ee";
+	public static final String WX_SECRET = "6fe27b0103ef4c7b3094d1ade741ca6f";
 	public static final String SCOPE = //Sina_应用申请的高级权限
 	"email,direct_messages_read,direct_messages_write,"
 	+ "friendships_groups_read,friendships_groups_write,statuses_to_me_read,"
 	+ "follow_app_official_microblog," + "invitation_write";
+	private static OnWxLoginListener listener;
 	
 	public static void onStart(Context context)
 	{
@@ -38,12 +43,20 @@ public class SocialShare
 			mWeiXin = WXAPIFactory.createWXAPI(context, WeiXin_AppKey, true);
 			mWeiXin.registerApp(WeiXin_AppKey);
 		}
+		if (wxLogin == null) {
+			wxLogin = WXAPIFactory.createWXAPI(context, WX_APPID, true);
+			wxLogin.registerApp(WX_APPID);
+		}
 		/*if (mSina == null)
 			mSina = new AuthInfo(context, Sina_AppKey, "https://api.weibo.com/oauth2/default.html", SCOPE);
 		if (mSinaShare == null)
 			mSinaShare = WeiboShareSDK.createWeiboAPI(context, Sina_AppKey);*/
 	}
-	
+
+	public static boolean isWXInstall() {
+		return mWeiXin.isWXAppInstalled();
+	}
+
 	public static void shareToQQ(Activity activity, Bundle params, boolean isQzone, IUiListener qqShareListener)
 	{
 		if (isQzone)
@@ -141,5 +154,36 @@ public class SocialShare
 	private static String buildTransaction(String type)
 	{  
         return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();  
-    }  
+    }
+
+	/**
+	 * 20190122-vbe
+	 * code-微信登录
+	 */
+	public static void handleIntent(Intent intent, IWXAPIEventHandler handler) {
+		wxLogin.handleIntent(intent, handler);
+	}
+
+	public static void loginFromWeixin(OnWxLoginListener lis) {
+		listener = lis;
+		SendAuth.Req req = new SendAuth.Req();
+		req.scope = "snsapi_userinfo";
+		req.state = "java21";
+		wxLogin.sendReq(req);
+	}
+
+	public static void onSuccess(String code) {
+		if (listener != null)
+			listener.onSuccess(code);
+	}
+
+	public static void onError() {
+		if (listener != null)
+			listener.onError();
+	}
+
+	public interface OnWxLoginListener {
+		void onSuccess(String code);
+		void onError();
+	}
 }

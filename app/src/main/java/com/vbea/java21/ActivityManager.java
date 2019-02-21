@@ -28,7 +28,7 @@ public class ActivityManager
 	
 	public void removeActivity(Activity activity)
 	{
-		if(activity != null && activityStack.contains(activity))
+		if(activityStack != null &&activity != null && activityStack.contains(activity))
 		{
 			activityStack.remove(activity);
 		}

@@ -26,22 +26,37 @@ public class LearnListAdapter<T extends ILearnList> extends RecyclerView.Adapter
     private OnItemClickListener onItemClickListener;
     private List<T> mList;
     private boolean isEnd;
+    private int removedItem = 0;
     private String server = "";
 
     public LearnListAdapter() {
         mList = new ArrayList<>();
-        setEnd(false);
     }
 
     public void setList(List<T> list)
     {
-        mList.clear();
-        mList.addAll(list);
-        if (Util.isServerDataId(mList.get(0).getOrder()))
-        {
-            server = mList.get(0).getUrl();
-            mList.remove(0);
+        if (list != null && list.size() > 0) {
+            mList.clear();
+            mList.addAll(list);
+            isEnd = false;
+            if (Util.isServerDataId(mList.get(0).getOrder())) {
+                server = mList.get(0).getUrl();
+                mList.remove(0);
+                removedItem = 1;
+            }
         }
+    }
+
+    public int addList(List<T> list) {
+        int count = mList.size();
+        mList.addAll(list);
+        return count;
+    }
+
+    public int size() {
+        if (mList != null)
+            return mList.size() + removedItem;
+        return 0;
     }
 
     @Override
@@ -114,8 +129,8 @@ public class LearnListAdapter<T extends ILearnList> extends RecyclerView.Adapter
         this.onItemClickListener = itemClickListener;
     }
 
-    public void setEnd(boolean end) {
-        isEnd = end;
+    public void setEnd(int count) {
+        isEnd = (mList.size() + removedItem) == count;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

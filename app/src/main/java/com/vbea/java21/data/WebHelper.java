@@ -110,14 +110,14 @@ public class WebHelper extends SQLiteOpenHelper
 	public Cursor listHistory() throws Exception
 	{
 		SQLiteDatabase db = getReadableDatabase();
-		return db.query(TABLE_HISTORY, new String[] { COL_ID,COL_TITLE,COL_URL,COL_CREATEON }, null, null, null, null, "createOn desc");
+		return db.query(TABLE_HISTORY, new String[] { COL_ID,COL_TITLE,COL_URL,COL_CREATEON }, null, null, null, null, COL_CREATEON + " desc");
 	}
 	
 	//获取所有的书签
 	public Cursor listBookmark() throws Exception
 	{
 		SQLiteDatabase db = getReadableDatabase();
-		return db.query(TABLE_BOOK, new String[] { COL_ID,COL_TITLE,COL_URL,COL_CREATEON }, null, null, null, null, "createOn desc");
+		return db.query(TABLE_BOOK, new String[] { COL_ID,COL_TITLE,COL_URL,COL_CREATEON }, null, null, null, null, COL_CREATEON + " desc");
 	}
 	
 	//删除指定的历史记录

@@ -19,7 +19,7 @@ public class Help extends BaseActivity
 	{
 		enableBackButton();
 		WebView web = bind(R.id.webHelp);
-		web.loadUrl("file:///android_asset/web/help.html");
+		web.loadUrl("file:///android_asset/java/help.html");
 	}
 	
 	@Override

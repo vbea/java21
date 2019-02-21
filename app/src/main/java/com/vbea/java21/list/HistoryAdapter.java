@@ -50,6 +50,17 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 				}
 			}
 		});
+		holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				if(onItemClickListener != null)
+				{
+					onItemClickListener.onItemLongClick(item.getTitle(), item.getUrl());
+					return true;
+				}
+				return false;
+			}
+		});
 	}
 
 	@Override
@@ -82,5 +93,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.MyViewHo
 	public interface OnItemClickListener
 	{
         void onItemClick(String url);
+		void onItemLongClick(String title, String url);
     }
 }

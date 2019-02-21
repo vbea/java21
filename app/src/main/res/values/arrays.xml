@@ -139,9 +139,9 @@
 	</string-array>
 	<string-array name="array_ua">
 		<item>Default</item>
-		<item>Mozilla/5.0 (iPhone; U; CPU iPhone OS 5_0 like Mac OS X; en-us) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3</item>
-		<item>Mozilla/5.0 (iPad; U; CPU OS 5_0 like Mac OS X; en-us) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3</item>
-		<item>Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36</item>
+		<item>Mozilla/5.0 (iPhone; U; CPU iPhone OS 5_0 like Mac OS X; en-us) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3 VbeBrowser/1.0</item>
+		<item>Mozilla/5.0 (iPad; U; CPU OS 5_0 like Mac OS X; en-us) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3 VbeBrowser/1.0</item>
+		<item>Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.87 Safari/537.36 VbeBrowser/1.0</item>
 	</string-array>
 	<string-array name="array_codelan">
 		<item>C</item>
@@ -258,5 +258,15 @@
 	<string-array name="array_bookaction">
 		<item>浏览</item>
 		<item>删除</item>
+	</string-array>
+	<string-array name="array_hisaction">
+		<item>浏览</item>
+		<item>保存为书签</item>
+	</string-array>
+	<string-array name="array_download_item">
+		<item>开始/暂停</item>
+		<item>删除</item>
+		<item>重新下载</item>
+		<item>复制下载地址</item>
 	</string-array>
 </resources>

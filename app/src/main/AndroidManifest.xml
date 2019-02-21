@@ -31,6 +31,7 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -49,7 +50,7 @@
         <activity
             android:name=".ApiWord"
             android:label="@string/apidoc"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".TextReplace"
             android:label="@string/textEditor" />
@@ -57,16 +58,16 @@
             android:name=".AdminActivity"
             android:label="@string/activity_admin"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
 
-            <!--
+        <!--
             intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
 				<data android:scheme="file" />
 				<data android:mimeType="*/*" />
             </intent-filter
-            -->
+        -->
         <activity
             android:name=".Comment"
             android:screenOrientation="portrait"
@@ -76,7 +77,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".AndroidWeb"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".MusicList"
             android:label="@string/morelist"
@@ -142,28 +143,37 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="http" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="https" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/html" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.WEB_SEARCH" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
@@ -175,8 +185,9 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:scheme="file"
-                      android:host="localhost" />
+                <data
+                    android:host="localhost"
+                    android:scheme="file" />
                 <data android:mimeType="text/html" />
                 <data android:pathPattern="*.htm" />
                 <data android:pathPattern="*.html" />
@@ -189,6 +200,16 @@
         <activity
             android:name=".BrowserSet"
             android:label="@string/browserset"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".DownloadFile"
+            android:label="@string/download_mng"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".DownloadBridge"
+            android:label="@string/download_mng"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
@@ -255,10 +276,8 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="tencent1101326556" />
             </intent-filter>
         </activity>
@@ -276,6 +295,11 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/CropBlack" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <service
             android:name=".audio.AudioService"
@@ -283,11 +307,13 @@
         <service
             android:name="com.qq.e.comm.DownloadService"
             android:exported="false" />
-
+        <service
+            android:name=".DownloadService"
+            android:exported="false" />
         <provider
             android:name="com.tencent.mid.api.MidProvider"
             android:authorities="com.vbea.java21.TENCENT.MID.V3"
-            android:exported="true"/>
+            android:exported="true" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

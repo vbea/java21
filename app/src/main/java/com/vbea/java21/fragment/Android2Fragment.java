@@ -42,9 +42,8 @@ public class Android2Fragment extends Fragment
 	private TextView errorText;
 	private ProgressBar proRefresh;
 	private LearnListAdapter<AndroidAdvance> mAdapter;
-	private List<AndroidAdvance> mList;
 	private View rootView;
-	private int mCount = 0;
+	private int mCount = -1;
 	private final int type = 2;
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -60,7 +59,6 @@ public class Android2Fragment extends Fragment
         super.onViewCreated(view, savedInstanceState);
 		if (recyclerView == null)
 		{
-			mList = new ArrayList<AndroidAdvance>();
 			mAdapter = new LearnListAdapter<>();
 			errorText = (TextView) view.findViewById(R.id.txt_andError);
 			proRefresh = (ProgressBar) view.findViewById(R.id.refreshProgress);
@@ -102,16 +100,8 @@ public class Android2Fragment extends Fragment
 			refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener()
 			{
 				@Override
-				public void onRefresh()
-				{
-					/*if (!Common.isLogin())
-					{
-						recyclerView.setVisibility(View.GONE);
-						errorText.setVisibility(View.VISIBLE);
-						errorText.setText("加载失败，请登录后重试");
-					}
-					else*/
-						getCount();
+				public void onRefresh() {
+					getCount();
 				}
 			});
 				
@@ -137,42 +127,38 @@ public class Android2Fragment extends Fragment
 			init();
 			return;
 		}
-		/*if (!Common.IS_ACTIVE)
-		{
-			mHandler.sendEmptyMessage(3);
-			return;
-		}*/
-		BmobQuery<AndroidAdvance> query = new BmobQuery<AndroidAdvance>();
-		query.addWhereEqualTo("enable", true);
-		query.count(AndroidAdvance.class, new CountListener()
-		{
-			@Override
-			public void done(Integer count, BmobException e)
-			{
-				if (e == null)
-				{
-					mCount = count;
-					if (count == 0)
-					{
-						mHandler.sendEmptyMessage(3);
-						return;
+		if (mCount < 0) {
+			BmobQuery<AndroidAdvance> query = new BmobQuery<AndroidAdvance>();
+			query.addWhereEqualTo("enable", true);
+			query.count(AndroidAdvance.class, new CountListener() {
+				@Override
+				public void done(Integer count, BmobException e) {
+					if (e == null) {
+						mCount = count;
+						if (count == 0) {
+							mHandler.sendEmptyMessage(3);
+							return;
+						}
+					} else {
+						mCount = -1;
+						ExceptionHandler.log("Android2Fragment-count", e);
 					}
+					refresh();
 				}
-				else
-					mCount = -1;
-				refresh();
-			}
-		});
+			});
+		} else {
+			refresh();
+		}
 	}
 	
 	private void refresh()
 	{
-		if (mCount <= 0 || !Common.isNet(getContext()) || mCount == mList.size())
+		if (mCount <= 0 || !Common.isNet(getContext()))
 		{
 			init();
 			return;
 		}
-		if (mList == null || mList.size() == 0)
+		if (mAdapter.getItemCount() == 0)
 		{
 			errorText.setVisibility(View.VISIBLE);
 			errorText.setText("正在加载，请稍候");
@@ -188,11 +174,9 @@ public class Android2Fragment extends Fragment
 			{
 				if (e == null)
 				{
-					if (list.size() > 0)
-					{
-						mList = list;
-					}
-				}
+					mAdapter.setList(list);
+				} else
+					ExceptionHandler.log("Android2Fragment-refresh", e);
 				mHandler.sendEmptyMessage(1);
 			}
 		});
@@ -200,14 +184,15 @@ public class Android2Fragment extends Fragment
 	
 	private void addItem()
 	{
-		if (mCount > mList.size())
+		if (mCount > mAdapter.size())
 		{
+			recyclerView.stopScroll();
 			proRefresh.setVisibility(View.VISIBLE);
 			BmobQuery<AndroidAdvance> query = new BmobQuery<AndroidAdvance>();
 			query.addWhereEqualTo("enable", true);
 			query.order("order");
 			query.setLimit(15);
-			query.setSkip(mList.size());
+			query.setSkip(mAdapter.size());
 			query.findObjects(new FindListener<AndroidAdvance>()
 			{
 				@Override
@@ -217,10 +202,12 @@ public class Android2Fragment extends Fragment
 					{
 						if (list.size() > 0)
 						{
-							mList.addAll(list);
+							mAdapter.notifyItemInserted(mAdapter.addList(list));
+							proRefresh.setVisibility(View.GONE);
+							mAdapter.setEnd(mCount);
 						}
-					}
-					mHandler.sendEmptyMessage(2);
+					} else
+						ExceptionHandler.log("Android2Fragment-add", e);
 				}
 			});
 		}
@@ -229,17 +216,17 @@ public class Android2Fragment extends Fragment
 	private void init()
 	{
 		errorText.setText("加载失败\n请检查你的网络连接");
-		if (mList.size() > 0)
+		if (refreshLayout.isRefreshing())
+			refreshLayout.setRefreshing(false);
+		if (mAdapter.getItemCount() > 0)
 		{
 			errorText.setVisibility(View.GONE);
 			recyclerView.setVisibility(View.VISIBLE);
-		}
-		else
+			mAdapter.notifyDataSetChanged();
+		} else {
+			recyclerView.setVisibility(View.GONE);
 			errorText.setVisibility(View.VISIBLE);
-		if (refreshLayout.isRefreshing())
-			refreshLayout.setRefreshing(false);
-		mAdapter.setList(mList);
-		mAdapter.notifyDataSetChanged();
+		}
 	}
 	
 	@SuppressLint("HandlerLeak")
@@ -252,13 +239,6 @@ public class Android2Fragment extends Fragment
 			{
 				case 1:
 					init();
-					break;
-				case 2:
-					mAdapter.setList(mList);
-					mAdapter.notifyItemInserted(mAdapter.getItemCount());
-					proRefresh.setVisibility(View.GONE);
-					if (mList.size() == mCount)
-						mAdapter.setEnd(true);
 					break;
 				case 3:
 					errorText.setText("敬请期待");
@@ -283,55 +263,8 @@ public class Android2Fragment extends Fragment
 	@Override
 	public void onResume()
 	{
-		/*if (!Common.isLogin())
-		{
-			recyclerView.setVisibility(View.GONE);
-		}*/
 		if (refreshLayout.isRefreshing())
 			refreshLayout.setRefreshing(false);
 		super.onResume();
-	}
-	
-	/*public void update()
-	{
-		Util.showConfirmCancelDialog(getActivity(), "数据更新", "你确定要更新数据吗", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface d, int s)
-			{
-				mPdialog = ProgressDialog.show(getActivity(), null, "请稍候...");
-				new UpdateThread().start();
-			}
-		});
-	}*/
-	
-	class UpdateThread extends Thread implements Runnable
-	{
-		public void run()
-		{
-			try
-			{
-				for (AndroidAdvance item : mList)
-				{
-					if (item.isTitle)
-						continue;
-					item.url = item.url.replace("http://vbea.wicp.net/","");
-					item.update(new UpdateListener()
-					{
-						public void done(BmobException e)
-						{
-							if (e!=null)
-								ExceptionHandler.log("update", e.toString());
-						}
-					});
-					sleep(500);
-				}
-				mHandler.sendEmptyMessage(4);
-			}
-			catch (Exception e)
-			{
-				mHandler.sendEmptyMessage(5);
-				ExceptionHandler.log("update", e.toString());
-			}
-		}
 	}
 }

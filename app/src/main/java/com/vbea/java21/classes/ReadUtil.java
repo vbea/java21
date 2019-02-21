@@ -137,7 +137,7 @@ public class ReadUtil {
         spf.putString(READ_AndroidAdvance, "");
         spf.putString(READ_AIDE, "");
         spf.putString(READ_Database, "");
-        spf.commit();
+        spf.apply();
         readUtil = new ReadUtil(ct);
     }
 }

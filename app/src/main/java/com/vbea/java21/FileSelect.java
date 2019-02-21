@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 import android.os.StrictMode;
@@ -132,12 +133,15 @@ public class FileSelect extends BaseActivity
 	public void init()
 	{
 		rootPath = Environment.getExternalStorageDirectory();
-		mList = new ArrayList<FileItem>();
-		fileList = new ArrayList<FileItem>();
+		mList = new ArrayList<>();
+		fileList = new ArrayList<>();
 		String def = getIntent().getStringExtra("default");
-		if (!Util.isNullOrEmpty(def))
-			listFiles(new File(def));
-		else
+		if (!Util.isNullOrEmpty(def)) {
+			File defFile = new File(def);
+			if (!defFile.exists())
+				defFile.mkdirs();
+			listFiles(defFile);
+		} else
 			listFiles(rootPath);
 	}
 	
@@ -149,6 +153,10 @@ public class FileSelect extends BaseActivity
 		txtLocation.setText(files.getPath());
 		if (!currentPath.equals(rootPath))
 			mList.add(new FileItem().addUplev());
+		if (!files.exists()) {
+			handler.sendEmptyMessage(1);
+			return;
+		}
 		isCompleted = false;
 		handler.sendEmptyMessageDelayed(2, 100);
 		if (files.exists())
@@ -188,6 +196,7 @@ public class FileSelect extends BaseActivity
 		}
 	}
 	
+	@SuppressLint("HandlerLeak")
 	Handler handler = new Handler()
 	{
 		@Override

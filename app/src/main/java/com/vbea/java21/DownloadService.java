@@ -35,7 +35,7 @@ public class DownloadService extends Service {
         super.onCreate();
         notiManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (Util.isAndroidO()) {
-            NotificationChannel channel = new NotificationChannel("23", "DownloadManager", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel channel = new NotificationChannel("23", "DownloadManager", NotificationManager.IMPORTANCE_LOW);
             channel.enableVibration(false);
             notiManager.createNotificationChannel(channel);
         }
@@ -49,6 +49,7 @@ public class DownloadService extends Service {
         builder.setSmallIcon(R.mipmap.wel_icon);
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
         builder.setOngoing(going);
+        builder.setOnlyAlertOnce(true);
         if (Util.isAndroidO()) {
             builder.setChannelId("23");
         }
@@ -143,7 +144,7 @@ public class DownloadService extends Service {
         public void onFileDownloadStatusDownloading(DownloadFileInfo downloadFileInfo, float downloadSpeed, long remainingTime) {
             // 正在下载，downloadSpeed为当前下载速度，单位KB/s，remainingTime为预估的剩余时间，单位秒
             notiManager.cancel(TYPE_PAUSE);
-            createNotification(true, TYPE_ON, getDownlading(),  getSpeed(downloadSpeed) + "，预计需要" + getRemain(remainingTime));
+            createNotification(true, TYPE_ON, getDownlading(),  "速度" + getSpeed(downloadSpeed) + "，预计还要" + getRemain(remainingTime));
         }
 
         @Override

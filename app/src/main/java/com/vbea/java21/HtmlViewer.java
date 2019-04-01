@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.MotionEvent;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
@@ -92,7 +93,6 @@ public class HtmlViewer extends BaseActivity
 		setToolbarTitle("点此输入网址或搜索");
 	}
 
-	@SuppressLint("SetJavaScriptEnabled")
 	@Override
 	protected void after()
 	{
@@ -128,12 +128,12 @@ public class HtmlViewer extends BaseActivity
 		wset.setAllowFileAccess(true);
 		//wset.setRenderPriority(WebSettings.RenderPriority.HIGH);
 		//wset.setJavaScriptCanOpenWindowsAutomatically(true);
-		wset.setSupportMultipleWindows(false);
+		wset.setSupportMultipleWindows(true);
 		//webView.addJavascriptInterface(new JavaScriptShowCode(), "showcode");
 		onSetting();
 		mHandler.sendEmptyMessageDelayed(0, 300);
 		webView.setWebChromeClient(new MyWebChromeClient());
-		
+
 		webView.setWebViewClient(new WebViewClient()
 		{
 			@Override
@@ -252,7 +252,7 @@ public class HtmlViewer extends BaseActivity
 						FileDownloader.detect(url, new OnDetectBigUrlFileListener() {
 							@Override
 							public void onDetectNewDownloadFile(String url, String fileName, String saveDir, long fileSize) {
-								FileDownloader.createAndStart(url, saveDir, filename);
+								FileDownloader.createAndStart(url, saveDir, Util.isNullOrEmpty(filename) ? fileName : filename);
 								toastShortMessage("已创建下载任务");
 							}
 
@@ -510,7 +510,7 @@ public class HtmlViewer extends BaseActivity
 			@Override
 			public void onFocusChange(View p1, boolean p2)
 			{
-				webView.setNestedScrollingEnabled(!p2);
+				webView.setCanNestedScroll(!p2);
 				if (!p2)
 					searchItem.collapseActionView();
 			}
@@ -1007,6 +1007,14 @@ public class HtmlViewer extends BaseActivity
 			});
 		}
 
+		@Override
+		public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
+			WebView.WebViewTransport transport = (WebView.WebViewTransport) resultMsg.obj;
+			transport.setWebView(getNewWindow(view));
+			resultMsg.sendToTarget();
+			return true;
+		}
+
 		/*public void onExceededDatabaseQuota(String url, String databasein, long quota, long estime, long totalq, WebStorage.QuotaUpdater update)
 		{
 			update.updateQuota(5 * 1024 * 1024);
@@ -1066,11 +1074,31 @@ public class HtmlViewer extends BaseActivity
 			return true;
 		}
 	}
+
+	private WebView getNewWindow(WebView view) {
+		WebView newWebView = new WebView(view.getContext());
+		newWebView.setWebViewClient(new WebViewClient() {
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url) {
+				Util.showConfirmCancelDialog(HtmlViewer.this,"拦截提醒", "网页弹出一个新窗口已被拦截，URL为" + url,"访问", "取消",  new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						/*Intent intent = new Intent(Intent.ACTION_VIEW);
+						intent.setClass(HtmlViewer.this, HtmlViewer.class);
+						intent.setData(Uri.parse(view.getUrl()));
+						Common.startActivityOptions(HtmlViewer.this, intent);*/
+						webView.loadUrl(url);
+					}
+				});
+				return true;
+			}
+		});
+		return newWebView;
+	}
 	
 	@SuppressLint("HandlerLeak")
 	Handler mHandler = new Handler()
 	{
-
 		@Override
 		public void handleMessage(Message msg)
 		{

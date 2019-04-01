@@ -161,7 +161,7 @@ public class Machine extends BaseActivity
 			{
 				if (login && !Common.isLogin())
 				{
-					Util.showConfirmCancelDialog(this, "仍要激活", "请先注册帐号并登录后再激活，以便于将密钥存入账户，以后可在其他设备同步激活", "返回登录", new DialogInterface.OnClickListener()
+					Util.showConfirmCancelDialog(this, "提示", "请先注册帐号并登录后再激活，以便于将密钥存入账户，以后可在其他设备同步激活", "仍要激活", "返回登录", new DialogInterface.OnClickListener()
 					{
 						public void onClick(DialogInterface dialog, int s)
 						{

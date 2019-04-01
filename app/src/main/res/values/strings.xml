@@ -117,17 +117,18 @@
 	<string name="fileselect">选择保存位置</string>
 	<string name="bookmark">书签</string>
 	<string name="history">历史记录</string>
-	<string name="version">V 7.3.0 Build 1650
+	<string name="version">V 7.3.0 Build 1666
 	</string>
-	<string name="update">7.3.0 (1650)
+	<string name="update">7.3.0 (1666)
 	</string>
-	<integer name="versionCode">1650</integer>
+	<integer name="versionCode">1660</integer>
 	<string name="abt_ver">当前版本：v7.3.0
 		\n1.旧版数据库教程下线，新增SQL教程
 		\n2.修复QQ登录无法自动登录的BUG
 		\n3.新增微信登录和微信自动登录
 		\n4.修复浏览器书签无法显示的问题
 		\n5.浏览器新增文件下载功能，支持断点续传、多任务下载
+		\n6.其他细节优化
 	</string>
 	<string name="shared">share_image</string>
 	<string name="about_us">作者的话：\n2013年5月20日，邠心工作室成立，至今已有五年时间，目前团队有三人，我是在2012年(高中)开始自学Java，花了21天学完基础知识之后开始研究并开发Android，并于2014年发布此APP，帮助那些也想要自学Java的朋友，目前正在朝着全栈开发的方向前进，希望能找到志同道合的朋友。

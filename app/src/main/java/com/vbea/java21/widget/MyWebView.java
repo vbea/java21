@@ -20,6 +20,7 @@ public class MyWebView extends WebView implements NestedScrollingChild {
     private final int[] mScrollConsumed = new int[2];
  
     private int mNestedYOffset;
+    private boolean canNestedScroll = true;
  
     private NestedScrollingChildHelper mChildHelper;
  
@@ -46,6 +47,9 @@ public class MyWebView extends WebView implements NestedScrollingChild {
  
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if (!canNestedScroll) {
+            return false;
+        }
         boolean result = false;
  
         MotionEvent trackedEvent = MotionEvent.obtain(event);
@@ -99,9 +103,12 @@ public class MyWebView extends WebView implements NestedScrollingChild {
         }
         return result;
     }
- 
+
+    public void setCanNestedScroll(boolean enabled) {
+        canNestedScroll = enabled;
+    }
+
     // NestedScrollingChild
- 
     @Override
     public void setNestedScrollingEnabled(boolean enabled) {
         mChildHelper.setNestedScrollingEnabled(enabled);
@@ -129,22 +136,33 @@ public class MyWebView extends WebView implements NestedScrollingChild {
  
     @Override
     public boolean dispatchNestedScroll(int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int[] offsetInWindow) {
-        return mChildHelper.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, offsetInWindow);
+        if (isNestedScrollingEnabled())
+            return mChildHelper.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, offsetInWindow);
+        else
+            return false;
     }
  
     @Override
     public boolean dispatchNestedPreScroll(int dx, int dy, int[] consumed, int[] offsetInWindow) {
-        return mChildHelper.dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow);
+        if (isNestedScrollingEnabled())
+            return mChildHelper.dispatchNestedPreScroll(dx, dy, consumed, offsetInWindow);
+        else
+            return false;
     }
  
     @Override
     public boolean dispatchNestedFling(float velocityX, float velocityY, boolean consumed) {
-        return mChildHelper.dispatchNestedFling(velocityX, velocityY, consumed);
+        if (isNestedScrollingEnabled())
+            return mChildHelper.dispatchNestedFling(velocityX, velocityY, consumed);
+        else
+            return false;
     }
  
     @Override
     public boolean dispatchNestedPreFling(float velocityX, float velocityY) {
-        return mChildHelper.dispatchNestedPreFling(velocityX, velocityY);
+        if (isNestedScrollingEnabled())
+            return mChildHelper.dispatchNestedPreFling(velocityX, velocityY);
+        else
+            return false;
     }
- 
 }

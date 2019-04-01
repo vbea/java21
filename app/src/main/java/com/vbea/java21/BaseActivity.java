@@ -24,7 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity
         toolbar = bind(R.id.toolbar);
 		if (!Util.isNullOrEmpty(_title)) {
 			toolbar.setTitle(_title);
-			_title = null;
+			_title = "";
 		}
 		setSupportActionBar(toolbar);
         after();

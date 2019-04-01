@@ -16,7 +16,7 @@
 			android:layout_width="100dp"
 			android:layout_height="100dp"
 			android:layout_marginTop="30dp"
-			android:src="@mipmap/ic_launcher"/>
+			android:src="@mipmap/ic_launcher_round"/>
 		<TextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -175,7 +175,7 @@
 				android:layout_height="wrap_content"
 				android:textSize="14sp"
 				android:textColor="?attr/textPrimary"
-				android:text="序列号："/>
+				android:text="　序列号："/>
 			<TextView
 				android:id="@+id/about_key"
 				android:layout_width="fill_parent"

@@ -451,17 +451,7 @@ public class Util
 	
 	public static final void showResultDialog(Context context, String msg, String title)
 	{
-		showResultDialog(context, msg, title, new DialogInterface.OnClickListener(){
-			public void onClick(DialogInterface d, int s)
-			{
-				
-			}
-		});
-	}
-	
-	public static final void showResultDialog(Context context, String msg, String title, String ok)
-	{
-		showResultDialog(context, msg, title, ok, null);
+		showResultDialog(context, msg, title, null);
 	}
 	
 	public static final void showResultDialog(Context context, String msg, String title, DialogInterface.OnClickListener lis)
@@ -503,10 +493,10 @@ public class Util
 		dialog.show();
 	}
 	
-	public static void showConfirmCancelDialog(Context context, String ok, String message, String cacel, DialogInterface.OnClickListener posListener)
+	public static void showConfirmCancelDialog(Context context, String title, String message, String ok, String cacel, DialogInterface.OnClickListener posListener)
 	{
 		MyAlertDialog dialog = new MyAlertDialog(context);
-		dialog.setTitle(android.R.string.dialog_alert_title);
+		dialog.setTitle(title);
 		dialog.setMessage(message);
 		dialog.setPositiveButton(ok, posListener);
 		dialog.setNegativeButton(cacel, null).create();

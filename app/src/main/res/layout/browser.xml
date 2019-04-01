@@ -18,9 +18,9 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:background="?attr/colorPrimary"
-				app:layout_scrollFlags="scroll|enterAlways"
 				app:navigationIcon="@mipmap/ic_back"
 				app:theme="?attr/actionStyle"
+				app:layout_scrollFlags="scroll|enterAlways"
 				app:popupTheme="?attr/popupStyle"/>
 		</android.support.design.widget.AppBarLayout>
 		<RelativeLayout

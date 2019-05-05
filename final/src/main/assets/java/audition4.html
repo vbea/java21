@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>Java面试题（四）</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<script src="Script/shCore.js" type="text/javascript"></script>
+    <script src="Script/shBrushJava.js" type="text/javascript"></script>
+    <link href="css/shCoreDefault.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+    </script>
+    <style type="text/css">
+        .div {
+            padding: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 100%; background-color: #FFF; margin: 0 auto;">
+        <h1 style="width: 100%; text-align: center; font-size: 1.1em;">Java 面试题（四）</h1>
+        <div class="div">
+            <strong>61、servlet的生命周期</strong>
+            <p>web容器加载servlet，生命周期开始。通过调用servlet的init()方法进行servlet的初始化。通过调用service()方法实现，根据请求的不同调用不同的do***()方法。结束服务，web容器调用servlet的destroy()方法。</p>
+            <strong>62、如何现实servlet的单线程模式</strong>
+            <p>&lt;%@ page isThreadSafe=”false”%></p>
+            <strong>63、页面间对象传递的方法</strong>
+            <p>request，session，application，cookie等</p>
+            <strong>64、JSP和Servlet有哪些相同点和不同点，他们之间的联系是什么？</strong>
+            <p>JSP是Servlet技术的扩展，本质上是Servlet的简易方式，更强调应用的外表表达。JSP编译后是"类servlet"。Servlet和JSP最主要的不同点在于，Servlet的应用逻辑是在Java文件中，并且完全从表示层中的HTML里分离开来。而JSP的情况是Java和HTML可以组合成一个扩展名为.jsp的文件。JSP侧重于视图，Servlet主要用于控制逻辑。</p>
+            <strong>65、四种会话跟踪技术</strong>
+            <p>
+                会话作用域ServletsJSP 页面描述：<br />
+                page否是代表与一个页面相关的对象和属性。一个页面由一个编译好的 Java servlet 类（可以带有任何的 include 指令，但是没有 include 动作）表示。这既包括 servlet 又包括被编译成 servlet 的 JSP 页面<br />
+                request是是代表与 Web 客户机发出的一个请求相关的对象和属性。一个请求可能跨越多个页面，涉及多个 Web 组件（由于 forward 指令和 include 动作的关系）<br />
+                session是是代表与用于某个 Web 客户机的一个用户体验相关的对象和属性。一个 Web 会话可以也经常会跨越多个客户机请求<br />
+                application是是代表与整个 Web 应用程序相关的对象和属性。这实质上是跨越整个 Web 应用程序，包括多个页面、请求和会话的一个全局作用域
+            </p>
+            <strong>66、Request对象的主要方法：</strong>
+            <p>
+                setAttribute(String name,Object)：设置名字为name的request的参数值<br />
+                getAttribute(String name)：返回由name指定的属性值<br />
+                getAttributeNames()：返回request对象所有属性的名字集合，结果是一个枚举的实例<br />
+                getCookies()：返回客户端的所有Cookie对象，结果是一个Cookie数组<br />
+                getCharacterEncoding()：返回请求中的字符编码方式<br />
+                getContentLength()：返回请求的Body的长度<br />
+                getHeader(String name)：获得HTTP协议定义的文件头信息<br />
+                getHeaders(String name)：返回指定名字的request Header的所有值，结果是一个枚举的实例<br />
+                getHeaderNames()：返回所以request Header的名字，结果是一个枚举的实例<br />
+                getInputStream()：返回请求的输入流，用于获得请求中的数据<br />
+                getMethod()：获得客户端向服务器端传送数据的方法<br />
+                getParameter(String name)：获得客户端传送给服务器端的有name指定的参数值<br />
+                getParameterNames()：获得客户端传送给服务器端的所有参数的名字，结果是一个枚举的实例<br />
+                getParameterValues(String name)：获得有name指定的参数的所有值<br />
+                getProtocol()：获取客户端向服务器端传送数据所依据的协议名称<br />
+                getQueryString()：获得查询字符串<br />
+                getRequestURI()：获取发出请求字符串的客户端地址<br />
+                getRemoteAddr()：获取客户端的IP地址<br />
+                getRemoteHost()：获取客户端的名字<br />
+                getSession([Boolean create])：返回和请求相关Session<br />
+                getServerName()：获取服务器的名字<br />
+                getServletPath()：获取客户端所请求的脚本文件的路径<br />
+                getServerPort()：获取服务器的端口号<br />
+                removeAttribute(String name)：删除请求中的一个属性
+            </p>
+            <strong>67、J2EE是技术还是平台还是框架？</strong>
+            <p>
+                J2EE本身是一个标准，一个为企业分布式应用的开发提供的标准平台。<br />
+                J2EE也是一个框架，包括JDBC、JNDI、RMI、JMS、EJB、JTA等技术。
+            </p>
+            <strong>68、我们在web应用开发过程中经常遇到输出某种编码的字符，如iso8859-1等，如何输出一个某种编码的字符串？</strong>
+<pre class="brush: java;">
+Public String translate (String str) {
+    String tempStr = "";
+    try {
+        tempStr = new String(str.getBytes("ISO-8859-1"), "GBK");
+        tempStr = tempStr.trim();
+    }
+    catch (Exception e) {
+        System.err.println(e.getMessage());
+    }
+    return tempStr;
+}
+</pre>
+            <strong>69、简述逻辑操作(&,|,^)与条件操作(&&,||)的区别。</strong>
+            <p>
+                区别主要答两点：<br />
+                a.条件操作只能操作布尔型的,而逻辑操作不仅可以操作布尔型,而且可以操作数值型<br />
+                b.逻辑操作不会产生短路
+            </p>
+            <strong>70、XML文档定义有几种形式？它们之间有何本质区别？解析XML文档有哪几种方式？</strong>
+            <p>
+                a: 两种形式 dtd schema，b: 本质区别:schema本身是xml的，可以被XML解析器解析(这也是从DTD上发展schema的根本目的)，c:有DOM,SAX,STAX等<br />
+                DOM:处理大型文件时其性能下降的非常厉害。这个问题是由DOM的树结构所造成的，这种结构占用的内存较多，而且DOM必须在解析文件之前把整个文档装入内存,适合对XML的随机访问。<br />
+                SAX:不现于DOM,SAX是事件驱动型的XML解析方式。它顺序读取XML文件，不需要一次全部装载整个文件。当遇到像文件开头，文档结束，或者标签开头与标签结束时，它会触发一个事件，用户通过在其回调事件中写入处理代码来处理XML文件，适合对XML的顺序访问。<br />
+                STAX:Streaming API for XML (StAX)
+            </p>
+            <strong>71、简述synchronized和java.util.concurrent.locks.Lock的异同？</strong><br />
+            <p>
+                主要相同点：Lock能完成synchronized所实现的所有功能。<br />
+                主要不同点：Lock有比synchronized更精确的线程语义和更好的性能。synchronized会自动释放锁，而Lock一定要求程序员手工释放，并且必须在finally从句中释放。
+            </p>
+            <strong>72、EJB的角色和三个对象</strong>
+            <p>
+                一个完整的基于EJB的分布式计算结构由六个角色组成，这六个角色可以由不同的开发商提供，每个角色所作的工作必须遵循Sun公司提供的EJB规范，以保证彼此之间的兼容性。这六个角色分别是EJB组件开发者（Enterprise Bean Provider） 、应用组合者（Application Assembler）、部署者（Deployer）、EJB 服务器提供者（EJB Server Provider）、EJB 容器提供者（EJB Container Provider）、系统管理员（System Administrator）<br />
+                三个对象是Remote（Local）接口、Home（LocalHome）接口，Bean类
+            </p>
+            <strong>73、EJB容器提供的服务</strong>
+            <p>主要提供声明周期管理、代码产生、持续性管理、安全、事务管理、锁和并发行管理等服务。</p>
+            <strong>74、EJB规范规定EJB中禁止的操作有哪些？</strong>
+            <p>1.不能操作线程和线程API(线程API指非线程对象的方法如notify,wait等)，2.不能操作awt，3.不能实现服务器功能，4.不能对静态属生存取，5.不能使用IO操作直接存取文件系统，6.不能加载本地库.，7.不能将this作为变量和返回，8.不能循环调用。</p>
+            <strong>75、remote接口和home接口主要作用</strong>
+            <p>
+                remote接口定义了业务方法，用于EJB客户端调用业务方法。<br />
+                home接口是EJB工厂用于创建和移除查找EJB实例
+            </p>
+            <strong>76、bean 实例的生命周期</strong>
+            <p>对于Stateless Session Bean、Entity Bean、Message Driven Bean一般存在缓冲池管理，而对于Entity Bean和Statefull Session Bean存在Cache管理，通常包含创建实例，设置上下文、创建EJB Object（create）、业务方法调用、remove等过程，对于存在缓冲池管理的Bean，在create之后实例并不从内存清除，而是采用缓冲池调度机制不断重用实例，而对于存在Cache管理的Bean则通过激活和去激活机制保持Bean的状态并限制内存中实例数量。</p>
+            <strong>77、EJB的激活机制</strong>
+            <p>以Stateful Session Bean 为例：其Cache大小决定了内存中可以同时存在的Bean实例的数量，根据MRU或NRU算法，实例在激活和去激活状态之间迁移，激活机制是当客户端调用某个EJB实例业务方法时，如果对应EJB Object发现自己没有绑定对应的Bean实例则从其去激活Bean存储中（通过序列化机制存储实例）回复（激活）此实例。状态变迁前会调用对应的ejbActive和ejbPassivate方法。</p>
+            <strong>78、EJB的几种类型</strong>
+            <p>
+                会话（Session）Bean ，实体（Entity）Bean 消息驱动的（Message Driven）Bean<br />
+                会话Bean又可分为有状态（Stateful）和无状态（Stateless）两种<br />
+                实体Bean可分为Bean管理的持续性（BMP）和容器管理的持续性（CMP）两种
+            </p>
+            <strong>79、客服端调用EJB对象的几个基本步骤</strong>
+            <p>设置JNDI服务工厂以及JNDI服务地址系统属性，查找Home接口，从Home接口调用Create方法创建Remote接口，通过Remote接口调用其业务方法。</p>
+            <strong>80、如何给weblogic指定大小的内存？</strong>
+            <p>在启动Weblogic的脚本中（位于所在Domian对应服务器目录下的startServerName），增加set MEM_ARGS=-Xms32m -Xmx200m，可以调整最小内存为32M，最大200M。</p>
+        </div>
+        <div style="font-size:0.8em; text-align:right;">《21天学通Java》整理提供-2018.06.15</div>
+    </div>
+</body>
+</html>

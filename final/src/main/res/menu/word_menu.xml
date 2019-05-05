@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+	<item
+		android:id="@+id/item_flush"
+		android:title="刷新"
+		android:icon="@mipmap/ic_refresh"
+		app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/item_apiCN"
+        android:title="Java6中文"/>
+	<item
+        android:id="@+id/item_api6"
+        android:title="Java6"/>
+	<item
+        android:id="@+id/item_api7"
+        android:title="Java7"/>
+	<item
+        android:id="@+id/item_api8"
+        android:title="Java8"/>
+	<item
+        android:id="@+id/item_api9"
+        android:title="Java9"/>
+	<item
+        android:id="@+id/item_api10"
+        android:title="Java10"/>
+	<item
+        android:id="@+id/item_api11"
+        android:title="Java11"/>
+	<item
+		android:id="@+id/item_api12"
+		android:title="Java12"/>
+	<item
+        android:id="@+id/item_apiand"
+        android:title="Android API"
+		android:visible="false"/>
+</menu>

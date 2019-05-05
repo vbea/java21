@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title>Java实战训练题（二）- 邠心工作室</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <script src="Script/shCore.js" type="text/javascript"></script>
+    <script src="Script/shBrushJava.js" type="text/javascript"></script>
+    <link href="css/shCoreDefault.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+    </script>
+    <style type="text/css">
+        .div
+        {
+            padding: 0 1%;
+        }
+    </style>
+</head>
+<body>
+<div style="width: 100%; background-color: #FFF; margin: 0 auto;">
+<h1 style="width: 100%; text-align: center; font-size: 1.1em;">Java实战训练（二）</h1>
+<div style="font-size:0.8em; text-align:center;">(满分100分，考试时间60分钟)</div><br />
+<div class="div">
+1、什么是Java虚拟机？(5分)<br />为什么Java被称作是“平台无关的编程语言”？(5分)<br />
+2、JDK和JRE的区别是什么？(5分)<br />
+3、”static”关键字是什么意思？Java中是否可以覆盖(override)一个private或者是static的方法？(5分)<br />
+4、是否可以在static环境中访问非static变量？(5分)<br />
+5、什么是自动拆装箱？(5分)<br />
+6、Java中的方法覆盖(Overriding)和方法重载(Overloading)是什么意思？(5分)<br />
+7、Java中，什么是构造函数？什么是构造函数重载？什么是复制构造函数？(15分)<br />
+8、接口和抽象类的区别是什么？(10分)<br />
+9、Java中垃圾回收有什么目的？什么时候进行垃圾回收？(5分)<br />
+10、Java中的两种异常类型是什么？他们有什么区别？(10分)<br />
+11、RMI体系结构分哪几层？(10分)<br />
+12、什么是Servlet？(5分)<br />
+13、运行下面程序：<br />
+<pre class="brush:java">
+public class Foo {
+	public static void main(String[] args) {
+		StringBuffer a=new StringBuffer("A");
+		StringBuffer b=new StringBuffer("B");
+        operator(a,b);
+		System.out.println(a + "," + b);
+	}
+	public static void operator(StringBuffer x, StringBuffer y) {
+		x.append(y);
+		y=x;
+	}
+}
+</pre>
+输出的结果是？(10分)
+</div>
+<div style="font-size:0.8em; text-align:right;">《21天学通Java》整理提供-2018.06.14</div>
+</div>
+</body>
+</html>

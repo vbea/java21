@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">欢迎使用21天学通Java!</string>
+    <string name="app_name">21天学通JAVA</string>
+	<string name="abt_book">\n
+		名称：《21天学通JAVA》\n\n
+		作者：邠心\n\n
+		发布：邠心工作室\n\n
+		发布时间：2014-3-1</string>
+	<string name="abt_invate">获取密钥请先注册登录并付费加入以下Q群(以下三档根据自己的情况选择一个)：①群
+	</string>
+	<string name="abt_invate0">，②群
+	</string>
+	<string name="abt_invate1">，③群</string>
+	<string name="abt_invate2">，VIP群</string>
+	<string name="abt_invate3">(<u>提示：以上任选一个，进群后5分钟内不要退群，密钥私聊群主或管理员获取，请不要忘记查看群文件和群公告，里面有学习资料！</u>加入VIP群的除了密钥之外还可以获得VIP会员帐号资格和本APP源码一份，详细请联系群主获取。)\n软件激活后可享有以下功能：\n
+		\t1.激活后可将激活凭证存入已登录的账户中，重新安装后或更换手机直接登录即可自动校验凭证并激活；\n
+		\t2.激活后可去除软件广告，还有机会获得VIP会员；\n
+		\t3.激活后享受永久技术支持，在线答疑，并提供教学资料；\n
+		\t4.VIP会员可去除开屏广告等所有广告；
+		\n注：当前版本：v7.4.8，截取此页面可获取更准确的密钥\n软件激活后可以将密钥保存到登录的云端账户中，以便在其他设备中快速登录并激活，所以请牢记您的用户名和密码。如您忘记用户名或密码，可联系管理员提供邮箱账号找回。
+	</string>
+	<string name="setheme">主题设置
+	</string>
+	<string name="setimage">背景设置
+	</string>
+	<string name="contacts">Java基础
+	</string>
+	<string name="javaadv">Java进阶
+	</string>
+	<string name="browser">浏览器
+	</string>
+	<string name="browserset">浏览器设置
+	</string>
+	<string name="help">帮助与反馈
+	</string>
+	<string name="helpcenter">帮助中心
+	</string>
+	<string name="about">关于
+	</string>
+	<string name="aboutus">关于我们
+	</string>
+	<string name="apidoc">API文档
+	</string>
+	<string name="settings">设置
+	</string>
+	<string name="more">音乐盛典
+	</string>
+	<string name="morelist">音乐列表
+	</string>
+	<string name="textEditor">文本替换器
+	</string>
+	<string name="codeEditor">代码编辑器
+	</string>
+	<string name="piano">钢琴键盘
+	</string>
+	<string name="musictest">音节码测试
+	</string>
+	<string name="musictrans">音节码转换
+	</string>
+	<string name="userinfo">个人中心
+	</string>
+	<string name="prosucees">章节:学习完成：
+	</string>
+	<string name="baodian">Java宝典
+	</string>
+	<string name="knowledge">Java知识点
+	</string>
+	<string name="video">在线视频
+	</string>
+	<string name="favorite">学习资料
+	</string>
+	<string name="useredit">个人设置
+	</string>
+	<string name="feedback">反馈
+	</string>
+	<string name="ch_noregist">请按照章节依次学习，不要偷懒哦！
+	</string>
+	<string name="freekey"><u>免费获取</u>
+	</string>
+	<string name="buyprokey"><u>终极计划</u>
+	</string>
+	<string name="actived">激活软件
+	</string>
+	<string name="complete">完成
+	</string>
+	<string name="inforegist">注册信息
+	</string>
+	<string name="qqmessage">QQ消息生成器
+	</string>
+	<string name="wifiview">Wi-Fi密码查看器
+	</string>
+	<string name="changed"><u>更换序列号</u>
+	</string>
+	<string name="cnext"><u>下一章</u>
+	</string>
+	<string name="relogin"><u>重新登录</u>
+	</string>
+	<string name="logintoqq">使用QQ登录
+	</string>
+	<string name="donate">捐赠
+	</string>
+	<string name="comm_hint">我来说两句
+	</string>
+	<string name="announce">发表
+	</string>
+	<string name="modelist">语言列表
+	</string>
+	<string name="myinbox">消息中心</string>
+	<string name="decord">二维码</string>
+	<string name="fileselect">选择保存位置</string>
+	<string name="bookmark">书签</string>
+	<string name="history">历史记录</string>
+	<string name="version">V 7.4.8 Build 2999
+	</string>
+	<string name="update">7.4.8 (2999)
+	</string>
+	<integer name="versionCode">2999</integer>
+	<string name="abt_ver">当前版本：v7.4.8(离线终极版)
+		\n1.由于广大网友反感软件收费，所以我们去掉了收费功能
+		\n2.由于大部分网友记不住密码，所以我们去掉了登录功能
+		\n3.由于广大网友讨厌软件广告，所以我们去掉了所有广告
+		\n4.由于被广大网友诬陷是贩卖隐私的软件，所以我们去掉了一切可能造成误会的权限
+		\n5.此版本为离线终极版，纯离线阅读，不消耗任何流量(API文档除外)
+		\n6.此版本为终极版，以后都不会再更新，请谨慎升级
+	</string>
+	<string name="shared">share_image</string>
+	<string name="about_us">作者的话：\n2013年5月20日，邠心工作室成立，至今已有五年时间，目前团队有三人，我是在2012年(高中)开始自学Java，花了21天学完基础知识之后开始研究并开发Android，并于2014年发布此APP，帮助那些也想要自学Java的朋友，目前正在朝着全栈开发的方向前进，希望能找到志同道合的朋友。
+	</string>
+	<string name="about_join">加入我们：\n邮箱：vbea@foxmail.com
+		\nQ  Q：248104237\nQQ群：222876252
+		\n官网：http://vbea.wicp.net\n微博：@邠心工作室\n微信公众号：邠心工作室(VbeStudio)\n地址：四川省成都市"
+	</string>
+	<string name="about_mark">邠心工作室邀您加入我们参与Android应用的开发和设计，一起学习Android软件开发和前端开发技术，有意请联系我们，谢谢！
+	</string>
+	<string name="copyright">邠心工作室 版权所有\nCopyright © 2014-2019 VbeStudio. All Rights Reserved
+	</string>
+	<string name="donateinfo">您可以通过支付宝转账、微信转账，或者付费加入Q群222876252或49321718，也可以加入邠心工作室开发组QQ群135482843。您的支持给我们提供了动力，是对我们最大的鼓励！
+		\n（加入邠心工作室开发组Q群(135482843)的作为回报我们将送出5.2.1版本源码一份以及自学大礼包，包括文字教程、视频、源码实例等）\n二维码见下面，点击可放大
+	</string>
+	<string name="number_mobile">134,135,136,137,138,139,147,150,151,152,157,158,159,182,183,184,187,188,174,178
+	</string>
+	<string name="number_unicom">130,131,132,145,155,156,176,185,186
+	</string>
+	<string name="number_telcom">133,153,180,181,189
+	</string>
+	<string name="pc_ua">Mozilla/5.0 (Linux; U; AppleWebKit/537.36 (KHTML, like Gecko)Version/4.0 Chrome/60.0.0.0 Safari/537.36</string>
+	<string name="default_encoding">text/plain</string>
+	<string name="codejson">[{\"name\":\"ABAP\",\"mode\":\"ABAP\",\"path\":\"abap\"},{\"name\":\"ActionScript\",\"mode\":\"ActionScript\",\"path\":\"as\"},{\"name\":\"ADA\",\"mode\":\"ADA\",\"path\":\"ada|adb\"},{\"name\":\"Config\",\"mode\":\"INI\",\"path\":\"ini|conf|cfg|prefs\"},{\"name\":\"Config Text\",\"mode\":\"Apache_Conf\",\"path\":\"htaccess|htgroups|htpasswd|htaccess|htgroups|htpasswd\"},{\"name\":\"A\u8BED\u8A00\",\"mode\":\"Assembly_x86\",\"path\":\"asm|a\"},{\"name\":\"ASP.NET\",\"mode\":\"HTML_Elixir\",\"path\":\"asp|aspx\"},{\"name\":\"BacthScript\",\"mode\":\"BatchFile\",\"path\":\"bat|cmd\"},{\"name\":\"C&amp;C++\",\"mode\":\"C_Cpp\",\"path\":\"cpp|c|cc|cxx|h|hh|hpp|ino\"},{\"name\":\"Clojure Lisp\",\"mode\":\"Clojure\",\"path\":\"clj|cljs\"},{\"name\":\"Cobol\",\"mode\":\"Cobol\",\"path\":\"cbl|cob\"},{\"name\":\"Coffee\",\"mode\":\"coffee\",\"path\":\"coffee|cf|cson|Cakefile\"},{\"name\":\"C#\",\"mode\":\"CSharp\",\"path\":\"cs\"},{\"name\":\"CSS\",\"mode\":\"CSS\",\"path\":\"css\"},{\"name\":\"D\u8BED\u8A00\",\"mode\":\"D\",\"path\":\"d|di\"},{\"name\":\"Diff\",\"mode\":\"Diff\",\"path\":\"diff|patch\"},{\"name\":\"EJS\",\"mode\":\"EJS\",\"path\":\"ejs\"},{\"name\":\"Erlang\",\"mode\":\"Erlang\",\"path\":\"erl|hrl\"},{\"name\":\"Forth\",\"mode\":\"Forth\",\"path\":\"frt|fs|ldr|fth|4th\"},{\"name\":\"G\u7801\",\"mode\":\"Gcode\",\"path\":\"gcode\"},{\"name\":\"Gitignore\",\"mode\":\"Gitignore\",\"path\":\"gitignore\"},{\"name\":\"GLSL\",\"mode\":\"Glsl\",\"path\":\"glsl|frag|vert\"},{\"name\":\"GO\u8BED\u8A00\",\"mode\":\"golang\",\"path\":\"go\"},{\"name\":\"Groovy\",\"mode\":\"Groovy\",\"path\":\"go|gradle\"},{\"name\":\"HAML\",\"mode\":\"HAML\",\"path\":\"haml\"},{\"name\":\"Handlebars\",\"mode\":\"Handlebars\",\"path\":\"hbs|handlebars|tpl|mustache\"},{\"name\":\"Haskell\",\"mode\":\"Haskell\",\"path\":\"hs\"},{\"name\":\"Haskell Cabal\",\"mode\":\"Haskell_Cabal\",\"path\":\"cabal\"},{\"name\":\"HaXe\",\"mode\":\"haXe\",\"path\":\"cabal\"},{\"name\":\"Hjson\",\"mode\":\"Hjson\",\"path\":\"hjson\"},{\"name\":\"HTML\",\"mode\":\"HTML\",\"path\":\"html|htm|xhtml|vue|we|wpy\"},{\"name\":\"HTML Elixir\",\"mode\":\"HTML_Elixir\",\"path\":\"eex\"},{\"name\":\"HTML Ruby\",\"mode\":\"HTML_Ruby\",\"path\":\"erb|rhtml\"},{\"name\":\"Java\",\"mode\":\"Java\",\"path\":\"java|class\"},{\"name\":\"JavaScript\",\"mode\":\"JavaScript\",\"path\":\"js|jsm|jsx\"},{\"name\":\"JSON\",\"mode\":\"JSON\",\"path\":\"json\"},{\"name\":\"JSP\",\"mode\":\"JSP\",\"path\":\"jsp\"},{\"name\":\"JSX\",\"mode\":\"JSX\",\"path\":\"jsx\"},{\"name\":\"Kotlin\",\"mode\":\"Kotlin\",\"path\":\"kt|kts\"},{\"name\":\"LESS\",\"mode\":\"LESS\",\"path\":\"less\"},{\"name\":\"LISP\",\"mode\":\"Lisp\",\"path\":\"lisp\"},{\"name\":\"LiveScript\",\"mode\":\"LiveScript\",\"path\":\"ls\"},{\"name\":\"LSL\",\"mode\":\"LSL\",\"path\":\"lsl\"},{\"name\":\"Lua\",\"mode\":\"Lua\",\"path\":\"lua\"},{\"name\":\"LuaPage\",\"mode\":\"LuaPage\",\"path\":\"lp\"},{\"name\":\"Makefile\",\"mode\":\"Makefile\",\"path\":\"makefile|gnumakefile|makefile|ocamlmakefile|make\"},{\"name\":\"Markdown\",\"mode\":\"Markdown\",\"path\":\"md|markdown\"},{\"name\":\"MEL\",\"mode\":\"MEL\",\"path\":\"mel\"},{\"name\":\"MySQL\",\"mode\":\"MySQL\",\"path\":\"mysql\"},{\"name\":\"Objective-C\",\"mode\":\"ObjectiveC\",\"path\":\"m|mm\"},{\"name\":\"OCaml\",\"mode\":\"OCaml\",\"path\":\"ml|mli\"},{\"name\":\"Pascal\",\"mode\":\"Pascal\",\"path\":\"pas|p\"},{\"name\":\"Perl\",\"mode\":\"Perl\",\"path\":\"pl|pm\"},{\"name\":\"pgSQL\",\"mode\":\"pgSQL\",\"path\":\"pgsql\"},{\"name\":\"PHP\",\"mode\":\"PHP\",\"path\":\"php|phtml|shtml|php3|php4|php5|phps|phpt|aw|ctp|module\"},{\"name\":\"Powershell\",\"mode\":\"Powershell\",\"path\":\"ps1\"},{\"name\":\"Properties\",\"mode\":\"Properties\",\"path\":\"properties\"},{\"name\":\"Protobuf\",\"mode\":\"Protobuf\",\"path\":\"proto\"},{\"name\":\"Python\",\"mode\":\"Python\",\"path\":\"py\"},{\"name\":\"R\u8BED\u8A00\",\"mode\":\"R\",\"path\":\"r\"},{\"name\":\"Razor\",\"mode\":\"Razor\",\"path\":\"cshtml|asp\"},{\"name\":\"RHTML\",\"mode\":\"RHTML\",\"path\":\"rhtml\"},{\"name\":\"Ruby\",\"mode\":\"Ruby\",\"path\":\"rb|ru|gemspec|rake|guardfile|rakefile|gemfile\"},{\"name\":\"SASS\",\"mode\":\"SASS\",\"path\":\"sass\"},{\"name\":\"Scala\",\"mode\":\"Scala\",\"path\":\"scala\"},{\"name\":\"Scheme\",\"mode\":\"Scheme\",\"path\":\"scm|sm|rkt|oak|scheme\"},{\"name\":\"SCSS\",\"mode\":\"SCSS\",\"path\":\"scss\"},{\"name\":\"SH\",\"mode\":\"SH\",\"path\":\"sh|bash|bashrc\"},{\"name\":\"Space\",\"mode\":\"Space\",\"path\":\"space\"},{\"name\":\"SQL\",\"mode\":\"SQL\",\"path\":\"sql\"},{\"name\":\"SQLServer\",\"mode\":\"SQLServer\",\"path\":\"sqlserver\"},{\"name\":\"SVG\",\"mode\":\"SVG\",\"path\":\"svg\"},{\"name\":\"Swift\",\"mode\":\"Swift\",\"path\":\"swift\"},{\"name\":\"Tex\",\"mode\":\"Tex\",\"path\":\"tex\"},{\"name\":\"Textile\",\"mode\":\"Textile\",\"path\":\"textile\"},{\"name\":\"TypeScript\",\"mode\":\"Typescript\",\"path\":\"ts|typescript|str\"},{\"name\":\"VBScript\",\"mode\":\"VBScript\",\"path\":\"vbs|vb|vbe\"},{\"name\":\"XML\",\"mode\":\"XML\",\"path\":\"xml|rdf|rss|wsdl|xslt|atom|mathml|mml|xul|xbl|xaml|config|pom\"},{\"name\":\"XQuery\",\"mode\":\"XQuery\",\"path\":\"xq\"},{\"name\":\"\u70ED\u952E\u811A\u672C\",\"mode\":\"AutoHotKey\",\"path\":\"ahk\"},{\"name\":\"\u7EAF\u6587\u672C\",\"mode\":\"Text\",\"path\":\"txt|text|log|settings|\"}]</string>
+	<string name="pianojson">[{\"count\":3,\"key\":\"A1,A2\",\"tone\":\"C1\"},{\"count\":5,\"key\":\"A3,A4,A5\",\"tone\":\"C2,C3\"},{\"count\":7,\"key\":\"A6,A7,A8,A9\",\"tone\":\"C4,C5,C6\"},{\"count\":5,\"key\":\"A10,A11,A12\",\"tone\":\"C7,C8\"},{\"count\":7,\"key\":\"A13,A14,A15,A16\",\"tone\":\"C9,C10,C11\"},{\"count\":5,\"key\":\"A,B,C\",\"tone\":\"C12,C13\"},{\"count\":7,\"key\":\"D,E,F,G\",\"tone\":\"C14,C15,C16\"},{\"count\":5,\"key\":\"H,I,J\",\"tone\":\"C17,C18\"},{\"count\":7,\"key\":\"K,L,M,N\",\"tone\":\"C19,C20,C21\"},{\"count\":5,\"key\":\"O,P,Q\",\"tone\":\"C22,C23\"},{\"count\":7,\"key\":\"R,S,T,U\",\"tone\":\"C24,C25,C26\"},{\"count\":5,\"key\":\"V,W,X\",\"tone\":\"C27,C28\"},{\"count\":7,\"key\":\"Y,Z,B1,B2\",\"tone\":\"C29,C30,C31\"},{\"count\":5,\"key\":\"B3,B4,B5\",\"tone\":\"C32,C33\"},{\"count\":7,\"key\":\"B6,B7,B8,B9\",\"tone\":\"C34,C35,C36\"},{\"count\":1,\"key\":\"B10\",\"tone\":\"\"}]</string>
+    <string name="txt_delete">删除</string>
+    <string name="txt_reply">回复</string>
+    <string name="load_failed">加载失败\n请检查你的网络连接</string>
+	<string name="txt_lastrow">我是有底线的</string>
+	<string name="txt_lastload">玩命加载中</string>
+	<string name="txt_setreaded">设为已读</string>
+	<string name="activity_admin">管理工具</string>
+	<string name="err_wxnoinstall">未安装微信</string>
+	<string name="wx_auth_denied">用户拒绝</string>
+	<string name="wx_auth_cancel">用户取消</string>
+	<string name="download_mng">下载管理器</string>
+    <string name="no_download_file">没有下载内容</string>
+</resources>

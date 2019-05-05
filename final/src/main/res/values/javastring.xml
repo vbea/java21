@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="java_username">注册时填写的用户名
+	</string>
+	<string name="java_fmail">注册时填写的邮箱
+	</string>
+	<string name="java_forphone">手机(未绑定可留空)
+	</string>
+	<string name="java_psd">密码
+	</string>
+	<string name="java_npsd">新密码
+	</string>
+	<string name="java_pasd">确认密码
+	</string>
+	<string name="java_email">邮箱
+	</string>
+	<string name="java_emails">绑定邮箱
+	</string>
+	<string name="java_nick">昵称
+	</string>
+	<string name="java_sign">注册
+	</string>
+	<string name="java_signuser">新用户注册
+	</string>
+	<string name="java_forget">忘记密码
+	</string>
+	<string name="java_login">登录
+	</string>
+	<string name="java_qqlogin">QQ登录
+	</string>
+	<string name="java_gender">性别
+	</string>
+	<string name="info_gender">性别
+	</string>
+	<string name="java_birthday">生日
+	</string>
+	<string name="java_age">年龄
+	</string>
+	<string name="java_level">等级
+	</string>
+	<string name="java_role">用户组
+	</string>
+	<string name="java_address">地址
+	</string>
+	<string name="info_address">所在地
+	</string>
+	<string name="java_mobile">绑定手机
+	</string>
+	<string name="java_qq">绑定QQ
+	</string>
+	<string name="java_wx">绑定微信
+	</string>
+	<string name="java_binding">绑定手机
+	</string>
+	<string name="java_mark">个性签名
+	</string>
+	<string name="java_person">个人档案
+	</string>
+	<string name="sign">注册
+	</string>
+	<string name="logout">注销
+	</string>
+	<string name="hint_login">用户名、手机或邮箱
+	</string>
+	<string name="hint_user">用户名(数字或字母，3~11个字符)
+	</string>
+	<string name="hint_email">找回密码的凭证
+	</string>
+	<string name="forgetpsd">找回密码
+	</string>
+	<string name="resetpsd">重置密码
+	</string>
+</resources>
+	

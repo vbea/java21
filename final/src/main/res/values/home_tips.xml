@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="array_homeTips">
+		<item>音乐盛典中的音乐是由代码自动弹奏出的</item>
+		<item>主题设置中可切换到夜间模式</item>
+		<item>在Java基础教程中双击标题可回到顶部</item>
+		<item>经常评论可获得VIP会员资格</item>
+		<item>关闭消息通知同时会关闭短信轰炸机功能</item>
+		<item>长按抽屉中的主题设置可进入背景设置</item>
+		<item>设置中可更改教程的字体大小</item>
+		<item>只要记住账号，换手机也可以自动激活</item>
+		<item>勤学习，多交流</item>
+	</string-array>
+	<string-array name="array_homeDics">
+		<item>好记性不如烂笔头</item>
+		<item>学知不足，业精于勤</item>
+		<item>业精于勤荒于嬉，行成于思毁于随</item>
+		<item>黑发不知勤学早，白首方悔读书迟</item>
+		<item>好好学习，天天向上</item>
+		<item>三人行，必有我师焉。择其善者而从之，其不善者而改之</item>
+		<item>学而时习之，温故而知新</item>
+		<item>学如逆水行舟，不进则退，不学则殆</item>
+		<item>书到用时方恨少，事非经过不知难</item>
+		<item>莫等闲，白了少年头，空悲切</item>
+		<item>三天不念口生,三天不做手生</item>
+		<item>满招损，谦受益。</item>
+		<item>自己动手，丰衣足食</item>
+		<item>天行健，君子以自强不息</item>
+		<item>地势坤，君子以厚德载物</item>
+		<item>水至清则无鱼，人至贱则无敌</item>
+	</string-array>
+</resources>

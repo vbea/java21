@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_height="match_parent"
+	android:layout_width="match_parent">
+	<LinearLayout
+		android:layout_height="match_parent"
+		android:layout_width="match_parent"
+		android:orientation="vertical">
+		<include
+			layout="@layout/java_tool"/>
+		<TextView
+			android:id="@+id/file_location"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_margin="5dp"
+			android:textSize="12sp"
+			android:textColor="?attr/textSecondary"
+			android:text="location"
+			android:singleLine="true"
+			android:ellipsize="start"/>
+		<android.support.v7.widget.RecyclerView
+			android:id="@+id/file_recyclerView"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:background="@color/dividers"
+			android:fastScrollEnabled="true"/>
+	</LinearLayout>
+	<android.support.design.widget.FloatingActionButton
+		android:id="@+id/fbtn_done"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_margin="16dp"
+		android:layout_gravity="bottom|end"
+		android:clickable="true"
+		android:src="@mipmap/ic_done"
+		app:fabSize="normal"
+		app:backgroundTint="?attr/colorAccent"
+		app:rippleColor="?attr/btnColor"
+		app:elevation="6dp"
+		app:borderWidth="0dp"
+		app:pressedTranslationZ="10dp"/>
+</FrameLayout>
+

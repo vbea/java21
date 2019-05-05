@@ -1,0 +1,66 @@
+blockquote {
+    border: 0px;
+    margin: 10px;
+    padding: 10px;
+    color: #333333;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, STHeiti, 'Microsoft Yahei', sans-serif;
+    white-space: normal;
+    background-color: #F3F7F0;
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.5em;
+}
+
+.div {
+    padding: 0 5px;
+    background-color: white;
+	overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+	display: block;
+}
+
+green {
+    color: #008200;
+}
+
+p:not(.exap):not(.error):not(.nov) {
+    text-indent: 2em;
+}
+
+.exap {
+    font-size: 14px;
+    color: #666;
+}
+
+.error {
+    font-size: 14px;
+    color: #de1e1e;
+}
+
+.table {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+}
+
+.table tr:nth-child(2n) {
+    background-color: #eee;
+}
+
+.table tr td {
+    padding: 4px 10px;
+}
+
+li {
+    padding: 2px 0;
+}
+
+.blueTitle {
+    padding: 5px 10px;
+    color: white;
+    display: inline-block;
+    background-color: #0099ff;
+}

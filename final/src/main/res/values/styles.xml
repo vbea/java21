@@ -1,0 +1,223 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight">
+		<item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+		<item name="textPrimary">@color/textPrimary</item>
+		<item name="textSecondary">@color/textSecondary</item>
+		<item name="titleColor">#fffafafa</item>
+		<item name="actionStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+		<item name="popupStyle">@style/ThemeOverlay.AppCompat.Light</item>
+		<item name="android:textColor">#444444</item>
+		<item name="btnColor">#DCDCDC</item>
+	</style>
+	
+	<!--style name="Theme_TextSize_Small">
+		<item name="javaTextSize">@dimen/text_small</item>
+	</style>
+	
+	<style name="Theme_TextSize_nSmall">
+		<item name="javaTextSize">@dimen/text_nsmall</item>
+	</style>
+	
+	<style name="Theme_TextSize_Large">
+		<item name="javaTextSize">@dimen/text_large</item>
+	</style>
+	
+	<style name="Theme_TextSize_nLarge">
+		<item name="javaTextSize">@dimen/text_nlarge</item>
+	</style-->
+	
+	<style name="AppTheme.Black">
+		<item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
+		<item name="colorAccent">@color/black</item>
+	</style> 
+	
+	<style name="CropBlack" parent="Theme.AppCompat">
+		<item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/black</item>
+		<item name="colorAccent">@color/black</item>
+	</style> 
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">true</item>
+        <item name="color">@android:color/white</item>
+    </style>
+	<style name="AppTheme.TranStatusBar">
+		<item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+		<item name="android:windowTranslucentStatus">true</item>
+		<item name="android:windowDrawsSystemBarBackgrounds">true</item>
+		<!--item name="android:statusBarColor">@color/transparent</item-->
+        <item name="android:windowContentOverlay">@null</item>
+		<item name="android:windowContentTransitions">true</item>
+    	<item name="android:windowAllowEnterTransitionOverlap">true</item>
+    	<item name="android:windowAllowReturnTransitionOverlap">true</item>
+    	<item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
+    	<item name="android:windowSharedElementExitTransition">@android:transition/move</item>
+    </style>
+	<!--style name="MyTabLayout" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">  
+        <item name="android:textSize">15sp</item>  
+        <item name="android:textColor">@color/white</item>  
+    </style-->
+	
+	<style name="MyActionBar" parent="">
+		<item name="actionMenuTextColor">@color/abc_primary_text_material_light</item>
+		<item name="android:textColorPrimary">@color/abc_primary_text_material_light</item>
+		<item name="android:textColorSecondary">@color/abc_secondary_text_material_light</item>
+	</style>
+	
+	<!--Normal Theme-->
+	<style name="AppTheme1" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title1</item>
+        <item name="colorPrimaryDark">@color/title1</item>
+		<item name="colorAccent">@color/title1_3</item>
+	</style>
+	<style name="AppTheme2" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title2</item>
+        <item name="colorPrimaryDark">@color/title2</item>
+		<item name="colorAccent">@color/title2_3</item>
+	</style>
+
+	<style name="AppTheme3" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title3</item>
+        <item name="colorPrimaryDark">@color/title3</item>
+		<item name="colorAccent">@color/title3_3</item>
+	</style>
+	<style name="AppTheme4" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title3</item>
+        <item name="colorPrimaryDark">@color/title3</item>
+		<item name="colorAccent">@color/title3_a</item>
+	</style>
+
+	<style name="AppTheme5" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title4</item>
+        <item name="colorPrimaryDark">@color/title4</item>
+		<item name="colorAccent">@color/title4_3</item>
+	</style>
+	<style name="AppTheme6" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title4</item>
+        <item name="colorPrimaryDark">@color/title4</item>
+		<item name="colorAccent">@color/title4_a</item>
+	</style>
+
+	<style name="AppTheme7" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title5</item>
+        <item name="colorPrimaryDark">@color/title5</item>
+		<item name="colorAccent">@color/title5_3</item>
+	</style>
+	<style name="AppTheme8" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title6</item>
+        <item name="colorPrimaryDark">@color/title6</item>
+		<item name="colorAccent">@color/title6_3</item>
+	</style>
+
+	<style name="AppTheme9" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title7</item>
+        <item name="colorPrimaryDark">@color/title7</item>
+		<item name="colorAccent">@color/title7_3</item>
+	</style>
+	<style name="AppTheme10" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title7</item>
+        <item name="colorPrimaryDark">@color/title7</item>
+		<item name="colorAccent">@color/title6_a</item>
+	</style>
+
+	<style name="AppTheme11" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title8</item>
+        <item name="colorPrimaryDark">@color/title8</item>
+		<item name="colorAccent">@color/title8_3</item>
+	</style>
+	<style name="AppTheme12" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title8</item>
+        <item name="colorPrimaryDark">@color/title8</item>
+		<item name="colorAccent">@color/title7_a</item>
+	</style>
+
+	<style name="AppTheme13" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title9</item>
+        <item name="colorPrimaryDark">@color/title9</item>
+		<item name="colorAccent">@color/title9_3</item>
+	</style>
+	<style name="AppTheme14" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title10</item>
+        <item name="colorPrimaryDark">@color/title10</item>
+		<item name="colorAccent">@color/title10_3</item>
+	</style>
+
+	<style name="AppTheme15" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title11</item>
+        <item name="colorPrimaryDark">@color/title11</item>
+		<item name="colorAccent">@color/title11_3</item>
+	</style>
+	<style name="AppTheme16" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title12</item>
+        <item name="colorPrimaryDark">@color/title12</item>
+		<item name="colorAccent">@color/title12_3</item>
+	</style>
+
+	<style name="AppTheme17" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title13</item>
+        <item name="colorPrimaryDark">@color/title13</item>
+		<item name="colorAccent">@color/title13_3</item>
+	</style>
+	<style name="AppTheme18" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title14</item>
+        <item name="colorPrimaryDark">@color/title14</item>
+		<item name="colorAccent">@color/title14_3</item>
+	</style>
+
+	<style name="AppTheme19" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title15</item>
+        <item name="colorPrimaryDark">@color/title15</item>
+		<item name="colorAccent">@color/title15_3</item>
+	</style>
+	<style name="AppTheme20" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title16</item>
+        <item name="colorPrimaryDark">@color/title16</item>
+		<item name="colorAccent">@color/title16_3</item>
+	</style>
+
+	<style name="AppTheme21" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title17</item>
+        <item name="colorPrimaryDark">@color/title17</item>
+		<item name="colorAccent">@color/title17_3</item>
+	</style>
+	<style name="AppTheme22" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title17</item>
+        <item name="colorPrimaryDark">@color/title17</item>
+		<item name="colorAccent">@color/title16_a</item>
+	</style>
+
+	<style name="AppTheme23" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title18</item>
+        <item name="colorPrimaryDark">@color/title18</item>
+		<item name="colorAccent">@color/title18_3</item>
+	</style>
+	<style name="AppTheme24" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title18</item>
+        <item name="colorPrimaryDark">@color/title18</item>
+		<item name="colorAccent">@color/title17_a</item>
+	</style>
+
+	<style name="AppTheme25" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title19</item>
+        <item name="colorPrimaryDark">@color/title19</item>
+		<item name="colorAccent">@color/title19_3</item>
+	</style>
+	<style name="AppTheme26" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title20</item>
+        <item name="colorPrimaryDark">@color/title20</item>
+		<item name="colorAccent">@color/title20_3</item>
+	</style>
+
+	<style name="AppTheme27" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title4</item>
+        <item name="colorPrimaryDark">@color/title4</item>
+		<item name="colorAccent">@color/title19</item>
+	</style>
+	<style name="AppTheme28" parent="AppTheme.TranStatusBar">
+		<item name="colorPrimary">@color/title20</item>
+        <item name="colorPrimaryDark">@color/title20</item>
+		<item name="colorAccent">@color/title19</item>
+	</style>
+</resources>

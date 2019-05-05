@@ -1,4 +1,4 @@
-/app/debug.keystore
-/app/build
-/app/build.gradle
-/app/debug.keystore
+debug.keystore
+build
+build.gradle
+local.properties

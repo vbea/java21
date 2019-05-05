@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+	<item
+		android:id="@+id/item_add"
+		android:title="新建"
+		android:icon="@mipmap/ic_add"
+		app:showAsAction="always"/>
+	<item
+		android:id="@+id/item_language"
+		android:title="@string/modelist"/>
+	<item
+		android:id="@+id/item_save"
+		android:title="保存"/>
+	<item
+		android:id="@+id/item_keyword"
+		android:title="按键说明"/>
+</menu>

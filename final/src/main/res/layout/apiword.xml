@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical"
+	android:clipToPadding="true">
+	<include layout="@layout/java_tool"/>
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+		<WebView
+			android:id="@+id/WebViewApi"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"/>
+		<ProgressBar
+			android:id="@+id/apiProgress"
+			android:layout_width="fill_parent"
+			android:layout_height="3dp"
+			style="?android:attr/progressBarStyleHorizontal"
+			android:progressDrawable="@drawable/web_progress"
+			android:visibility="gone"
+			android:max="100"
+			android:progress="0"
+			android:secondaryProgress="0"/>
+		<TextView
+			android:id="@+id/api_nightView"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:visibility="gone"
+			android:enabled="false"
+			android:background="#8F000000"/>
+	</RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>第十一章 异常处理 - 邠心工作室</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <link href="css/main.css" rel="stylesheet" />
+    <script src="Script/shCore.js" type="text/javascript"></script>
+    <script src="Script/shBrushJava.js" type="text/javascript"></script>
+    <link href="css/shCoreDefault.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+    </script>
+</head>
+<body>
+    <div class="div">
+        <blockquote>
+            每个人都不能保证所写的程序没有错误，如果程序中可能发生错误就需要进行异常处理在学校中老师批改作业一样，通常要指出学生所犯的错误。指出错误可能是准确的指出错误，也可能是给出一个错误范围，让学生在这个范围中自己查找。在Java中，异常处理也是这样的，通过异常处理来指出程序中的错误，可以给出一个具体异常，也可以给出一个异常范围。在本章中就来学习如何进行异常处理。通过本章的学习，同学们应该完成如下几个目标。
+            <ol>
+                <li>了解什么是异常处理。</li>
+                <li>熟练掌握如何进行异常处理。</li>
+                <li>掌握异常的分类和区别不同的异常。</li>
+                <li>能够自定义异常和使用自定义异常。</li>
+            </ol>
+        </blockquote>
+        <h3>11.1  异常处理基本介绍</h3>
+        <p>在本节中将对异常有一个大概的了解。异常发生的原因有很多，可能是软件的问题，也可以是硬件的问题。在Java程序中，对异常的处理都是一样的，一般情况下是通过try-catch语句来进行异常处理。该语句还可以存在finally语句。本节中就来对这些最简单的异常处理语句进行介绍。</p>
+        <h4>11.1.1  try和catch捕获异常</h4>
+        <p>通常情况下，在Java程序中就是采用try-catch语句进行异常处理的。这种方法既好用，又容易让开发员理解。try-catch语句的基本语法如下所示。</p>
+        <pre class="brush:java">try
+{
+    //此处是可能出现异常的代码
+}
+catch(Exception e)
+{
+    //此处是如果发生异常处理的代码
+}
+</pre>
+        <p>在try语句中放可能出现异常的代码；在catch语句中需要给出一个异常的类型和该类型的引用，并在catch语句中放当出现该异常类型时需要执行的代码。</p>
+        <h4>11.1.2  try-catch语句使用注意点</h4>
+        <p>使用try-catch语句是有很多注意点和技巧的。在一开始学时就应该了解这些。有些初学者会认为使用了try-catch语句的程序就会发生异常，这是不对的。try-catch语句是对有可能发生异常的程序进行查看，如果没有发生异常，就不会执行catch语句中的内容。在程序中如果不使用try-catch语句，则当程序发生异常的时候，会自动退出程序的运行。而使用try-catch语句后，当程序发生异常的时候，会进行执行catch语句中的程序，从而使程序不自动退出。在前面的学习中经常会看到出现异常的情况，如果在其中使用try-catch语句就不会出现那种异常信息。</p>
+        <p class="error">注意：try-catch语句是对有可能发生异常的程序进行查看，如果没有发生异常，就不会执行catch语句中的内容。在程序中如果不使用try-catch语句，则当程序发生异常的时候，会自动退出程序的运行。</p>
+        <p class="exap">try-catach语句中的catch语句可以不只是一个，可以存在多个catch语句来定义可能发生的多个异常。当处理任何一个异常时，则将不再执行其他catch语句。</p>
+        <p class="exap">当对程序使用多个catch语句进行异常处理时，特别需要注意的是要将范围相对小的异常放在前面，将范围相对大的异常放在后面，这通过程序是很容易理解的。</p>
+        <p class="error">注意：当对程序使用多个catch语句进行异常处理时，要将范围相对小的异常放在前面，将范围相对大的异常放在后面。</p>
+        <h4>11.1.3  finally语句的使用</h4>
+        <p>在try-catch语句中是还可以具有finally语句的。在实际开发中经常要使用到finally语句，尤其是将在后面学习到的数据库操作中。连接数据库是可以发生异常的，当然也是可能不发生异常的。但是有一点，不管是否发生异常，连接数据库所用到的资源都是需要关闭的，这些操作是必须执行的，这些执行语句就可以放在finally语句中。在finally语句中就是放肯定会被执行的语句。</p>
+        <p class="exap">提示：不管是否发生异常，连接数据库所用到的资源都是需要关闭的，这些操作是必须执行的。</p>
+        <p>finally语句的语法形式如下所示。</p>
+        <pre class="brush:java">try
+{
+	//此处是可能出现异常的代码
+}
+catch(Exception e)
+{
+	//此处是如果发生异常的处理代码
+}
+finally
+{
+	//此处是肯定被执行的代码
+}
+</pre>
+        <p>finally语句虽然在程序中肯定执行，但是为了确保知识的严谨性，这里也给出了几个可能会中断finally语句执行的情况。首先是finally语句中本身就产生异常；再者就是执行finally语句的线程死亡，线程的问题会在后面的学习中学习到；还有一种情况，那就是程序执行到finally语句时停电了。</p>
+        <h4>11.1.4  再谈异常处理注意点</h4>
+        <p>学习finally语句后，又多出了很多在写try-catch-finally语句时需要注意的地方。这些在开发中是比较少见的，但是在考试中经常会出现。第一个注意点就是当不存在catch语句时，finally语句必须存在并且紧跟在try语句后面。同学们可以自己写程序来验证这一点。</p>
+        <p>还有一个需要注意的格式是在try语句和catch语句间不能存在任何语句，同样在catch语句和finally语句中也不能存在任何语句，这地方的语句不包括注释语句。</p>
+        <p class="error">注意：当不存在catch语句时，finally语句必须存在并且紧跟在try语句后面。在try语句和catch语句间不能存在任何语句，同样在catch语句和finally语句中也不能存在任何语句。</p>
+        <h3>11.2  异常的分类</h3>
+        <p>可以对异常进行分类的，从大的角度将异常分为捕获异常和未捕获异常两类。在Java类库中有一个叫做Throwable类，该类继承于Object类。所有的异常类都是继承Throwable类，Throwable类有两个直接子类，Error类和Exception类。在Exception类中又有一个RuntimeException类。在Exception类中的直接和间接子类中除去RuntimeException类的直接和间接子类，都是捕获异常。其他的都为未捕获异常。</p>
+        <h4>11.2.1  捕获异常</h4>
+        <p>捕获异常是在翻译外文书时给起的名字，如果直接翻译的话是必须处理异常。捕获异常通常是由外部因素造成的，不是由程序造成的。例如连接网络等操作，这些是和很多因素有关系的，有可能并不是程序的错误。虽然这些错误并不是程序的错误，但是也是必须要进行处理的。</p>
+        <p class="exap">提示：捕获异常是在翻译外文书时给起的名字，如果直接翻译的话是必须处理异常。</p>
+        <p>在Java程序中对捕获异常的处理是必须进行异常处理，虽然有可能程序并不会出现异常。这种设计大大提高了程序的稳定性。下面通过程序代码来进行捕获异常的讲解。</p>
+        <p class="error">注意：如果语句中不可能出现捕获异常，但是程序中仍然对该语句进行捕获异常处理，这样该程序运行时是会发生错误的。</p>
+        <h4>11.2.2  未捕获异常</h4>
+        <p>在异常中，除了捕获异常以外的都是未捕获异常。未捕获异常包括Error类以及它的直接子类和间接子类和RuntimeException类以及它的直接子类和间接子类。Error类以及它的子类通常是由硬件运行错误所导致的错误。这些是很严重的错误，通常是不能通过程序来进行修改的。RuntimeException类以及它的子类通常是程序运行时引起的异常。</p>
+        <p class="exap">提示：Error类以及它的子类通常是由硬件运行错误所导致的错误。这些是很严重的错误，通常是不能通过程序来进行修改的。</p>
+        <p>前面使用最多的就是数组下标越界异常，该异常就是未捕获异常。未捕获异常是可以不进行异常处理的，如果不进行异常处理编译的时候是完全没有问题的，但是在运行时会发生错误。</p>
+        <h3>11.3  抛出异常</h3>
+        <p>对异常的处理不是只有前面讲的使用try-catch语句来进行处理的。在有些情况下，异常是不需要立即进行处理的，但是也必须要进行异常处理，这时候就用到抛出异常的内容。</p>
+        <h4>11.3.1  抛出异常的简单介绍</h4>
+        <p>日常生活中，例如学校中有什么问题都会先去问老师，但是有一些问题例如转学是不能由老师来解决的，这时候老师就需要再去问校长，由校长来解决这个问题。可能校长还有不能解决的问题，就需要去问教育部。抛出异常也是这样的，当一个程序段发生异常时，如果自己不能够进行异常处理，就可以将抛出异常给上一层。如果上一层也不能解决就可以一直向上抛出异常，直到抛出给main方法。如果仍然不能解决，就会中断程序，将异常显示出来。</p>
+        <p class="exap">技巧：当一个程序段发生异常时，如果自己不能够进行异常处理，就可以将抛出异常给上一层。如果上一层也不能解决就可以一直向上抛出异常，直到抛出给main方法。</p>
+        <h4>11.3.2  使用throws和throw语句抛出异常</h4>
+        <p>在抛出异常的操作中，不但可以使用上一小节中的抛出异常的方法，还可以使用throws语句和throw语句进行抛出异常。throws语句是在方法的声明中使用来抛出异常，而throw语句是在方法体内使用抛出异常。</p>
+        <p class="exap">提示：throws语句是在方法的声明中使用来抛出异常，而throw语句是在方法体内使用抛出异常。</p>
+        <h3>11.4  自定义异常</h3>
+        <p>在Java中定义了非常多的异常类，几乎覆盖了可能出现的所有问题。但是再多的定义也不可能满足所有的情况，这时候就需要来进行自定义异常。在本节中就来学习如何创建自定义异常类，并让同学们学习如何使用自定义异常。</p>
+        <h4>11.4.1  创建和使用自定义异常类</h4>
+        <p>创建自定义异常类需要继承Exception类。在自定义的异常类中通过具有一个无参构造器和一个带有字符串参数的有参构造器。</p>
+        <p class="exap">【范例】示例代码是一个最简单的自定义异常类。</p>
+        <pre class="brush:java">class MyException extends Exception
+{
+	public MyException()
+	{
+	}
+	public MyException(String s)
+	{
+		super(s);
+	}
+} </pre>
+        <p class="exap">【代码解析】在该自定义异常类的程序中，让自定义的类继承Exception类，其中定义了一个无参构造器和一个需要字符串类型的有参构造器。这是一个最简单的自定义异常类。</p>
+        <p>在Exception类中定义很多方法，这里讲解一些最常见的方法。使用printStackTrace方法可以显示异常调用栈的信息。使用toString方法可以得到异常对象的字符串表示。使用getMessage方法可以得到异常对象中携带的出错信息。在自定义的异常类中因为继承了Exception类，所以同时拥有这些方法。</p>
+        <h4>11.4.2  自定义异常的实际应用</h4>
+        <p>在本节中来学习如何在实际应用中使用自定义异常。这里看一个非常简单的实际应用。在百分制的考试当中，0到100的得分都是可能发生的，但是超出这个范围，则肯定是发生了错误。这里就可以使用自定义异常，当使用不在0到100范围内的数的时候就会发生自定义异常。自定义异常类仍然还是采用上一小节中定义的自定义异常。</p>
+        <p>同学们在学习前面示例代码时也许感觉不到使用自定义异常的优越性的，这是因为在实际应用中是不会将抛出异常的方法和调用方法写在一起的。</p>
+        <p class="exap">开发一个定义可能抛出异常方法的类</p>
+        <pre class="brush:java">public class YiChang15
+{
+	//定义一个可能发生自定义异常的方法
+	public String deiFen(int fen)throws MyException
+	{
+		if(fen>=0&&fen<=100)
+		{
+			return "正常";
+		}
+		else
+		{
+			//当分数不在0到100的范围内时抛出自定义异常
+			throw new MyException("错误输入");
+		}
+	}
+}</pre>
+        <p>该方法定义后，其他人就可以进行使用了。先看一个不会发生自定义异常的程序。</p>
+        <pre class="brush:java">public class YiChang16
+{
+	public static void main(String args[])
+	{
+		YiChang15 yc=new YiChang15();
+		try
+		{
+			String s=yc.deiFen(68);		//68在范围内，不会发生异常
+			System.out.println(s);
+		}
+		catch(MyException e)
+		{
+			System.out.println("异常信息为："+e.getMessage());
+		}
+	}
+}</pre>
+        <p>再看一个会发生自定义异常的程序。</p>
+        <pre class="brush:java">public class YiChang17
+{
+	public static void main(String args[])
+	{
+		YiChang14 yc=new YiChang14();
+		try
+		{
+			String ss=yc.deiFen(123);	//123不在范围内，会发生异常
+			System.out.println(ss);
+		}
+		catch(MyException e)
+		{
+			System.out.println("异常信息为："+e.getMessage());
+		}
+	}
+}</pre>
+        <p>上面的两个程序都调用了可能抛出自定义异常的类。该示例代码和上一个示例代码相比并没有更多的功能。但是同学们会发现该程序更适合当有很多人同时使用自定义异常的时候。这种设计在实际的团队开发中经常使用，该团队为了完成自己需要的功能，定义了一个自定义异常类和抛出该异常类的方法。这些只需要一次编写，其他人就可以直接来使用该方法和自定义异常类。</p>
+        <h3>11.5  综合练习</h3>
+        <span>1.判断下面的程序是否能够正常运行。</span>
+        <pre class="brush:java">import java.io.*;
+class Fu
+{
+	public void myVoid()throws IOException
+	{
+		System.out.println("父类");
+	}
+}
+public class LianXi1 extends Fu
+{
+	public void myVoid()throws Exception
+	{
+		System.out.println("子类");
+	}
+	public static void main(String args[])
+	{		
+	}
+}
+</pre>
+        <span>2.判断下面的程序是否能够正常运行。</span>
+        <pre class="brush:java">import java.io.*;
+class Fu
+{
+	public void myVoid()throws IOException
+	{
+		System.out.println("父类");
+	}
+}
+public class LianXi2 extends Fu
+{
+	public void myVoid(String s)throws Exception
+	{
+		System.out.println("子类");
+	}
+	public static void main(String args[])
+	{		
+	}
+}
+</pre>
+        <p class="exap">【提示】有些同学们可能会认为该程序和上一个程序一样也会发生编译错误的，这里不是这样的，该程序能够正常编译。因为在该程序子类中的myVoid方法并不是重写的父类中的myVoid方法，而是重载的方法，从而不会发生编译错误。</p>
+        <h3>11.6  小结</h3>
+        <p>在本章中主要对Java中的异常处理进行了详细的讲解。首先讲解了异常处理的基本结构，然后讲解了异常处理的分类，在本章的最后还对如何定义自己的异常进行了讲解。如果想了解更多的关于本章的内容，可以参考电子工业出版社出版的《深入浅出JDK 6.0》一书进行学习。</p>
+    </div>
+</body>
+</html>

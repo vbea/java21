@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+	<item
+		android:id="@+id/item_flush"
+		android:title="刷新"
+		android:icon="@mipmap/ic_refresh"
+		app:showAsAction="ifRoom"/>
+	<item
+		android:id="@+id/item_androidshare"
+		android:icon="@drawable/abc_ic_menu_share_mtrl_alpha"
+		android:title="分享"
+		app:showAsAction="ifRoom"/>
+	<!--item
+		android:id="@+id/item_androidcomment"
+		android:icon="@drawable/abc_ic_menu_share_mtrl_alpha"
+		android:title="评论"/-->
+</menu>

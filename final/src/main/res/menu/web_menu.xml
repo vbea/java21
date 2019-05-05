@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+	<item
+		android:id="@+id/item_urls"
+		android:title="打开/搜索"
+		android:imeOptions="actionSearch"
+		app:showAsAction="ifRoom|collapseActionView"
+		app:actionViewClass="android.support.v7.widget.SearchView" />
+	<item
+		android:id="@+id/item_flush"
+		android:title="刷新"
+		android:icon="@mipmap/ic_refresh"
+		app:showAsAction="ifRoom"/>
+	<item
+		android:id="@+id/item_androidshare"
+		android:title="分享"/>
+	<item
+		android:id="@+id/item_back"
+		android:title="后退"/>
+	<item
+		android:id="@+id/item_forward"
+		android:title="前进"/>
+	<item
+		android:id="@+id/item_home"
+		android:title="主页"/>
+	<item
+		android:id="@+id/item_addbook"
+		android:title="@string/bookmark"/>
+	<item
+		android:id="@+id/item_history"
+		android:title="@string/history"/>
+	<item
+		android:id="@+id/item_download"
+		android:title="@string/download_mng"/>
+	<item
+		android:id="@+id/item_setting"
+		android:title="设置"/>
+	<item
+		android:id="@+id/item_code"
+		android:title="查看源"/>
+</menu>

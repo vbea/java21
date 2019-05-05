@@ -26,6 +26,7 @@
 		<RelativeLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
+			android:background="?attr/titleColor"
 			app:layout_behavior="@string/appbar_scrolling_view_behavior">
 			<com.vbea.java21.widget.MyWebView
 				android:id="@+id/WebViewPage"

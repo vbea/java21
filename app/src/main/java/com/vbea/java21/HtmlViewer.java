@@ -8,10 +8,14 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.app.AlertDialog;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
+import android.support.design.widget.CoordinatorLayout;
 import android.view.MotionEvent;
+import android.view.WindowManager;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
@@ -21,6 +25,7 @@ import android.webkit.URLUtil;
 import android.webkit.ValueCallback;
 import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -85,6 +90,10 @@ public class HtmlViewer extends BaseActivity
 	private ValueCallback<Uri> mUploadMessage;
 	private ValueCallback<Uri[]> mUploadMessages;
 	private String[] headItems = {"拍照","相册"};
+	private FrameLayout coordinatorLayout, fullVideoLayout;
+	private WebChromeClient.CustomViewCallback customViewCallback;
+	private PowerManager pm;
+	private MyAlertDialog certDialog;
 
 	@Override
 	protected void before()
@@ -96,6 +105,8 @@ public class HtmlViewer extends BaseActivity
 	@Override
 	protected void after()
 	{
+		coordinatorLayout = bind(R.id.webCoordinator);
+		fullVideoLayout = bind(R.id.webFullVideo);
 		webView = bind(R.id.WebViewPage);
 		souceView = bind(R.id.WebViewSource);
 		TextView nightView = bind(R.id.api_nightView);
@@ -104,6 +115,7 @@ public class HtmlViewer extends BaseActivity
 		if (MyThemes.isNightTheme()) {
 			nightView.setVisibility(View.VISIBLE);
 		}
+		pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		wset = webView.getSettings();
 		UA_Default = wset.getUserAgentString();
 		wset.setJavaScriptEnabled(true);
@@ -114,6 +126,7 @@ public class HtmlViewer extends BaseActivity
 		//html5
 		wset.setDomStorageEnabled(true);
 		wset.setDatabaseEnabled(true);
+		wset.setSaveFormData(true);
 		//wset.setDatabasePath(getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath());
 		wset.setAppCacheEnabled(true);
 		wset.setAppCachePath(getApplicationContext().getDir("cache", Context.MODE_PRIVATE).getPath());
@@ -124,6 +137,7 @@ public class HtmlViewer extends BaseActivity
 		wset.setGeolocationEnabled(true);
 		wset.setGeolocationDatabasePath(getApplicationContext().getDir("database", Context.MODE_PRIVATE).getPath());
 		wset.setCacheMode(WebSettings.LOAD_DEFAULT);
+		wset.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
 		//wset.setAppCacheMaxSize(1024*1024*10);
 		wset.setAllowFileAccess(true);
 		//wset.setRenderPriority(WebSettings.RenderPriority.HIGH);
@@ -371,42 +385,44 @@ public class HtmlViewer extends BaseActivity
 	
 	private void showSecurityDialog(final String msg, final SslCertificate sert, final SslErrorHandler handle)
 	{
-		MyAlertDialog builder = new MyAlertDialog(this);
-		builder.setTitle("安全警告");
-		builder.setMessage(msg);
-		builder.setCancelable(false);
-		builder.setPositiveButton("继续", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface d, int s)
-			{
-				handle.proceed();
-			}
-		});
-		builder.setNegativeButton("取消", null);
-		builder.setNeutralButton("查看证书", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface d, int s)
-			{
-				StringBuilder sb = new StringBuilder();
-				sb.append("颁发给：");
-				sb.append(sert.getIssuedTo().getCName());
-				sb.append("\n");
-				sb.append("颁发者：");
-				sb.append(sert.getIssuedBy().getCName());
-				sb.append("\n有效期：");
-				sb.append(sert.getValidNotBefore());
-				sb.append("\n至");
-				sb.append(sert.getValidNotAfter());
-				Util.showResultDialog(HtmlViewer.this, sb.toString(), "安全证书", "确定", new DialogInterface.OnClickListener()
-				{
-					public void onClick(DialogInterface d, int s)
-					{
-						showSecurityDialog(msg, sert, handle);
-					}
-				});
-			}
-		});
-		builder.show();
+		if (certDialog == null) {
+			certDialog = new MyAlertDialog(this);
+			certDialog.setTitle("安全警告");
+			certDialog.setMessage(msg);
+			certDialog.setCancelable(false);
+			certDialog.setPositiveButton("继续", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface d, int s) {
+					handle.proceed();
+				}
+			});
+			certDialog.setNegativeButton("取消", null);
+			certDialog.setNeutralButton("查看证书", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface d, int s) {
+					StringBuilder sb = new StringBuilder();
+					sb.append("颁发给：");
+					sb.append(sert.getIssuedTo().getCName());
+					sb.append("\n");
+					sb.append("颁发者：");
+					sb.append(sert.getIssuedBy().getCName());
+					sb.append("\n有效期：");
+					sb.append(sert.getValidNotBefore());
+					sb.append("\n至");
+					sb.append(sert.getValidNotAfter());
+					Util.showResultDialog(HtmlViewer.this, sb.toString(), "安全证书", "确定", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface d, int s) {
+							showSecurityDialog(msg, sert, handle);
+						}
+					});
+				}
+			});
+			certDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+				@Override
+				public void onDismiss(DialogInterface dialogInterface) {
+					certDialog = null;
+				}
+			});
+			certDialog.show();
+		}
 	}
 	
 	private Bitmap getShareBitmap()
@@ -1072,6 +1088,29 @@ public class HtmlViewer extends BaseActivity
 				startActivityForResult(Intent.createChooser(i, "文件上传"), FILECHOOSER_RESULTCODE);
 			}
 			return true;
+		}
+
+		@Override
+		public void onShowCustomView(View view, CustomViewCallback callback) {
+			customViewCallback = callback;
+			coordinatorLayout.setVisibility(View.INVISIBLE);
+			fullVideoLayout.addView(view);
+			fullVideoLayout.setVisibility(View.VISIBLE);
+			getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LOW_PROFILE);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		}
+
+		@Override
+		public void onHideCustomView() {
+			if (customViewCallback != null)
+				customViewCallback.onCustomViewHidden();
+			getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+			getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+			coordinatorLayout.setVisibility(View.VISIBLE);
+			fullVideoLayout.removeAllViews();
+			fullVideoLayout.setVisibility(View.GONE);
 		}
 	}
 

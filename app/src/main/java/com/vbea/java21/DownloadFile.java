@@ -203,6 +203,10 @@ public class DownloadFile extends BaseActivity {
             {
                 public void onClick(DialogInterface d, int s)
                 {
+                    if (Util.isNullOrEmpty(edt.getText().toString().trim())) {
+                        toastShortMessage("请输入下载链接");
+                        return;
+                    }
                     toastShortMessage("请稍候...");
                     FileDownloader.detect(edt.getText().toString(), new OnDetectBigUrlFileListener() {
                         @Override

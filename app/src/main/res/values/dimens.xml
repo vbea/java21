@@ -3,6 +3,7 @@
 
     <dimen name="fab_size_normal">56dp</dimen>
     <dimen name="fab_shadow_size">8dp</dimen>
+	<dimen name="activity_margin_half">8dp</dimen>
 	<dimen name="activity_margin">16dp</dimen>
 	<dimen name="activity_margin_double">32dp</dimen>
 	<dimen name="item_size">56dp</dimen>

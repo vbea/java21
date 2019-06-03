@@ -1034,7 +1034,20 @@ public class Util
 	//显示敏感信息
 	public static String getSecstr(String str, int start, int end)
 	{
-		String regex = "(\\S{"+start+"})(.*)(\\S{"+end+"})";
+		char[] chars = str.toCharArray();
+        int _char = (str.length() - start - end);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < chars.length; i++) {
+            if (i < start) {
+                sb.append(chars[i]);
+            } else if (i < start + _char) {
+                sb.append("*");
+            } else {
+                sb.append(chars[i]);
+            }
+        }
+        return sb.toString();
+		/*String regex = "(\\S{"+start+"})(.*)(\\S{"+end+"})";
 		Matcher m = Pattern.compile(regex).matcher(str);
 		if (m.find())
 		{
@@ -1046,7 +1059,7 @@ public class Util
 			}
 			return str.replaceAll(rep, sb.toString());
 		}
-		return str;
+		return str;*/
 	}
 	
 	//获取清单文件数据

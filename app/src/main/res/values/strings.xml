@@ -128,13 +128,13 @@
 		\n3.其他细节优化
 	</string>
 	<string name="shared">share_image</string>
-	<string name="about_us">作者的话：\n2013年5月20日，邠心工作室成立，至今已有五年时间，目前团队有三人，我是在2012年(高中)开始自学Java，花了21天学完基础知识之后开始研究并开发Android，并于2014年发布此APP，帮助那些也想要自学Java的朋友，目前正在朝着全栈开发的方向前进，希望能找到志同道合的朋友。
+	<string name="about_us">邠心工作室(VBES)，2013年5月20日成立，至今已有六年时间，目前团队仅有二人，我们都是90后的编程爱好者，本人是在2012年(高中)开始自学Java，花了21天学完基础知识之后开始研究并开发Android，并于2014年发布此APP，帮助那些也想要自学Java的朋友，目前我们正朝着全栈开发的方向发展，希望能找到志同道合的朋友。
 	</string>
-	<string name="about_join">加入我们：\n邮箱：vbea@foxmail.com
-		\nQ  Q：248104237\nQQ群：222876252
+	<string name="about_join">邮箱：vbea@foxmail.com
+		\nQ　Q：248104237\nQ群：222876252
 		\n官网：http://vbea.wicp.net\n微博：@邠心工作室\n微信公众号：邠心工作室(VbeStudio)\n地址：四川省成都市"
 	</string>
-	<string name="about_mark">邠心工作室邀您加入我们参与Android应用的开发和设计，一起学习Android软件开发和前端开发技术，有意请联系我们，谢谢！
+	<string name="about_mark">欢迎加入我们的团队，共同参与Android应用的开发和设计，一起学习Java和前端开发技术，有意请联系我们，谢谢！
 	</string>
 	<string name="copyright">邠心工作室 版权所有\nCopyright © 2014-2019 VbeStudio. All Rights Reserved
 	</string>

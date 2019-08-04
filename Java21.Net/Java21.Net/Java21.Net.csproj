@@ -1,0 +1,578 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1696D9E1-5714-4704-A90C-0CF61622832E}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Java21.Net</RootNamespace>
+    <AssemblyName>Java21.Net</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="ToolBLL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\ToolBLL.dll</HintPath>
+    </Reference>
+    <Reference Include="ToolDAL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\ToolDAL.dll</HintPath>
+    </Reference>
+    <Reference Include="ToolModel, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\ToolModel.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="404.html" />
+    <Content Include="About.aspx" />
+    <Content Include="AddQuota.aspx" />
+    <Content Include="ChangePassword.aspx" />
+    <Content Include="css\bootstrap.css" />
+    <Content Include="css\home.css" />
+    <Content Include="css\java.css" />
+    <Content Include="css\login.css" />
+    <Content Include="css\shCoreDefault.css" />
+    <Content Include="css\umeditor.css" />
+    <Content Include="database\DataList.aspx" />
+    <Content Include="database\Default.aspx" />
+    <Content Include="database\ExecuteSQL.aspx" />
+    <Content Include="database\HomePage.aspx" />
+    <Content Include="EditUser.aspx" />
+    <Content Include="Feedback.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="HomePage.aspx" />
+    <Content Include="images\arclist\1.gif" />
+    <Content Include="images\arclist\10.gif" />
+    <Content Include="images\arclist\100.gif" />
+    <Content Include="images\arclist\11.gif" />
+    <Content Include="images\arclist\12.gif" />
+    <Content Include="images\arclist\13.gif" />
+    <Content Include="images\arclist\14.gif" />
+    <Content Include="images\arclist\15.gif" />
+    <Content Include="images\arclist\16.gif" />
+    <Content Include="images\arclist\17.gif" />
+    <Content Include="images\arclist\18.gif" />
+    <Content Include="images\arclist\19.gif" />
+    <Content Include="images\arclist\2.gif" />
+    <Content Include="images\arclist\20.gif" />
+    <Content Include="images\arclist\21.gif" />
+    <Content Include="images\arclist\22.gif" />
+    <Content Include="images\arclist\23.gif" />
+    <Content Include="images\arclist\24.gif" />
+    <Content Include="images\arclist\25.gif" />
+    <Content Include="images\arclist\26.gif" />
+    <Content Include="images\arclist\27.gif" />
+    <Content Include="images\arclist\28.gif" />
+    <Content Include="images\arclist\29.gif" />
+    <Content Include="images\arclist\3.gif" />
+    <Content Include="images\arclist\30.gif" />
+    <Content Include="images\arclist\31.gif" />
+    <Content Include="images\arclist\32.gif" />
+    <Content Include="images\arclist\33.gif" />
+    <Content Include="images\arclist\34.gif" />
+    <Content Include="images\arclist\35.gif" />
+    <Content Include="images\arclist\36.gif" />
+    <Content Include="images\arclist\37.gif" />
+    <Content Include="images\arclist\38.gif" />
+    <Content Include="images\arclist\39.gif" />
+    <Content Include="images\arclist\4.gif" />
+    <Content Include="images\arclist\40.gif" />
+    <Content Include="images\arclist\41.gif" />
+    <Content Include="images\arclist\42.gif" />
+    <Content Include="images\arclist\43.gif" />
+    <Content Include="images\arclist\44.gif" />
+    <Content Include="images\arclist\45.gif" />
+    <Content Include="images\arclist\46.gif" />
+    <Content Include="images\arclist\47.gif" />
+    <Content Include="images\arclist\48.gif" />
+    <Content Include="images\arclist\49.gif" />
+    <Content Include="images\arclist\5.gif" />
+    <Content Include="images\arclist\50.gif" />
+    <Content Include="images\arclist\51.gif" />
+    <Content Include="images\arclist\52.gif" />
+    <Content Include="images\arclist\53.gif" />
+    <Content Include="images\arclist\54.gif" />
+    <Content Include="images\arclist\55.gif" />
+    <Content Include="images\arclist\56.gif" />
+    <Content Include="images\arclist\57.gif" />
+    <Content Include="images\arclist\58.gif" />
+    <Content Include="images\arclist\59.gif" />
+    <Content Include="images\arclist\6.gif" />
+    <Content Include="images\arclist\60.gif" />
+    <Content Include="images\arclist\61.gif" />
+    <Content Include="images\arclist\62.gif" />
+    <Content Include="images\arclist\63.gif" />
+    <Content Include="images\arclist\64.gif" />
+    <Content Include="images\arclist\65.gif" />
+    <Content Include="images\arclist\66.gif" />
+    <Content Include="images\arclist\67.gif" />
+    <Content Include="images\arclist\68.gif" />
+    <Content Include="images\arclist\69.gif" />
+    <Content Include="images\arclist\7.gif" />
+    <Content Include="images\arclist\70.gif" />
+    <Content Include="images\arclist\71.gif" />
+    <Content Include="images\arclist\72.gif" />
+    <Content Include="images\arclist\73.gif" />
+    <Content Include="images\arclist\74.gif" />
+    <Content Include="images\arclist\75.gif" />
+    <Content Include="images\arclist\76.gif" />
+    <Content Include="images\arclist\77.gif" />
+    <Content Include="images\arclist\78.gif" />
+    <Content Include="images\arclist\79.gif" />
+    <Content Include="images\arclist\8.gif" />
+    <Content Include="images\arclist\80.gif" />
+    <Content Include="images\arclist\81.gif" />
+    <Content Include="images\arclist\82.gif" />
+    <Content Include="images\arclist\83.gif" />
+    <Content Include="images\arclist\84.gif" />
+    <Content Include="images\arclist\85.gif" />
+    <Content Include="images\arclist\86.gif" />
+    <Content Include="images\arclist\87.gif" />
+    <Content Include="images\arclist\88.gif" />
+    <Content Include="images\arclist\89.gif" />
+    <Content Include="images\arclist\9.gif" />
+    <Content Include="images\arclist\90.gif" />
+    <Content Include="images\arclist\91.gif" />
+    <Content Include="images\arclist\92.gif" />
+    <Content Include="images\arclist\93.gif" />
+    <Content Include="images\arclist\94.gif" />
+    <Content Include="images\arclist\95.gif" />
+    <Content Include="images\arclist\96.gif" />
+    <Content Include="images\arclist\97.gif" />
+    <Content Include="images\arclist\98.gif" />
+    <Content Include="images\arclist\99.gif" />
+    <Content Include="images\caret.png" />
+    <Content Include="images\close.png" />
+    <Content Include="images\face.png" />
+    <Content Include="images\favicon.ico" />
+    <Content Include="images\goto.jpg" />
+    <Content Include="images\icons.gif" />
+    <Content Include="images\icons.png" />
+    <Content Include="images\ic_star_light.png" />
+    <Content Include="images\ic_star_normal.png" />
+    <Content Include="images\inputbox.png" />
+    <Content Include="images\loading.gif" />
+    <Content Include="images\loginbox_bg.png" />
+    <Content Include="images\logo.png" />
+    <Content Include="images\ok.gif" />
+    <Content Include="images\pet-1a.png" />
+    <Content Include="images\phone.png" />
+    <Content Include="images\pop-bg.png" />
+    <Content Include="images\spacer.gif" />
+    <Content Include="images\star_light.png" />
+    <Content Include="images\star_normal.png" />
+    <Content Include="images\videologo.gif" />
+    <Content Include="Java21web.asmx" />
+    <Content Include="JavaKeys.aspx" />
+    <Content Include="JavaKnowledge.aspx" />
+    <Content Include="JavaVideo.aspx" />
+    <Content Include="Knowledge.aspx" />
+    <Content Include="Knowledges.aspx" />
+    <Content Include="KnowledgeView.aspx" />
+    <Content Include="Login.aspx" />
+    <Content Include="Quotations.aspx" />
+    <Content Include="Recycle.aspx" />
+    <Content Include="Register.aspx" />
+    <Content Include="script\asyncbox\AsyncBox.v1.4.5.js" />
+    <Content Include="script\asyncbox\jQuery.v1.4.2.js" />
+    <Content Include="script\asyncbox\skins\ZCMS\asyncbox.css" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\asyncbox_bg.gif" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\asyncbox_bg.png" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\asyncbox_tipsbar_bg.gif" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\asyncbox_tipsbar_icon.gif" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\asyncbox_title_bottom.gif" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\asyncbox_title_bottom.png" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\asynctips_bg.gif" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\icon.gif" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\ie6\dialog_cb.png" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\ie6\dialog_closebtn.gif" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\ie6\dialog_ct.png" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\ie6\dialog_lb.png" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\ie6\dialog_lt.png" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\ie6\dialog_mlm.png" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\ie6\dialog_mrm.png" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\ie6\dialog_rb.png" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\ie6\dialog_rt.png" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\wait.gif" />
+    <Content Include="script\asyncbox\skins\ZCMS\images\wait_bg.gif" />
+    <Content Include="script\comment.js" />
+    <Content Include="script\comment.min.js" />
+    <Content Include="script\cooke.js" />
+    <Content Include="script\dialogs\emotion\emotion.css" />
+    <Content Include="script\dialogs\emotion\emotion.js" />
+    <Content Include="script\dialogs\emotion\images\0.gif" />
+    <Content Include="script\dialogs\emotion\images\bface.gif" />
+    <Content Include="script\dialogs\emotion\images\cface.gif" />
+    <Content Include="script\dialogs\emotion\images\fface.gif" />
+    <Content Include="script\dialogs\emotion\images\jxface2.gif" />
+    <Content Include="script\dialogs\emotion\images\neweditor-tab-bg.png" />
+    <Content Include="script\dialogs\emotion\images\tface.gif" />
+    <Content Include="script\dialogs\emotion\images\wface.gif" />
+    <Content Include="script\dialogs\emotion\images\yface.gif" />
+    <Content Include="script\dialogs\formula\formula.css" />
+    <Content Include="script\dialogs\formula\formula.html" />
+    <Content Include="script\dialogs\formula\formula.js" />
+    <Content Include="script\dialogs\formula\images\formula.png" />
+    <Content Include="script\dialogs\image\image.css" />
+    <Content Include="script\dialogs\image\image.js" />
+    <Content Include="script\dialogs\image\images\close.png" />
+    <Content Include="script\dialogs\image\images\upload1.png" />
+    <Content Include="script\dialogs\image\images\upload2.png" />
+    <Content Include="script\dialogs\link\link.js" />
+    <Content Include="script\dialogs\map\map.html" />
+    <Content Include="script\dialogs\map\map.js" />
+    <Content Include="script\dialogs\video\images\center_focus.jpg" />
+    <Content Include="script\dialogs\video\images\left_focus.jpg" />
+    <Content Include="script\dialogs\video\images\none_focus.jpg" />
+    <Content Include="script\dialogs\video\images\right_focus.jpg" />
+    <Content Include="script\dialogs\video\video.css" />
+    <Content Include="script\dialogs\video\video.js" />
+    <Content Include="script\jquery-1.4.1.min.js" />
+    <Content Include="script\jquery.min.js" />
+    <Content Include="script\jquery.qqFace.js" />
+    <Content Include="script\lang\en\en.js" />
+    <Content Include="script\lang\en\images\addimage.png" />
+    <Content Include="script\lang\en\images\alldeletebtnhoverskin.png" />
+    <Content Include="script\lang\en\images\alldeletebtnupskin.png" />
+    <Content Include="script\lang\en\images\background.png" />
+    <Content Include="script\lang\en\images\button.png" />
+    <Content Include="script\lang\en\images\copy.png" />
+    <Content Include="script\lang\en\images\deletedisable.png" />
+    <Content Include="script\lang\en\images\deleteenable.png" />
+    <Content Include="script\lang\en\images\imglabel.png" />
+    <Content Include="script\lang\en\images\listbackground.png" />
+    <Content Include="script\lang\en\images\localimage.png" />
+    <Content Include="script\lang\en\images\music.png" />
+    <Content Include="script\lang\en\images\rotateleftdisable.png" />
+    <Content Include="script\lang\en\images\rotateleftenable.png" />
+    <Content Include="script\lang\en\images\rotaterightdisable.png" />
+    <Content Include="script\lang\en\images\rotaterightenable.png" />
+    <Content Include="script\lang\en\images\upload.png" />
+    <Content Include="script\lang\zh-cn\images\copy.png" />
+    <Content Include="script\lang\zh-cn\images\imglabel.png" />
+    <Content Include="script\lang\zh-cn\images\localimage.png" />
+    <Content Include="script\lang\zh-cn\images\music.png" />
+    <Content Include="script\lang\zh-cn\images\upload.png" />
+    <Content Include="script\lang\zh-cn\zh-cn.js" />
+    <Content Include="script\mathquill\font\stixgeneral-bundle\STIXFontLicense2010.txt" />
+    <Content Include="script\mathquill\font\stixgeneral-bundle\stixgeneral-webfont.svg" />
+    <Content Include="script\mathquill\font\stixgeneral-bundle\stixgeneralbol-webfont.svg" />
+    <Content Include="script\mathquill\font\stixgeneral-bundle\stixgeneralbolita-webfont.svg" />
+    <Content Include="script\mathquill\font\stixgeneral-bundle\stixgeneralitalic-webfont.svg" />
+    <Content Include="script\mathquill\font\Symbola.svg" />
+    <Content Include="script\mathquill\mathquill.css" />
+    <Content Include="script\mathquill\mathquill.js" />
+    <Content Include="script\mathquill\mathquill.min.js" />
+    <Content Include="script\shBrushJava.js" />
+    <Content Include="script\shCore.js" />
+    <Content Include="script\umeditor.config.js" />
+    <Content Include="script\umeditor.js" />
+    <Content Include="script\umeditor.min.js" />
+    <Content Include="Settings.aspx" />
+    <Content Include="UserMng.aspx" />
+    <Content Include="Video.aspx" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="About.aspx.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="About.aspx.designer.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AddQuota.aspx.cs">
+      <DependentUpon>AddQuota.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AddQuota.aspx.designer.cs">
+      <DependentUpon>AddQuota.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ChangePassword.aspx.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChangePassword.aspx.designer.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="database\Common.cs" />
+    <Compile Include="database\DataList.aspx.cs">
+      <DependentUpon>DataList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="database\DataList.aspx.designer.cs">
+      <DependentUpon>DataList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="database\Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="database\Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="database\ExecuteSQL.aspx.cs">
+      <DependentUpon>ExecuteSQL.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="database\ExecuteSQL.aspx.designer.cs">
+      <DependentUpon>ExecuteSQL.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="database\HomePage.aspx.cs">
+      <DependentUpon>HomePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="database\HomePage.aspx.designer.cs">
+      <DependentUpon>HomePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditUser.aspx.cs">
+      <DependentUpon>EditUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditUser.aspx.designer.cs">
+      <DependentUpon>EditUser.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Feedback.aspx.cs">
+      <DependentUpon>Feedback.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Feedback.aspx.designer.cs">
+      <DependentUpon>Feedback.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HomePage.aspx.cs">
+      <DependentUpon>HomePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="HomePage.aspx.designer.cs">
+      <DependentUpon>HomePage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Java.Master.cs">
+      <DependentUpon>Java.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Java.Master.designer.cs">
+      <DependentUpon>Java.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Java21web.asmx.cs">
+      <DependentUpon>Java21web.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="JavaKeys.aspx.cs">
+      <DependentUpon>JavaKeys.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="JavaKeys.aspx.designer.cs">
+      <DependentUpon>JavaKeys.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="JavaKnowledge.aspx.cs">
+      <DependentUpon>JavaKnowledge.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="JavaKnowledge.aspx.designer.cs">
+      <DependentUpon>JavaKnowledge.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="JavaVideo.aspx.cs">
+      <DependentUpon>JavaVideo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="JavaVideo.aspx.designer.cs">
+      <DependentUpon>JavaVideo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Knowledge.aspx.cs">
+      <DependentUpon>Knowledge.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Knowledge.aspx.designer.cs">
+      <DependentUpon>Knowledge.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Knowledges.aspx.cs">
+      <DependentUpon>Knowledges.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Knowledges.aspx.designer.cs">
+      <DependentUpon>Knowledges.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="KnowledgeView.aspx.cs">
+      <DependentUpon>KnowledgeView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="KnowledgeView.aspx.designer.cs">
+      <DependentUpon>KnowledgeView.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="net\JavaUploader.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Quotations.aspx.cs">
+      <DependentUpon>Quotations.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Quotations.aspx.designer.cs">
+      <DependentUpon>Quotations.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Recycle.aspx.cs">
+      <DependentUpon>Recycle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Recycle.aspx.designer.cs">
+      <DependentUpon>Recycle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Register.aspx.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Register.aspx.designer.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.aspx.cs">
+      <DependentUpon>Settings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Settings.aspx.designer.cs">
+      <DependentUpon>Settings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UserMng.aspx.cs">
+      <DependentUpon>UserMng.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserMng.aspx.designer.cs">
+      <DependentUpon>UserMng.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Video.aspx.cs">
+      <DependentUpon>Video.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Video.aspx.designer.cs">
+      <DependentUpon>Video.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Java.Master" />
+    <Content Include="script\mathquill\font\stixgeneral-bundle\stixgeneral-webfont.eot" />
+    <Content Include="script\mathquill\font\stixgeneral-bundle\stixgeneral-webfont.ttf" />
+    <Content Include="script\mathquill\font\stixgeneral-bundle\stixgeneral-webfont.woff" />
+    <Content Include="script\mathquill\font\stixgeneral-bundle\stixgeneralbol-webfont.eot" />
+    <Content Include="script\mathquill\font\stixgeneral-bundle\stixgeneralbol-webfont.ttf" />
+    <Content Include="script\mathquill\font\stixgeneral-bundle\stixgeneralbol-webfont.woff" />
+    <Content Include="script\mathquill\font\stixgeneral-bundle\stixgeneralbolita-webfont.eot" />
+    <Content Include="script\mathquill\font\stixgeneral-bundle\stixgeneralbolita-webfont.ttf" />
+    <Content Include="script\mathquill\font\stixgeneral-bundle\stixgeneralbolita-webfont.woff" />
+    <Content Include="script\mathquill\font\stixgeneral-bundle\stixgeneralitalic-webfont.eot" />
+    <Content Include="script\mathquill\font\stixgeneral-bundle\stixgeneralitalic-webfont.ttf" />
+    <Content Include="script\mathquill\font\stixgeneral-bundle\stixgeneralitalic-webfont.woff" />
+    <Content Include="script\mathquill\font\Symbola.eot" />
+    <Content Include="script\mathquill\font\Symbola.otf" />
+    <Content Include="script\mathquill\font\Symbola.ttf" />
+    <Content Include="script\mathquill\font\Symbola.woff" />
+    <Content Include="net\getContent.ashx" />
+    <Content Include="net\imageUp.ashx" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Java21.Logic\Java21.Logic.csproj">
+      <Project>{92a8c845-b253-4892-aee9-2ddb8e13f5f5}</Project>
+      <Name>Java21.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Java21.Model\Java21.Model.csproj">
+      <Project>{2f23461f-ebcf-4a98-985d-2d61c946fa93}</Project>
+      <Name>Java21.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>62149</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:62149/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

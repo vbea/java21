@@ -1,0 +1,175 @@
+﻿@{
+    ViewBag.Title = "21天学通Java-邠心工作室";
+    Layout = "~/Views/Shared/_LayoutJava.cshtml";
+}@section head {
+    <link href="/css/index.css" rel="stylesheet" />
+    <script src="/Script/responsiveslides.min.js"></script>
+    <script>
+        $(function () {
+            // Slideshow 4
+            $("#slider4").responsiveSlides({
+                auto: true,
+                pager: true,
+                nav: true,
+                speed: 500,
+                namespace: "callbacks",
+                before: function () {
+                    $('.events').append("<li>before event fired.</li>");
+                },
+                after: function () {
+                    $('.events').append("<li>after event fired.</li>");
+                }
+            });
+
+            $("#slider5").responsiveSlides({
+                auto: true,
+                pager: false,
+                nav: false,
+                speed: 500
+            });
+        });
+    </script>
+}<!--banner start here-->
+<div class="banner">
+    <div class="banner-main">
+        <div class="container">
+            <div class="banner-grids">
+                <div class="col-md-6 banner-left">
+                    <img src="/images/hand-phone.png" alt="" />
+                </div>
+                <div class="col-md-6 banner-right">
+                    <img src="/images/logo-icon.png" alt="" />
+                    <h1>21天学通Java<br> 5.0版</h1>
+                    <div class="banner-bwn">
+                        <a href="#">&nbsp;&nbsp;立即下载&nbsp;&nbsp;</a>
+                    </div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--banner end here-->
+<!--temp grids start here-->
+<div class="temp-grid" id="Features">
+    <div class="container">
+        <div class="temp-grid-main">
+            <div class="feature">
+                <h3>功能介绍</h3>
+            </div>
+            <div class="tempgrid-top">
+                <div class="tempgrid-left">
+                    <img src="/images/ic_fe_1.png" alt="" />
+                    <h3>基础知识</h3>
+                    <p>包含21章Java基础知识，从Java入门到应用开发，一天学会一章，仅需21天就能学会Java的全部基础知识，零基础也能学Java。</p>
+                </div>
+                <div class="tempgrid-left">
+                    <img src="/images/ic_fe_2.png" alt="" />
+                    <h3>在线学习</h3>
+                    <p>这里不仅有Java知识点的讲解，还有在线视频。在这里你可以遇到同样在学习的同学，你们可以相互交流、相互指导。</p>
+                </div>
+                <div class="tempgrid-left">
+                    <img src="/images/ic_fe_3.png" alt="" />
+                    <h3>复习巩固</h3>
+                    <p>不复习是会忘记的，所以要勤复习，巩固你的知识，实践能加深你对代码和语法的理解。</p>
+                </div>
+            </div>
+            <div class="tempgrid-top">
+                <div class="tempgrid-left">
+                    <img src="/images/ic_fe_4.png" alt="" />
+                    <h3>实战训练</h3>
+                    <p>这里的题目全是来自各大高校的试卷，先自己试着做题，然后根据参考答案给自己打分，争取满分吧！</p>
+                </div>
+                <div class="tempgrid-left">
+                    <img src="/images/ic_fe_5.png" alt="" />
+                    <h3>API文档</h3>
+                    <p>来自Oracle官方原版API文档，帮助你对Java语法的理解。</p>
+                </div>
+                <div class="tempgrid-left">
+                    <img src="/images/ic_fe_6.png" alt="" />
+                    <h3>Java宝典</h3>
+                    <p>这里有Java面试宝典，Java开发技巧，代码规范性，算法优化等很有帮助的知识。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--temp grid end here-->
+<div class="video" id="Character">
+    <div class="video-container" id="top">
+        <div class="video-top">
+            <h3>新版特性</h3>
+        </div>
+        <div class="video-main">
+            <ul id="slider5">
+                <li>
+                    <img class="video-image" src="/images/mobo-parts.png" />
+                </li>
+                <li>
+                    <img class="video-image" src="/images/mobo-parts2.png" />
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--screen shot start here-->
+<div id ="Screenhots" class="callbacks_container">
+    <div class="container" id="top">
+        <div class="screenshot-top">
+            <h3>应用截图</h3>
+        </div>
+        <div class="screenshot-bottom">
+            <ul class="rslides" id="slider4">
+                <li>
+                    <div class="screenshot">
+                        <img src="/images/srn1.png" alt="" />
+                    </div>
+                    <div class="screenshot">
+                        <img src="/images/srn2.png" alt="" />
+                    </div>
+                    <div class="screenshot">
+                        <img src="/images/srn3.png" alt="" />
+                    </div>
+                    <div class="screenshot">
+                        <img src="/images/srn4.png" alt="" />
+                    </div>
+                </li>
+                <li>
+                    <div class="screenshot">
+                        <img src="/images/srn5.png" alt="" />
+                    </div>
+                    <div class="screenshot">
+                        <img src="/images/srn6.png" alt="" />
+                    </div>
+                    <div class="screenshot">
+                        <img src="/images/srn7.png" alt="" />
+                    </div>
+                    <div class="screenshot">
+                        <img src="/images/srn8.png" alt="" />
+                    </div>
+                </li>
+                <li>
+                    <div class="screenshot">
+                        <img src="/images/srn9.png" alt="" />
+                    </div>
+                    <div class="screenshot">
+                        <img src="/images/srn10.png" alt="" />
+                    </div>
+                    <div class="screenshot">
+                        <img src="/images/srn11.png" alt="" />
+                    </div>
+                    <div class="screenshot">
+                        <img src="/images/srn12.png" alt="" />
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<!--screens shot end here-->
+<div class="divTop">
+    <a class="scroll" href="#Features">功能介绍</a>
+    <a class="scroll" href="#Character">新版特性</a>
+    <a class="scroll" href="#Screenhots">应用截图</a>
+</div>

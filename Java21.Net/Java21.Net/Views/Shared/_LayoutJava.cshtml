@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="keywords" content="21天学通Java,邠心,邠心工作室,Android软件开发,Java学习,BXA学堂,正德应用,自学Java" />
+    <meta name="description" content="《21天学通Java》-邠心工作室-Java学习网站-在线学习，Android软件开发" />
+    <meta name="author" content="邠心" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link href="/css/header.css" rel="stylesheet" />
+    <link href="/css/bootstrap_2.css" rel="stylesheet" />
+    <script src="/Script/jquery.min.js"></script>
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }</script>
+    <script src="/Script/move-top.js"></script>
+    <script src="/Script/easing.js"></script>
+    <title>@ViewBag.Title</title>
+    <script type="text/javascript">
+        var menu_s = false;
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
+            });
+        
+            $("#id_user,#user_menu").mouseover(function (e) {
+                if (menu_s)
+                    return;
+                $("#user_menu").slideDown("fast",function () {
+                    menu_s = true;
+                });
+                //$("#user_menu").show();
+                $("#user_menu").css("left", ($("#id_user").offset().left - 30) + "px");
+                $("#user_menu").css("top", ($("#id_user").offset().top + 30) + "px");
+            });
+            $("#user_menu").mouseleave(function (e) {
+                if (menu_s) {
+                    $("#user_menu").slideUp(500, function () {
+                        menu_s = false;
+                    });
+                }
+            });
+            $().UItoTop({ easingType: 'easeOutQuart' });
+        }).click(function () {
+            if (menu_s) {
+                $("#user_menu").slideUp(500, function () {
+                    menu_s = false;
+                });
+            }
+        });
+    </script>
+    @RenderSection("head", false)
+</head>
+<body>
+<div style="width:100%; height:100%;">
+<div class="header">
+    <div class="container">
+        <div class="header-main">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="/images/logo.png" alt="" />
+                </a>
+            </div>
+            <span class="menu">
+                <img src="/images/menu_icon.png" alt="" />
+            </span>
+            <div class="user_box">@Html.Raw(ViewData["Div_User"])
+                <ul id="user_menu" class="user_menu">
+                    <li><a href="Users">个人空间</a></li>
+                    <li><a href="#">我的收藏</a></li>
+                    <li><a href="#">账号设置</a></li>
+                    <li><a onclick="return confirm('你确定要注销吗？')" href="/Users/Logout">退出</a></li>
+                </ul>
+            </div>
+            <div class="clear"></div>
+            <div class="navg">
+                <nav class="cl-effect-1">
+                    <ul class="res">
+                        <li><a href="/home">首页</a></li>
+                        <li><a href="/download">下载</a></li>
+                        <li><a href="/javakeys">注册码</a></li>
+                        <li><a href="/video">视频</a></li>
+                        <li><a href="/article">文章</a></li>
+                        <li><a href="/wenda">问答</a></li>
+                        <li><a href="http://bbs.vbes.pw" target="_blank">论坛</a></li>
+                        <li><a href="/about">关于</a></li>
+                    </ul>
+                </nav>
+                <script>
+                    $("span.menu").click(function () {
+                        $("ul.res").slideToggle("slow", function () {
+                            // Animation complete.
+                        });
+                    });
+                </script>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+@RenderBody()
+<div class="footer">Copyright ©2013-2016 All Rights Reserved<br />邠心工作室-BXA学堂-21天学通Java [<a style="color:white" href="/old/HomePage.aspx">旧版</a>]</div>
+<a href="#" id="toTop" style="display: block;"><span id="toTopHover" style="opacity: 1;"></span></a>
+</div>
+</body>
+</html>

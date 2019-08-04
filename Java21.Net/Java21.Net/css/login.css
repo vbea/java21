@@ -1,0 +1,12 @@
+﻿body{ background-color:#25afde; margin:0; padding:0; font-family:Arial; }
+a {color:#2bb3df; text-decoration:none; font-size:14px;}
+a:hover { color:#2bb3df; text-decoration:underline; }
+#Loginbox{ background: url(../images/loginbox_bg.png) no-repeat; width:839px; height:415px; margin:0 auto; position:relative; margin-top:5%;}
+#Logintable{ position:absolute; left:410px; top:150px;}
+#Logintable td{ height:45px;}
+#Logintable .tips{ font-size:13px; color:#bd1616;}
+#Logintable td .inputbox{ width:211px; height:34px; line-height:34px; margin:0; padding:0; background: url(../images/inputbox.png) no-repeat #121212; color:#c1c1c1; font-size:13px;}
+#Logintable td .inputbox input{ background:transparent; border:0 none; color:#b6b6b6; font-size:13px; padding-left:10px; width:130px;}
+#Logintable td .loginbutton{ background-color:#2bb3df; border:0 none; width:94px; height:24px; cursor:pointer;}
+
+#Loginbox .copyrightbox{ font-size:13px; text-align:center; position:absolute; bottom:-40px; left:250px; width:250px;}

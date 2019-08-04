@@ -1,0 +1,390 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="category" Type="int" Nullable="false" />
+          <Property Name="artical" Type="text" />
+          <Property Name="cdate" Type="datetime" />
+          <Property Name="cuser" Type="varchar" MaxLength="50" />
+          <Property Name="edate" Type="datetime" />
+          <Property Name="euser" Type="varchar" MaxLength="50" />
+          <Property Name="comment" Type="datetime" />
+          <Property Name="cread" Type="int" Nullable="false" />
+          <Property Name="valid" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="catename" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="remark" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="aid" Type="int" Nullable="false" />
+          <Property Name="uid" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="star" Type="int" Nullable="false" />
+          <Property Name="comment" Type="varchar" MaxLength="200" />
+          <Property Name="cdate" Type="datetime" Nullable="false" />
+          <Property Name="device" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="suggest" Type="varchar" MaxLength="500" />
+          <Property Name="device" Type="varchar" MaxLength="50" />
+          <Property Name="contact" Type="varchar" MaxLength="100" />
+          <Property Name="cdate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Keys">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="keys" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="maxc" Type="int" Nullable="false" />
+          <Property Name="curr" Type="int" Nullable="false" />
+          <Property Name="ver" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="cdate" Type="datetime" Nullable="false" />
+          <Property Name="mark" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Knowledge">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="artical" Type="text" />
+          <Property Name="cdate" Type="datetime" />
+          <Property Name="cuser" Type="varchar" MaxLength="50" />
+          <Property Name="edate" Type="datetime" />
+          <Property Name="euser" Type="varchar" MaxLength="50" />
+          <Property Name="comment" Type="datetime" />
+          <Property Name="cread" Type="int" Nullable="false" />
+          <Property Name="valid" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Quotations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sentence" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="cdate" Type="datetime" />
+          <Property Name="tips" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="psd" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="roles" Type="int" Nullable="false" />
+          <Property Name="nickname" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="gender" Type="bit" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="valid" Type="bit" Nullable="false" />
+          <Property Name="cdate" Type="datetime" Nullable="false" />
+          <Property Name="mark" Type="varchar" MaxLength="200" />
+          <Property Name="head" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Video">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="DataModelStoreContainer">
+          <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Keys" EntityType="Self.Keys" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Knowledge" EntityType="Self.Knowledge" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Quotations" EntityType="Self.Quotations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Video" EntityType="Self.Video" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="aid" Type="Int32" Nullable="false" />
+          <Property Name="uid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="star" Type="Int32" Nullable="false" />
+          <Property Name="comment1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="cdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="device" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="suggest" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="device" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contact" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cdate" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="Keys">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="keys1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="maxc" Type="Int32" Nullable="false" />
+          <Property Name="curr" Type="Int32" Nullable="false" />
+          <Property Name="ver" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="cdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="mark" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Knowledge">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="artical" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cdate" Type="DateTime" Precision="3" />
+          <Property Name="cuser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="edate" Type="DateTime" Precision="3" />
+          <Property Name="euser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="comment" Type="DateTime" Precision="3" />
+          <Property Name="cread" Type="Int32" Nullable="false" />
+          <Property Name="valid" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Quotations">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sentence" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cdate" Type="DateTime" Precision="3" />
+          <Property Name="tips" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="psd" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="roles" Type="Int32" Nullable="false" />
+          <Property Name="nickname" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="gender" Type="Boolean" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="valid" Type="Boolean" Nullable="false" />
+          <Property Name="cdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="mark" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="head" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Video">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Comment" EntityType="Self.Comment" />
+          <EntitySet Name="Feedback" EntityType="Self.Feedback" />
+          <EntitySet Name="Keys" EntityType="Self.Keys" />
+          <EntitySet Name="Knowledge" EntityType="Self.Knowledge" />
+          <EntitySet Name="Quotations" EntityType="Self.Quotations" />
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="Video" EntityType="Self.Video" />
+          <EntitySet Name="Article" EntityType="DataModel.Article" />
+          <EntitySet Name="Category" EntityType="DataModel.Category" />
+        </EntityContainer>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="category" Type="Int32" Nullable="false" />
+          <Property Name="artical" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="cdate" Type="DateTime" Precision="3" />
+          <Property Name="cuser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="edate" Type="DateTime" Precision="3" />
+          <Property Name="euser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="comment" Type="DateTime" Precision="3" />
+          <Property Name="cread" Type="Int32" Nullable="false" />
+          <Property Name="valid" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="catename" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="remark" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DataModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Comment">
+            <EntityTypeMapping TypeName="DataModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="aid" ColumnName="aid" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="star" ColumnName="star" />
+                <ScalarProperty Name="comment1" ColumnName="comment" />
+                <ScalarProperty Name="cdate" ColumnName="cdate" />
+                <ScalarProperty Name="device" ColumnName="device" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feedback">
+            <EntityTypeMapping TypeName="DataModel.Feedback">
+              <MappingFragment StoreEntitySet="Feedback">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="suggest" ColumnName="suggest" />
+                <ScalarProperty Name="device" ColumnName="device" />
+                <ScalarProperty Name="contact" ColumnName="contact" />
+                <ScalarProperty Name="cdate" ColumnName="cdate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Keys">
+            <EntityTypeMapping TypeName="DataModel.Keys">
+              <MappingFragment StoreEntitySet="Keys">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="keys1" ColumnName="keys" />
+                <ScalarProperty Name="maxc" ColumnName="maxc" />
+                <ScalarProperty Name="curr" ColumnName="curr" />
+                <ScalarProperty Name="ver" ColumnName="ver" />
+                <ScalarProperty Name="cdate" ColumnName="cdate" />
+                <ScalarProperty Name="mark" ColumnName="mark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Knowledge">
+            <EntityTypeMapping TypeName="DataModel.Knowledge">
+              <MappingFragment StoreEntitySet="Knowledge">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="artical" ColumnName="artical" />
+                <ScalarProperty Name="cdate" ColumnName="cdate" />
+                <ScalarProperty Name="cuser" ColumnName="cuser" />
+                <ScalarProperty Name="edate" ColumnName="edate" />
+                <ScalarProperty Name="euser" ColumnName="euser" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="cread" ColumnName="cread" />
+                <ScalarProperty Name="valid" ColumnName="valid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Quotations">
+            <EntityTypeMapping TypeName="DataModel.Quotations">
+              <MappingFragment StoreEntitySet="Quotations">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sentence" ColumnName="sentence" />
+                <ScalarProperty Name="cdate" ColumnName="cdate" />
+                <ScalarProperty Name="tips" ColumnName="tips" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DataModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="psd" ColumnName="psd" />
+                <ScalarProperty Name="roles" ColumnName="roles" />
+                <ScalarProperty Name="nickname" ColumnName="nickname" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="valid" ColumnName="valid" />
+                <ScalarProperty Name="cdate" ColumnName="cdate" />
+                <ScalarProperty Name="mark" ColumnName="mark" />
+                <ScalarProperty Name="head" ColumnName="head" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Video">
+            <EntityTypeMapping TypeName="DataModel.Video">
+              <MappingFragment StoreEntitySet="Video">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="url" ColumnName="url" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Article">
+            <EntityTypeMapping TypeName="DataModel.Article">
+              <MappingFragment StoreEntitySet="Article">
+                <ScalarProperty Name="valid" ColumnName="valid" />
+                <ScalarProperty Name="cread" ColumnName="cread" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="euser" ColumnName="euser" />
+                <ScalarProperty Name="edate" ColumnName="edate" />
+                <ScalarProperty Name="cuser" ColumnName="cuser" />
+                <ScalarProperty Name="cdate" ColumnName="cdate" />
+                <ScalarProperty Name="artical" ColumnName="artical" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="DataModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="remark" ColumnName="remark" />
+                <ScalarProperty Name="catename" ColumnName="catename" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

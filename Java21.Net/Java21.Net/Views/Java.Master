@@ -1,0 +1,79 @@
+﻿<%@ Master Language="C#" Inherits="System.Web.Mvc.ViewMasterPage" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta name="keywords" content="21天学通Java,邠心,邠心工作室,Android软件开发,Java学习,BXA学堂,正德应用,自学Java" />
+    <meta name="description" content="《21天学通Java》-邠心工作室-Java学习网站-在线学习，Android软件开发" />
+    <meta name="author" content="邠心" />
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/header.css" rel="stylesheet" />
+    <link href="/css/bootstrap_2.css" rel="stylesheet" />
+    <script src="/Script/jquery.min.js"></script>
+    <script type="text/javascript" src="/Script/jquery-1.4.1.min.js"></script>
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }</script>
+    <script src="/Script/move-top.js"></script>
+    <script src="/Script/easing.js"></script>
+    <title>
+        <asp:ContentPlaceHolder ID="TitleContent" runat="server" />
+    </title>
+    <asp:ContentPlaceHolder ID="HreadContent" runat="server"></asp:ContentPlaceHolder>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <div class="header">
+            <div class="container">
+                <div class="header-main">
+                    <div class="logo">
+                        <a href="index.html">
+                            <img src="/images/logo.png" alt="" />
+                        </a>
+                    </div>
+                    <span class="menu">
+                        <img src="images/menu_icon.png" alt="" />
+                    </span>
+                    <div class="user_box">
+                        <a href="Login">登录</a>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="navg">
+                        <nav class="cl-effect-1">
+                            <ul class="res">
+                                <li><a href="/Home">首页</a></li>
+                                <li><a href="#Features">注册码</a></li>
+                                <li><a href="#Howitworks">视频</a></li>
+                                <li><a href="#Screenhots">文章</a></li>
+                                <li><a href="#Reviews">收藏</a></li>
+                                <li><a href="#Download">论坛</a></li>
+                                <li><a href="About">关于</a></li>
+                            </ul>
+                        </nav>
+                        <script>
+                            $("span.menu").click(function () {
+                                $("ul.res").slideToggle("slow", function () {
+                                    // Animation complete.
+                                });
+                            });
+                        </script>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <asp:ContentPlaceHolder ID="MainContent" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+</body>
+</html>

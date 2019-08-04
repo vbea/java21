@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "Article";
+    Layout = "~/Views/Shared/_LayoutJava.cshtml";
+}@section head{
+    <link href="/css/article.css" rel="stylesheet" />}
+@using Webdiyer.WebControls.Mvc;
+<div class="container">
+    <div class="art">
+        @foreach (var info in Model)
+        {
+            <div class="a_list">
+                <a href='@Html.Raw("/article/"+info.id+".html")'>@info.title</a><br />
+                @if (info.euser.Equals("")) {
+                <span>@Html.Raw("<span class='gray'>" + info.cuser + "</span> 于 " + Convert.ToDateTime(info.cdate).ToString("yyyy-MM-dd HH:mm:ss") + " 发表")
+                </span>
+                }else {
+                <span>@Html.Raw("<span class='gray'>" + info.euser + "</span> 于 " + Convert.ToDateTime(info.edate).ToString("yyyy-MM-dd HH:mm:ss") + " 修改")
+                </span>
+                }
+            </div>
+        }
+        <div class="pager">
+        @Html.Pager((IPagedList)Model, new PagerOptions
+        {
+            PageIndexParameterName = "p",
+            ShowPageIndexBox = false,
+            FirstPageText = "首页",
+            PrevPageText = "上一页",
+            NextPageText = "下一页",
+            LastPageText = "末页",
+            ContainerTagName="li"
+        })</div>
+        @*@Html.Raw("共：") @Model.TotalItemCount @Html.Raw("条，")
+        @Model.CurrentPageIndex @Html.Raw("/") @Model.TotalPageCount @Html.Raw("页")*@
+    </div>
+</div>

@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Video";
+    Layout = "~/Views/Shared/_LayoutJava.cshtml";
+}@section head {
+    <link href="/css/index.css" rel="stylesheet" />
+}<h2>视频列表</h2>
+<div class="temp-grid">
+    <div class="container">
+        <div class="temp-grid-main">
+            <div class="tempgrid-top">
+                @foreach (var item in Model)
+                {
+                    <div class="tempgrid-left">
+                        <embed src="@item.url" quality='high' width='480' height='400' align='middle' allowFullScreen='true' allowScriptAccess='always' type='application/x-shockwave-flash' />
+                        <p>@item.name</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

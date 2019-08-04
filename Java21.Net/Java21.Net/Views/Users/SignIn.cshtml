@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = "注册";
+    Layout = "~/Views/Shared/_LayoutUsers.cshtml";
+}@section head{
+    <style>
+        html, body {
+            height: 100%;
+            background-color: #25AFDE;
+        }
+    </style>
+    <script type="text/javascript">
+        function checkPasswords() {
+            var pass1 = document.getElementById("password");
+            var pass2 = document.getElementById("password2");
+
+            if (pass1.value != pass2.value)
+                pass2.setCustomValidity("两次输入的密码不匹配");
+            else
+                pass2.setCustomValidity("");
+        }
+    </script>
+}<div class="sign-bbox">
+    <div class="sign-box">
+        <div class="login-title text-center">
+            <h1><small>注册</small></h1>
+        </div>
+        <div class="sign-content ">
+            <div class="form">
+                <form action="SignIn" method="post">
+                    <div class="form-group">
+                        <div class="col-xs-12  ">
+                            <div class="input-group">
+                                <span class="input-group-addon">账 号</span>
+                                <input type="text" id="username" name="username" class="form-control" placeholder="登录凭证,3-11位的数字或字母" required="required" pattern="^[A-Za-z0-9]{3,11}$" value="@ViewData["username"]" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12  ">
+                            <div class="input-group">
+                                <span class="input-group-addon">密 码</span>
+                                <input type="password" id="password" name="password" class="form-control" placeholder="不超过16位的字母和数字组合" required="required" maxlength="16" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12  ">
+                            <div class="input-group">
+                                <span class="input-group-addon">验 证</span>
+                                <input type="password" id="password2" name="password2" class="form-control" placeholder="确认密码" required="required" maxlength="16" onchange="checkPasswords()" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12  ">
+                            <div class="input-group">
+                                <span class="input-group-addon">邮 箱</span>
+                                <input name="email" type="email" maxlength="100" class="form-control" id="email" pattern="@ViewData["EmailEx"]" required="required" placeholder="email@example.com" value="@ViewData["email"]"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12  ">
+                            <div class="input-group">
+                                <span class="input-group-addon">昵 称</span>
+                                <input type="text" id="nick" name="nick" class="form-control" required="required" maxlength="10" value="@ViewData["nick"]" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12  ">
+                            <div class="input-group">
+                                <span class="input-group-addon">性 别</span>
+                                <select id="gender" name="gender" class="form-control">
+                                    <option value="0" selected="selected">男</option>
+                                    <option value="1">女</option>
+                                </select>
+                                @*<input type="radio" name="gender" id="gender" value="0" checked="checked"/>男
+                                <input type="radio" name="gender" id="gender" value="1"/>女*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-xs-4 col-xs-offset-4 text-center">
+                            <button type="submit" class="btn btn-sm btn-info">注 册</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6 link">
+                            <p class="text-left remove-margin text-error">
+                                @ViewData["RegistMsg"]
+                                <!--<small>忘记密码？</small>-->
+                            </p>
+                        </div>
+                        <div class="col-xs-6 link">
+                            <p class="text-center remove-margin">
+                                <small>已有账号，点此</small> <a href="/Users/Login"><small>登录</small></a>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

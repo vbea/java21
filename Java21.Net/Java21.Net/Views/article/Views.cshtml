@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = Model.title;
+    Layout = "~/Views/Shared/_LayoutJava.cshtml";
+}@section head{
+    <script src='/Script/mathquill/mathquill.js'></script>
+    <link rel='stylesheet' href='/Script/mathquill/mathquill.css' />
+    <link href="/css/shCoreDefault.css" rel="stylesheet" />
+    <script src="/Script/comment.js"></script>
+    <script src="/Script/jquery.qqFace.js"></script>
+    <script src="/Script/shCore.js"></script>
+    <script src="/Script/shBrushJava.js"></script>
+    <link href="/css/article.css" rel="stylesheet" />
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+        imgClear();
+        $(function () {
+            $('.emotion').qqFace({
+                assign: 'txtComment',
+                path: '/images/arclist/'
+            });
+        });
+    </script>
+}<div class="art">
+    <div class="container">
+        <div class="text-center" style="font-size:larger; font-weight:bold; padding:10px;">@Model.title</div>
+        <div class="text">@Html.Raw(Model.artical)</div>
+</div>
+</div>

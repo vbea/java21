@@ -1,0 +1,376 @@
+﻿html, body {
+    font-family: 'Lato', sans-serif;
+    font-size: 100%;
+    background: #fff;
+}
+
+h4, h5, h6,
+h1, h2, h3 {
+    margin-top: 0;
+}
+
+ul, ol {
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+
+/*--header start here--*/
+nav a, nav {
+    position: relative;
+    display: inline-block;
+    outline: none;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 400;
+    text-shadow: 0 0 1px rgba(255,255,255,0.3);
+    font-size: 1.35em;
+}
+
+    nav a:hover,
+    nav a:focus {
+        outline: none;
+        text-decoration: none;
+    }
+
+/* Effect 1: Brackets */
+.cl-effect-1 a::before,
+.cl-effect-1 a::after {
+    display: inline-block;
+    opacity: 0;
+    -webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
+    -moz-transition: -moz-transform 0.3s, opacity 0.2s;
+    transition: transform 0.3s, opacity 0.2s;
+}
+
+.cl-effect-1 a::before {
+    margin-right: 10px;
+    content: '[';
+    -webkit-transform: translateX(20px);
+    -moz-transform: translateX(20px);
+    transform: translateX(20px);
+}
+
+.cl-effect-1 a::after {
+    margin-left: 10px;
+    content: ']';
+    -webkit-transform: translateX(-20px);
+    -moz-transform: translateX(-20px);
+    transform: translateX(-20px);
+}
+
+.cl-effect-1 a:hover::before,
+.cl-effect-1 a:hover::after,
+.cl-effect-1 a:focus::before,
+.cl-effect-1 a:focus::after {
+    opacity: 1;
+    -webkit-transform: translateX(0px);
+    -moz-transform: translateX(0px);
+    transform: translateX(0px);
+}
+
+.banner {
+    background: #25AFDE;
+}
+
+.header {
+    background: #4780AE;
+    padding: 6px 0px;
+}
+
+.banner-grids {
+    padding: 85px 0px 0px 0px;
+}
+
+.banner-right {
+    text-align: center;
+}
+
+.logo {
+    float: left;
+}
+
+.navg {
+    float: right;
+    padding: 20px 0px 10px 0px;
+}
+
+    .navg ul {
+        padding: 10px 0px 0px 0px;
+        list-style: none;
+    }
+
+        .navg ul li {
+            display: inline-block;
+        }
+
+            .navg ul li a {
+                font-size: 17px;
+                font-weight: 500;
+                color: #fff;
+            }
+
+                .navg ul li a:hover {
+                    color: #FEA963;
+                    text-decoration: none;
+                    transition: 0.5s all;
+                    -webkit-transition: 0.5s all;
+                    -moz-transition: 0.5s all;
+                    -o-transition: 0.5s all;
+                }
+
+.user_box {
+    float: right;
+    padding: 5px 15px 10px 15px;
+    color: white;
+}
+
+    .user_box figure .user_log {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 40px;
+        border: 1px solid #ccc;
+        overflow: hidden;
+        -webkit-box-shadow: 0 0 3px #ccc;
+        box-shadow: 0 0 3px #ccc;
+    }
+
+    .user_box figure .user_div {
+        text-align: center;
+        color: white;
+        font-size: 0.8em;
+    }
+
+    .user_box figure div img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .user_box a {
+        font-size: small;
+        font-weight: 500;
+        color: #fff;
+    }
+
+        .user_box a:hover {
+            color: white;
+            transition: 0.5s all;
+            -webkit-transition: 0.5s all;
+            -moz-transition: 0.5s all;
+            -o-transition: 0.5s all;
+        }
+
+.banner-right h1 {
+    font-size: 40px;
+    font-weight: 500;
+    color: #fff;
+    padding: 35px 0px;
+    line-height: 1.8em;
+}
+
+.banner-left img {
+    width: 100%;
+}
+
+span.menu {
+    display: none;
+}
+
+/* 菜单不同屏幕适应-响应 */
+@media(max-width:1024px) {
+    .navg ul li a {
+        font-size: 14px;
+    }
+}
+
+@media(max-width:768px) {
+    span.menu {
+        display: block;
+        cursor: pointer;
+        float: right;
+        padding-top: 25px;
+        padding-right: 10px;
+    }
+
+
+    ul.res {
+        display: none;
+        padding: 0px;
+    }
+
+    .navg {
+        float: none;
+        width: 100%;
+    }
+
+    ul.res li a:hover, ul.res li a.active {
+        color: #fff;
+        transition: 0.5s all;
+        -webkit-transition: 0.5s all;
+        -moz-transition: 0.5s all;
+        -o-transition: 0.5s all;
+    }
+
+    .navg ul.res li a {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        color: #fff;
+        font-size: 14px;
+        background: #239ec8;
+    }
+
+        .navg ul.res li a:hover {
+            color: #FB7A08;
+            border: none;
+            text-decoration: none;
+            transition: 0.5s all;
+            -webkit-transition: 0.5s all;
+            -moz-transition: 0.5s all;
+            -o-transition: 0.5s all;
+        }
+
+    .navg ul.res li {
+        display: block;
+        text-align: center;
+        margin: 0px;
+        background-color: #fff;
+    }
+
+    .clear {
+        clear: both;
+    }
+
+    .banner-left {
+        float: left;
+        width: 60%;
+    }
+
+    .banner-right {
+        float: right;
+        width: 40%;
+    }
+
+    .logo img {
+        width: 80%;
+    }
+
+    .banner-right img {
+        width: 60%;
+    }
+
+    .banner-right h1 {
+        font-size: 23px;
+    }
+}
+
+@media(max-width:640px) {
+}
+
+@media(max-width:480px) {
+    .logo img {
+        width: 70%;
+    }
+
+    .banner-bwn a {
+        font-size: 11px;
+    }
+
+    .banner-right h1 {
+        font-size: 15px;
+        padding: 15px 0px;
+    }
+
+    .banner-grids {
+        padding: 30px 0px 0px 0px;
+    }
+}
+
+@media(max-width:320px) {
+    .logo img {
+        width: 60%;
+    }
+
+    span.menu {
+        padding-top: 0px;
+    }
+
+    .header {
+        padding: 15px 0px;
+    }
+
+    .banner-bwn a {
+        font-size: 7px;
+        padding: 9px 6px;
+    }
+
+    .banner-right h1 {
+        font-size: 13px;
+        padding: 6px 0px;
+    }
+}
+
+.user_menu {
+    width: 100px;
+    display: none;
+    float: left;
+    list-style-type: none;
+    position: absolute;
+    background: url(/images/bg_menu.png);
+    margin: 0px;
+    padding: 11px 1px 1px 1px;
+    z-index: 100;
+}
+
+    .user_menu li a {
+        color: black;
+        display: block;
+        cursor: pointer;
+        width: 100%;
+        padding: 5px 10px;
+    }
+
+        .user_menu li a:hover {
+            display: block;
+            background-color: #25AFDE;
+            text-decoration: none;
+            color: white;
+        }
+
+@media (min-width: 320px) { /*>=320的设备*/
+
+}
+
+@media (min-width: 768px) { /*>=768的设备*/
+    
+}
+
+@media (min-width: 992px) { /*>=992的设备*/
+
+}
+
+@media (min-width: 1200px) { /*>=1200的设备*/
+
+}
+
+#toTop {
+        display: none;
+        text-decoration: none;
+        position: fixed;
+        bottom: 0px;
+        right: 10px;
+        overflow: hidden;
+        width: 48px;
+        height: 48px;
+        border: none;
+        text-indent: 100%;
+        background-size: 35px;
+        background: url(/images/arr.png) no-repeat 0px 0px;
+        z-index:99999;
+        outline:0;
+    }

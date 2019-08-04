@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "登录";
+    Layout = "~/Views/Shared/_LayoutUsers.cshtml";
+}@section head{
+<style>
+    html, body {
+      height: 100%;
+    }
+</style>
+}<div class="box">
+    <div class="login-box">
+        <div class="login-title text-center">
+            <h1><small>登录</small></h1>
+        </div>
+        <div class="login-content ">
+            <div class="form">
+                <form action="Login" method="post">
+                    <div class="form-group">
+                        <div class="col-xs-12  ">
+                            <div class="input-group">
+                                <span class="input-group-addon"><img src="/images/ic_user.png" /></span>
+                                <input type="text" id="username" name="username" class="form-control" placeholder="用户名/邮箱" required="required" value="@ViewData["username"]" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-12  ">
+                            <div class="input-group">
+                                <span class="input-group-addon"><img src="/images/ic_password.png" /></span>
+                                <input type="password" id="password" name="password" class="form-control" placeholder="密码" required="required" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-actions">
+                        <div class="col-xs-4 col-xs-offset-4 text-center">
+                            <button type="submit" class="btn btn-sm btn-info">登 录</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-xs-6 link">
+                            <p class="text-left remove-margin text-error">
+                                @ViewData["LoginMsg"]
+                                <!--<small>忘记密码？</small>-->
+                            </p>
+                        </div>
+                        <div class="col-xs-6 link">
+                            <p class="text-center remove-margin">
+                                <small>还没注册?</small> <a href="/Users/SignIn"><small>注册</small></a>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

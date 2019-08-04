@@ -1,0 +1,338 @@
+﻿.page {
+    width: 98%;
+    min-height: 500px;
+    padding: 0;
+    margin: 0 auto;
+}
+
+.pagea {
+    width: 500px;
+    height: 100%;
+    padding: 0;
+    margin: 0 auto;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 5%;
+}
+
+.pager_in {
+    width: 100%;
+    background-color: #FFF;
+    color: black;
+    text-align: left;
+    padding-left: 10px;
+    border-top: 1px solid #4780AE;
+}
+
+.content {
+    width: 98%;
+    padding: 5px;
+    text-align: left;
+    font-size: 15px;
+}
+
+.emotion {
+    padding-right: 5px;
+}
+
+label {
+    display: inline-block !important;
+    vertical-align: middle;
+    margin: 0px !important;
+}
+
+.gv_hrader {
+    border: #4780AE 1px solid;
+}
+
+.gv_row {
+    border-left: 1px solid #4780AE;
+    border-right: 1px solid #4780AE;
+}
+
+.gv2_row {
+    border: 1px solid #4780AE;
+}
+
+.com_row {
+    border-bottom: #EEEEEE 1px solid;
+}
+
+.grid_b
+{
+    margin: 10px auto;
+}
+
+.err {
+    color: red;
+    text-align: left;
+}
+
+.blue {
+    color: blue;
+}
+
+.gray {
+    color: #555555;
+}
+
+.gray2{
+    color:#CCCCCC;
+    font-size:11px;
+}
+
+body {
+    background-color: white;
+}
+
+img {
+    border-style: none;
+}
+
+.jar_a {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    text-decoration: none;
+    color: #353535 !important;
+}
+
+    .jar_a:link {
+        text-decoration: none;
+    }
+
+    .jar_a:hover {
+        text-decoration: none;
+    }
+
+a:link {
+    color: blue;
+    text-decoration: none;
+}
+
+a:visited {
+    color: blue;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #F75733;
+    text-decoration: underline;
+}
+
+.menudiv {
+    width: 100%;
+    height: 35px;
+    background-color: #4780AE;
+}
+
+.table_i {
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table_m {
+    width: 160px;
+    height: 30px;
+    text-align: left;
+    line-height: 30px;
+    display: block;
+}
+
+.menu {
+    width: 98%;
+    height: 35px;
+    padding: 0px;
+    padding-left: 15px;
+}
+
+    .menu li {
+        width: 75px;
+        list-style: none;
+        float: left;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        line-height: 33px;
+        background-color: #4780AE;
+    }
+
+        .menu li a {
+            display: block;
+            text-align: center;
+            height: 31px;
+            font-size: 11pt;
+        }
+
+            .menu li a:link {
+                color: white;
+                font-weight: bold;
+                text-decoration: none;
+                background-color: #4780AE;
+            }
+
+            .menu li a:visited {
+                color: white;
+                font-weight: bold;
+                text-decoration: none;
+                background-color: #4780AE;
+            }
+
+            .menu li a:hover {
+                color: #DDDDDD;
+                font-weight: bold;
+                text-decoration: none;
+                background: #629bc8;
+            }
+
+.logo {
+    height: 80px;
+    background: url(../images/logo.png) no-repeat;
+    text-align: right;
+    padding-right: 10px;
+}
+
+button {
+    cursor: pointer;
+    -webkit-appearance: button;
+}
+
+html input[type='button'] {
+    cursor: pointer;
+    -webkit-appearance: button;
+}
+
+input[type='reset'] {
+    cursor: pointer;
+    -webkit-appearance: button;
+}
+
+input[type='submit'] {
+    cursor: pointer;
+    -webkit-appearance: button;
+}
+
+.btn {
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(187, 187, 187) rgb(187, 187, 187) rgb(162, 162, 162);
+    padding: 4px 12px;
+    border-radius: 4px;
+    border-image: none;
+    text-align: center;
+    color: rgb(127, 127, 127);
+    line-height: 20px;
+    font-size: 14px;
+    margin-bottom: 0px;
+    vertical-align: middle;
+    display: inline-block;
+    cursor: pointer;
+    box-shadow: inset 0px 1px 0px rgba(255,255,255,0.2), 0px 1px 2px rgba(0,0,0,0.05);
+    text-shadow: 0px 1px 1px rgba(255,255,255,0.75);
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(230, 230, 230));
+    background-repeat: repeat-x;
+    background-color: rgb(245, 245, 245);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, .2), 0 1px 2px rgba(0, 0, 0, .05);
+}
+
+    .btn:hover {
+        color: rgb(127, 127, 127);
+        background-color: rgb(230, 230, 230);
+    }
+
+    .btn:focus {
+        color: rgb(127, 127, 127);
+        background-color: rgb(230, 230, 230);
+    }
+
+    .btn:active {
+        color: rgb(127, 127, 127);
+        background-color: rgb(230, 230, 230);
+    }
+
+.active.btn {
+    color: rgb(127, 127, 127);
+    background-color: rgb(230, 230, 230);
+}
+
+.disabled.btn {
+    color: rgb(127, 127, 127);
+    background-color: rgb(230, 230, 230);
+}
+
+[disabled].btn {
+    color: rgb(127, 127, 127);
+    background-color: rgb(230, 230, 230);
+}
+
+.btn-info {
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: rgb(255, 255, 255);
+    text-shadow: 0px -1px 0px rgba(0,0,0,0.25);
+    background-image: linear-gradient(rgb(91, 192, 222), rgb(47, 150, 180));
+    background-repeat: repeat-x;
+    background-color: rgb(73, 175, 205);
+}
+
+    .btn-info:hover {
+        color: rgb(255, 255, 255);
+        background-color: rgb(47, 150, 180);
+    }
+
+    .btn-info:focus {
+        color: rgb(255, 255, 255);
+        background-color: rgb(47, 150, 180);
+    }
+
+    .btn-info:active {
+        color: rgb(255, 255, 255);
+        background-color: rgb(47, 150, 180);
+    }
+
+.active.btn-info {
+    color: rgb(255, 255, 255);
+    background-color: rgb(47, 150, 180);
+}
+
+.disabled.btn-info {
+    color: rgb(255, 255, 255);
+    background-color: rgb(47, 150, 180);
+}
+
+[disabled].btn-info {
+    color: rgb(255, 255, 255);
+    background-color: rgb(47, 150, 180);
+}
+
+input:valid:not([type='file']) {
+    border: 1px solid rgb(0, 160, 176);
+    border-image: none;
+}
+
+input:invalid:not([type='file']) {
+    border: 1px solid rgb(255, 133, 0);
+    border-image: none;
+}
+
+.qqFace {
+    margin-top: 4px;
+    background: #fff;
+    padding: 2px;
+    border: 1px #dfe6f6 solid;
+}
+
+    .qqFace table td {
+        padding: 0px;
+    }
+
+        .qqFace table td img {
+            cursor: pointer;
+            border: 1px #fff solid;
+        }
+
+            .qqFace table td img:hover {
+                border: 1px #0066cc solid;
+            }

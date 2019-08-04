@@ -1,0 +1,28 @@
+﻿.art{
+    width:80%;
+    margin:0px auto;
+    background-color:white;
+}
+.a_list{
+    padding:10px 20px;
+    border-bottom:1px #CCCCCC dashed;
+}
+.a_list a{
+    width:100%;
+    color:black;
+    text-decoration:none;
+    font-size:1.5em;
+    outline:0;
+}
+.a_list a:hover{
+    text-decoration:underline;
+}
+.a_list span{
+    padding:5px;
+    color:#CCCCCC;
+    font-size:0.9em;
+}
+
+.gray{
+    color:#808080 !important;
+}

@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Java21.Net", "Java21.Net\Java21.Net.csproj", "{1696D9E1-5714-4704-A90C-0CF61622832E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Java21.Logic", "Java21.Logic\Java21.Logic.csproj", "{92A8C845-B253-4892-AEE9-2DDB8E13F5F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Java21.Data", "Java21.Data\Java21.Data.csproj", "{35D0705A-7225-4CC7-86CD-32EB989DDD14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Java21.Model", "Java21.Model\Java21.Model.csproj", "{2F23461F-EBCF-4A98-985D-2D61C946FA93}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1696D9E1-5714-4704-A90C-0CF61622832E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1696D9E1-5714-4704-A90C-0CF61622832E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1696D9E1-5714-4704-A90C-0CF61622832E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1696D9E1-5714-4704-A90C-0CF61622832E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92A8C845-B253-4892-AEE9-2DDB8E13F5F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92A8C845-B253-4892-AEE9-2DDB8E13F5F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92A8C845-B253-4892-AEE9-2DDB8E13F5F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92A8C845-B253-4892-AEE9-2DDB8E13F5F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35D0705A-7225-4CC7-86CD-32EB989DDD14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35D0705A-7225-4CC7-86CD-32EB989DDD14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35D0705A-7225-4CC7-86CD-32EB989DDD14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35D0705A-7225-4CC7-86CD-32EB989DDD14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F23461F-EBCF-4A98-985D-2D61C946FA93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F23461F-EBCF-4A98-985D-2D61C946FA93}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F23461F-EBCF-4A98-985D-2D61C946FA93}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F23461F-EBCF-4A98-985D-2D61C946FA93}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -49,7 +49,7 @@
 	</string>
 	<string name="settings">设置
 	</string>
-	<string name="more">音乐盛典
+	<string name="more">音乐小窝
 	</string>
 	<string name="morelist">音乐列表
 	</string>
@@ -117,14 +117,14 @@
 	<string name="fileselect">选择保存位置</string>
 	<string name="bookmark">书签</string>
 	<string name="history">历史记录</string>
-	<string name="version">V 7.3.1 Build 1688
+	<string name="version">V 8.0.0 Build 1800
 	</string>
-	<string name="update">7.3.1 (1688)
+	<string name="update">8.0.0 (1800)
 	</string>
-	<integer name="versionCode">1680</integer>
-	<string name="abt_ver">当前版本：v7.3.1
-		\n1.浏览器新增对在线播放视频的全屏和屏幕常亮的支持
-		\n2.浏览器下载文件功能的BUG修复
+	<integer name="versionCode">1800</integer>
+	<string name="abt_ver">当前版本：v8.0.0
+		\n1.修复SQL教程无法打开的问题
+		\n2.浏览器视频全屏可根据设备方向切换横竖屏
 		\n3.其他细节优化
 	</string>
 	<string name="shared">share_image</string>
@@ -154,7 +154,7 @@
     <string name="txt_delete">删除</string>
     <string name="txt_reply">回复</string>
     <string name="load_failed">加载失败\n请检查你的网络连接</string>
-	<string name="txt_lastrow">我是有底线的</string>
+	<string name="txt_lastrow">到底啦</string>
 	<string name="txt_lastload">玩命加载中</string>
 	<string name="txt_setreaded">设为已读</string>
 	<string name="activity_admin">管理工具</string>

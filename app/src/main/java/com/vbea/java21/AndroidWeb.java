@@ -125,6 +125,10 @@ public class AndroidWeb extends BaseActivity
 					Intent intent = new Intent(AndroidWeb.this, ShowWebImage.class);
 					intent.putExtra("url", url.replace("img://", ""));
 					Common.startActivityOptions(AndroidWeb.this, intent);
+				} else if (url.startsWith("weixin://")) {
+					Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+					startActivity(intent);
 				} else {
 					Intent intent = new Intent(AndroidWeb.this, HtmlViewer.class);
 					intent.setAction(Intent.ACTION_VIEW);

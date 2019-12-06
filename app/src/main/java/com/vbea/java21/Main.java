@@ -59,7 +59,7 @@ public class Main extends BaseActivity
     private ActionBarDrawerToggle drawerToggle;
 	private ImageView mImgHead;
 	private long exitTime = 0;
-	private LinearLayout drawMuic, drawTheme, drawHelp, drawWifi, drawCodeEditor, layoutTips;
+	private LinearLayout drawMuic, drawTheme, drawHelp, drawCodeEditor, layoutTips;
 	private RelativeLayout drawUser;
 	private TextView txtUserName, txtSignature, txtAudioCode, txtVip;
 	private CustomTextView txtCotation;
@@ -89,7 +89,7 @@ public class Main extends BaseActivity
 		drawMuic = bind(R.id.drawer_music);
 		drawTheme = bind(R.id.draw_item1);
 		drawHelp = bind(R.id.drawer_helpLayout);
-		drawWifi = bind(R.id.drawer_wifiLayout);
+		//drawWifi = bind(R.id.drawer_wifiLayout);
 		drawCodeEditor = bind(R.id.drawer_codeEditor);
 		drawUser = bind(R.id.draw_user);
 		layoutTips = bind(R.id.layout_tips);
@@ -367,13 +367,13 @@ public class Main extends BaseActivity
 		if (Common.isLogin())
 		{
 			//drawSms.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
-			drawWifi.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
+			//drawWifi.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
 			drawCodeEditor.setVisibility(Common.isAdminUser() ? View.VISIBLE : View.GONE);
 		}
 		else
 		{
 			//drawSms.setVisibility(View.GONE);
-			drawWifi.setVisibility(View.VISIBLE);
+			//drawWifi.setVisibility(View.VISIBLE);
 			drawCodeEditor.setVisibility(View.GONE);
 		}
 	}
@@ -402,7 +402,7 @@ public class Main extends BaseActivity
 		MyAlertDialog builder = new MyAlertDialog(this);
 		builder.setTitle("提示");
 		builder.setCancelable(false);
-		builder.setMessage("学累了吧，要不要去音乐盛典听听音乐放松下？");
+		builder.setMessage("学累了吧，要不要去音乐小窝听听音乐放松下？");
 		builder.setPositiveButton("去看看", new DialogInterface.OnClickListener()
 		{
 			public void onClick(DialogInterface d, int p)
@@ -862,13 +862,14 @@ public class Main extends BaseActivity
 		}
 	};
 
-	/*@Override
+	@Override
 	protected void onStop()
 	{
-		if (Common.isSupportMD())
-			toolbar.setTransitionName(getString(R.string.shared));
+		/*if (Common.isSupportMD())
+			toolbar.setTransitionName(getString(R.string.shared));*/
+		StatService.onStop(this);
 		super.onStop();
-	}*/
+	}
 	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)

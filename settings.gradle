@@ -1,1 +1,1 @@
-include ':app',':final'
+include ':app'

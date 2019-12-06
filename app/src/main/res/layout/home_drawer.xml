@@ -212,7 +212,7 @@
 				android:layout_marginBottom="5dp"
 				android:textColor="?attr/colorAccent"
 				android:textSize="12sp"
-				android:text="实用工具(需登录)"
+				android:text="实用工具"
 				android:singleLine="true"/>
 			<LinearLayout
 				android:layout_width="match_parent"
@@ -269,7 +269,7 @@
 					android:textSize="16sp"
 					android:singleLine="true"/>
 			</LinearLayout>
-			<LinearLayout
+			<!--LinearLayout
 				android:id="@+id/drawer_wifiLayout"
 				android:layout_width="match_parent"
 				android:layout_height="60dp"
@@ -296,7 +296,7 @@
 					android:textSize="16sp" 
 					android:singleLine="true"/>
 			</LinearLayout>
-			<!--LinearLayout
+			<LinearLayout
 				android:id="@+id/drawer_smsLayout"
 				android:layout_width="match_parent"
 				android:layout_height="60dp"

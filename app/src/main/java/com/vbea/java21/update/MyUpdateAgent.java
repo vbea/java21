@@ -1,6 +1,11 @@
 package com.vbea.java21.update;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 import android.app.Activity;
@@ -26,7 +31,6 @@ import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.DownloadFileListener;
 import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.update.AppVersion;
 
 /**
  * Created by Vbe on 2018/12/6.
@@ -38,6 +42,7 @@ public class MyUpdateAgent {
     private String filename = "";
     private NotificationManager notificationManager;
     private int percents = -1;
+    private UpdateResponse response;
 
     private MyUpdateAgent(Activity a) {
         activity = a;
@@ -69,7 +74,8 @@ public class MyUpdateAgent {
                     if (objects != null && objects.size() > 0) {
                         AppVersion appVersion = objects.get(0);
                         if (appVersion != null) {
-                            showUpdateDialog(new UpdateResponse(appVersion));
+                            response = new UpdateResponse(appVersion);
+                            showUpdateDialog();
                         }
                     }
                 } else {
@@ -79,7 +85,8 @@ public class MyUpdateAgent {
         });
     }
 
-    private void showUpdateDialog(final UpdateResponse response) {
+    private void showUpdateDialog() {
+        if (response == null) return;
         if (response.target_size <= 0L) {
             Util.toastShortMessage(context,"target_size为空或格式不对，请填写apk文件大小(long类型)。");
             return;
@@ -91,7 +98,9 @@ public class MyUpdateAgent {
         }
 
         filename = response.path_md5 + ".apk";
-        final File file = new File(Common.getUpdatePath(), filename);
+        File dist = new File(Common.getUpdatePath());
+        if (!dist.exists()) dist.mkdirs();
+        final File file = new File(dist, filename);
         if (file.exists() && file.length() == response.target_size) {
             isExist = true;
         }
@@ -142,6 +151,8 @@ public class MyUpdateAgent {
     }
 
     private void installApk(File file) {
+        response.appVersion.addInstall();
+        response.appVersion.update();
         Intent intent = new Intent();
         intent.setAction(android.content.Intent.ACTION_VIEW);
         String mime = Util.getMimeType(filename);
@@ -152,6 +163,33 @@ public class MyUpdateAgent {
         }
         intent.setDataAndType(Uri.fromFile(file), mime);
         activity.startActivity(intent);
+    }
+
+    private void downloadApk(final String url, final File file) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getNetFile(url, file, new OnUpdateAgent() {
+                    @Override
+                    public void done() {
+                        notificationManager.cancelAll();
+                        response.appVersion.addDownload();
+                        response.appVersion.update();
+                        if (file.exists())
+                            installApk(file);
+                    }
+
+                    @Override
+                    public void onProgress(long l) {
+                        int per = (int)(l * 100 / response.target_size);
+                        if (percents != per) {
+                            createNotification(context.getString(R.string.bmob_common_action_info_exist) + percents + "%");
+                            percents = per;
+                        }
+                    }
+                });
+            }
+        }).start();
     }
 
     private void downloadApk(BmobFile bmobFile, final File file) {
@@ -198,5 +236,37 @@ public class MyUpdateAgent {
             ExceptionHandler.log("update:getVersionCode", e);
         }
         return 0;
+    }
+
+    private void getNetFile(String uri, File file, OnUpdateAgent agent) {
+        // 下载网络上的文件
+        try
+        {
+            URL myFileUrl = new URL(uri);
+            HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
+            conn.setDoInput(true);
+            conn.connect();
+            InputStream is = conn.getInputStream();
+            FileOutputStream fos = new FileOutputStream(file);
+            byte[] b = new byte[1024];
+            int length = 0;
+            long total = 0L;
+            while((length = is.read(b)) > 0) {
+                fos.write(b,0, length);
+                total += length;
+                agent.onProgress(total);
+            }
+            is.close();
+            fos.close();
+        } catch (OutOfMemoryError | IOException e) {
+            e.printStackTrace();
+        } finally {
+            agent.done();
+        }
+    }
+
+    interface OnUpdateAgent {
+        void done();
+        void onProgress(long l);
     }
 }

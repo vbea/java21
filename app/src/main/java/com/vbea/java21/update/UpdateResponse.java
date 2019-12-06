@@ -4,13 +4,12 @@ import com.vbea.java21.classes.MD5Util;
 import com.vbea.java21.classes.Util;
 
 import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.update.AppVersion;
 
 /**
  * Created by Vbe on 2018/12/7.
  */
 public class UpdateResponse {
-    public BmobFile path;
+    public String path;
     public String path_md5;
     public String version = null;
     public Integer version_i;
@@ -18,8 +17,10 @@ public class UpdateResponse {
     public long target_size;
     public String format_size;
     public Boolean isforce;
+    public AppVersion appVersion;
 
     public UpdateResponse(AppVersion app) {
+        this.appVersion = app;
         this.updateLog = app.getUpdate_log();
         this.version = app.getVersion();
         this.version_i = app.getVersion_i();
@@ -30,9 +31,9 @@ public class UpdateResponse {
         if (this.isforce == null) {
             this.isforce = false;
         }
-        if (app.getPath() != null) {
-            this.path = app.getPath();
-            this.path_md5 = MD5Util.getMD5(this.path.getFileUrl());
+        if (app.getLink() != null) {
+            this.path = app.getLink();
+            this.path_md5 = app.getPath_md5();// MD5Util.getMD5(this.path);
         }
         try {
             this.target_size = Long.parseLong(app.getTarget_size());

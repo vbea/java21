@@ -1014,7 +1014,7 @@ public class HtmlViewer extends BaseActivity
 
 		public void onGeolocationPermissionsShowPrompt(final String origin, final android.webkit.GeolocationPermissions.Callback callback)
 		{
-			Util.showConfirmCancelDialog(HtmlViewer.this, "提示", "来自"+origin+"的网页正在请求定位，请确认是否允许？", new DialogInterface.OnClickListener()
+			Util.showConfirmCancelDialog(HtmlViewer.this, "提示", "来自"+origin+"的网页正在请求定位，是否允许？", new DialogInterface.OnClickListener()
 			{
 				public void onClick(DialogInterface d, int s)
 				{
@@ -1097,7 +1097,7 @@ public class HtmlViewer extends BaseActivity
 			fullVideoLayout.addView(view);
 			fullVideoLayout.setVisibility(View.VISIBLE);
 			getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_LOW_PROFILE);
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
 			getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		}
 

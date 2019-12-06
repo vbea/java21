@@ -7,11 +7,11 @@ import cn.bmob.v3.datatype.BmobFile;
 
 public class SQLHtml extends BmobObject implements ILearnList
 {
-	public String title;
-	public BmobFile file;
-	public Integer order;
-	public Boolean isTitle;
-	public Boolean enable;
+	private String title;
+	private String url;
+	private Integer order;
+	private Boolean isTitle;
+	private Boolean enable;
 
 	@Override
 	public String getTitle() {
@@ -30,9 +30,7 @@ public class SQLHtml extends BmobObject implements ILearnList
 
 	@Override
 	public String getUrl() {
-		if (file != null)
-			return file.getFileUrl();
-		return "";
+		return url;
 	}
 
 	@Override

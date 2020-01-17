@@ -1,4 +1,4 @@
 debug.keystore
 build
-build.gradle
 local.properties
+/app/cert.properties

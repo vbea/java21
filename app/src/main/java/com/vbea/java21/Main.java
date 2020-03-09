@@ -639,6 +639,7 @@ public class Main extends BaseActivity
 			bannerView.destroy();
 			bannerView = null;
 		}
+		mHandler.removeCallbacksAndMessages(null);
 		super.onDestroy();
 	}
 	
@@ -874,7 +875,7 @@ public class Main extends BaseActivity
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
-		if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN)
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN)
 		{
 			if (!mDrawerLayout.isDrawerOpen(Gravity.START))
 			{

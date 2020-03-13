@@ -30,8 +30,8 @@
 				android:background="?attr/titleColor">
 				<LinearLayout
 					android:id="@+id/topLayout"
-					android:layout_width="fill_parent"
-					android:layout_height="fill_parent"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
 					android:paddingTop="10dp"
 					android:gravity="center"
 					android:orientation="vertical">
@@ -71,19 +71,17 @@
 			android:id="@+id/content_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-			android:divider="@drawable/ic_divider"
-			android:showDividers="middle">
+            android:orientation="vertical">
 			<TableRow
 				android:id="@+id/btn_info_user"
-				android:layout_width="fill_parent"
+				android:layout_width="match_parent"
 				android:layout_height="56dp"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp"
+				android:paddingLeft="@dimen/activity_vertical_margin"
+				android:paddingRight="@dimen/activity_vertical_margin"
 				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:layout_weight="1"
 					android:gravity="center_vertical"
 					android:textSize="16sp"
@@ -92,21 +90,21 @@
 				<TextView
 					android:id="@+id/info_level"
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:gravity="center_vertical"
 					android:textSize="14sp"
 					android:singleLine="true"
 					android:textColor="?attr/colorAccent"/>
 			</TableRow>
 			<TableRow
-				android:layout_width="fill_parent"
+				android:layout_width="match_parent"
 				android:layout_height="56dp"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp"
+				android:paddingLeft="@dimen/activity_vertical_margin"
+				android:paddingRight="@dimen/activity_vertical_margin"
 				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:layout_weight="1"
 					android:gravity="center_vertical"
 					android:textSize="16sp"
@@ -115,21 +113,21 @@
 				<TextView
 					android:id="@+id/info_role"
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:gravity="center_vertical"
 					android:textSize="14sp"
 					android:singleLine="true"
 					android:textColor="?attr/colorAccent"/>
 			</TableRow>
 			<TableRow
-				android:layout_width="fill_parent"
+				android:layout_width="match_parent"
 				android:layout_height="56dp"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp"
+				android:paddingLeft="@dimen/activity_vertical_margin"
+				android:paddingRight="@dimen/activity_vertical_margin"
 				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:layout_weight="1"
 					android:gravity="center_vertical"
 					android:textSize="16sp"
@@ -138,21 +136,21 @@
 				<TextView
 					android:id="@+id/info_gender"
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:gravity="center_vertical"
 					android:textSize="14sp"
 					android:singleLine="true"
 					android:textColor="?attr/colorAccent"/>
 			</TableRow>
 			<TableRow
-				android:layout_width="fill_parent"
+				android:layout_width="match_parent"
 				android:layout_height="56dp"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp"
+				android:paddingLeft="@dimen/activity_vertical_margin"
+				android:paddingRight="@dimen/activity_vertical_margin"
 				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:layout_weight="1"
 					android:gravity="center_vertical"
 					android:textSize="16sp"
@@ -161,21 +159,21 @@
 				<TextView
 					android:id="@+id/info_birthday"
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:gravity="center_vertical"
 					android:textSize="14sp"
 					android:singleLine="true"
 					android:textColor="?attr/colorAccent"/>
 			</TableRow>
 			<TableRow
-				android:layout_width="fill_parent"
+				android:layout_width="match_parent"
 				android:layout_height="56dp"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp"
+				android:paddingLeft="@dimen/activity_vertical_margin"
+				android:paddingRight="@dimen/activity_vertical_margin"
 				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:layout_weight="1"
 					android:gravity="center_vertical"
 					android:textSize="16sp"
@@ -184,7 +182,7 @@
 				<TextView
 					android:id="@+id/info_address"
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:gravity="center_vertical"
 					android:textSize="14sp"
 					android:singleLine="true"
@@ -192,14 +190,14 @@
 			</TableRow>
 			<TableRow
 				android:id="@+id/btn_info_mobile"
-				android:layout_width="fill_parent"
+				android:layout_width="match_parent"
 				android:layout_height="56dp"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp"
+				android:paddingLeft="@dimen/activity_vertical_margin"
+				android:paddingRight="@dimen/activity_vertical_margin"
 				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:layout_weight="1"
 					android:gravity="center_vertical"
 					android:textSize="16sp"
@@ -208,21 +206,21 @@
 				<TextView
 					android:id="@+id/info_mobile"
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:gravity="center_vertical"
 					android:textSize="14sp"
 					android:singleLine="true"
 					android:textColor="?attr/colorAccent"/>
 			</TableRow>
 			<TableRow
-				android:layout_width="fill_parent"
+				android:layout_width="match_parent"
 				android:layout_height="56dp"
-				android:background="@drawable/btn_menu"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp">
+				android:paddingLeft="@dimen/activity_vertical_margin"
+				android:paddingRight="@dimen/activity_vertical_margin"
+				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:layout_weight="1"
 					android:gravity="center_vertical"
 					android:textSize="16sp"
@@ -231,7 +229,7 @@
 				<TextView
 					android:id="@+id/info_email"
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:gravity="center_vertical"
 					android:textSize="14sp"
 					android:singleLine="true"
@@ -239,14 +237,14 @@
 			</TableRow>
 			<TableRow
 				android:id="@+id/btn_info_qq"
-				android:layout_width="fill_parent"
+				android:layout_width="match_parent"
 				android:layout_height="56dp"
-				android:background="@drawable/btn_menu"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp">
+				android:paddingLeft="@dimen/activity_vertical_margin"
+				android:paddingRight="@dimen/activity_vertical_margin"
+				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:layout_weight="1"
 					android:gravity="center_vertical"
 					android:textSize="16sp"
@@ -255,7 +253,7 @@
 				<TextView
 					android:id="@+id/info_qq"
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:gravity="center_vertical"
 					android:textSize="14sp"
 					android:singleLine="true"
@@ -263,14 +261,14 @@
 			</TableRow>
 			<TableRow
 				android:id="@+id/btn_info_wx"
-				android:layout_width="fill_parent"
+				android:layout_width="match_parent"
 				android:layout_height="56dp"
-				android:background="@drawable/btn_menu"
-				android:paddingLeft="10dp"
-				android:paddingRight="10dp">
+				android:paddingLeft="@dimen/activity_vertical_margin"
+				android:paddingRight="@dimen/activity_vertical_margin"
+				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:layout_weight="1"
 					android:gravity="center_vertical"
 					android:textSize="16sp"
@@ -279,45 +277,43 @@
 				<TextView
 					android:id="@+id/info_wx"
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
 					android:gravity="center_vertical"
 					android:textSize="14sp"
 					android:singleLine="true"
 					android:textColor="?attr/colorAccent"/>
 			</TableRow>
 			<LinearLayout
-				android:layout_width="fill_parent"
+				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:paddingTop="@dimen/activity_vertical_margin"
+				android:paddingLeft="@dimen/activity_vertical_margin"
+				android:paddingRight="@dimen/activity_vertical_margin"
 				android:minHeight="56dp"
 				android:maxHeight="80dp"
-				android:padding="5dp"
 				android:orientation="vertical"
 				android:background="@drawable/btn_menu">
 				<TextView
-					android:layout_width="fill_parent"
+					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:gravity="start"
-					android:padding="5dp"
 					android:textSize="16sp"
 					android:textColor="?attr/textPrimary"
 					android:text="@string/java_mark"/>
 				<TextView
 					android:id="@+id/info_mark"
-					android:layout_width="fill_parent"
-					android:layout_height="fill_parent"
-					android:padding="5dp"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:paddingTop="@dimen/activity_half_margin"
 					android:gravity="start"
 					android:textSize="14sp"
 					android:textColor="?attr/colorAccent"/>
 			</LinearLayout>
 			<Button
 				android:id="@+id/btn_logout"
-				android:layout_width="fill_parent"
+				android:layout_width="match_parent"
 				android:layout_height="50dp"
-				android:layout_marginTop="10dp"
-				android:layout_marginBottom="20dp"
-				android:layout_marginLeft="10dp"
-				android:layout_marginRight="10dp"
+				android:layout_margin="@dimen/activity_vertical_margin"
 				android:background="@drawable/btn_red"
 				android:textColor="@color/white"
 				android:textSize="18sp"

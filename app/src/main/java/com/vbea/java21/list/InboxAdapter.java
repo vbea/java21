@@ -91,21 +91,18 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MyViewHolder
 				isOpen = true;
 			}
 			@Override
-			public void onCloseMenu()
-			{
+			public void onCloseMenu() {
 				holder.layout.setClickable(true);
 				isOpen = false;
 			}
 			@Override
-			public boolean onStart(SlidingView v)
-			{
+			public boolean onStart(SlidingView v) {
 				//holder.title.setText(v.mScreenWidth + "/" + v.leftMenuWidth + "/" + v.rightMenuWidth);
-				if (isOpen)
-				{
+				if (isOpen) {
 					if (v.isOpen())
 						v.closeMenu();
-					else
-						notifyDataSetChanged();
+					/*else
+						notifyDataSetChanged();*/
 					isOpen = false;
 					return true;
 				}
@@ -115,43 +112,36 @@ public class InboxAdapter extends RecyclerView.Adapter<InboxAdapter.MyViewHolder
 	}
 
 	@Override
-	public int getItemCount()
-	{
+	public int getItemCount() {
 		if (mList != null)
 			return mList.size();
 		return 0;
 	}
 
-	public void setList(List<Messages> list)
-	{
+	public void setList(List<Messages> list) {
 		mList = list;
 	}
 
-	public void setOnItemClickListener(OnItemClickListener onItemClickListener)
-	{
+	public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
 	@Override
-	public long getItemId(int p1)
-	{
+	public long getItemId(int p1) {
 		return 0;
 	}
 
-	public void clear()
-	{
+	public void clear() {
 		if (mList != null)
 			mList.clear();
 	}
 
-	public class MyViewHolder extends ViewHolder
-	{
+	public class MyViewHolder extends ViewHolder {
 		TextView leftMenu, rightMenu, title, content, date;
 		SlidingView slidingView;
 		LinearLayout layout;
 		View end;
-		public MyViewHolder(View v)
-		{
+		public MyViewHolder(View v) {
 			super(v);
 			layout = (LinearLayout) v.findViewById(R.id.item_messageBox);
 			leftMenu = (TextView) v.findViewById(R.id.item_leftMenu);

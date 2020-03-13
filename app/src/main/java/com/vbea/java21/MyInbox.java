@@ -1,5 +1,6 @@
 package com.vbea.java21;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -61,13 +62,10 @@ public class MyInbox extends BaseActivity
 			}
 		});
 
-		mAdapter.setOnItemClickListener(new InboxAdapter.OnItemClickListener()
-		{
+		mAdapter.setOnItemClickListener(new InboxAdapter.OnItemClickListener() {
 			@Override
-			public void onLeftMenu(Messages msg)
-			{
-				Common.getInbox().updateMessage(msg.read ? msg.makeUnread() : msg.makeRead(), new InboxManager.InboxCallback()
-				{
+			public void onLeftMenu(Messages msg) {
+				Common.getInbox().updateMessage(msg.read ? msg.makeUnread() : msg.makeRead(), new InboxManager.InboxCallback() {
 					@Override
 					public void onSuccess()
 					{
@@ -76,19 +74,16 @@ public class MyInbox extends BaseActivity
 					@Override
 					public void onFailure(){}
 				});
-				
 			}
 
 			@Override
-			public void onDelete(Messages msg, int position)
-			{
+			public void onDelete(Messages msg, int position) {
 				Common.getInbox().deleteMessage(msg, position);
 				init();
 			}
 
 			@Override
-			public void onClick(Messages msg)
-			{
+			public void onClick(Messages msg) {
 				if (!msg.read)
 					Common.getInbox().updateMessage(msg.makeRead(), null);
 				if (msg.type == 0)
@@ -109,39 +104,31 @@ public class MyInbox extends BaseActivity
 		});
 	}
 
-	private void init()
-	{
+	private void init() {
 		if (refreshLayout.isRefreshing())
 			refreshLayout.setRefreshing(false);
-		if (mAdapter.getItemCount() > 0)
-		{
+		if (mAdapter.getItemCount() > 0) {
 			emptyView.setVisibility(View.GONE);
 			recyclerView.setVisibility(View.VISIBLE);
 			//Util.toastShortMessage(getApplicationContext(), "count:" + Common.getInbox().getList().size() + ",unread"+Common.getInbox().getCount());
 			mAdapter.notifyDataSetChanged();
-		}
-		else
-		{
+		} else {
 			emptyView.setVisibility(View.VISIBLE);
 			emptyView.setText("空空如也");
 			recyclerView.setVisibility(View.GONE);
 		}
 	}
 
-	private void getData()
-	{
+	private void getData() {
 		emptyView.setText("请稍候...");
-		Common.getInbox().getMessage(new InboxManager.InboxCallback()
-		{
+		Common.getInbox().getMessage(new InboxManager.InboxCallback() {
 			@Override
-			public void onSuccess()
-			{
+			public void onSuccess() {
 				mAdapter.setList(Common.getInbox().getList());
 				mHandler.sendEmptyMessage(1);
 			}
 			@Override
-			public void onFailure()
-			{
+			public void onFailure() {
 				//mAdapter.clear();
 				mHandler.sendEmptyMessage(2);
 			}
@@ -149,8 +136,7 @@ public class MyInbox extends BaseActivity
 	}
 
 	@Override
-	protected void onResume()
-	{
+	protected void onResume() {
 		if (refreshLayout.isRefreshing())
 			refreshLayout.setRefreshing(false);
 		getData();
@@ -158,19 +144,19 @@ public class MyInbox extends BaseActivity
 	}
 
 	@Override
-	protected void onDestroy()
-	{
+	protected void onDestroy() {
 		//Common.getInbox().refreshMessage();
+		mHandler.removeCallbacksAndMessages(null);
 		super.onDestroy();
 	}
 
+	@SuppressLint("HandlerLeak")
 	Handler mHandler = new Handler()
 	{
 		@Override
 		public void handleMessage(Message msg)
 		{
-			switch (msg.what)
-			{
+			switch (msg.what) {
 				case 1:
 					init();
 					break;

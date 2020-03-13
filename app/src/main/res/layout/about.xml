@@ -26,21 +26,23 @@
 			android:textSize="20sp"
 			android:layout_marginTop="5dp"/>
 		<TextView
+			android:id="@+id/about_version"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/version"
 			android:textColor="#808080"
 			android:gravity="center_vertical"
 			android:textSize="12sp"
 			android:layout_marginTop="5dp"/>
 		<TableRow
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content">
+			android:layout_height="wrap_content"
+			android:paddingTop="@dimen/activity_vertical_margin"
+			android:gravity="center_vertical">
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
-				android:padding="10dp"
+				android:paddingLeft="@dimen/activity_vertical_margin"
 				android:textSize="15sp"
 				android:textColor="?attr/colorPrimary"
 				android:text="软件信息"/>
@@ -49,7 +51,10 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:background="@drawable/btn_menu"
-				android:padding="10dp"
+				android:paddingTop="@dimen/activity_half_margin"
+				android:paddingLeft="@dimen/activity_vertical_margin"
+				android:paddingRight="@dimen/activity_vertical_margin"
+				android:paddingBottom="@dimen/activity_half_margin"
 				android:textSize="15sp"
 				android:textColor="?attr/colorPrimary"
 				android:text="新版特性"/>
@@ -62,10 +67,9 @@
 			android:id="@+id/tab_actStatus"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:paddingLeft="10dp"
-			android:paddingRight="10dp"
-			android:paddingBottom="5dp"
-			android:paddingTop="5dp"
+			android:paddingTop="@dimen/activity_vertical_margin"
+			android:paddingLeft="@dimen/activity_vertical_margin"
+			android:paddingRight="@dimen/activity_vertical_margin"
 			android:gravity="center_vertical">
 			<TextView
 				android:layout_width="wrap_content"
@@ -91,10 +95,9 @@
 		<TableRow
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:paddingLeft="10dp"
-			android:paddingRight="10dp"
-			android:paddingBottom="5dp"
-			android:paddingTop="5dp"
+			android:paddingTop="@dimen/activity_half_margin"
+			android:paddingLeft="@dimen/activity_vertical_margin"
+			android:paddingRight="@dimen/activity_vertical_margin"
 			android:gravity="center_vertical">
 			<TextView
 				android:layout_width="wrap_content"
@@ -116,14 +119,14 @@
 			android:id="@+id/abt_actLayout"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
+			android:paddingLeft="@dimen/activity_vertical_margin"
+			android:paddingRight="@dimen/activity_vertical_margin"
 			android:orientation="vertical"
 			android:visibility="gone">
 		<TableRow
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:paddingLeft="10dp"
-			android:paddingRight="10dp"
-			android:paddingBottom="3dp"
+			android:paddingTop="@dimen/activity_half_margin"
 			android:gravity="center_vertical">
 			<TextView
 				android:layout_width="wrap_content"
@@ -144,9 +147,7 @@
 		<TableRow
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:paddingLeft="10dp"
-			android:paddingRight="10dp"
-			android:paddingBottom="3dp"
+			android:paddingTop="@dimen/activity_half_margin"
 			android:gravity="center_vertical">
 			<TextView
 				android:layout_width="wrap_content"
@@ -167,8 +168,7 @@
 		<TableRow
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:paddingLeft="10dp"
-			android:paddingRight="10dp"
+			android:paddingTop="@dimen/activity_half_margin"
 			android:gravity="center_vertical">
 			<TextView
 				android:layout_width="wrap_content"
@@ -187,7 +187,7 @@
 				android:singleLine="true"
 				android:textIsSelectable="true"/>
 		</TableRow>
-		<TableRow
+		<!--TableRow
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:paddingLeft="10dp"
@@ -210,14 +210,14 @@
 				android:singleLine="true"
 				android:ellipsize="middle"
 				android:text="Java"/>
-		</TableRow>
+		</TableRow-->
 		</LinearLayout>
 		<TableRow
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:paddingLeft="10dp"
-			android:paddingRight="10dp"
-			android:paddingTop="5dp"
+			android:paddingTop="@dimen/activity_half_margin"
+			android:paddingLeft="@dimen/activity_vertical_margin"
+			android:paddingRight="@dimen/activity_vertical_margin"
 			android:gravity="center_vertical">
 			<TextView
 				android:layout_width="wrap_content"
@@ -239,9 +239,9 @@
 		<TableRow
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:paddingLeft="10dp"
-			android:paddingRight="10dp"
-			android:paddingTop="5dp"
+			android:paddingTop="@dimen/activity_half_margin"
+			android:paddingLeft="@dimen/activity_vertical_margin"
+			android:paddingRight="@dimen/activity_vertical_margin"
 			android:gravity="center_vertical">
 			<TextView
 				android:layout_width="wrap_content"
@@ -263,9 +263,9 @@
 		<TableRow
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:paddingLeft="10dp"
-			android:paddingRight="10dp"
-			android:paddingTop="5dp"
+			android:paddingTop="@dimen/activity_half_margin"
+			android:paddingLeft="@dimen/activity_vertical_margin"
+			android:paddingRight="@dimen/activity_vertical_margin"
 			android:gravity="center_vertical">
 			<TextView
 				android:layout_width="wrap_content"

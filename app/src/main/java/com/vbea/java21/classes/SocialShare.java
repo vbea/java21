@@ -33,6 +33,7 @@ public class SocialShare
 	+ "friendships_groups_read,friendships_groups_write,statuses_to_me_read,"
 	+ "follow_app_official_microblog," + "invitation_write";
 	private static OnWxLoginListener listener;
+	public static int WX_TYPE = 0;//0:share 1:login
 	
 	public static void onStart(Context context)
 	{
@@ -91,6 +92,7 @@ public class SocialShare
 	{
 		if (mWeiXin == null)
 			return;
+		WX_TYPE = 0;
 		WXWebpageObject webpage = new WXWebpageObject();
 		webpage.webpageUrl = url;
 		WXMediaMessage msg = new WXMediaMessage(webpage);
@@ -161,10 +163,14 @@ public class SocialShare
 	 * code-微信登录
 	 */
 	public static void handleIntent(Intent intent, IWXAPIEventHandler handler) {
-		wxLogin.handleIntent(intent, handler);
+		if (WX_TYPE == 0)
+			mWeiXin.handleIntent(intent, handler);
+		else
+			wxLogin.handleIntent(intent, handler);
 	}
 
 	public static void loginFromWeixin(OnWxLoginListener lis) {
+		WX_TYPE = 1;
 		listener = lis;
 		SendAuth.Req req = new SendAuth.Req();
 		req.scope = "snsapi_userinfo";

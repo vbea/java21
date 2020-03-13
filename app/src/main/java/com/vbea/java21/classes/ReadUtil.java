@@ -2,12 +2,7 @@ package com.vbea.java21.classes;
 
 import android.content.Context;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-
-import cn.bmob.v3.http.bean.Init;
+import com.vbes.util.EasyPreferences;
 
 /**
  * Created by Vbe on 2018/12/10.
@@ -23,7 +18,6 @@ public class ReadUtil {
     public static final String READ_AIDE = "read_aide";
     public static final String READ_Database = "read_database";
     private String radJava, radJava2, radJ2ee, radAndroid, radAndroid2, radAide, radDatabase;
-    private EasyPreferences spf;
 
     public static ReadUtil getInstance() {
         return readUtil;
@@ -35,14 +29,13 @@ public class ReadUtil {
     }
 
     private ReadUtil(Context context) {
-        spf = new EasyPreferences(context);
-        radJava = spf.getString(READ_Java, "");
-        radJava2 = spf.getString(READ_JavaAdvance, "");
-        radJ2ee = spf.getString(READ_J2EE, "");
-        radAndroid = spf.getString(READ_Android, "");
-        radAndroid2 = spf.getString(READ_AndroidAdvance, "");
-        radAide = spf.getString(READ_AIDE, "");
-        radDatabase = spf.getString(READ_Database, "");
+        radJava = EasyPreferences.getString(READ_Java, "");
+        radJava2 = EasyPreferences.getString(READ_JavaAdvance, "");
+        radJ2ee = EasyPreferences.getString(READ_J2EE, "");
+        radAndroid = EasyPreferences.getString(READ_Android, "");
+        radAndroid2 = EasyPreferences.getString(READ_AndroidAdvance, "");
+        radAide = EasyPreferences.getString(READ_AIDE, "");
+        radDatabase = EasyPreferences.getString(READ_Database, "");
     }
 
     public boolean isReadJava(String num) {
@@ -119,25 +112,25 @@ public class ReadUtil {
     }
 
     public void saveData() {
-        spf.putString(READ_Java, radJava);
-        spf.putString(READ_JavaAdvance, radJava2);
-        spf.putString(READ_J2EE, radJ2ee);
-        spf.putString(READ_Android, radAndroid);
-        spf.putString(READ_AndroidAdvance, radAndroid2);
-        spf.putString(READ_AIDE, radAide);
-        spf.putString(READ_Database, radDatabase);
-        spf.apply();
+        EasyPreferences.putString(READ_Java, radJava);
+        EasyPreferences.putString(READ_JavaAdvance, radJava2);
+        EasyPreferences.putString(READ_J2EE, radJ2ee);
+        EasyPreferences.putString(READ_Android, radAndroid);
+        EasyPreferences.putString(READ_AndroidAdvance, radAndroid2);
+        EasyPreferences.putString(READ_AIDE, radAide);
+        EasyPreferences.putString(READ_Database, radDatabase);
+        EasyPreferences.apply();
     }
 
     public void clearAllData(Context ct) {
-        spf.putString(READ_Java, "");
-        spf.putString(READ_JavaAdvance, "");
-        spf.putString(READ_J2EE, "");
-        spf.putString(READ_Android, "");
-        spf.putString(READ_AndroidAdvance, "");
-        spf.putString(READ_AIDE, "");
-        spf.putString(READ_Database, "");
-        spf.apply();
+        EasyPreferences.putString(READ_Java, "");
+        EasyPreferences.putString(READ_JavaAdvance, "");
+        EasyPreferences.putString(READ_J2EE, "");
+        EasyPreferences.putString(READ_Android, "");
+        EasyPreferences.putString(READ_AndroidAdvance, "");
+        EasyPreferences.putString(READ_AIDE, "");
+        EasyPreferences.putString(READ_Database, "");
+        EasyPreferences.apply();
         readUtil = new ReadUtil(ct);
     }
 }

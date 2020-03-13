@@ -17,11 +17,11 @@ import android.content.Intent;
 import android.content.ComponentName;
 import android.content.ServiceConnection;
 
-import com.vbea.java21.classes.EasyPreferences;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.audio.SoundLoad;
 import com.vbea.java21.audio.AudioService;
+import com.vbes.util.EasyPreferences;
 
 public class More extends BaseActivity
 {
@@ -34,14 +34,12 @@ public class More extends BaseActivity
 	private String[] arraySize;
 
 	@Override
-	protected void before()
-	{
+	protected void before() {
 		setContentView(R.layout.more);
 	}
 
 	@Override
-	protected void after()
-	{
+	protected void after() {
 		enableBackButton();
 		arraySize = getResources().getStringArray(R.array.array_pianosize);
 		RelativeLayout btnLoop = bind(R.id.btn_setLoop);
@@ -60,17 +58,14 @@ public class More extends BaseActivity
 
 		txtPianoSize.setText(arraySize[Common.PIANO_SIZE]);
 
-		btnLoop.setOnClickListener(new View.OnClickListener()
-		{
-			public void onClick(View v)
-			{
+		btnLoop.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
 				swtLoop.toggle();
 				Common.audioService.setLoop(swtLoop.isChecked());
 				swtOrder.setChecked(Common.audioService.order);
 			}
 		});
-		swtLoop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-		{
+		swtLoop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton p1, boolean p2)
 			{
@@ -78,52 +73,40 @@ public class More extends BaseActivity
 				swtOrder.setChecked(Common.audioService.order);
 			}
 		});
-		btnOrder.setOnClickListener(new View.OnClickListener()
-		{
-			public void onClick(View v)
-			{
+		btnOrder.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
 				swtOrder.toggle();
 				Common.audioService.setOrder(swtOrder.isChecked());
 				swtLoop.setChecked(Common.audioService.loop);
 			}
 		});
-		swtOrder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
-		{
+		swtOrder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
-			public void onCheckedChanged(CompoundButton p1, boolean p2)
-			{
+			public void onCheckedChanged(CompoundButton p1, boolean p2) {
 				Common.audioService.setOrder(p2);
 				swtLoop.setChecked(Common.audioService.loop);
 			}
 		});
-		btnTrans.setOnClickListener(new View.OnClickListener()
-		{
-			public void onClick(View v)
-			{
+		btnTrans.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
 				Common.startActivityOptions(More.this, MusicTrans.class);
 			}
 		});
 		
-		btnPiano.setOnClickListener(new View.OnClickListener()
-		{
-			public void onClick(View v)
-			{
+		btnPiano.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
 				startActivity(new Intent(More.this, Piano.class));
 			}
 		});
 		
-		btnList.setOnClickListener(new View.OnClickListener()
-		{
-			public void onClick(View v)
-			{
+		btnList.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
 				Common.startActivityOptions(More.this, MusicList.class);
 			}
 		});
 		
-		btnTest.setOnClickListener(new View.OnClickListener()
-		{
-			public void onClick(View v)
-			{
+		btnTest.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
 				Common.startActivityOptions(More.this, MusicTest.class);
 			}
 		});
@@ -149,18 +132,15 @@ public class More extends BaseActivity
 		//createNotification();
 	}
 	
-	class MusicPlayerClick implements View.OnClickListener
-	{
+	class MusicPlayerClick implements View.OnClickListener {
 		int music;
 		public MusicPlayerClick(int mu)
 		{
 			music = mu;
 		}
 		@Override
-		public void onClick(View v)
-		{
-			if (Common.audioService != null)
-			{
+		public void onClick(View v) {
+			if (Common.audioService != null) {
 				/*if (Common.audioService.isPlay())
 				{
 					stoped();
@@ -168,16 +148,13 @@ public class More extends BaseActivity
 				}
 				else
 				{*/
-					if (Common.audioService != null)
-					{
+					if (Common.audioService != null) {
 						Common.audioService.play(music);
-						if (mThread == null)
-						{
+						if (mThread == null) {
 							mThread = new PlayThread();
 							mThread.start();
 						}
-					}
-					else
+					} else
 						supportFinishAfterTransition();
 					//Util.toastLongMessage(getApplicationContext(), "max:"+Common.SOUND.getMusicMax(music) + "\nmin:" + Common.SOUND.getMusicMin(music));
 				
@@ -185,32 +162,24 @@ public class More extends BaseActivity
 		}
 	}
 	
-	private void init()
-	{
+	private void init() {
 		MusicName = "";
-		if (Common.audioService == null)
-		{
-			if (Common.SOUND != null)
-			{
+		if (Common.audioService == null) {
+			if (Common.SOUND != null) {
 				if (soundLoad == null)
 					soundLoad = Common.SOUND;
 				Intent intent = new Intent(getApplicationContext(), AudioService.class);
 				intent.setAction(AUDIO_SERVICE);
 				startService(intent);
 				bindService(intent, sconn, Context.BIND_AUTO_CREATE);
-			}
-			else
+			} else
 				finishAfterTransition();
-		}
-		else
-		{
+		} else {
 			swtLoop.setChecked(Common.audioService.loop);
 			swtOrder.setChecked(Common.audioService.order);
-			if (Common.audioService.isPlay())
-			{
+			if (Common.audioService.isPlay()) {
 				showMusicName();
-				if (mThread == null)
-				{
+				if (mThread == null) {
 					mThread = new PlayThread();
 					mThread.start();
 				}
@@ -218,35 +187,25 @@ public class More extends BaseActivity
 		}
 	}
 	
-	class PlayThread extends Thread //implements Runnable
-	{
+	class PlayThread extends Thread { //implements Runnable
 		@Override
-		public void run()
-		{
-			synchronized(this)
-			{
-				try
-				{
-					if (Common.audioService != null)
-					{
+		public void run() {
+			synchronized(this) {
+				try {
+					if (Common.audioService != null) {
 						mHandler.sendEmptyMessage(3);
-						while(true)
-						{
-							if (Common.audioService.isPlay())
-							{
+						while(true) {
+							if (Common.audioService.isPlay()) {
 								Thread.sleep(10);
 								mHandler.sendEmptyMessage(1);
-							}
-							else
-							{
+							} else {
 								mHandler.sendEmptyMessage(2);
 								Thread.sleep(1000);
 							}
 						}
 					}
-				}
-				catch (Exception e)
-				{
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 		}
@@ -258,8 +217,7 @@ public class More extends BaseActivity
 		@Override
 		public void handleMessage(Message msg)
 		{
-			switch (msg.what)
-			{
+			switch (msg.what) {
 				case 1:
 					proMusic.setMax(Common.audioService.max);
 					proMusic.setProgress(Common.audioService.current);
@@ -284,48 +242,42 @@ public class More extends BaseActivity
 		}
 	};
 	
-	private void showMusicName()
-	{
+	private void showMusicName() {
 		if (Util.isNullOrEmpty(MusicName))
 			mHandler.sendEmptyMessage(3);
 		else
 			txtName.setText(MusicName);
 	}
 	
-	private void CopyMusic(String music)
-	{
+	private void CopyMusic(String music) {
 		Util.addClipboard(this, "music", music);
 		Util.toastShortMessage(getApplicationContext(), "已复制代码到剪贴板");
 	}
 	
-	private ServiceConnection sconn = new ServiceConnection()
-	{
+	private ServiceConnection sconn = new ServiceConnection() {
 		@Override
-		public void onServiceConnected(ComponentName p1, IBinder p2)
-		{
+		public void onServiceConnected(ComponentName p1, IBinder p2) {
 			Common.audioService = ((AudioService.AudioBinder)p2).getService();
 			swtLoop.setChecked(Common.audioService.loop);
 			swtOrder.setChecked(Common.audioService.order);
 		}
 
 		@Override
-		public void onServiceDisconnected(ComponentName p1)
-		{
+		public void onServiceDisconnected(ComponentName p1) {
 			//mService = null;
 		}
 	};
 
 	@Override
-	protected void onResume()
-	{
+	protected void onResume() {
 		init();
 		super.onResume();
 	}
 
 	@Override
-	protected void onDestroy()
-	{
-		new EasyPreferences(this).putInt("piano_size", Common.PIANO_SIZE).apply();
+	protected void onDestroy() {
+		EasyPreferences.putInt("piano_size", Common.PIANO_SIZE);
+		EasyPreferences.apply();
 		super.onDestroy();
 	}
 }

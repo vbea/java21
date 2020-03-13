@@ -134,6 +134,7 @@ public class Setting extends BaseActivity
 				}
 				else
 				{
+					Common.startActivityOptions(Setting.this, Machine.class);
 					toastShortMessage("你需要激活后才能做此操作");
 					swiAdv.setChecked(false);
 				}

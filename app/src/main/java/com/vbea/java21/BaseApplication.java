@@ -6,6 +6,7 @@ import android.content.Context;
 
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
+import com.vbes.util.EasyPreferences;
 
 import org.wlf.filedownloader.FileDownloadConfiguration;
 import org.wlf.filedownloader.FileDownloader;
@@ -24,6 +25,8 @@ public class BaseApplication extends Application
 		builder.configRetryDownloadTimes(3); // 配置下载失败时尝试重试的次数，如果不配置默认为0不尝试
 		builder.configConnectTimeout(30000); // 配置连接网络超时时间，如果不配置默认为15秒
 		FileDownloader.init(builder.build());
+		ExceptionHandler.getInstance().init(this);
+		EasyPreferences.init(this, "java21");
 	}
 	
 	@Override
@@ -32,5 +35,6 @@ public class BaseApplication extends Application
 		super.attachBaseContext(base);
 		//MultiDex.install(base);
 		ExceptionHandler.getInstance().init(base);
+		EasyPreferences.init(base, "java21");
 	}
 }

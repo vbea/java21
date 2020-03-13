@@ -16,7 +16,7 @@
 				android:id="@+id/item_leftMenu"
 				android:layout_width="wrap_content"
 				android:layout_height="match_parent"
-				android:textSize="16sp"
+				android:textSize="14sp"
 				android:padding="10dp"
 				android:gravity="center"
 				android:text="@string/txt_setreaded"
@@ -28,27 +28,31 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_weight="1"
-				android:padding="10dp"
+				android:paddingTop="@dimen/margin_12"
+				android:paddingLeft="@dimen/activity_vertical_margin"
+				android:paddingRight="@dimen/activity_vertical_margin"
+				android:paddingBottom="@dimen/margin_12"
 				android:orientation="vertical">
 				<TableRow
 					android:layout_width="match_parent"
-					android:layout_height="wrap_content">
+					android:layout_height="wrap_content"
+					android:gravity="center_vertical">
 					<TextView
 						android:id="@+id/item_messageTitle"
-						android:layout_width="wrap_content"
+						android:layout_width="0dp"
 						android:layout_height="wrap_content"
 						android:layout_weight="1"
 						android:singleLine="true"
-						android:textSize="16sp"
+						android:textSize="15sp"
 						android:textColor="?attr/textPrimary"/>
 					<TextView
 						android:id="@+id/item_messageDate"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
-						android:textSize="14sp"
+						android:paddingTop="2dp"
+						android:textSize="12sp"
 						android:textColor="@color/gray"
-						android:singleLine="true"
-						android:gravity="center_vertical|right"/>
+						android:singleLine="true"/>
 				</TableRow>
 				<TextView
 					android:id="@+id/item_messageContent"
@@ -74,7 +78,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:gravity="center"
-		android:padding="10dp"
+		android:padding="@dimen/activity_half_margin"
 		android:text="@string/txt_lastrow"
 		android:textSize="12sp"
 		android:textColor="?attr/textSecondary"

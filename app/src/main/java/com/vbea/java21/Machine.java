@@ -1,9 +1,9 @@
 package com.vbea.java21;
 
 import java.util.Date;
-import java.util.Calendar;
 import java.text.SimpleDateFormat;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Handler;
 import android.os.Message;
@@ -21,7 +21,8 @@ import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.SocialShare;
 import com.vbea.java21.classes.Util;
-import com.vbea.secret.*;
+import com.vbes.util.secret.Key;
+import com.vbes.util.secret.ProdKey;
 
 public class Machine extends BaseActivity
 {
@@ -188,19 +189,15 @@ public class Machine extends BaseActivity
 		closePage();
 	}
 	
-	class KeyThread extends Thread implements Runnable
-	{
+	class KeyThread extends Thread implements Runnable {
 		String key;
-		public KeyThread(String _key)
-		{
+		KeyThread(String _key) {
 			key = _key;
 		}
 		
-		private boolean regist() throws Exception
-		{
-			if (key.length() == 25)
-			{
-				Keys keys = new SecretKey(key).getInstance();
+		private boolean regist() throws Exception {
+			if (key.length() == 25) {
+				Key keys = new ProdKey(key).getInstance();
 				return keys.invoke();
 			}
 			else
@@ -208,46 +205,42 @@ public class Machine extends BaseActivity
 		}
 		
 		@Override
-		public void run()
-		{
-			try
-			{
+		public void run() {
+			try {
 				Thread.sleep(3000);
-				if (regist())
-				{
+				if (regist()) {
 					Message msg = new Message();
 					msg.what = 1;
 					msg.obj = key;
 					mHandler.sendMessage(msg);
-				}
-				else
+				} else
 					mHandler.sendEmptyMessage(5);
-			}
-			catch(Exception e)
-			{
+			} catch(Exception e) {
 				mHandler.sendEmptyMessage(4);
 			}
 		}
 	}
 	
-	public void getDialog(String title)
-	{
+	public void getDialog(String title) {
 		mDialog = ProgressDialog.show(this, "", title, false, false);
 	}
-		
-	Handler mHandler = new Handler()
-	{
+
+	@Override
+	protected void onDestroy() {
+		mHandler.removeCallbacksAndMessages(null);
+		super.onDestroy();
+	}
+
+	@SuppressLint("HandlerLeak")
+	Handler mHandler = new Handler() {
 		@Override
-		public void handleMessage(Message msg)
-		{
-			switch (msg.what)
-			{
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
 				case 1:
 					Util.toastShortMessage(getApplicationContext(), "已应用该密钥");
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					Common.IS_ACTIVE = true;
-					if (Common.isLogin())
-					{
+					if (Common.isLogin()) {
 						Common.mUser.key = msg.obj.toString();
 						Common.updateUser();
 					}
@@ -285,8 +278,7 @@ public class Machine extends BaseActivity
 		}
 	};
 	
-	void closePage()
-	{
+	void closePage() {
 		//update on 20170606
 		/*if (START && DATED > 0)
 		{

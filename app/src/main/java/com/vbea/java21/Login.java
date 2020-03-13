@@ -19,7 +19,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.graphics.Point;
 
 import com.vbea.java21.classes.Common;
-import com.vbea.java21.classes.EasyPreferences;
 import com.vbea.java21.classes.MD5Util;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.SocialShare;
@@ -37,6 +36,7 @@ import com.tencent.connect.common.Constants;
 import org.json.JSONObject;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.vbes.util.EasyPreferences;
 
 public class Login extends BaseActivity
 {
@@ -48,14 +48,12 @@ public class Login extends BaseActivity
 	private RippleColorView rippleColorView;
 
 	@Override
-	protected void before()
-	{
+	protected void before() {
 		setContentView(R.layout.login);
 	}
 
 	@Override
-	public void after()
-	{
+	public void after() {
 		forget = bind(R.id.btn_forgetpsd);
 		btnSign = bind(R.id.btnSign);
 		ImageView qqLogin = bind(R.id.btn_qqLogin);
@@ -64,32 +62,26 @@ public class Login extends BaseActivity
 		edtUid = bind(R.id.loginUid);
 		edtPass = bind(R.id.loginPassword);
 		rippleColorView = bind(R.id.rippleColorView);
-		if (Common.HULUXIA)// && !Common.IS_ACTIVE)
-		{
+		if (Common.HULUXIA) {// && !Common.IS_ACTIVE)
 			//btnSign.setVisibility(View.GONE);
 			qqLogin.setVisibility(View.GONE);
 		}
 		edtUid.setText(Common.USERID);
-		toolbar.setNavigationOnClickListener(new View.OnClickListener()
-		{
+		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View view)
-			{
+			public void onClick(View view) {
 				if (canGoback)
 					supportFinishAfterTransition();
 			}
 		});
 		
-		btnLogin.setOnClickListener(new View.OnClickListener()
-		{
-			public void onClick(View v)
-			{
+		btnLogin.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
 				if (isEmpty(edtUid, true, "请输入用户名"))
 					return;
 				if (isEmpty(edtPass, false, "请输入密码"))
 					return;
-				if (!Common.isNet(Login.this))
-				{
+				if (!Common.isNet(Login.this)) {
 					Util.toastShortMessage(getApplicationContext(), "请检查你的网络连接");
 					return;
 				}
@@ -102,28 +94,21 @@ public class Login extends BaseActivity
 			}
 		});
 		
-		btnSign.setOnClickListener(new View.OnClickListener()
-		{
-			public void onClick(View v)
-			{
+		btnSign.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
 				Common.startActivityOptions(Login.this, Sign.class);
 			}
 		});
 		
-		forget.setOnClickListener(new View.OnClickListener()
-		{
-			public void onClick(View v)
-			{
+		forget.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
 				Common.startActivityOptions(Login.this, ForgetPassword.class);
 			}
 		});
 		
-		qqLogin.setOnClickListener(new View.OnClickListener()
-		{
-			public void onClick(View v)
-			{
-				if (SocialShare.mTencent != null)
-				{
+		qqLogin.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				if (SocialShare.mTencent != null) {
 					SocialShare.mTencent.login(Login.this, "all", new MyIListener());
 					mProgressDialog = ProgressDialog.show(Login.this, "", "请稍候……", true, false);
 				}
@@ -155,19 +140,14 @@ public class Login extends BaseActivity
 		});
 	}
 	
-	private boolean isEmpty(EditText view, boolean trim, String tip)
-	{
-		if (trim)
-		{
-			if (view.getText().toString().trim().length() == 0)
-			{
+	private boolean isEmpty(EditText view, boolean trim, String tip) {
+		if (trim) {
+			if (view.getText().toString().trim().length() == 0) {
 				view.requestFocus();
 				view.setError(tip);
 				return true;
 			}
-		}
-		else
-		{
+		} else {
 			if (view.getText().toString().length() == 0)
 			{
 				view.requestFocus();
@@ -178,14 +158,12 @@ public class Login extends BaseActivity
 		return false;
 	}
 	
-	public void reloadLogin()
-	{
+	public void reloadLogin() {
 		//Common.MUSIC = Common.mUser.Set_Music;
-		EasyPreferences spf = new EasyPreferences(this);
-		spf.putInt("theme", Common.APP_THEME_ID);
-		spf.putInt("back", Common.APP_BACK_ID);
-		spf.putInt("java_size", Common.JAVA_TEXT_SIZE);
-		spf.commit();
+		EasyPreferences.putInt("theme", Common.APP_THEME_ID);
+		EasyPreferences.putInt("back", Common.APP_BACK_ID);
+		EasyPreferences.putInt("java_size", Common.JAVA_TEXT_SIZE);
+		EasyPreferences.commit();
 		//Common.reStart(Login.this);
 	}
 	
@@ -202,8 +180,7 @@ public class Login extends BaseActivity
         return new Point(l1[0], l1[1]);
     }
 	
-	private void resetButton()
-	{
+	private void resetButton() {
 		btnLogin.setEnabled(true);
 		btnSign.setEnabled(true);
 		forget.setEnabled(true);
@@ -213,41 +190,32 @@ public class Login extends BaseActivity
 			mProgressDialog.dismiss();
 	}
 	
-	private void loginUser()
-	{
-		try
-		{
-			Common.Login(Login.this, edtUid.getText().toString(), MD5Util.getMD5(edtPass.getText().toString()), false, new Common.LoginListener()
-			{
+	private void loginUser() {
+		try {
+			Common.Login(Login.this, edtUid.getText().toString(), MD5Util.getMD5(edtPass.getText().toString()), false, new Common.LoginListener() {
 				@Override
-				public void onLogin(int code)
-				{
+				public void onLogin(int code) {
 					if (Common.mUser != null && code == 1) {
 						((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(edtUid.getWindowToken(), 0);
 						Point p = getLocationInView(rippleColorView, btnLogin);
-						rippleColorView.reveal(p.x, p.y, MyThemes.getColorAccent(Login.this), new Animator.AnimatorListener()
-						{
+						rippleColorView.reveal(p.x, p.y, MyThemes.getColorAccent(Login.this), new Animator.AnimatorListener() {
 							@Override
-							public void onAnimationStart(Animator p1)
-							{
+							public void onAnimationStart(Animator p1) {
 								
 							}
 
 							@Override
-							public void onAnimationEnd(Animator p1)
-							{
+							public void onAnimationEnd(Animator p1) {
 								mHandler.sendEmptyMessage(0);
 							}
 
 							@Override
-							public void onAnimationCancel(Animator p1)
-							{
+							public void onAnimationCancel(Animator p1) {
 								
 							}
 
 							@Override
-							public void onAnimationRepeat(Animator p1)
-							{
+							public void onAnimationRepeat(Animator p1) {
 								
 							}
 						});
@@ -258,31 +226,24 @@ public class Login extends BaseActivity
 				}
 
 				@Override
-				public void onError(String error)
-				{
+				public void onError(String error) {
 					ExceptionHandler.log("Login.LoginUser", error);
 					toastLoginError("0x0001");
 					//mHandler.sendEmptyMessage(1);
 				}
 			});
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			ExceptionHandler.log("Login.LoginThread", e.toString());
 			toastLoginError("0x0003");
 			//mHandler.sendEmptyMessage(1);
 		}
 	}
 	
-	public void loginQQUser()
-	{
-		try
-		{
-			Common.qqLogin(Login.this, SocialShare.mTencent.getOpenId(), false, new Common.LoginListener()
-			{
+	public void loginQQUser() {
+		try {
+			Common.qqLogin(Login.this, SocialShare.mTencent.getOpenId(), false, new Common.LoginListener() {
 				@Override
-				public void onLogin(int code)
-				{
+				public void onLogin(int code) {
 					if (Common.isLogin() && code == 1) {
 						Util.toastShortMessage(getApplicationContext(), "登录成功");
 						mHandler.sendEmptyMessage(0);
@@ -293,16 +254,13 @@ public class Login extends BaseActivity
 				}
 
 				@Override
-				public void onError(String error)
-				{
+				public void onError(String error) {
 					ExceptionHandler.log("Login.LoginQQUser", error);
 					toastLoginError("0x0001");
 					//mHandler.sendEmptyMessage(1);
 				}
 			});
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			ExceptionHandler.log("Login.qqLoginThread", e.toString());
 			toastLoginError("0x0003");
 			//mHandler.sendEmptyMessage(1);
@@ -359,22 +317,17 @@ public class Login extends BaseActivity
 		});
 	}
 	
-	private void toastLoginError(String code)
-	{
+	private void toastLoginError(String code) {
 		Util.toastShortMessage(getApplicationContext(), "登录失败，请重试(" + code + ")");
 	}
 	
-	class MyIListener implements IUiListener
-	{
+	class MyIListener implements IUiListener {
 		@Override
-		public void onComplete(Object p)
-		{
+		public void onComplete(Object p) {
 			JSONObject json = (JSONObject)p;
-			try
-			{
+			try {
 				//ExceptionHandler.log("json", p.toString());
-				if (json.has(Constants.PARAM_OPEN_ID))
-				{
+				if (json.has(Constants.PARAM_OPEN_ID)) {
 					String token = json.getString(Constants.PARAM_ACCESS_TOKEN);
 					String expires = json.getString(Constants.PARAM_EXPIRES_IN);
 					String openId = json.getString(Constants.PARAM_OPEN_ID);
@@ -382,42 +335,41 @@ public class Login extends BaseActivity
 					SocialShare.mTencent.setOpenId(openId);
 					loginQQUser();
 				}
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				ExceptionHandler.log("qqLoginIUiListener", e.toString());
 			}
 		}
 		@Override
-		public void onError(UiError p1)
-		{
+		public void onError(UiError p1) {
 			Util.toastShortMessage(getApplicationContext(), "登录失败");
 			if (mProgressDialog != null)
 				mProgressDialog.dismiss();
 		}
 		@Override
-		public void onCancel()
-		{
+		public void onCancel() {
 			if (mProgressDialog != null)
 				mProgressDialog.dismiss();
 		}
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-		if (requestCode == Constants.REQUEST_LOGIN)
-		{
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == Constants.REQUEST_LOGIN) {
 			Tencent.onActivityResultData(requestCode, resultCode, data, new MyIListener());
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 	@Override
-	public void onBackPressed()
-	{
+	public void onBackPressed() {
 		if (canGoback)
 			supportFinishAfterTransition();
+	}
+
+	@Override
+	protected void onDestroy() {
+		mHandler.removeCallbacksAndMessages(null);
+		super.onDestroy();
 	}
 
 	@SuppressLint("HandlerLeak")

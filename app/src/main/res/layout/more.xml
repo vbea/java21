@@ -8,134 +8,124 @@
 	android:background="?attr/titleColor">
 	<include layout="@layout/java_tool"/>
 	<RelativeLayout
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
 	<ScrollView
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
 		android:scrollbars="none"
 		android:paddingTop="1px">
 		<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
 			android:paddingBottom="5dp"
-			android:orientation="vertical"
-			android:divider="@drawable/ic_divider"
-			android:showDividers="middle">
+			android:orientation="vertical">
 			<TextView
 				android:id="@+id/btn_musicPiano"
-				android:layout_width="fill_parent"
-				android:layout_height="56dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
 				android:text="@string/piano"
 				android:background="@drawable/btn_menu"
-				android:gravity="left|center_vertical"
-				android:paddingLeft="20dp"
-				android:paddingRight="15dp"
+				android:padding="@dimen/activity_vertical_margin"
 				android:textColor="?attr/textPrimary"
-				android:textSize="17sp"/>
+				android:textSize="16sp"/>
 			<TextView
 				android:id="@+id/btn_musicTrans"
-				android:layout_width="fill_parent"
-				android:layout_height="56dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
 				android:text="@string/musictrans"
 				android:background="@drawable/btn_menu"
-				android:gravity="left|center_vertical"
-				android:paddingLeft="20dp"
-				android:paddingRight="15dp"
+				android:padding="@dimen/activity_vertical_margin"
 				android:textColor="?attr/textPrimary"
-				android:textSize="17sp"/>
+				android:textSize="16sp"/>
 			<TextView
 				android:id="@+id/btn_musicTest"
-				android:layout_width="fill_parent"
-				android:layout_height="56dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
 				android:text="@string/musictest"
 				android:background="@drawable/btn_menu"
-				android:gravity="left|center_vertical"
-				android:paddingLeft="20dp"
-				android:paddingRight="15dp"
+				android:padding="@dimen/activity_vertical_margin"
 				android:textColor="?attr/textPrimary"
-				android:textSize="17sp"/>
+				android:textSize="16sp"/>
 			<RelativeLayout
 				android:id="@+id/btn_setPianoSize"
-				android:layout_width="fill_parent"
-				android:layout_height="56dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:gravity="center_vertical"
+				android:padding="@dimen/activity_vertical_margin"
 				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_centerVertical="true"
 					android:text="键盘大小"
-					android:gravity="left|center_vertical"
-					android:paddingLeft="20dp"
 					android:textColor="?attr/textPrimary"
-					android:textSize="17sp"/>
+					android:textSize="16sp"/>
 				<TextView
 					android:id="@+id/txt_pianoSize"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginRight="15dp"
-					android:layout_alignParentRight="true"
 					android:layout_centerVertical="true"
+					android:layout_alignParentRight="true"
 					android:textSize="14sp"
 					android:text="大"
 					android:textColor="?attr/colorAccent"/>
 			</RelativeLayout>
 			<RelativeLayout
 				android:id="@+id/btn_setLoop"
-				android:layout_width="fill_parent"
-				android:layout_height="56dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:padding="@dimen/activity_vertical_margin"
 				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="match_parent"
+					android:layout_centerVertical="true"
 					android:text="循环播放"
-					android:gravity="left|center_vertical"
-					android:paddingLeft="20dp"
 					android:textColor="?attr/textPrimary"
-					android:textSize="17sp"/>
+					android:textSize="16sp"/>
 				<Switch
 					android:id="@+id/slid_setLoop"
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
-					android:layout_marginRight="10dp"
-					android:gravity="center"
-					android:layout_alignParentRight="true"/>
+					android:layout_height="match_parent"
+					android:layout_alignParentRight="true"
+					android:layout_centerVertical="true"
+					android:gravity="center"/>
 			</RelativeLayout>
 			<RelativeLayout
 				android:id="@+id/btn_setOrder"
-				android:layout_width="fill_parent"
-				android:layout_height="56dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:padding="@dimen/activity_vertical_margin"
 				android:background="@drawable/btn_menu">
 				<TextView
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_centerVertical="true"
 					android:text="顺序播放"
-					android:gravity="left|center_vertical"
-					android:paddingLeft="20dp"
 					android:textColor="?attr/textPrimary"
-					android:textSize="17sp"/>
+					android:textSize="16sp"/>
 				<Switch
 					android:id="@+id/slid_setOrder"
 					android:layout_width="wrap_content"
-					android:layout_height="fill_parent"
-					android:layout_marginRight="10dp"
+					android:layout_height="match_parent"
+					android:layout_alignParentRight="true"
 					android:gravity="center"
-					android:layout_alignParentRight="true"/>
+					android:layout_centerVertical="true"/>
 			</RelativeLayout>
 			<TextView
 				android:id="@+id/btn_musicList"
-				android:layout_width="fill_parent"
-				android:layout_height="56dp"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
 				android:text="@string/morelist"
 				android:background="@drawable/btn_menu"
-				android:gravity="left|center_vertical"
-				android:paddingLeft="20dp"
-				android:paddingRight="15dp"
+				android:padding="@dimen/activity_vertical_margin"
 				android:textColor="?attr/textPrimary"
-				android:textSize="17sp"/>
+				android:textSize="16sp"/>
 		</LinearLayout>
 	</ScrollView>
 	<LinearLayout
-		android:layout_width="fill_parent"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
 		android:orientation="vertical">
@@ -178,7 +168,7 @@
 			android:id="@+id/pro_micMore"
 			style="?android:attr/progressBarStyleHorizontal"
 			android:layout_height="3dp"
-			android:layout_width="fill_parent"
+			android:layout_width="match_parent"
 			android:progressDrawable="@drawable/web_progress"
 			android:max="100"/>
 	</LinearLayout>

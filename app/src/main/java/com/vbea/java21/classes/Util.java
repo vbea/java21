@@ -41,24 +41,24 @@ import android.widget.Toast;
 import android.webkit.MimeTypeMap;
 import android.telephony.TelephonyManager;
 import org.apache.commons.io.FileUtils;
+
+import com.vbea.java21.BuildConfig;
 import com.vbea.java21.R;
 import com.vbea.java21.view.MyAlertDialog;
+import com.vbes.util.VbeUtil;
 
 public class Util
 {
-	public static boolean isServerDataId(int id)
-	{
+	public static boolean isServerDataId(int id) {
 		return id == -3;
 	}
 	
 	//byte转为字符串
-    public static String bytesToHexString(byte[] src)
-	{
+    public static String bytesToHexString(byte[] src) {
         StringBuilder stringBuilder = new StringBuilder("");
         if (src == null || src.length <= 0)
             return null;
-        for (int i = 0; i < src.length; i++)
-		{
+        for (int i = 0; i < src.length; i++) {
             int v = src[i] & 0xFF;
             String hv = Integer.toHexString(v);
             if (hv.length() < 2)
@@ -72,16 +72,14 @@ public class Util
      * @param hexString the hex string
      * @return byte[]
      */
-    public static byte[] hexStringToBytes(String hexString)
-	{
+    public static byte[] hexStringToBytes(String hexString) {
         if (hexString == null || hexString.equals(""))
             return null;
         hexString = hexString.toUpperCase();
         int length = hexString.length() / 2;
         char[] hexChars = hexString.toCharArray();
         byte[] d = new byte[length];
-        for (int i = 0; i < length; i++)
-		{
+        for (int i = 0; i < length; i++) {
             int pos = i * 2;
             d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
         }
@@ -92,8 +90,7 @@ public class Util
      * @param c char
      * @return byte
      */
-    private static byte charToByte(char c)
-	{
+    private static byte charToByte(char c) {
         return (byte)"0123456789ABCDEF".indexOf(c);
     }
 
@@ -104,16 +101,12 @@ public class Util
     /*
      * 将字符串编码成16进制数字,适用于所有字符（包括中文）
      */
-    public static String toHexString(String str)
-    {
+    public static String toHexString(String str) {
 		//根据默认编码获取字节数组
         byte[] bytes = null;
-		try
-		{
+		try {
 			bytes = str.getBytes("UTF-8");
-		}
-		catch (UnsupportedEncodingException e)
-		{
+		} catch (UnsupportedEncodingException e) {
 			ExceptionHandler.log("Util.toHexString", e.toString());
 			//e.printStackTrace();
 		}
@@ -121,8 +114,7 @@ public class Util
 			return null;
         StringBuilder sb=new StringBuilder(bytes.length*2);
 		//将字节数组中每个字节拆解成2位16进制整数
-        for(int i=0;i<bytes.length;i++)
-        {
+        for(int i=0;i<bytes.length;i++) {
             sb.append(hexString.charAt((bytes[i]&0xf0)>>4));
             sb.append(hexString.charAt((bytes[i]&0x0f)>>0));
         }
@@ -130,88 +122,64 @@ public class Util
     }
 
     //转换十六进制编码为字符串
-    public static String hexToString(String s)
-    {
-        if("0x".equals(s.substring(0, 2)))
-        {
+    public static String hexToString(String s) {
+        if("0x".equals(s.substring(0, 2))) {
             s =s.substring(2);
         }
         byte[] baKeyword = new byte[s.length()/2];
-        for(int i = 0; i < baKeyword.length; i++)
-        {
-            try
-            {
+        for(int i = 0; i < baKeyword.length; i++) {
+            try {
                 baKeyword[i] = (byte)(0xff & Integer.parseInt(s.substring(i*2, i*2+2),16));
-            }
-            catch(Exception e)
-            {
+            } catch(Exception e) {
 				ExceptionHandler.log("Util.hexToString", e.toString());
                 //e.printStackTrace();
             }
         }
-        try
-        {
+        try {
             s = new String(baKeyword, "utf-8");//UTF-16le:Not
-        }
-        catch (Exception e1)
-        {
+        } catch (Exception e1) {
 			ExceptionHandler.log("Util.hexToString_2", e1.toString());
 			//e1.printStackTrace();
         }
         return s;
     }
 
-    public static byte[] bmpToByteArray(final Bitmap bmp, final boolean needRecycle)
-	{
+    public static byte[] bmpToByteArray(final Bitmap bmp, final boolean needRecycle) {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		bmp.compress(CompressFormat.PNG, 100, output);
-		if (needRecycle)
-		{
+		if (needRecycle) {
 			bmp.recycle();
 		}
 		
 		byte[] result = output.toByteArray();
-		try
-		{
+		try {
 			output.close();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			ExceptionHandler.log("Util.bmpToByteArray", e.toString());
 			//e.printStackTrace();
 		}
 		return result;
 	}
 	
-	public static byte[] getHtmlByteArray(final String url)
-	{
+	public static byte[] getHtmlByteArray(final String url) {
 		URL htmlUrl = null;     
 		InputStream inStream = null;     
-		try
-		{
+		try {
 			htmlUrl = new URL(url);         
 			URLConnection connection = htmlUrl.openConnection();         
 			HttpURLConnection httpConnection = (HttpURLConnection)connection;         
 			int responseCode = httpConnection.getResponseCode();
 			if(responseCode == HttpURLConnection.HTTP_OK)
 				inStream = httpConnection.getInputStream();
-		}
-		catch (MalformedURLException e)
-		{               
-			ExceptionHandler.log("Util.getHtmlByteArray", e.toString());
-		}
-		catch (IOException e)
-		{              
+		} catch (Exception e) {
 			ExceptionHandler.log("Util.getHtmlByteArray", e.toString());    
 		} 
 		byte[] data = inputStreamToByte(inStream);
 		return data;
 	}
 	
-	public static byte[] inputStreamToByte(InputStream is)
-	{
-		try
-		{
+	public static byte[] inputStreamToByte(InputStream is) {
+		try {
 			ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
 			int ch;
 			while ((ch = is.read()) != -1) {
@@ -220,17 +188,14 @@ public class Util
 			byte imgdata[] = bytestream.toByteArray();
 			bytestream.close();
 			return imgdata;
-		}
-		catch(Exception e)
-		{
+		} catch(Exception e) {
 			ExceptionHandler.log("Util.inputStreamToByte", e.toString());
 			//e.printStackTrace();
 		}
 		return null;
 	}
 	
-	public static byte[] readFromFile(String fileName, int offset, int len)
-	{
+	public static byte[] readFromFile(String fileName, int offset, int len) {
 		if (fileName == null)
 			return null;
 		File file = new File(fileName);
@@ -245,30 +210,24 @@ public class Util
 		if(offset + len > (int) file.length())
 			return null;
 		byte[] b = null;
-		try
-		{
+		try {
 			RandomAccessFile in = new RandomAccessFile(fileName, "r");
 			b = new byte[len];
 			in.seek(offset);
 			in.readFully(b);
 			in.close();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			ExceptionHandler.log("Util.readFromFile", e.toString());
 		}
 		return b;
 	}
 
-    public static int computeSampleSize(BitmapFactory.Options options, int minSideLength, int maxNumOfPixels)
-	{
+    public static int computeSampleSize(BitmapFactory.Options options, int minSideLength, int maxNumOfPixels) {
         int initialSize = computeInitialSampleSize(options, minSideLength, maxNumOfPixels);
         int roundedSize;
-        if (initialSize <= 8)
-		{
+        if (initialSize <= 8) {
             roundedSize = 1;
-            while (roundedSize < initialSize)
-			{
+            while (roundedSize < initialSize) {
                 roundedSize <<= 1;
             }
         }
@@ -277,14 +236,12 @@ public class Util
         return roundedSize;
     }
 
-    private static int computeInitialSampleSize(BitmapFactory.Options options, int minSideLength, int maxNumOfPixels)
-	{
+    private static int computeInitialSampleSize(BitmapFactory.Options options, int minSideLength, int maxNumOfPixels) {
         double w = options.outWidth;
         double h = options.outHeight;
         int lowerBound = (maxNumOfPixels == -1) ? 1 : (int) Math.ceil(Math.sqrt(w * h / maxNumOfPixels));
         int upperBound = (minSideLength == -1) ? 128 : (int) Math.min(Math.floor(w / minSideLength), Math.floor(h / minSideLength));
-        if (upperBound < lowerBound)
-		{
+        if (upperBound < lowerBound) {
             // return the larger one when there is no overlapping zone.
             return lowerBound;
         }
@@ -299,10 +256,8 @@ public class Util
     /**
      * 以最省内存的方式读取图片
      */
-    public static Bitmap readBitmap(final String path)
-	{
-        try
-		{
+    public static Bitmap readBitmap(final String path) {
+        try {
             FileInputStream stream = new FileInputStream(new File(path));
             BitmapFactory.Options opts = new BitmapFactory.Options();
             opts.inSampleSize = 8;
@@ -310,21 +265,16 @@ public class Util
             opts.inInputShareable=true;
             Bitmap bitmap = BitmapFactory.decodeStream(stream , null, opts);
             return bitmap;
-        }
-		catch (OutOfMemoryError e)
-		{
+        } catch (OutOfMemoryError e) {
 			ExceptionHandler.log("readBitmap_OOM", e.toString());
             return null;
-        }
-		catch (Exception e)
-		{
+        } catch (Exception e) {
 			ExceptionHandler.log("Util.readBitmap", e.toString());
             return null;
         }
     }
 	
-	public static void saveBitmap(Context context, String folder, String filename, Bitmap bitmap) throws IOException
-	{
+	public static void saveBitmap(Context context, String folder, String filename, Bitmap bitmap) throws IOException {
 		File directory = new File(folder);
 		if (!directory.exists())
 			directory.mkdirs();
@@ -339,10 +289,8 @@ public class Util
 		updateGallery(context, file);
 	}
 	
-	public static void saveCropBitmap(Bitmap bm, File file)
-	{
-		try
-		{
+	public static void saveCropBitmap(Bitmap bm, File file) {
+		try {
         	BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
         	bm.compress(Bitmap.CompressFormat.PNG, 80, bos);
         	bos.flush();
@@ -352,46 +300,35 @@ public class Util
 		}
     }
 	
-	public static void updateGallery(Context context, File f)
-	{
-		try
-		{
+	public static void updateGallery(Context context, File f) {
+		try {
 			//MediaStore.Images.Media.insertImage(context.getContentResolver(), f.getAbsolutePath(), f.getName(), null);
 			ContentValues values = new ContentValues();
 			values.put(MediaStore.Images.Media.DATA, f.getAbsolutePath());
 			values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
 			context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 			context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(f.getParentFile())));
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			ExceptionHandler.log("updateGallery()", e);
 		}
 	}
 	
-	public static String getDeviceModel()
-	{
-		try
-		{
+	public static String getDeviceModel() {
+		try {
 			return Build.MODEL;
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			return "";
 		}
 	}
 
     private static final int MAX_DECODE_PICTURE_SIZE = 1920 * 1440;
-	public static Bitmap extractThumbNail(final String path, final int height, final int width, final boolean crop)
-	{
+	public static Bitmap extractThumbNail(final String path, final int height, final int width, final boolean crop) {
 		//Assert.assertTrue(path != null && !path.equals("") && height > 0 && width > 0);
 		BitmapFactory.Options options = new BitmapFactory.Options();
-		try
-		{
+		try {
 			options.inJustDecodeBounds = true;
 			Bitmap tmp = BitmapFactory.decodeFile(path, options);
-			if (tmp != null)
-			{
+			if (tmp != null) {
 				tmp.recycle();
 				tmp = null;
 			}
@@ -401,21 +338,17 @@ public class Util
 			if (options.inSampleSize <= 1)
 				options.inSampleSize = 1;
 			// NOTE: out of memory error
-			while (options.outHeight * options.outWidth / options.inSampleSize > MAX_DECODE_PICTURE_SIZE)
-			{
+			while (options.outHeight * options.outWidth / options.inSampleSize > MAX_DECODE_PICTURE_SIZE) {
 				options.inSampleSize++;
 			}
 			int newHeight = height;
 			int newWidth = width;
-			if (crop)
-			{
+			if (crop) {
 				if (beY > beX)
 					newHeight = (int) (newWidth * 1.0 * options.outHeight / options.outWidth);
 				else
 					newWidth = (int) (newHeight * 1.0 * options.outWidth / options.outHeight);
-			}
-			else
-			{
+			} else {
 				if (beY < beX)
 					newHeight = (int) (newWidth * 1.0 * options.outHeight / options.outWidth);
 				else
@@ -426,13 +359,11 @@ public class Util
 			if (bm == null)
 				return null;
 			final Bitmap scale = Bitmap.createScaledBitmap(bm, newWidth, newHeight, true);
-			if (scale != null)
-			{
+			if (scale != null) {
 				bm.recycle();
 				bm = scale;
 			}
-			if (crop)
-			{
+			if (crop) {
 				final Bitmap cropped = Bitmap.createBitmap(bm, (bm.getWidth() - width) >> 1, (bm.getHeight() - height) >> 1, width, height);
 				if (cropped == null)
 					return bm;
@@ -440,34 +371,28 @@ public class Util
 				bm = cropped;
 			}
 			return bm;
-		}
-		catch (OutOfMemoryError e)
-		{
+		} catch (OutOfMemoryError e) {
 			ExceptionHandler.log("Util.extractThumbNail", e.toString());
 			options = null;
 		}
 		return null;
 	}
 	
-	public static final void showResultDialog(Context context, String msg, String title)
-	{
+	public static final void showResultDialog(Context context, String msg, String title) {
 		showResultDialog(context, msg, title, null);
 	}
 	
-	public static final void showResultDialog(Context context, String msg, String title, DialogInterface.OnClickListener lis)
-	{
+	public static final void showResultDialog(Context context, String msg, String title, DialogInterface.OnClickListener lis) {
 		showResultDialog(context, msg, title, "知道了", lis);
 	}
 	
-	public static final void showResultDialog(Context context, String msg, String title, String ok, DialogInterface.OnClickListener lis)
-	{
+	public static final void showResultDialog(Context context, String msg, String title, String ok, DialogInterface.OnClickListener lis) {
 		if(msg == null) return;
 		//String rmsg = msg.replace(",", "\n");
 		new MyAlertDialog(context).setTitle(title).setMessage(msg).setNegativeButton(ok, lis).create().show();
 	}
 	
-	public static void showConfirmCancelDialog(Context context, String title, String message, DialogInterface.OnClickListener posListener)
-	{
+	public static void showConfirmCancelDialog(Context context, String title, String message, DialogInterface.OnClickListener posListener) {
 		MyAlertDialog dialog = new MyAlertDialog(context);
 		dialog.setTitle(title);
 		dialog.setMessage(message);
@@ -477,13 +402,11 @@ public class Util
 		dialog.show();
 	}
 	
-	public static void showConfirmCancelDialog(Context context, String message, DialogInterface.OnClickListener posListener)
-	{
+	public static void showConfirmCancelDialog(Context context, String message, DialogInterface.OnClickListener posListener) {
 		showConfirmCancelDialog(context, android.R.string.dialog_alert_title, message, posListener);
 	}
 	
-	public static void showConfirmCancelDialog(Context context, int title, String message, DialogInterface.OnClickListener posListener)
-	{
+	public static void showConfirmCancelDialog(Context context, int title, String message, DialogInterface.OnClickListener posListener) {
 		MyAlertDialog dialog = new MyAlertDialog(context);
 		dialog.setTitle(title);
 		dialog.setMessage(message);
@@ -493,8 +416,7 @@ public class Util
 		dialog.show();
 	}
 	
-	public static void showConfirmCancelDialog(Context context, String title, String message, String ok, String cacel, DialogInterface.OnClickListener posListener)
-	{
+	public static void showConfirmCancelDialog(Context context, String title, String message, String ok, String cacel, DialogInterface.OnClickListener posListener) {
 		MyAlertDialog dialog = new MyAlertDialog(context);
 		dialog.setTitle(title);
 		dialog.setMessage(message);
@@ -504,54 +426,45 @@ public class Util
 		dialog.show();
 	}
 	
-	public static String Join(String splitter, String[] strs)
-	{
+	public static String Join(String splitter, String[] strs) {
 		if (strs.length <= 0)
 			return "";
 		StringBuffer sb = new StringBuffer();
-        for(String s:strs)
-		{
+        for(String s:strs) {
             sb.append(s+splitter);
         }
         return sb.toString().substring(0, sb.toString().length()-1);
 	}
 	
-	public static String Join(String splitter, List<String> strs)
-	{
+	public static String Join(String splitter, List<String> strs) {
 		if (strs.size() <= 0)
 			return "";
 		StringBuffer sb = new StringBuffer();
-        for(String s:strs)
-		{
+        for(String s:strs) {
             sb.append(s+splitter);
         }
         return sb.toString().substring(0, sb.toString().length()-1);
 	}
 	
 	//打印消息并且用Toast显示消息
-	public static void toastShortMessage(Context activity, String message)
-	{
+	public static void toastShortMessage(Context activity, String message) {
 		Toast.makeText(activity, message, Toast.LENGTH_SHORT).show();
 	}
 
-	public static void toastLongMessage(Context activity, String message)
-	{
+	public static void toastLongMessage(Context activity, String message) {
 		Toast.makeText(activity, message, Toast.LENGTH_LONG).show();
 	}
 	
-	public static String trim(String src, char element)
-	{
+	public static String trim(String src, char element) {
 		boolean beginIndexFlag = true;
 		boolean endIndexFlag = true;
-		do
-		{
+		do {
 			int beginIndex = src.indexOf(element)==0?1:0;
 			int endIndex = src.lastIndexOf(element)+1==src.length()?src.lastIndexOf(element):src.length();
 			src = src.substring(beginIndex,endIndex);
 			beginIndexFlag=(src.indexOf(element)==0);
 			endIndexFlag=(src.lastIndexOf(element)+1==src.length());
-		}
-		while(beginIndexFlag||endIndexFlag);
+		} while(beginIndexFlag||endIndexFlag);
 		return src;
 	}
 
@@ -562,12 +475,10 @@ public class Util
 	 * @return
 	 * @throws MalformedURLException
 	 */
-	public static Bitmap getNetBitmap(String imageUri)
-	{
+	public static Bitmap getNetBitmap(String imageUri) {
 		// 显示网络上的图片
 		Bitmap bitmap = null;
-		try
-		{
+		try {
 			URL myFileUrl = new URL(imageUri);
 			HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
 			conn.setDoInput(true);
@@ -575,14 +486,10 @@ public class Util
 			InputStream is = conn.getInputStream();
 			bitmap = BitmapFactory.decodeStream(is);
 			is.close();
-        }
-		catch (OutOfMemoryError e)
-		{
+        } catch (OutOfMemoryError e) {
             e.printStackTrace();
             bitmap = null;
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			ExceptionHandler.log("Util.getNetBitmap", e.toString());
             bitmap = null;
 		}
@@ -590,10 +497,8 @@ public class Util
 	}
 	
 	//下载文件
-	public static void downloadFile(final String url, String path, String name)
-	{
-		try
-		{
+	public static void downloadFile(final String url, String path, String name) {
+		try {
 			InputStream inStream = null;
 			URL htmlUrl = new URL(url);         
 			URLConnection connection = htmlUrl.openConnection();         
@@ -605,9 +510,7 @@ public class Util
 				file.createNewFile();
 			FileUtils.copyToFile(inStream, file);
 			inStream.close();
-		}
-		catch (Exception e)
-		{              
+		} catch (Exception e) {
 			ExceptionHandler.log("Util.downloadFile", e.toString());    
 		}
 	}
@@ -618,8 +521,7 @@ public class Util
     // ==========
     public static String ACTION_OPEN_DOCUMENT = "android.intent.action.OPEN_DOCUMENT";
     public static int Build_VERSION_KITKAT = 19;
-    public static String getPath(final Context context, final Uri uri)
-	{
+    public static String getPath(final Context context, final Uri uri) {
         final boolean isKitKat = Build.VERSION.SDK_INT >= 19;
         // DocumentProvider
         if (isKitKat && isDocumentUri(context, uri))
@@ -677,12 +579,8 @@ public class Util
     }
 
     private static final String PATH_DOCUMENT = "document";
-    /**
-     * Test if the given URI represents a {@link Document} backed by a
-     * {@link DocumentsProvider}.
-     */
-    private static boolean isDocumentUri(Context context, Uri uri)
-	{
+
+    private static boolean isDocumentUri(Context context, Uri uri) {
         final List<String> paths = uri.getPathSegments();
         if (paths.size() < 2)
             return false;
@@ -691,8 +589,7 @@ public class Util
         return true;
     }
 
-    private static String getDocumentId(Uri documentUri)
-	{
+    private static String getDocumentId(Uri documentUri) {
         final List<String> paths = documentUri.getPathSegments();
         if (paths.size() < 2)
             throw new IllegalArgumentException("Not a document: " + documentUri);
@@ -701,14 +598,10 @@ public class Util
         return paths.get(1);
     }
 	
-	public static boolean AuthKey(Context context)
-	{
-		try
-		{
+	public static boolean AuthKey(Context context) {
+		try {
 			return MD5Util.CheckKey(context.getPackageManager().getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES).signatures);
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			return false;
 		}
 	}
@@ -728,22 +621,17 @@ public class Util
      *            [url=home.php?mod=space&uid=7300]@return[/url] The value of
      *            the _data column, which is typically a file path.
      */
-    public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs)
-	{
+    public static String getDataColumn(Context context, Uri uri, String selection, String[] selectionArgs) {
         Cursor cursor = null;
         final String column = "_data";
         final String[] projection = { column };
-        try
-		{
+        try {
             cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs, null);
-            if (cursor != null && cursor.moveToFirst())
-			{
+            if (cursor != null && cursor.moveToFirst()) {
                 final int index = cursor.getColumnIndexOrThrow(column);
                 return cursor.getString(index);
             }
-        }
-		finally
-		{
+        } finally {
             if (cursor != null)
                 cursor.close();
         }
@@ -755,8 +643,7 @@ public class Util
      *            The Uri to check.
      * @return Whether the Uri authority is ExternalStorageProvider.
      */
-    public static boolean isExternalStorageDocument(Uri uri)
-	{
+    public static boolean isExternalStorageDocument(Uri uri) {
         return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
 
@@ -765,8 +652,7 @@ public class Util
      *            The Uri to check.
      * @return Whether the Uri authority is DownloadsProvider.
      */
-    public static boolean isDownloadsDocument(Uri uri)
-	{
+    public static boolean isDownloadsDocument(Uri uri) {
         return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
 
@@ -775,30 +661,25 @@ public class Util
      *            The Uri to check.
      * @return Whether the Uri authority is MediaProvider.
      */
-    public static boolean isMediaDocument(Uri uri)
-	{
+    public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 	
-	public static String getFormatSize(long bytes) 
-	{
+	public static String getFormatSize(long bytes) {
         if (bytes < 1024)
             return bytes + "B";
 		double kiloByte = bytes / 1024;
-		if (kiloByte < 1024)
-		{  
+		if (kiloByte < 1024) {
             BigDecimal result1 = new BigDecimal(kiloByte);
             return result1.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "KB";  
         }  
         double megaByte = kiloByte / 1024;  
-        if (megaByte < 1024)
-		{
+        if (megaByte < 1024) {
             BigDecimal result2 = new BigDecimal(megaByte);
             return result2.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "MB";  
         }
         double gigaByte = megaByte / 1024;  
-        if (gigaByte < 1024)
-		{
+        if (gigaByte < 1024) {
             BigDecimal result3 = new BigDecimal(gigaByte);
             return result3.setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString() + "GB";  
         }
@@ -812,47 +693,39 @@ public class Util
      *            The Uri to check.
      * @return Whether the Uri authority is Google Photos.
      */
-    public static boolean isGooglePhotosUri(Uri uri)
-	{
+    public static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 	
-	public static boolean isNullOrEmpty(String obj)
-	{
+	public static boolean isNullOrEmpty(String obj) {
 		if (obj != null)
 			return obj.equals("");
 		return true;
 	}
 	
-	public static String getFileType(String filename)
-	{
+	public static String getFileType(String filename) {
 		if (filename.indexOf(".") >= 0)
 			return filename.substring(filename.lastIndexOf("."));
 		return filename;
 	}
 	
-	public static String getFileTypeName(String filename)
-	{
+	public static String getFileTypeName(String filename) {
 		if (filename.indexOf(".") >= 0)
 			return filename.substring(filename.lastIndexOf(".")+1);
 		return filename;
 	}
 	
-	public static boolean isImageFile(String path)
-	{
+	public static boolean isImageFile(String path) {
 		String p = path.toLowerCase();
 		return p.endsWith(".jpg") || p.endsWith(".png") || p.endsWith(".gif") || p.endsWith(".bmp");
 	}
 	
-	public static String removeEmptyItem(String[] list)
-	{
+	public static String removeEmptyItem(String[] list) {
 		if (list.length == 1)
 			return list[0];
 		StringBuilder sb = new StringBuilder();
-		for (String s : list)
-		{
-			if (!isNullOrEmpty(s))
-			{
+		for (String s : list) {
+			if (!isNullOrEmpty(s)) {
 				sb.append(",");
 				sb.append(s);
 			}
@@ -860,28 +733,23 @@ public class Util
 		return sb.toString().substring(1);
 	}
 	
-	public static boolean isAndroidM()
-	{
+	public static boolean isAndroidM() {
 		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M);
 	}
 	
-	public static boolean isAndroidN()
-	{
+	public static boolean isAndroidN() {
 		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N);
 	}
 	
-	public static boolean isAndroidO()
-	{
+	public static boolean isAndroidO() {
 		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O);
 	}
 	
-	public static boolean isAndroidP()
-	{
+	public static boolean isAndroidP() {
 		return (Build.VERSION.SDK_INT >= 28);
 	}
 	
-	public static boolean hasPermission(Context c, String p)
-	{
+	public static boolean hasPermission(Context c, String p) {
 		//ExceptionHandler.log(p, "permission:"+ (c.checkSelfPermission(p) == PackageManager.PERMISSION_GRANTED));
 		return c.checkSelfPermission(p) == PackageManager.PERMISSION_GRANTED;
 	}
@@ -978,32 +846,27 @@ public class Util
 	public static String getDeviceId(Context context)
 	{
 		StringBuilder deviceId = new StringBuilder();
-		try
-		{
+		try {
 			deviceId.append("version:");
-			deviceId.append(context.getResources().getString(R.string.update));
+			deviceId.append(BuildConfig.VERSION_NAME);
 			deviceId.append(",model:");
 			deviceId.append(getDeviceModel());
 			//IMEI（imei）
 			TelephonyManager tm	= (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 			String imei	= tm.getDeviceId();
-			if(!isNullOrEmpty(imei))
-			{
+			if(!isNullOrEmpty(imei)) {
 				deviceId.append(",imei:");
 				deviceId.append(imei);
 				return deviceId.toString();
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			return deviceId.toString();
 		}
 		return deviceId.toString();
 	}
 	
 	//获取文件扩展名
-	public static String getExtension(String name)
-	{
+	public static String getExtension(String name) {
 		String suffix = "";
 		int idx = name.lastIndexOf(".");
 		if(idx > 0)
@@ -1012,8 +875,7 @@ public class Util
 	}
 	
 	//获取文件扩展名(去掉.)
-	public static String getExtensionName(String name)
-	{
+	public static String getExtensionName(String name) {
 		String suffix = "";
 		int idx = name.lastIndexOf(".");
 		if(idx > 0)
@@ -1022,8 +884,7 @@ public class Util
 	}
 	
 	//得到扩展名MIME类型
-	public static String getMimeType(String fileName)
-	{
+	public static String getMimeType(String fileName) {
 		String mime = "*/*";
 		String tmp = MimeTypeMap.getSingleton().getMimeTypeFromExtension(getExtensionName(fileName));
 		if (tmp != null)
@@ -1032,8 +893,7 @@ public class Util
 	}
 	
 	//显示敏感信息
-	public static String getSecstr(String str, int start, int end)
-	{
+	public static String getSecstr(String str, int start, int end) {
 		char[] chars = str.toCharArray();
         int _char = (str.length() - start - end);
         StringBuilder sb = new StringBuilder();
@@ -1063,29 +923,23 @@ public class Util
 	}
 	
 	//获取清单文件数据
-	public static String getMetaValue(Context context, String metaKey)
-	{
+	public static String getMetaValue(Context context, String metaKey) {
 		String apiKey = "";
 		if (context == null || isNullOrEmpty(metaKey))
 			return apiKey;
-        try
-		{
+        try {
 			ApplicationInfo ai = context.getPackageManager().getApplicationInfo(context.getPackageName(),PackageManager.GET_META_DATA);
-            if (ai != null)
-			{
+            if (ai != null) {
 				if (ai.metaData != null)
 					apiKey = ai.metaData.getString(metaKey);
             }
-        }
-		catch (Exception e)
-		{
+        } catch (Exception e) {
 			ExceptionHandler.log("Util.getMetaValue()", e);
 		}
         return apiKey;
 	}
 	
-	public static int getStatusBarHeight(Activity p)
-	{
+	public static int getStatusBarHeight(Activity p) {
 		Rect rect = new Rect();
 		p.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);
 		return rect.top;

@@ -61,8 +61,8 @@ public class Knowledge extends BaseActivity
 				break;
 		}
 		myweb.setWebViewClient(new WebViewClient());
-		if (!Common.isNoadv())
-			initBanner();
+		/*if (!Common.isNoadv())
+			initBanner();*/
 	}
 	
 	private String getUrl(String url)

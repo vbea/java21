@@ -50,7 +50,6 @@ import android.support.v7.widget.SearchView;
 import android.support.v4.content.FileProvider;
 import android.support.design.widget.BottomSheetDialog;
 
-import com.vbea.java21.classes.EasyPreferences;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.SocialShare;
@@ -63,6 +62,7 @@ import com.tencent.connect.share.QQShare;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
+import com.vbes.util.EasyPreferences;
 
 import org.wlf.filedownloader.DownloadConfiguration;
 import org.wlf.filedownloader.FileDownloader;
@@ -82,7 +82,6 @@ public class HtmlViewer extends BaseActivity
 	private Uri cameraUri;
 	private String[] Searchs, UAurls;
 	private boolean ISSOURCE = false;
-	private EasyPreferences spf;
 	private WebSettings wset;
 	private WebHelper webHelper;
 	private static final int FILECHOOSER_RESULTCODE = 1;
@@ -799,8 +798,6 @@ public class HtmlViewer extends BaseActivity
 	
 	private void onSetting()
 	{
-		if (spf == null)
-			spf = new EasyPreferences(this);
 		if (Searchs == null)
 			Searchs = getResources().getStringArray(R.array.array_search_url);
 		if (UAurls == null)
@@ -810,10 +807,10 @@ public class HtmlViewer extends BaseActivity
 		}
 		if (webHelper == null)
 			webHelper = new WebHelper(getApplicationContext());
-		SH_home = spf.getString("web_home", "");
-		SH_search = spf.getInt("web_search", 0);
-		SH_savePath = spf.getString("web_savepath", Common.ExterPath + "/DCIM/Java21");
-		int ua = spf.getInt("web_ua", 0);
+		SH_home = EasyPreferences.getString("web_home", "");
+		SH_search = EasyPreferences.getInt("web_search", 0);
+		SH_savePath = EasyPreferences.getString("web_savepath", Common.ExterPath + "/DCIM/Java21");
+		int ua = EasyPreferences.getInt("web_ua", 0);
 		if (SH_UA != ua)
 		{
 			SH_UA = ua;
@@ -831,10 +828,8 @@ public class HtmlViewer extends BaseActivity
 	@Override
     //设置回退 
     //覆盖Activity类的onKeyDown(int keyCoder,KeyEvent event)方法 
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-	{
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && event.getAction() == KeyEvent.ACTION_DOWN)
-		{
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && event.getAction() == KeyEvent.ACTION_DOWN) {
 			if (ISSOURCE)
 				goPage();
 			else if (webView.canGoBack())
@@ -846,25 +841,19 @@ public class HtmlViewer extends BaseActivity
         return super.onKeyDown(keyCode, event);
 	}
 	
-	public void selectImage()
-	{
+	public void selectImage() {
 		MyAlertDialog dialogBuild = new MyAlertDialog(HtmlViewer.this);
-		dialogBuild.setItems(headItems, new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface dialog, int item)
-			{
+		dialogBuild.setItems(headItems, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int item) {
 				dialog.dismiss();
-				switch (item)
-				{
+				switch (item) {
 					case 0:
-						if (Util.isAndroidN())
-						{
+						if (Util.isAndroidN()) {
 							if (!Util.hasAllPermissions(HtmlViewer.this, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
 								Util.requestPermission(HtmlViewer.this, 1001, Manifest.permission.CAMERA,Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 							else
 								startCamera();
-						}
-						else
+						} else
 							startCamera();
 						break;
 					case 1:
@@ -876,19 +865,14 @@ public class HtmlViewer extends BaseActivity
 				}
 			}
 		});
-		dialogBuild.setOnCancelListener(new DialogInterface.OnCancelListener()
-		{
-			public void onCancel(DialogInterface d)
-			{
-				if (mUploadMessages != null)
-				{
+		dialogBuild.setOnCancelListener(new DialogInterface.OnCancelListener() {
+			public void onCancel(DialogInterface d) {
+				if (mUploadMessages != null) {
 					//Uri[] uris = new Uri[1];
 					//uris[0] = Uri.parse("");
 					mUploadMessages.onReceiveValue(null);
 					mUploadMessages = null;
-				}
-				else if (mUploadMessage != null)
-				{
+				} else if (mUploadMessage != null) {
 					mUploadMessage.onReceiveValue(Uri.parse(""));
 					mUploadMessage = null;
 				}
@@ -899,37 +883,31 @@ public class HtmlViewer extends BaseActivity
 	
 	private void startCamera()
 	{
-		try
-		{
+		try {
 			Intent intent1 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 			File file = new File(Common.getTempImagePath());
 			cameraUri = FileProvider.getUriForFile(getApplicationContext(), Common.FileProvider, file);
 			intent1.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri);
 			startActivityForResult(intent1, CHOOSE_CAMERA);
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			ExceptionHandler.log("startCamera_1", e.toString());
 		}
 	}
 	
 	@Override
-	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
-	{
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		if (requestCode == 1001 && Util.hasAllPermissionsGranted(grantResults))
 			startCamera();
 	}
 
 	@Override
-	protected void onPause()
-	{
+	protected void onPause() {
 		super.onPause();
 	}
 
 	@Override
-	protected void onResume()
-	{
+	protected void onResume() {
 		onSetting();
 		if (mBSDialog != null)
 			mBSDialog.dismiss();
@@ -937,26 +915,21 @@ public class HtmlViewer extends BaseActivity
 	}
 
 	@Override
-	protected void onDestroy()
-	{
+	protected void onDestroy() {
+		mHandler.removeCallbacksAndMessages(null);
 		super.onDestroy();
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
-		if (resultCode == Activity.RESULT_OK)
-		{
-			switch (requestCode)
-			{
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == Activity.RESULT_OK) {
+			switch (requestCode) {
 				case CHOOSE_CAMERA:
-					if (mUploadMessage != null)
-					{
+					if (mUploadMessage != null) {
 						File f = new File(Common.getTempImagePath());
 						if (!f.exists())
 							cameraUri = Uri.parse("");
-						else
-						{
+						else {
 							ContentValues values = new ContentValues();
 							values.put(MediaStore.Images.Media.DATA, f.getAbsolutePath());
 							values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
@@ -984,8 +957,7 @@ public class HtmlViewer extends BaseActivity
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
-	private void onReceiveValue(Uri uri)
-	{
+	private void onReceiveValue(Uri uri) {
 		if (uri == null)
 			uri = Uri.parse("");
 		if (mUploadMessage != null)
@@ -996,26 +968,21 @@ public class HtmlViewer extends BaseActivity
 		mUploadMessages = null;
 	}
 	
-	public class MyWebChromeClient extends WebChromeClient
-	{
+	public class MyWebChromeClient extends WebChromeClient {
 		@Override
-		public void onReceivedTitle(WebView view, String title)
-		{
+		public void onReceivedTitle(WebView view, String title) {
 			super.onReceivedTitle(view, title);
             setToolbarTitle(title);
 		}
 
 		@Override
-		public void onProgressChanged(WebView view, int newProgress)
-		{
+		public void onProgressChanged(WebView view, int newProgress) {
 			webProgress.setProgress(newProgress);
 			webProgress.setVisibility(newProgress >= 100 ? View.INVISIBLE : View.VISIBLE);
 		}
 
-		public void onGeolocationPermissionsShowPrompt(final String origin, final android.webkit.GeolocationPermissions.Callback callback)
-		{
-			Util.showConfirmCancelDialog(HtmlViewer.this, "提示", "来自"+origin+"的网页正在请求定位，是否允许？", new DialogInterface.OnClickListener()
-			{
+		public void onGeolocationPermissionsShowPrompt(final String origin, final android.webkit.GeolocationPermissions.Callback callback) {
+			Util.showConfirmCancelDialog(HtmlViewer.this, "提示", "来自"+origin+"的网页正在请求定位，是否允许？", new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface d, int s)
 				{
 					callback.invoke(origin, true, false);
@@ -1069,8 +1036,7 @@ public class HtmlViewer extends BaseActivity
 		//Android 5.0+
 		@Override
 		@SuppressLint("NewApi")
-		public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams)
-		{
+		public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
 			if (mUploadMessages != null)
 				mUploadMessages.onReceiveValue(null);
 			mUploadMessages = filePathCallback;
@@ -1080,8 +1046,7 @@ public class HtmlViewer extends BaseActivity
 			type = Util.isNullOrEmpty(type) ? "*/*" : type;
 			if (type.equals("image/*"))
 				selectImage();
-			else
-			{
+			else {
 				Intent i = new Intent(Intent.ACTION_GET_CONTENT);
 				i.addCategory(Intent.CATEGORY_OPENABLE);
 				i.setType(type);
@@ -1136,17 +1101,14 @@ public class HtmlViewer extends BaseActivity
 	}
 	
 	@SuppressLint("HandlerLeak")
-	Handler mHandler = new Handler()
-	{
+	Handler mHandler = new Handler() {
 		@Override
-		public void handleMessage(Message msg)
-		{
+		public void handleMessage(Message msg) {
 			if (msg.what == 0)
 				init();
 			else if (msg.what == 1)
 				webView.loadUrl(SH_url);
-			else if (msg.what == 2)
-			{
+			else if (msg.what == 2) {
 				if (SOURCE_LOAD == 1)
 				{
 					ISSOURCE = true;
@@ -1166,23 +1128,16 @@ public class HtmlViewer extends BaseActivity
 		}
 	};
 	
-	class CodeThread extends Thread implements Runnable
-	{
-		public void run()
-		{
-			try
-			{
+	class CodeThread extends Thread implements Runnable {
+		public void run() {
+			try {
 				byte[] bytes = Util.getHtmlByteArray(SH_url);
 				SH_html = new String(bytes);
 				SOURCE_LOAD = 1;
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				SOURCE_LOAD = 2;
 				ExceptionHandler.log("CodeThread", e);
-			}
-			finally
-			{
+			} finally {
 				mHandler.sendEmptyMessage(2);
 			}
 		}

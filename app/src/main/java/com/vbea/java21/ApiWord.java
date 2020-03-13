@@ -120,8 +120,8 @@ public class ApiWord extends BaseActivity
 				popwin.dismiss();
 			}
 		});*/
-		if (!Common.isNoadv())
-			initBanner();
+		/*if (!Common.isNoadv())
+			initBanner();*/
 	}
 
 	@Override

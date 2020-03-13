@@ -24,7 +24,6 @@ import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.AdvConfig;
-import com.tencent.stat.StatService;
 import com.qq.e.ads.splash.SplashAD;
 import com.qq.e.ads.splash.SplashADListener;
 import com.qq.e.comm.util.AdError;
@@ -59,33 +58,27 @@ public class MainActivity extends AppCompatActivity
 		txtTip = (TextView) findViewById(R.id.welcome_tips);
 		txtDic = (TextView) findViewById(R.id.welcome_dics);
 		txtSkip = (TextView) findViewById(R.id.welcome_skip);
-		StatService.trackCustomEvent(this, "onCreate", "");
 		homeTips = getResources().getStringArray(R.array.array_homeTips);
 		homeDics = getResources().getStringArray(R.array.array_homeDics);
 		disappears = new AlphaAnimation(1, 0);
 		disappears.setDuration(1000);
-		disappears.setAnimationListener(new Animation.AnimationListener()
-		{
+		disappears.setAnimationListener(new Animation.AnimationListener() {
 			@Override
-			public void onAnimationStart(Animation p1)
-			{
+			public void onAnimationStart(Animation p1) {
 			}
 
 			@Override
-			public void onAnimationEnd(Animation p1)
-			{
+			public void onAnimationEnd(Animation p1) {
 				imgIcon.setVisibility(View.INVISIBLE);
 				txtTip.setVisibility(View.INVISIBLE);
 				txtDic.setVisibility(View.INVISIBLE);
 			}
 				
 			@Override
-			public void onAnimationRepeat(Animation p1)
-			{
+			public void onAnimationRepeat(Animation p1) {
 			}
 		});
-		if (Common.VERSION_CODE == 0)
-		{
+		if (Common.VERSION_CODE == 0) {
 			Common.update(this, false);
 		}
 		if (Util.isAndroidM())
@@ -103,19 +96,15 @@ public class MainActivity extends AppCompatActivity
     }
 	
 	@SuppressLint("HandlerLeak")
-	Handler mHandler = new Handler()
-	{
+	Handler mHandler = new Handler() {
 		@Override
-		public void handleMessage(Message msg)
-		{
-			switch (msg.what)
-			{
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
 				case 0:
 					getRandomTip();
 					break;
 				case 1:
-					if (Common.isSupportMD())
-					{
+					if (Common.isSupportMD()) {
 						getRandomDic();
 						imgIcon.startAnimation(disappears);
 						txtTip.startAnimation(disappears);
@@ -129,14 +118,12 @@ public class MainActivity extends AppCompatActivity
 					Common.startActivityOption(MainActivity.this, intent, based, getString(R.string.shared));
 					break;
 				case 3:
-					if (canJump)
-					{
+					if (canJump) {
 						Intent intent1 = new Intent(MainActivity.this, Main.class);
 						intent1.putExtra("start", true);
 						Common.startActivityOptions(MainActivity.this, intent1);
-						mHandler.sendEmptyMessageDelayed(4, 1000);
-					}
-					else
+						mHandler.sendEmptyMessageDelayed(4, 500);
+					} else
 						canJump = true;
 					break;
 				case 4:
@@ -157,7 +144,6 @@ public class MainActivity extends AppCompatActivity
 	@Override
 	protected void onResume()
 	{
-		StatService.onResume(this);
 		imgIcon.setVisibility(View.VISIBLE);
 		getRandomTips();
 		mHandler.sendEmptyMessage(3);
@@ -165,32 +151,28 @@ public class MainActivity extends AppCompatActivity
 	}
 
 	@Override
-	public void onBackPressed()
-	{
-		
+	protected void onDestroy() {
+		mHandler.removeCallbacksAndMessages(null);
+		super.onDestroy();
 	}
 	
-	private void getRandomTips()
-	{
-		if (layoutMain.getVisibility() == View.VISIBLE)
-		{
+	private void getRandomTips() {
+		if (layoutMain.getVisibility() == View.VISIBLE) {
 			getRandomTip();
 			getRandomDic();
 		}
 	}
 	
-	private void getRandomTip()
-	{
+	private void getRandomTip() {
 		txtTip.setText(homeTips[(int)(Math.random() * (double)homeTips.length)]);
 	}
-	private void getRandomDic()
-	{
+
+	private void getRandomDic() {
 		txtDic.setText(homeDics[(int)(Math.random() * (double)homeDics.length)]);
 	}
 	
 	@Override
-	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults)
-	{
+	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 		//ExceptionHandler.log("main", "result:" + Util.Join(",", permissions));
 		if (Util.hasAllPermissionsGranted(grantResults))
 			startSplashAD();
@@ -199,35 +181,30 @@ public class MainActivity extends AppCompatActivity
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 	}
 	
-	private void startSplashAD()
-	{
-		try
-		{
+	private void startSplashAD() {
+		try {
 			//ExceptionHandler.log("main", "startSplashAD");
-			if (Common.isWeladv())
-			{
+			if (Common.isWeladv()) {
 				txtSkip.setVisibility(View.VISIBLE);
-				splashAD = new SplashAD(this, container, txtSkip, AdvConfig.APPID, AdvConfig.Splash, new MySplashListener(), 0);
-			}
-			else
-			{
-				new MainThread().start();
+				splashAD = new SplashAD(this, txtSkip, AdvConfig.APPID, AdvConfig.Splash, new MySplashListener(), 0);
+				splashAD.fetchAndShowIn(container);
+			} else {
+				toHome();
 			}
 		} catch (Exception e) {
 			ExceptionHandler.log("startSplashMain", e);
-			new MainThread().start();
+			toHome();
 		}
 	}
 	
 	@TargetApi(Build.VERSION_CODES.M)
-	private void checkAndRequestPermission()
-	{
+	private void checkAndRequestPermission() {
 		requestOnce+=1;
 		if (requestOnce > 2) {
-			new MainThread().start();
+			toHome();
 			return;
 		}
-		List<String> lackedPermission = new ArrayList<String>();
+		List<String> lackedPermission = new ArrayList<>();
 		if (!Util.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE))
 			lackedPermission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
 		if (!Util.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
@@ -239,76 +216,56 @@ public class MainActivity extends AppCompatActivity
     	// 权限都已经有了，那么直接调用SDK
 		if (lackedPermission.size() == 0) {
 			startSplashAD();
-		} else
-		{
+		} else {
 			// 请求所缺少的权限，在onRequestPermissionsResult中再看是否获得权限，如果获得权限就可以调用SDK，否则不要调用SDK。
 			String[] requestPermission = new String[lackedPermission.size()];
 			requestPermission = lackedPermission.toArray(requestPermission);
 			requestPermissions(requestPermission, 1024);
 		}
 	}
-	
-	class MainThread extends Thread implements Runnable
-	{
-		@Override
-		public void run()
-		{
-			try
-			{
-				Thread.sleep(1000);
-				mHandler.sendEmptyMessage(0);
-				Thread.sleep(500);
-				mHandler.sendEmptyMessage(1);
-				Thread.sleep(1000);
-				mHandler.sendEmptyMessage(2);
-				Thread.sleep(1000);
-				mHandler.sendEmptyMessage(4);
-			}
-			catch (Exception e)
-			{
-				ExceptionHandler.log("MainActivity", e.toString());
-			}
-		}
+
+	public void toHome() {
+		mHandler.sendEmptyMessageDelayed(0, 1000);
+		mHandler.sendEmptyMessageDelayed(1, 1500);
+		mHandler.sendEmptyMessageDelayed(2, 2500);
+		mHandler.sendEmptyMessageDelayed(4, 3500);
 	}
 	
-	class MySplashListener implements SplashADListener
-	{
-
+	class MySplashListener implements SplashADListener {
 		@Override
-		public void onADExposure()
-		{
+		public void onADExposure() {
 			
 		}
 
 		@Override
-		public void onADDismissed()
-		{
+		public void onADLoaded(long l) {
+
+		}
+
+		@Override
+		public void onADDismissed() {
 			canJump = true;
 			mHandler.sendEmptyMessageDelayed(3, 500);
 		}
 
 		@Override
-		public void onNoAD(AdError e)
-		{
+		public void onNoAD(AdError e) {
 			//ExceptionHandler.log("splash_noad", e.getErrorCode() + ":" + e.getErrorMsg());
-			new MainThread().start();
+			toHome();
 		}
 
 		@Override
-		public void onADPresent()
-		{
+		public void onADPresent() {
 			layoutMain.setVisibility(View.GONE);
 		}
 
 		@Override
-		public void onADClicked()
-		{
+		public void onADClicked() {
 
 		}
 
 		@Override
-		public void onADTick(long p1)
-		{
+		public void onADTick(long p1) {
 			txtSkip.setText(String.format(SKIP_TEXT, Math.round(p1 / 1000f)));
 		}
 	}

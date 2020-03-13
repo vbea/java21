@@ -6,23 +6,24 @@
 	android:layout_width="match_parent"
 	android:orientation="vertical"
 	android:gravity="center_vertical"
-	android:padding="10dp"
+	android:paddingTop="@dimen/margin_12"
+	android:paddingLeft="@dimen/activity_vertical_margin"
+	android:paddingRight="@dimen/activity_vertical_margin"
+	android:paddingBottom="@dimen/margin_12"
 	android:background="@drawable/btn_menu">
 	<TextView
 		android:id="@+id/item_title"
-		android:layout_width="fill_parent"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_weight="1"
-		android:textSize="16sp"
+		android:textSize="15sp"
 		android:textColor="?attr/textPrimary"
-		android:singleLine="true"
-		android:gravity="center_vertical|left"/>
+		android:singleLine="true"/>
 	<TextView
 		android:id="@+id/item_sub"
-		android:layout_width="fill_parent"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:textSize="14sp"
+		android:paddingTop="2dp"
+		android:textSize="12sp"
 		android:textColor="@color/gray"
-		android:singleLine="true"
-		android:gravity="center_vertical|left"/>
+		android:singleLine="true"/>
 </LinearLayout>

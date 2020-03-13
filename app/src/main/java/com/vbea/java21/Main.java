@@ -3,10 +3,12 @@ package com.vbea.java21;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +19,7 @@ import android.net.Uri;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.DialogInterface;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.LinearLayout;
@@ -27,11 +30,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 
-import com.tencent.stat.StatService;
 import com.qq.e.ads.banner.ADSize;
 import com.qq.e.ads.banner.BannerView;
 import com.qq.e.ads.banner.AbstractBannerADListener;
+import com.qq.e.ads.banner2.UnifiedBannerADListener;
+import com.qq.e.ads.banner2.UnifiedBannerView;
 import com.qq.e.comm.util.AdError;
+import com.tencent.stat.StatService;
 import com.vbea.java21.classes.ReadUtil;
 import com.vbea.java21.fragment.AideFragment;
 import com.vbea.java21.fragment.Android2Fragment;
@@ -66,7 +71,7 @@ public class Main extends BaseActivity
 	private boolean START = false;
 	private SoundThread soundThread;
 	private ViewGroup bannerLayout;
-	private BannerView bannerView;
+	private UnifiedBannerView bannerView;
 	private InboxCallback myCallback;
 	private boolean menuReady = false;
 
@@ -115,54 +120,44 @@ public class Main extends BaseActivity
 		Common.IsChangeICON = true;
         drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
 		mDrawerLayout.addDrawerListener(drawerToggle);
-		mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener()
-		{
+		mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
 			@Override
-			public void onDrawerSlide(View p1, float p2)
-			{
+			public void onDrawerSlide(View p1, float p2) {
 				
 			}
 
 			@Override
-			public void onDrawerOpened(View p1)
-			{
+			public void onDrawerOpened(View p1) {
 				txtCotation.pause();
 				closeTip();
 			}
 
 			@Override
-			public void onDrawerClosed(View p1)
-			{
+			public void onDrawerClosed(View p1) {
 				setTip(Common.getTip());
 			}
 
 			@Override
-			public void onDrawerStateChanged(int p1)
-			{
+			public void onDrawerStateChanged(int p1) {
 				mDrawerLayout.requestFocus();
 			}
 		});
-		drawTheme.setOnLongClickListener(new View.OnLongClickListener()
-		{
-			public boolean onLongClick(View v)
-			{
+
+		drawTheme.setOnLongClickListener(new View.OnLongClickListener() {
+			public boolean onLongClick(View v) {
 				Common.startActivityOptions(Main.this, SetDrawerImage.class);
 				mHandler.sendEmptyMessageDelayed(1, 500);
 				return false;
 			}
 		});
-		drawUser.setOnClickListener(new View.OnClickListener()
-		{
-			public void onClick(View v)
-			{
-				if (Common.isLogin())
-				{
+
+		drawUser.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				if (Common.isLogin()) {
 					Common.startActivityOptions(Main.this, new Intent(Main.this, UserCentral.class), Pair.create(drawUser, "share_user")		
 						/*(Pair<View,String>)Pair.create(mImgHead, "icon_pre"),
 						(Pair<View,String>)Pair.create(txtUserName, "share_nick")*/);
-				}
-				else
-				{
+				} else {
 					if (txtUserName.getText().toString().equals("正在登录..."))
 						return;
 					Common.startActivityOptions(Main.this, Login.class);
@@ -170,22 +165,19 @@ public class Main extends BaseActivity
 				}
 			}
 		});
-		txtCotation.setOnClickListener(new View.OnClickListener()
-		{
-			public void onClick(View v)
-			{
-				Util.showResultDialog(Main.this, txtCotation.getText().toString(), "消息通知", new DialogInterface.OnClickListener()
-				{
-					public void onClick(DialogInterface d, int i)
-					{
+
+		txtCotation.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				Util.showResultDialog(Main.this, txtCotation.getText().toString(), "消息通知", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface d, int i) {
 						setTip(Common.getTip());
 					}
 				});
 			}
 		});
+
 		myCallback = new InboxCallback();
-		if (START)
-		{
+		if (START) {
 			if (Common.isNet(this) && Common.canLogin())
 				onAutoLogin();
 			mHandler.sendEmptyMessageDelayed(6, 500);
@@ -224,16 +216,13 @@ public class Main extends BaseActivity
 		}
 	}*/
 	
-	public void setIcon()
-	{
+	public void setIcon() {
 		Common.setIcon(mImgHead, this, false);
 		showPlugin();
 	}
 	
-	public void checkVersion()
-	{
-		if (Common.VERSION_CODE != getResources().getInteger(R.integer.versionCode))
-		{
+	public void checkVersion() {
+		if (Common.VERSION_CODE != BuildConfig.VERSION_CODE) {
 			Util.showResultDialog(this, getString(R.string.abt_ver), "新版特性", new DialogInterface.OnClickListener()
 			{
 				public void onClick(DialogInterface dialog, int s)
@@ -245,74 +234,61 @@ public class Main extends BaseActivity
 	}
 	
     @Override
-    protected void onPostCreate(Bundle savedInstanceState)
-	{
+    protected void onPostCreate(Bundle savedInstanceState) {
 		drawerToggle.syncState();
 		super.onPostCreate(savedInstanceState);
 	}
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig)
-	{
+    public void onConfigurationChanged(Configuration newConfig) {
 		drawerToggle.onConfigurationChanged(newConfig);
 		super.onConfigurationChanged(newConfig);
 	}
 	
-	public void closeTip()
-	{
+	public void closeTip() {
 		//if (layoutTips.getVisibility() != View.GONE)
 		layoutTips.setVisibility(View.GONE);
 	}
 	
-	public void setTip(Tips tip)
-	{
-		if (tip != null)
-		{
+	public void setTip(Tips tip) {
+		if (tip != null) {
 			//if (!Common.HULUXIA)
 			//drawSms.setVisibility(tip.openSMS ? View.VISIBLE : View.GONE);
 			layoutTips.setVisibility(View.VISIBLE);
 			txtCotation.setText(tip.message);
 			txtCotation.start();
-		}
-		else
+		} else
 			closeTip();
 	}
 
 	//抽屉
-	public void goTheme(View v)
-	{
+	public void goTheme(View v) {
 		Common.startActivityOptions(Main.this, Themes.class);
 		mHandler.sendEmptyMessageDelayed(1, 500);
 	}
 	
-	public void goSetting(View v)
-	{
+	public void goSetting(View v) {
 		Common.startActivityOptions(Main.this, Setting.class);
 		mHandler.sendEmptyMessageDelayed(1, 500);
 	}
 	
-	public void goAPI(View v)
-	{
+	public void goAPI(View v) {
 		Common.startActivityOptions(Main.this, ApiWord.class);
 		mHandler.sendEmptyMessageDelayed(1, 500);
 	}
 	
-	public void goMusic(View v)
-	{
+	public void goMusic(View v) {
 		Common.startActivityOptions(Main.this, More.class);
 		mHandler.sendEmptyMessageDelayed(1, 500);
 	}
 	
-	public void goHelp(View v)
-	{
+	public void goHelp(View v) {
 		Common.startActivityOptions(Main.this, Help.class);
 		mHandler.sendEmptyMessageDelayed(1, 500);
 	}
 	
-	public void goEditor(View v)
-	{
-		if (!Common.isLogin())
-		{
+	public void goEditor(View v) {
+		if (!Common.isLogin()) {
 			Util.toastShortMessage(getApplicationContext(), "请先登录！");
 			return;
 		}
@@ -320,16 +296,13 @@ public class Main extends BaseActivity
 		mHandler.sendEmptyMessageDelayed(1, 500);
 	}
 	
-	public void goCodeEditor(View v)
-	{
+	public void goCodeEditor(View v) {
 		Common.startActivityOptions(Main.this, AdminActivity.class);
 		mHandler.sendEmptyMessageDelayed(1, 500);
 	}
 	
-	public void goQQMessage(View v)
-	{
-		if (!Common.isLogin())
-		{
+	public void goQQMessage(View v) {
+		if (!Common.isLogin()) {
 			Util.toastShortMessage(getApplicationContext(), "请先登录！");
 			return;
 		}
@@ -337,8 +310,7 @@ public class Main extends BaseActivity
 		mHandler.sendEmptyMessageDelayed(1, 500);
 	}
 	
-	public void goBrowser(View v)
-	{
+	public void goBrowser(View v) {
 		Common.startActivityOptions(Main.this, HtmlViewer.class);
 		mHandler.sendEmptyMessageDelayed(1, 500);
 	}
@@ -360,26 +332,21 @@ public class Main extends BaseActivity
 		});
 	}*/
 	
-	private void showPlugin()
-	{
+	private void showPlugin() {
 		if (Common.HULUXIA)
 			drawHelp.setVisibility(View.GONE);
-		if (Common.isLogin())
-		{
+		if (Common.isLogin()) {
 			//drawSms.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
 			//drawWifi.setVisibility(Common.isVipUser() ? View.VISIBLE : View.GONE);
 			drawCodeEditor.setVisibility(Common.isAdminUser() ? View.VISIBLE : View.GONE);
-		}
-		else
-		{
+		} else {
 			//drawSms.setVisibility(View.GONE);
 			//drawWifi.setVisibility(View.VISIBLE);
 			drawCodeEditor.setVisibility(View.GONE);
 		}
 	}
 	
-	public void goBack(View v)
-	{
+	public void goBack(View v) {
 		saveStatus();
 		/*if (!Common.isSVipUser())
 		{
@@ -396,34 +363,28 @@ public class Main extends BaseActivity
 		ActivityManager.getInstance().FinishAllActivities();
 	}
 	
-	private void onAudioDialog()
-	{
+	private void onAudioDialog() {
 		if (Common.isAudio() && Common.AUDIO_STUDY_STATE >= 20) {
-		MyAlertDialog builder = new MyAlertDialog(this);
-		builder.setTitle("提示");
-		builder.setCancelable(false);
-		builder.setMessage("学累了吧，要不要去音乐小窝听听音乐放松下？");
-		builder.setPositiveButton("去看看", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface d, int p)
-			{
-				Common.AUDIO_STUDY_STATE = 0;
-				Common.startActivityOptions(Main.this, More.class);
-			}
-		});
-		builder.setNegativeButton("不用了", new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface d, int p)
-			{
-				Common.AUDIO_STUDY_STATE = 0;
-			}
-		});
-		builder.show();
+			MyAlertDialog builder = new MyAlertDialog(this);
+			builder.setTitle("提示");
+			builder.setCancelable(false);
+			builder.setMessage("学累了吧，要不要去音乐小窝听听音乐放松下？");
+			builder.setPositiveButton("去看看", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface d, int p) {
+					Common.AUDIO_STUDY_STATE = 0;
+					Common.startActivityOptions(Main.this, More.class);
+				}
+			});
+			builder.setNegativeButton("不用了", new DialogInterface.OnClickListener() {
+				public void onClick(DialogInterface d, int p) {
+					Common.AUDIO_STUDY_STATE = 0;
+				}
+			});
+			builder.show();
 		}
 	}
 	
-	public void closeDrawered()
-	{
+	public void closeDrawered() {
 		mDrawerLayout.closeDrawer(Gravity.START);
 	}
 	
@@ -440,8 +401,7 @@ public class Main extends BaseActivity
 	{
 		if (!menuReady) {
 			List<Copys> msg = Common.getCopyMsg();
-			if (msg != null)
-			{
+			if (msg != null) {
 				menuReady = true;
 				if (msg.size() > 0) {
 					menu.clear();
@@ -455,13 +415,10 @@ public class Main extends BaseActivity
 		}
 		//else
 			//menu.findItem(R.id.item_alipay).setVisible(false);
-		if (Common.getInbox().getCount() > 0)
-		{
+		if (Common.getInbox().getCount() > 0) {
 			menu.findItem(R.id.item_newmsg).setVisible(true);
 			menu.findItem(R.id.item_msg).setVisible(false);
-		}
-		else
-		{
+		} else {
 			menu.findItem(R.id.item_newmsg).setVisible(false);
 			menu.findItem(R.id.item_msg).setVisible(true);
 		}
@@ -469,19 +426,16 @@ public class Main extends BaseActivity
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
+	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getGroupId() == 10) {
 			showDynamicMenu(item.getItemId());
 			return true;
 		}
 		//Common.myInbox.refreshMessage();
-		switch (item.getItemId())
-		{
+		switch (item.getItemId()) {
 			case R.id.item_msg:
 			case R.id.item_newmsg:
-				if (Common.isLogin())
-				{
+				if (Common.isLogin()) {
 					Common.startActivityOptions(this, MyInbox.class);
 					Common.getInbox().clearCount();
 					invalidateOptionsMenu();
@@ -493,16 +447,13 @@ public class Main extends BaseActivity
 				Common.startActivityOptions(Main.this, About.class);
 				break;
 			/*case R.id.item_alipay:
-				try
-				{
+				try {
 					Intent intent = new Intent(Intent.ACTION_VIEW);
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 					intent.setData(Uri.parse(Common.getCopyMsg().getUrl()));
 					startActivity(intent);
 					Util.toastLongMessage(getApplicationContext(), "感谢您的支持，领取后请记得使用哦！");
-				}
-				catch (Exception e)
-				{
+				} catch (Exception e) {
 					Util.toastShortMessage(getApplicationContext(), "未安装支付宝");
 				}
 				break;*/
@@ -510,25 +461,19 @@ public class Main extends BaseActivity
 		return super.onOptionsItemSelected(item);
 	}
 	
-	private void showDynamicMenu(int id)
-	{
+	private void showDynamicMenu(int id) {
 		final Copys msg = Common.getCopyMsg(id);
-		if (msg != null)
-		{
+		if (msg != null) {
 			if (msg.getType() == 0)
 				Util.showResultDialog(this, msg.getMessage(), msg.getTitle());
 			else if (msg.getType() == 1) {
-				Util.showConfirmCancelDialog(this, msg.getTitle(), msg.getMessage(), new DialogInterface.OnClickListener()
-				{
-					public void onClick(DialogInterface d, int p)
-					{
+				Util.showConfirmCancelDialog(this, msg.getTitle(), msg.getMessage(), new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface d, int p) {
 						Util.addClipboard(Main.this, msg.getResult());
 						Util.toastShortMessage(getApplicationContext(), "复制成功");
 					}
 				});
-			}
-			else
-			{
+			} else {
 				final Intent intent = new Intent(Intent.ACTION_VIEW);
 				if (msg.getType() == 2)
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -537,10 +482,8 @@ public class Main extends BaseActivity
 				if (!Util.isNullOrEmpty(msg.getUrl()))
 					intent.setData(Uri.parse(msg.getUrl()));
 				if (!Util.isNullOrEmpty(msg.getMessage())) {
-					Util.showConfirmCancelDialog(this, msg.getTitle(), msg.getMessage(), new DialogInterface.OnClickListener()
-					{
-						public void onClick(DialogInterface d, int p)
-						{
+					Util.showConfirmCancelDialog(this, msg.getTitle(), msg.getMessage(), new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface d, int p) {
 							startActivity(intent);
 							if (!Util.isNullOrEmpty(msg.getResult()))
 								Util.toastLongMessage(getApplicationContext(), msg.getResult());
@@ -556,8 +499,7 @@ public class Main extends BaseActivity
 	}
 
 	@Override
-	protected void onPause()
-	{
+	protected void onPause() {
 		StatService.onPause(this);
 		super.onPause();
 	}
@@ -574,8 +516,7 @@ public class Main extends BaseActivity
 		return bmp;
 	}*/
 	
-	private void saveStatus()
-	{
+	private void saveStatus() {
 		ReadUtil.getInstance().saveData();
 		/*if (Common.isCanUploadUserSetting())
 			Common.updateUser();
@@ -589,17 +530,14 @@ public class Main extends BaseActivity
 		return editor.commit();*/
 	}
 	
-	private void showDrawerImage()
-	{
-		if (MyThemes.ISCHANGED)
-		{
+	private void showDrawerImage() {
+		if (MyThemes.ISCHANGED) {
 			MyThemes.ISCHANGED = false;
 			if (Common.APP_BACK_ID == 100)
 				drawUser.setBackground(Common.getHomeBack());
 			else
 				drawUser.setBackgroundResource(MyThemes.getDrawerBack());
-			if (MyThemes.homeTextColor != 0)
-			{
+			if (MyThemes.homeTextColor != 0) {
 				txtUserName.setTextColor(MyThemes.homeTextColor);
 				txtSignature.setTextColor(MyThemes.homeTextColor);
 				txtUserName.setShadowLayer(2f, 2f, 2f, MyThemes.homeTextShadow);
@@ -609,14 +547,11 @@ public class Main extends BaseActivity
 	}
 
 	@Override
-	protected void onResume()
-	{
+	protected void onResume() {
 		showUserInfo();
 		mHandler.sendEmptyMessage(5);
-		if (Common.MUSIC)
-		{
-			if (soundThread == null || !soundThread.RUN)
-			{
+		if (Common.MUSIC) {
+			if (soundThread == null || !soundThread.RUN) {
 				soundThread = new SoundThread();
 				soundThread.start();
 			}
@@ -631,10 +566,8 @@ public class Main extends BaseActivity
 	}
 
 	@Override
-	protected void onDestroy()
-	{
-		if (bannerView != null)
-		{
+	protected void onDestroy() {
+		if (bannerView != null) {
 			bannerLayout.removeAllViews();
 			bannerView.destroy();
 			bannerView = null;
@@ -643,133 +576,137 @@ public class Main extends BaseActivity
 		super.onDestroy();
 	}
 	
-	private void initBanner()
-	{
-		bannerView = new BannerView(this, ADSize.BANNER, AdvConfig.APPID, AdvConfig.BannerHome);
-		bannerView.setRefresh(30);
-		bannerView.setADListener(new AbstractBannerADListener()
-		{
+	private void initBanner() {
+		Log.i("--initBanner--", "initBanner");
+		bannerView = new UnifiedBannerView(this, AdvConfig.APPID, AdvConfig.NewBannerHome, new UnifiedBannerADListener() {
 			@Override
-			public void onNoAD(AdError e)
-			{
-				//ExceptionHandler.log("ad:"+e.getErrorCode(), e.getErrorMsg());
+			public void onNoAD(AdError adError) {
+				Log.i("--onNoAD--", adError.getErrorMsg());
 			}
 
 			@Override
-			public void onADReceiv()
-			{
+			public void onADReceive() {
+				Log.i("--onADReceive--", "Banner加载完成");
+			}
 
+			@Override
+			public void onADExposure() {
+				Log.i("--onADExposure--", "initBanner");
+			}
+
+			@Override
+			public void onADClosed() {
+				Log.i("--onADClosed--", "initBanner");
+			}
+
+			@Override
+			public void onADClicked() {
+				Log.i("--onADClicked--", "initBanner");
+			}
+
+			@Override
+			public void onADLeftApplication() {
+				Log.i("--onADLeftApplication--", "initBanner");
+			}
+
+			@Override
+			public void onADOpenOverlay() {
+				Log.i("--onADOpenOverlay--", "initBanner");
+			}
+
+			@Override
+			public void onADCloseOverlay() {
+				Log.i("--onADCloseOverlay--", "initBanner");
 			}
 		});
+		bannerView.setRefresh(30);
 		bannerLayout.addView(bannerView);
 		bannerView.loadAD();
 	}
 	
-	private void showBanner()
-	{
-		if (Common.isNoadv() && !Common.isHuluxiaUser())
-		{
-			if (bannerView != null)
-			{
+	private void showBanner() {
+		if (Common.isNoadv() && !Common.isHuluxiaUser()) {
+			if (bannerView != null) {
 				bannerLayout.removeAllViews();
 				bannerView.destroy();
 				bannerView = null;
 			}
-		}
-		else
-		{
+		} else {
 			if (bannerView == null)
 				initBanner();
 		}
 	}
+
+	private FrameLayout.LayoutParams getUnifiedBannerLayoutParams() {
+		Point screenSize = new Point();
+		getWindowManager().getDefaultDisplay().getSize(screenSize);
+		return new FrameLayout.LayoutParams(screenSize.x,  Math.round(screenSize.x / 6.4F));
+	}
 	
-	class SoundThread extends Thread implements Runnable
-	{
+	class SoundThread extends Thread implements Runnable {
 		public boolean RUN = false;
-		public void run()
-		{
+		public void run() {
 			synchronized(this){
-			try
-			{
+			try {
 				RUN = true;
 				if (Common.SOUND == null)
 					Common.SOUND = new SoundLoad(Main.this);
-				if (!Common.SOUND.isCompeted)
-				{
+				if (!Common.SOUND.isCompeted) {
 					Common.SOUND.load();
 				}
-				if (Common.audioService != null && Common.audioService.isPlay())
-				{
-					while (Common.audioService.isPlay())
-					{
+				if (Common.audioService != null && Common.audioService.isPlay()) {
+					while (Common.audioService.isPlay()) {
 						Thread.sleep(10);
 						mHandler.sendEmptyMessage(3);
 					}
 					mHandler.sendEmptyMessage(4);
 				}
-			}
-			catch (Exception er)
-			{
+			} catch (Exception er) {
 				ExceptionHandler.log("Main.SoundThread", er.toString());
 				mHandler.sendEmptyMessage(4);
-			}
-			finally
-			{
+			} finally {
 				mHandler.sendEmptyMessage(5);
 				RUN = false;
 			}}
 		}
 	}
 	
-	public void onAutoLogin()
-	{
-		try
-		{
-			if (!Common.isLogin())
-			{
+	public void onAutoLogin() {
+		try {
+			if (!Common.isLogin()) {
 				mHandler.sendEmptyMessage(10);
-				Common.Login(Main.this, new Common.LoginListener()
-				{
+				Common.Login(Main.this, new Common.LoginListener() {
 					@Override
-					public void onLogin(int code)
-					{
-						if (code == 1)
-						{
-							if (!Common.OldSerialNo.equals(Common.mUser.serialNo) && !Util.isNullOrEmpty(Common.OldSerialNo))
-							{
+					public void onLogin(int code) {
+						if (code == 1) {
+							if (!Common.OldSerialNo.equals(Common.mUser.serialNo) && !Util.isNullOrEmpty(Common.OldSerialNo)) {
 								Util.toastShortMessage(Main.this, "帐号在其他设备登录，您的登录态已失效，请重新登录");
 								Common.Logout(Main.this);
 							}
 							else
 								Common.IsChangeICON = true;
 							showUserInfo();
-						}	
-						if (code == 0 || code == 2)
-						{
+						}
+						if (code == 0 || code == 2) {
 							toastLoginError("0x000"+code);
 						}
 					}
 
 					@Override
-					public void onError(String error)
-					{
+					public void onError(String error) {
 						ExceptionHandler.log("mainLogin", error);
 						toastLoginError("0x0001");
 					}
 				});
 			}
-		}
-		catch (Exception er)
-		{
+		} catch (Exception er) {
 			ExceptionHandler.log("mainLogin",er.toString());
 			toastLoginError("0x0003");
 		}
 	}
 	
-	private void showUserInfo()
-	{
-		if (Common.isLogin())
-		{
+	private void showUserInfo() {
+		if (Common.isLogin()) {
 			if (Util.isNullOrEmpty(Common.mUser.nickname))
 				txtUserName.setText("");
 			else
@@ -780,32 +717,26 @@ public class Main extends BaseActivity
 				txtSignature.setText(Common.mUser.mark);
 			Common.getInbox().getMyInbox(System.currentTimeMillis(), myCallback);
 			Common.showUserRole(txtVip);
-		}
-		else
-		{
+		} else {
 			txtUserName.setText("请登录");
 			txtSignature.setText("");
 			txtVip.setVisibility(View.GONE);
 			closeDrawered();
 		}
-		if (Common.IsChangeICON)
-		{
+		if (Common.IsChangeICON) {
 			Common.IsChangeICON = false;
 			mHandler.sendEmptyMessage(7);
 		}
 	}
 	
-	private void toastLoginError(String code)
-	{
+	private void toastLoginError(String code) {
 		Util.toastShortMessage(getApplicationContext(), "登录失败(" + code + ")");
 		txtUserName.setText("请登录");
 	}
 	
-	private class InboxCallback implements InboxManager.InboxCallback
-	{
+	private class InboxCallback implements InboxManager.InboxCallback {
 		@Override
-		public void onSuccess()
-		{
+		public void onSuccess() {
 			invalidateOptionsMenu();
 		}
 		@Override
@@ -813,13 +744,10 @@ public class Main extends BaseActivity
 	}
 	
 	@SuppressLint("HandlerLeak")
-	private Handler mHandler = new Handler()
-	{
+	private Handler mHandler = new Handler() {
 		@Override
-		public void handleMessage(Message msg)
-		{
-			switch (msg.what)
-			{
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
 				case 0:
 					finish();
 					break;
@@ -864,8 +792,7 @@ public class Main extends BaseActivity
 	};
 
 	@Override
-	protected void onStop()
-	{
+	protected void onStop() {
 		/*if (Common.isSupportMD())
 			toolbar.setTransitionName(getString(R.string.shared));*/
 		StatService.onStop(this);
@@ -873,27 +800,20 @@ public class Main extends BaseActivity
 	}
 	
 	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event)
-	{
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN)
-		{
-			if (!mDrawerLayout.isDrawerOpen(Gravity.START))
-			{
-				if((System.currentTimeMillis() - exitTime) > 2000)
-				{
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+			if (!mDrawerLayout.isDrawerOpen(Gravity.START)) {
+				if((System.currentTimeMillis() - exitTime) > 2000) {
 					//if (saveStatus())
 					Util.toastShortMessage(getApplicationContext(), "再按一次退出程序");
 					exitTime = System.currentTimeMillis();
-				}
-				else
+				} else
 					onExit();
-			}
-			else
+			} else
 				closeDrawered();
 			return true;
 		}
-		if(keyCode == KeyEvent.KEYCODE_MENU && event.getAction() == KeyEvent.ACTION_DOWN)
-		{
+		if(keyCode == KeyEvent.KEYCODE_MENU && event.getAction() == KeyEvent.ACTION_DOWN) {
 			if (mDrawerLayout.isDrawerOpen(Gravity.START))
 				closeDrawered();
 			else
@@ -902,8 +822,7 @@ public class Main extends BaseActivity
 		return super.onKeyDown(keyCode, event);
 	}
 	
-	private void onExit()
-	{
+	private void onExit() {
 		Intent home = new Intent(Intent.ACTION_MAIN);
 		home.addCategory(Intent.CATEGORY_HOME);
 		startActivity(home);

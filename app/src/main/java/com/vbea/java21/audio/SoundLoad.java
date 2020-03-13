@@ -34,8 +34,7 @@ public class SoundLoad
 	public boolean isCompeted = false;
 	//private int playCode = 0;
 	//private boolean soDown;
-	public SoundLoad(Context context) throws Exception
-	{
+	public SoundLoad(Context context) throws Exception {
 		am = context.getAssets();
 		isCompeted = false;
 		//start new Auduo 20170810
@@ -46,8 +45,7 @@ public class SoundLoad
 		//hash_music2 = new HashMap<String, Integer>(88);
 	}
 	
-	private SoundPool getSoundPool()
-	{
+	private SoundPool getSoundPool() {
 		SoundPool.Builder mSoundPool = new SoundPool.Builder();
 		mSoundPool.setMaxStreams(10);
 		AudioAttributes.Builder aab = new AudioAttributes.Builder();
@@ -58,71 +56,53 @@ public class SoundLoad
 		return mSoundPool.build();
 	}
 	
-	public void load()
-	{
+	public void load() {
 		synaxMusic();
 		load1();
 	}
 	//正常音节码解析
-	private void load1()
-	{
-		try
-		{
+	private void load1() {
+		try {
 			//26正常声音解析
-			for (int i = 0; i<sound_alpha.length; i++)
-			{
+			for (int i = 0; i<sound_alpha.length; i++) {
 				if (!hash_music.containsKey(sound_alpha[i]))
 					hash_music.put(sound_alpha[i], mSoundPool1.load(am.openFd(String.format(path, sound_alpha[i])), 1));
 				/*if (!hash_music2.containsKey(sound_alpha[i]))
 					hash_music2.put(sound_alpha[i], mSoundPool2.load(am.openFd(String.format(path, sound_alpha[i])), 1));*/
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			ExceptionHandler.log("SoundLoad.load1",e.toString());
-		}
-		finally
-		{
+		} finally {
 			load2();
 		}
 	}
 	//高低音节补充码解析
-	private void load2()
-	{
-		try
-		{
+	private void load2() {
+		try {
 			//16低音解析
-			for (int i = 0; i<sound_bass.length; i++)
-			{
+			for (int i = 0; i<sound_bass.length; i++) {
 				if (!hash_music.containsKey(sound_bass[i]))
 					hash_music.put(sound_bass[i], mSoundPool1.load(am.openFd(String.format(path, sound_bass[i])), 1));
 				/*if (!hash_music2.containsKey(sound_bass[i]))
 					hash_music2.put(sound_bass[i], mSoundPool2.load(am.openFd(String.format(path, sound_bass[i])), 1));*/
 			}
 			//10高音解析
-			for (int i = 0; i<sound_pitch.length; i++)
-			{
+			for (int i = 0; i<sound_pitch.length; i++) {
 				if (!hash_music.containsKey(sound_pitch[i]))
 					hash_music.put(sound_pitch[i], mSoundPool1.load(am.openFd(String.format(path, sound_pitch[i])), 1));
 				/*if (!hash_music2.containsKey(sound_pitch[i]))
 					hash_music2.put(sound_pitch[i], mSoundPool2.load(am.openFd(String.format(path, sound_pitch[i])), 1));*/
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			ExceptionHandler.log("SoundLoad.load2", e.toString());
-		}
-		finally
-		{
+		} finally {
 			load3();
 		}
 	}
 	
 	//升降调音节码解析
-	private void load3()
-	{
-		try
-		{
+	private void load3() {
+		try {
 			//36升降调解析
 			for (int i = 0; i<sound_tone.length; i++)
 			{
@@ -131,84 +111,63 @@ public class SoundLoad
 				/*if (!hash_music2.containsKey(sound_tone[i]))
 					hash_music2.put(sound_tone[i], mSoundPool2.load(am.openFd(String.format(path, sound_tone[i])), 1));*/
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			ExceptionHandler.log("SoundLoad.load3", e.toString());
-		}
-		finally
-		{
+		} finally {
 			Common.AUDIO = isCompeted = true;
 		}
 	}
 	
-	public boolean isNull()
-	{
+	public boolean isNull() {
 		return (hash_music.size() == 88);
 	}
 	
-	public void play(String id) throws Exception
-	{
+	public void play(String id) throws Exception {
 		if (id.equals("-") || id.equals("_"))
 			return;
 		id = id.toUpperCase();
 		mSoundPool1.play(hash_music.get(id), 1, 1, 3, 0, 1);
 	}
 	
-	public void play(String[] ids) throws Exception
-	{
+	public void play(String[] ids) throws Exception {
 		for (String id:ids)
 			play(id);
 	}
 	
-	private void synaxMusic()
-	{
-		try
-		{
+	private void synaxMusic() {
+		try {
 			String json = Util.ReadFileToString(am.open("music/music.json"));
-			if (json != null)
-			{
+			if (json != null) {
 				Gson gson = new Gson();
 				JsonParser jsp = new JsonParser();
 				JsonArray jArray = jsp.parse(json).getAsJsonArray();
-				for (JsonElement obj : jArray)
-				{
+				for (JsonElement obj : jArray) {
 					Music music = gson.fromJson(obj, Music.class);
 					music.isTop = true;
 					musicTop.add(music);
 				}
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			ExceptionHandler.log("synaxMusic", e.toString());
-		}
-		finally
-		{
+		} finally {
 			synaxMusic2();
 		}
 	}
 	
-	private void synaxMusic2()
-	{
-		try
-		{
+	private void synaxMusic2() {
+		try {
 			String json = Util.ReadFileToString(am.open("music/music_all.json"));
-			if (json != null)
-			{
+			if (json != null) {
 				Gson gson = new Gson();
 				JsonParser jsp = new JsonParser();
 				JsonArray jArray = jsp.parse(json).getAsJsonArray();
-				for (JsonElement obj : jArray)
-				{
+				for (JsonElement obj : jArray) {
 					Music music = gson.fromJson(obj, Music.class);
 					music.isTop = false;
 					musicTop.add(music);
 				}
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			ExceptionHandler.log("synaxMusic2", e.toString());
 		}
 	}
@@ -227,15 +186,13 @@ public class SoundLoad
 			stop(id);
 	}*/
 	
-	public Music getMusic(int m)
-	{
+	public Music getMusic(int m) {
 		if (m < musicTop.size())
 			return musicTop.get(m);
 		return null;
 	}
 	
-	public List<Music> getMusicList()
-	{
+	public List<Music> getMusicList() {
 		return musicTop;
 	}
 	
@@ -244,15 +201,12 @@ public class SoundLoad
 		return m < musicTop.size();
 	}*/
 	
-	public int getMusicCount()
-	{
+	public int getMusicCount() {
 		return musicTop.size();
 	}
 	
-	public void clear()
-	{
-		if (mSoundPool1 != null)
-		{
+	public void clear() {
+		if (mSoundPool1 != null) {
 			mSoundPool1.autoPause();
 			mSoundPool1.release();
 		}

@@ -2,6 +2,7 @@ package com.vbea.java21;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebSettings;
 import android.webkit.WebViewClient;
@@ -24,6 +25,11 @@ import android.net.Uri;
 import android.graphics.Bitmap;
 
 import android.support.design.widget.BottomSheetDialog;
+
+import com.qq.e.ads.banner2.UnifiedBannerADListener;
+import com.qq.e.ads.banner2.UnifiedBannerView;
+import com.qq.e.ads.interstitial2.UnifiedInterstitialAD;
+import com.qq.e.ads.interstitial2.UnifiedInterstitialADListener;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.SocialShare;
@@ -54,7 +60,8 @@ public class AndroidWeb extends BaseActivity
 	private TextView NightView, CommentView;
 	private LinearLayout share_qq, share_qzone, share_wx, share_wxpy;
 	private LinearLayout share_sina, share_web, share_link, share_more;
-	private BannerView bannerView;
+	private UnifiedBannerView bannerView;
+	private UnifiedInterstitialAD interstitial;
 	private ViewGroup bannerLayout;
 	private int type = 0;//Android
 	//private int CommentCount = 0;
@@ -186,41 +193,95 @@ public class AndroidWeb extends BaseActivity
 	
 	private void initBanner()
 	{
-		bannerView = new BannerView(this, ADSize.BANNER, AdvConfig.APPID, AdvConfig.BannerSecond);
-		bannerView.setRefresh(30);
-		bannerView.setADListener(new AbstractBannerADListener()
-		{
+		bannerView = new UnifiedBannerView(this, AdvConfig.APPID, AdvConfig.WebNewBanner, new UnifiedBannerADListener() {
 			@Override
-			public void onNoAD(AdError e)
-			{
-				//ExceptionHandler.log("ad:"+e.getErrorCode(), e.getErrorMsg());
+			public void onNoAD(AdError adError) {
+				Log.i("--onNoAD--", adError.getErrorMsg());
 			}
-			
+
 			@Override
-			public void onADReceiv()
-			{
-				
+			public void onADReceive() {
+				Log.i("--onADReceive--", "initBanner");
+			}
+
+			@Override
+			public void onADExposure() {
+				Log.i("--onADExposure--", "initBanner");
+			}
+
+			@Override
+			public void onADClosed() {
+				Log.i("--onADClosed--", "initBanner");
+			}
+
+			@Override
+			public void onADClicked() {
+				Log.i("--onADClicked--", "initBanner");
+			}
+
+			@Override
+			public void onADLeftApplication() {
+				Log.i("--onADLeftApplication--", "initBanner");
+			}
+
+			@Override
+			public void onADOpenOverlay() {
+				Log.i("--onADOpenOverlay--", "initBanner");
+			}
+
+			@Override
+			public void onADCloseOverlay() {
+				Log.i("--onADCloseOverlay--", "initBanner");
 			}
 		});
+		bannerView.setRefresh(30);
 		bannerLayout.addView(bannerView);
 		bannerView.loadAD();
 	}
 	
 	private void initInterstitial()
 	{
-		final InterstitialAD interstitial = new InterstitialAD(this, AdvConfig.APPID, AdvConfig.Interstitial);
-		interstitial.setADListener(new AbstractInterstitialADListener()
-		{
+		Log.i("--InterstitialAD--", "init");
+		interstitial = new UnifiedInterstitialAD(this, AdvConfig.APPID, AdvConfig.NewInterstitial, new UnifiedInterstitialADListener() {
 			@Override
-			public void onNoAD(AdError e)
-			{
-				//ExceptionHandler.log("in-ad:"+e.getErrorCode(), e.getErrorMsg());
+			public void onADReceive() {
+				Log.i("--InterstitialAD--", "onADReceive");
+				interstitial.show();
 			}
 
 			@Override
-			public void onADReceive()
-			{
-				interstitial.show();
+			public void onVideoCached() {
+				Log.i("--InterstitialAD--", "onVideoCached");
+			}
+
+			@Override
+			public void onNoAD(AdError adError) {
+				Log.i("--InterstitialAD--", "onNoAD:" + adError.getErrorMsg());
+			}
+
+			@Override
+			public void onADOpened() {
+				Log.i("--InterstitialAD--", "onADOpened");
+			}
+
+			@Override
+			public void onADExposure() {
+				Log.i("--InterstitialAD--", "onADExposure");
+			}
+
+			@Override
+			public void onADClicked() {
+				Log.i("--InterstitialAD--", "onADClicked");
+			}
+
+			@Override
+			public void onADLeftApplication() {
+				Log.i("--InterstitialAD--", "onADLeftApplication");
+			}
+
+			@Override
+			public void onADClosed() {
+				Log.i("--InterstitialAD--", "onADClosed");
 			}
 		});
 		interstitial.loadAD();

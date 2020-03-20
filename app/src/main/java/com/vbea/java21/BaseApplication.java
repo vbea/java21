@@ -20,7 +20,7 @@ public class BaseApplication extends Application
 		// TODO: Implement this method
 		super.onCreate();
 		FileDownloadConfiguration.Builder builder = new FileDownloadConfiguration.Builder(this);
-		builder.configFileDownloadDir(Common.getDownloadPath()); // 配置下载文件保存的文件夹
+		builder.configFileDownloadDir(Common.getDownloadPath(this)); // 配置下载文件保存的文件夹
 		builder.configDownloadTaskSize(3); // 配置同时下载任务数量，如果不配置默认为2
 		builder.configRetryDownloadTimes(3); // 配置下载失败时尝试重试的次数，如果不配置默认为0不尝试
 		builder.configConnectTimeout(30000); // 配置连接网络超时时间，如果不配置默认为15秒

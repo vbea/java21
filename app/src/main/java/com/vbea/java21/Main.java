@@ -30,9 +30,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 
-import com.qq.e.ads.banner.ADSize;
-import com.qq.e.ads.banner.BannerView;
-import com.qq.e.ads.banner.AbstractBannerADListener;
 import com.qq.e.ads.banner2.UnifiedBannerADListener;
 import com.qq.e.ads.banner2.UnifiedBannerView;
 import com.qq.e.comm.util.AdError;
@@ -217,7 +214,7 @@ public class Main extends BaseActivity
 	}*/
 	
 	public void setIcon() {
-		Common.setIcon(mImgHead, this, false);
+		Common.setIcon(mImgHead, true);
 		showPlugin();
 	}
 	
@@ -298,6 +295,11 @@ public class Main extends BaseActivity
 	
 	public void goCodeEditor(View v) {
 		Common.startActivityOptions(Main.this, AdminActivity.class);
+		mHandler.sendEmptyMessageDelayed(1, 500);
+	}
+
+	public void goScanner(View v) {
+		startActivity(new Intent(Main.this, QRScannerActivity.class));
 		mHandler.sendEmptyMessageDelayed(1, 500);
 	}
 	
@@ -724,7 +726,6 @@ public class Main extends BaseActivity
 			closeDrawered();
 		}
 		if (Common.IsChangeICON) {
-			Common.IsChangeICON = false;
 			mHandler.sendEmptyMessage(7);
 		}
 	}
@@ -782,6 +783,7 @@ public class Main extends BaseActivity
 					break;
 				case 7:
 					setIcon();
+					Common.IsChangeICON = false;
 					break;
 				case 10:
 					txtUserName.setText("正在登录...");

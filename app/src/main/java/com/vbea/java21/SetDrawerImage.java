@@ -3,6 +3,7 @@ package com.vbea.java21;
 import java.io.File;
 
 import android.Manifest;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.net.Uri;
@@ -16,11 +17,10 @@ import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.SettingUtil;
-import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
-import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.vbes.util.CropImage;
+import com.vbes.util.GalleryUtil;
+import com.vbes.util.media.MimeType;
+import com.vbes.util.view.CropImageView;
 
 public class SetDrawerImage extends BaseActivity
 {
@@ -116,24 +116,23 @@ public class SetDrawerImage extends BaseActivity
 		if (item.getItemId() == R.id.item_drawer)
 		{
 			if (Util.hasAllPermissions(SetDrawerImage.this, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-				Matisse.from(this).choose(MimeType.ofAll()).imageEngine(new GlideEngine()).thumbnailScale(0.85f).forResult(1);
+				GalleryUtil.from(this).choose(MimeType.ofAll()).theme(MyThemes.getTheme()).thumbnailScale(0.85f).forResult(1);
 			else
 				Util.requestPermission(SetDrawerImage.this, 1001, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 		}
 		return true;
 	}
 	
-	public void startPhotoZoom(Uri uri)
-	{
-		CropImage.activity(uri).setGuidelines(CropImageView.Guidelines.ON).setActivityTitle("裁剪图片")
+	public void startPhotoZoom(Uri uri) {
+		Log.i("--startPhotoZoom--", uri.toString());
+		CropImage.activity(uri).setGuidelines(CropImageView.Guidelines.ON).setTheme(MyThemes.getTheme())
 		.setAspectRatio(7, 5).setOutputUri(Uri.fromFile(new File(Common.getDrawImagePath())))
 		.setAutoZoomEnabled(true).start(this);
 		//560*400
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data)
-	{
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode != RESULT_OK)
 			return;
 		if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -154,7 +153,7 @@ public class SetDrawerImage extends BaseActivity
 			
 			return;
 		} else if (requestCode == 1) {
-			startPhotoZoom(Matisse.obtainResult(data).get(0));
+			startPhotoZoom(GalleryUtil.obtainResult(data).get(0));
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
@@ -164,6 +163,6 @@ public class SetDrawerImage extends BaseActivity
 	{
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		if (requestCode == 1001 && Util.hasAllPermissionsGranted(grantResults))
-			Matisse.from(this).choose(MimeType.ofAll()).imageEngine(new GlideEngine()).thumbnailScale(0.85f).forResult(1);
+			GalleryUtil.from(this).choose(MimeType.ofAll()).theme(MyThemes.getTheme()).thumbnailScale(0.85f).forResult(1);
 	}
 }

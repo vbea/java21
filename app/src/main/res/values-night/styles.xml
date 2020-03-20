@@ -24,7 +24,7 @@
 	</style>
 	
 	<style name="AppTheme27" parent="AppTheme.TranStatusBar">
-		<item name="colorPrimary">@color/title4_dark</item>
+		<item name="colorPrimary">@color/title4</item>
         <item name="colorPrimaryDark">@color/title4</item>
 		<item name="colorAccent">@color/title19</item>
 	</style>

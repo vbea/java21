@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Build;
@@ -25,6 +26,9 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
 import com.vbea.java21.BuildConfig;
 import com.vbea.java21.DownloadService;
 import com.vbea.java21.R;
@@ -81,13 +85,16 @@ public class Common
 	public static final String FileProvider = "com.vbea.java21.fileprovider";
 	public static final String ExterPath = Environment.getExternalStorageDirectory().getAbsolutePath();
 	private static final String LocalPath = ExterPath + "/ZDApp/";
+	private static final String DataPath = "/data/data/com.vbea.java21/file";
 	private static List<Tips> mTips = null;
 	public static InboxManager myInbox;
 	private static long lastTipsTime;
 	private static List<Copys> copyMsgs;
 	public static String OldSerialNo, OldLoginDate;
+	private static Context mContext;
 	public static void start(Context context) {
 		//startBmob(context);
+		mContext = context;
 		if (BmobWrapper.getInstance() == null)
 			Bmob.initialize(context, "1aa46b02605279e1a84935073af9fc82");
 		if (IsRun)
@@ -530,20 +537,34 @@ public class Common
 		return false;
 	}
 
+	private static String getLocalPath() {
+		if (mContext != null) {
+			if (Util.hasAllPermissions(mContext, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+				return LocalPath;
+			}
+		}
+		return DataPath;
+	}
+
 	public static String getUpdatePath() {
-		return LocalPath + "apk/";
+		return getLocalPath() + "apk/";
 	}
 	
 	public static String getCachePath() {
-		return LocalPath + "Cache/";
+		return getLocalPath() + "Cache/";
 	}
 
-	public static String getDownloadPath() {
-		return LocalPath + "Download/";
+	public static String getDownloadPath(Context context) {
+		mContext = context;
+		return getLocalPath() + "Download/";
 	}
 	
 	public static String getIconPath() {
-		return LocalPath + "Portrait/";
+		return getLocalPath() + "Portrait/";
+	}
+
+	public static String getAvatarPath() {
+		return getIconPath()+ mUser.name + ".jpg";
 	}
 	
 	public static String getDrawImagePath() {
@@ -553,7 +574,8 @@ public class Common
 	public static String getTempImagePath() {
 		return getCachePath() + "temp.jpg";
 	}
-	
+
+	@Deprecated
 	public static Bitmap getIcon() {
 		if (mUser.icon != null) {
 			File path = new File(getIconPath());
@@ -584,17 +606,30 @@ public class Common
 		return null;
 	}
 	
-	public static void setIcon(final ImageView v, final Context context, boolean downed) {
-		if (!downed)
-			v.setImageDrawable(getRoundedIconDrawable(context, BitmapFactory.decodeResource(context.getResources(), R.mipmap.head)));
-		if (mUser != null && mUser.icon != null) {
+	public static void setIcon(ImageView v, boolean round) {
+		//if (!downed)
+			//v.setImageDrawable(getRoundedIconDrawable(context, BitmapFactory.decodeResource(context.getResources(), R.mipmap.head)));
+		if (mUser != null) {
 			File path = new File(getIconPath());
 			if (!path.exists())
 				path.mkdirs();
-			File file = new File(path, mUser.icon.getFilename());
-			if (file.exists())
-				v.setImageDrawable(getRoundedIconDrawable(context, BitmapFactory.decodeFile(file.getAbsolutePath())));
-			else {
+			/*if (round)
+				Glide.with(v.getContext()).asBitmap().onlyRetrieveFromCache(false).skipMemoryCache(true).load(new File(getAvatarPath())).apply(RequestOptions.circleCropTransform().placeholder(R.mipmap.head_circle)).into(v);
+			else
+				Glide.with(v.getContext()).asBitmap().skipMemoryCache(IsChangeICON).load(new File(getAvatarPath())).placeholder(R.mipmap.head).into(v);*/
+			File file = new File(getAvatarPath());
+			if (file.exists()) {
+				if (round)
+					v.setImageDrawable(getRoundedIconDrawable(v.getContext(), BitmapFactory.decodeFile(file.getAbsolutePath())));
+				else
+					v.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+			} else {
+				if (round)
+					v.setImageResource(R.mipmap.head_circle);
+				else
+					v.setImageResource(R.mipmap.head);
+			}
+			/*else {
 				if (downed) {
 					v.setImageDrawable(getRoundedIconDrawable(context, BitmapFactory.decodeResource(context.getResources(), R.mipmap.head)));
 					return;
@@ -613,13 +648,13 @@ public class Common
 				} catch (Exception e) {
 					ExceptionHandler.log("getIcon", e.toString());
 				}
-			}
+			}*/
 		}
 	}
 	
 	public static void setMyIcon(ImageView v, Context context, RoundedBitmapDrawable defaultIcon) {
 		if (mUser != null && mUser.icon != null) {
-			File file = new File(getIconPath(), mUser.icon.getFilename());
+			File file = new File(getAvatarPath());
 			if (file.exists())
 				v.setImageDrawable(getRoundedIconDrawable(context, BitmapFactory.decodeFile(file.getAbsolutePath())));
 			else

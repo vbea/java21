@@ -1,6 +1,8 @@
 package com.vbea.java21;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -14,6 +16,8 @@ public abstract class BaseActivity extends AppCompatActivity
 {
     protected Toolbar toolbar;
 	private String _title;
+	private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
 	{
@@ -75,6 +79,23 @@ public abstract class BaseActivity extends AppCompatActivity
 			ExceptionHandler.log("Base:onDestroy", e.toString());
 		}
     }
+
+	public void showLoading(@StringRes int id) {
+		showLoading(getString(id));
+	}
+
+	public void showLoading(String msg) {
+		if (progressDialog != null && progressDialog.isShowing()) {
+			return;
+		}
+		progressDialog = ProgressDialog.show(this, "", msg, false, false);
+	}
+
+	public void hideLoading() {
+		if (progressDialog != null && progressDialog.isShowing()) {
+			progressDialog.dismiss();
+		}
+	}
 	
 	protected void toastShortMessage(String message)
 	{

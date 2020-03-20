@@ -120,9 +120,10 @@
 	<string name="version">V %1$s Build %2$d</string>
 	<string name="abt_ver">当前版本：v8.0.1
 		\n1.8.0版UI更新，界面更平滑
-		\n2.修复浏览器分享至微信可能会闪退的问题
-		\n3.浏览器视频全屏可根据设备方向切换横竖屏
-		\n4.其他细节优化
+		\n2.新增扫一扫，可以扫描条码和二维码
+		\n3.修复浏览器分享至微信闪退的问题
+		\n4.浏览器视频全屏可根据设备方向切换横竖屏
+		\n5.其他细节优化
 	</string>
 	<string name="shared">share_image</string>
 	<string name="about_us">邠心工作室(VBES)，2013年5月20日成立，至今已有六年时间，目前团队仅有二人，我们都是90后的编程爱好者，本人是在2012年(高中)开始自学Java，花了21天学完基础知识之后开始研究并开发Android，并于2014年发布此APP，帮助那些也想要自学Java的朋友，目前我们正朝着全栈开发的方向发展，希望能找到志同道合的朋友。
@@ -160,4 +161,7 @@
 	<string name="wx_auth_cancel">用户取消</string>
 	<string name="download_mng">下载管理器</string>
     <string name="no_download_file">没有下载内容</string>
+    <string name="activity_qr_scan">扫一扫</string>
+    <string name="waiting">请稍后...</string>
+    <string name="qr_result_activity">扫描结果</string>
 </resources>

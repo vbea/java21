@@ -222,7 +222,7 @@ public class UserCentral extends BaseActivity
 	
 	public void setIcon()
 	{
-		Common.setIcon(icon, this, false);
+		Common.setIcon(icon, true);
 		appears = new AlphaAnimation(0, 1);
 		appears.setDuration(500);
 		disappears = new AlphaAnimation(1, 0);

@@ -4,11 +4,10 @@
 	android:layout_height="match_parent"
 	android:layout_width="match_parent"
 	android:orientation="vertical">
-	<include
-		layout="@layout/java_tool"/>
+	<include layout="@layout/java_tool"/>
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/music_recyclerView"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:background="@color/dividers"/>
+		android:background="?attr/titleColor"/>
 </LinearLayout>

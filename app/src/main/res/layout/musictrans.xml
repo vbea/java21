@@ -6,7 +6,8 @@
 	android:layout_height="fill_parent"
     android:clipToPadding="false"
 	android:orientation="vertical"
-	android:paddingBottom="8dp">
+	android:paddingBottom="@dimen/activity_half_margin"
+	android:background="?attr/titleColor">
 	<include layout="@layout/java_tool"/>
 	<EditText
 		android:id="@+id/txt_musicOld"

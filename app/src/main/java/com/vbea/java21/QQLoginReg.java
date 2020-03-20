@@ -418,11 +418,11 @@ public class QQLoginReg extends BaseActivity
 	
 	public File getIconFile() throws Exception
 	{
-		String filename = MD5Util.getMD5(btIcon, mUser.name) + ".png";
+		//String filename = MD5Util.getMD5(btIcon, mUser.name) + ".png";
 		File dir = new File(Common.getIconPath());
 		if (!dir.exists())
 			dir.mkdirs();
-		File file = new File(dir, filename);
+		File file = new File(Common.getAvatarPath());
 		saveFile(btIcon, file);
 		return file;
 	}

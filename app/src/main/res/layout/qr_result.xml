@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/titleColor"
+    android:clipToPadding="true">
+    <include layout="@layout/java_tool"/>
+    <TextView
+        android:id="@+id/txt_qr_result"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="@dimen/activity_vertical_margin"
+        android:textColor="?attr/textPrimary"
+        android:textIsSelectable="true"
+        android:textSize="15sp"/>
+    <Button
+        android:id="@+id/btn_qr_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:background="@drawable/btn_button"
+        android:textColor="@color/snow"
+        android:text="浏览/搜索"/>
+</LinearLayout>

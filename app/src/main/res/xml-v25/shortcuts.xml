@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcus xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/short_scan"
+        android:shortcutDisabledMessage="@string/shortcut_disabled_msg"
+        android:shortcutId="scan"
+        android:shortcutLongLabel="@string/activity_qr_scan"
+        android:shortcutShortLabel="@string/activity_qr_scan">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.vbea.java21.ui.QRScannerActivity"
+            android:targetPackage="com.vbea.java21" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/short_browser"
+        android:shortcutDisabledMessage="@string/shortcut_disabled_msg"
+        android:shortcutId="browser"
+        android:shortcutLongLabel="@string/browser"
+        android:shortcutShortLabel="@string/browser">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.vbea.java21.ui.HtmlViewer"
+            android:targetPackage="com.vbea.java21" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcus>

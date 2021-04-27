@@ -25,7 +25,7 @@
 			android:layout_weight="1"
 			android:scaleType="fitCenter"
 			android:adjustViewBounds="true"
-			android:src="@mipmap/donate_alipay"/>
+			android:src="@drawable/donate_alipay"/>
 		<ImageView
 			android:id="@+id/img_donate2"
 			android:layout_width="wrap_content"
@@ -33,7 +33,7 @@
 			android:layout_weight="1"
 			android:scaleType="fitCenter"
 			android:adjustViewBounds="true"
-			android:src="@mipmap/donate_wechat"/>
+			android:src="@drawable/donate_wechat"/>
 	</TableRow>
 	<TableRow
 		android:layout_width="match_parent"

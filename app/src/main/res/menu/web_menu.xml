@@ -11,7 +11,7 @@
 	<item
 		android:id="@+id/item_flush"
 		android:title="刷新"
-		android:icon="@mipmap/ic_refresh"
+		android:icon="@drawable/ic_refresh"
 		app:showAsAction="ifRoom"/>
 	<item
 		android:id="@+id/item_androidshare"

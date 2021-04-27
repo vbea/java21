@@ -28,33 +28,27 @@ public class UserImageLoad {
         saveUserIconByName(url);
     }
 
-    private void saveUserIconByName(String name)
-    {
+    private void saveUserIconByName(String name) {
         BmobQuery<Users> sql = new BmobQuery<>();
         sql.addWhereEqualTo("name", name);
-        sql.findObjects(new FindListener<Users>()
-        {
+        sql.findObjects(new FindListener<Users>() {
             @Override
-            public void done(List<Users> list, BmobException e)
-            {
+            public void done(List<Users> list, BmobException e) {
                 if (e == null && list.size() > 0) {
                     Users user = list.get(0);
                     if (user.icon == null)
                         return;
-                    File file = new File(Common.getCachePath(), user.name + ".png");
-                    user.icon.download(file, new DownloadFileListener()
-                    {
+                    File file = new File(Common.getCachePath(null), user.name + ".png");
+                    user.icon.download(file, new DownloadFileListener() {
                         @Override
-                        public void done(String p1, BmobException p2)
-                        {
+                        public void done(String p1, BmobException p2) {
                             if (listener != null) {
                                 listener.onComplete();
                             }
                         }
 
                         @Override
-                        public void onProgress(Integer p1, long p2)
-                        {
+                        public void onProgress(Integer p1, long p2) {
 
                         }
                     });

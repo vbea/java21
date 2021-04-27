@@ -31,7 +31,7 @@
 			<ImageView
 				android:layout_width="45dp"
 				android:layout_height="45dp"
-				android:src="@mipmap/share_btn_qq"/>
+				android:src="@drawable/share_btn_qq"/>
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
 			<ImageView
 				android:layout_width="45dp"
 				android:layout_height="45dp"
-				android:src="@mipmap/share_btn_qzone"/>
+				android:src="@drawable/share_btn_qzone"/>
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
@@ -73,7 +73,7 @@
 			<ImageView
 				android:layout_width="45dp"
 				android:layout_height="45dp"
-				android:src="@mipmap/share_btn_wechat"/>
+				android:src="@drawable/share_btn_wechat"/>
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
@@ -94,7 +94,7 @@
 			<ImageView
 				android:layout_width="45dp"
 				android:layout_height="45dp"
-				android:src="@mipmap/share_btn_timeline"/>
+				android:src="@drawable/share_btn_timeline"/>
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
 			<ImageView
 				android:layout_width="45dp"
 				android:layout_height="45dp"
-				android:src="@mipmap/share_btn_fav"/>
+				android:src="@drawable/share_btn_fav"/>
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
 			<ImageView
 				android:layout_width="45dp"
 				android:layout_height="45dp"
-				android:src="@mipmap/share_btn_web"/>
+				android:src="@drawable/share_btn_web"/>
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
@@ -162,7 +162,7 @@
 			<ImageView
 				android:layout_width="45dp"
 				android:layout_height="45dp"
-				android:src="@mipmap/share_btn_copylink"/>
+				android:src="@drawable/share_btn_copylink"/>
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
@@ -183,7 +183,7 @@
 			<ImageView
 				android:layout_width="45dp"
 				android:layout_height="45dp"
-				android:src="@mipmap/share_btn_more"/>
+				android:src="@drawable/share_btn_more"/>
 			<TextView
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"

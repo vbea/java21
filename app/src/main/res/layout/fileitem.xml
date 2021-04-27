@@ -7,25 +7,36 @@
 	android:orientation="horizontal"
 	android:background="@drawable/btn_menu"
 	android:paddingTop="5dp"
+	android:paddingLeft="@dimen/activity_half_margin"
+	android:paddingRight="@dimen/activity_half_margin"
 	android:paddingBottom="5dp">
 	<ImageView
 		android:id="@+id/file_icon"
-		android:layout_width="wrap_content"
-		android:layout_height="fill_parent"
-		android:src="@mipmap/ic_folder"
+		android:layout_width="50dp"
+		android:layout_height="50dp"
+		android:layout_marginLeft="@dimen/activity_quart_margin"
+		android:layout_marginRight="@dimen/activity_quart_margin"
+		android:src="@drawable/ic_folder"
 		android:tint="?attr/colorAccent"/>
+	<ImageView
+		android:id="@+id/file_thumb"
+		android:layout_width="50dp"
+		android:layout_height="50dp"
+		android:layout_marginLeft="@dimen/activity_quart_margin"
+		android:layout_marginRight="@dimen/activity_quart_margin"
+		android:adjustViewBounds="true"
+		android:scaleType="centerInside"
+		android:visibility="gone"/>
 	<LinearLayout
 		android:layout_height="wrap_content"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_weight="1"
 		android:orientation="vertical"
 		android:gravity="center_vertical"
-		android:paddingTop="5dp"
-		android:paddingBottom="5dp"
-		android:paddingRight="5dp">
+		android:padding="5dp">
 		<TextView
 			android:id="@+id/file_name"
-			android:layout_width="fill_parent"
+			android:layout_width="match_parent"
 			android:layout_height="0dp"
 			android:layout_weight="1"
 			android:textSize="16sp"
@@ -35,7 +46,7 @@
 			tools:ignore="NestedWeights" />
 		<TextView
 			android:id="@+id/file_detail"
-			android:layout_width="fill_parent"
+			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:textSize="14sp"
 			android:textColor="@color/gray"

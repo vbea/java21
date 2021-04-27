@@ -41,7 +41,7 @@
 		android:layout_width="32dp"
 		android:layout_height="32dp"
 		android:layout_marginRight="5dp"
-		android:src="@mipmap/not_pause"
+		android:src="@drawable/not_pause"
 		android:tint="?android:attr/textColorSecondary"
 		android:background="@drawable/bg_btn_noti"/>
 	<ImageView
@@ -49,14 +49,14 @@
 		android:layout_width="30dp"
 		android:layout_height="30dp"
 		android:layout_marginRight="5dp"
-		android:src="@mipmap/not_next"
+		android:src="@drawable/not_next"
 		android:tint="?android:attr/textColorSecondary"
 		android:background="@drawable/bg_btn_noti"/>
 	<ImageView
 		android:id="@+id/noti_close"
 		android:layout_width="30dp"
 		android:layout_height="30dp"
-		android:src="@mipmap/not_close"
+		android:src="@drawable/not_close"
 		android:tint="?android:attr/textColorSecondary"
 		android:background="@drawable/bg_btn_noti"/>
 </LinearLayout>

@@ -10,7 +10,7 @@
 		android:layout_height="30dp"
 		android:layout_alignParentEnd="true"
 		android:layout_margin="10dp"
-		android:src="@mipmap/ic_picture"/>
+		android:src="@drawable/ic_picture"/>
 	<ImageView
 		android:id="@+id/img_headicon"
 		android:layout_width="match_parent"
@@ -20,6 +20,6 @@
 		android:layout_centerInParent="true"
 		android:transitionName="icon_pre"
 		android:scaleType="fitCenter"
-		android:src="@mipmap/head"/>
+		android:src="@drawable/head"/>
 </RelativeLayout>
 

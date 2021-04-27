@@ -8,8 +8,9 @@
 	<android.support.v7.widget.CardView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginLeft="2dp"
-		android:layout_marginRight="2dp"
+		android:layout_marginLeft="@dimen/activity_half_margin"
+		android:layout_marginRight="@dimen/activity_half_margin"
+		android:layout_marginTop="@dimen/activity_quart_margin"
 		android:stateListAnimator="@drawable/anim_touch_raise"
 		android:focusable="false"
 		app:cardCornerRadius="2dp"
@@ -21,7 +22,10 @@
 			android:layout_height="wrap_content"
 			android:layout_width="match_parent"
 			android:orientation="vertical"
-			android:padding="10dp"
+			android:paddingTop="10dp"
+			android:paddingLeft="@dimen/activity_vertical_margin"
+			android:paddingRight="@dimen/activity_vertical_margin"
+			android:paddingBottom="@dimen/activity_half_margin"
 			android:background="?titleColor">
 			<TableRow
 				android:layout_width="match_parent"
@@ -29,13 +33,13 @@
 				android:gravity="center_vertical">
 				<ImageView
 					android:id="@+id/comm_icon"
-					android:layout_width="30dp"
-					android:layout_height="30dp"/>
+					android:layout_width="@dimen/activity_double_margin"
+					android:layout_height="@dimen/activity_double_margin"/>
 				<TextView
 					android:id="@+id/comm_name"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginLeft="6dp"
+					android:layout_marginLeft="@dimen/activity_half_margin"
 					android:textSize="15sp"
 					android:textColor="?attr/colorPrimary"
 					android:singleLine="true"
@@ -83,8 +87,8 @@
 				android:id="@+id/comm_text"
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginLeft="36dp"
-				android:paddingTop="3dp"
+				android:layout_marginLeft="40dp"
+				android:paddingTop="@dimen/activity_quart_margin"
 				android:textSize="14sp"
 				android:textColor="?attr/textPrimary"
 				android:textIsSelectable="true"/>
@@ -93,8 +97,8 @@
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:layout_marginTop="5dp"
-				android:layout_marginRight="3dp"
-				android:layout_marginLeft="39dp"
+				android:layout_marginRight="@dimen/activity_quart_margin"
+				android:layout_marginLeft="40dp"
 				android:paddingTop="2dp"
 				android:paddingBottom="3dp"
 				android:paddingLeft="6dp"
@@ -106,58 +110,56 @@
 				android:id="@+id/comm_btngroup"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="3dp"
-				android:layout_marginLeft="33dp"
+				android:layout_marginTop="@dimen/activity_quart_margin"
+				android:layout_marginLeft="@dimen/activity_double_margin"
 				android:gravity="center_vertical">
 				<TableRow
 					android:id="@+id/comm_endorse"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:background="@drawable/btn_normal"
-					android:paddingTop="3dp"
-					android:paddingBottom="3dp"
-					android:paddingLeft="6dp"
-					android:paddingRight="6dp"
+					android:paddingTop="@dimen/activity_quart_margin"
+					android:paddingBottom="@dimen/activity_quart_margin"
+					android:paddingLeft="@dimen/activity_half_margin"
+					android:paddingRight="@dimen/activity_half_margin"
 					android:gravity="center_vertical">
 					<ImageView
 						android:id="@+id/img_endorse"
-						android:layout_width="16dp"
-						android:layout_height="16dp"
-						android:src="@mipmap/ic_comment_great"/>
+						android:layout_width="@dimen/activity_vertical_margin"
+						android:layout_height="@dimen/activity_vertical_margin"
+						android:src="@drawable/ic_comment_great"/>
 					<TextView
 						android:id="@+id/txt_endorse"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:textColor="?attr/colorAccent"
-						android:paddingLeft="2dp"
+						android:paddingLeft="@dimen/activity_quart_margin"
 						android:singleLine="true"
-						android:textSize="14sp"
-						android:text="0"/>
+						android:textSize="14sp"/>
 				</TableRow>
 				<TableRow
 					android:id="@+id/comm_oppose"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:background="@drawable/btn_normal"
-					android:paddingTop="3dp"
-					android:paddingBottom="3dp"
-					android:paddingLeft="6dp"
-					android:paddingRight="6dp"
+					android:paddingTop="@dimen/activity_quart_margin"
+					android:paddingBottom="@dimen/activity_quart_margin"
+					android:paddingLeft="@dimen/activity_half_margin"
+					android:paddingRight="@dimen/activity_half_margin"
 					android:gravity="center_vertical">
 					<ImageView
 						android:id="@+id/img_oppose"
-						android:layout_width="16dp"
-						android:layout_height="16dp"
-						android:src="@mipmap/ic_comment_low"/>
+						android:layout_width="@dimen/activity_vertical_margin"
+						android:layout_height="@dimen/activity_vertical_margin"
+						android:src="@drawable/ic_comment_low"/>
 					<TextView
 						android:id="@+id/txt_oppose"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:textColor="?attr/colorAccent"
-						android:paddingLeft="2dp"
+						android:paddingLeft="@dimen/activity_quart_margin"
 						android:singleLine="true"
-						android:textSize="14sp"
-						android:text="0"/>
+						android:textSize="14sp"/>
 				</TableRow>
 				<TextView
 					android:layout_width="wrap_content"
@@ -171,10 +173,10 @@
 					android:textColor="?attr/colorAccent"
 					android:singleLine="true"
 					android:textSize="14sp"
-					android:paddingTop="3dp"
-					android:paddingBottom="3dp"
-					android:paddingLeft="6dp"
-					android:paddingRight="6dp"
+					android:paddingTop="6dp"
+					android:paddingBottom="6dp"
+					android:paddingLeft="@dimen/activity_half_margin"
+					android:paddingRight="@dimen/activity_half_margin"
 					android:layout_gravity="center"
 					android:text="@string/txt_delete"/>
 				<TextView
@@ -185,10 +187,10 @@
 					android:textColor="?attr/colorAccent"
 					android:singleLine="true"
 					android:textSize="14sp"
-					android:paddingTop="3dp"
-					android:paddingBottom="3dp"
-					android:paddingLeft="6dp"
-					android:paddingRight="6dp"
+					android:paddingTop="6dp"
+					android:paddingBottom="6dp"
+					android:paddingLeft="@dimen/activity_half_margin"
+					android:paddingRight="@dimen/activity_half_margin"
 					android:layout_gravity="center"
 					android:text="@string/txt_reply"/>
 			</TableRow>
@@ -199,7 +201,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:gravity="center"
-		android:padding="10dp"
+		android:padding="@dimen/activity_vertical_margin"
 		android:text="@string/txt_lastrow"
 		android:textSize="12sp"
 		android:textColor="?attr/textSecondary"

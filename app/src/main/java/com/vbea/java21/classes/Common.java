@@ -26,13 +26,10 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.bumptech.glide.request.RequestOptions;
 import com.vbea.java21.BuildConfig;
-import com.vbea.java21.DownloadService;
+import com.vbea.java21.ui.DownloadService;
 import com.vbea.java21.R;
-import com.vbea.java21.ActivityManager;
+import com.vbea.java21.ui.ActivityManager;
 import com.vbea.java21.audio.SoundLoad;
 import com.vbea.java21.audio.AudioService;
 import com.vbea.java21.data.Users;
@@ -91,17 +88,16 @@ public class Common
 	private static long lastTipsTime;
 	private static List<Copys> copyMsgs;
 	public static String OldSerialNo, OldLoginDate;
-	private static Context mContext;
 	public static void start(Context context) {
 		//startBmob(context);
-		mContext = context;
+		if (IsRun) {
+			return;
+		}
+		init();
 		if (BmobWrapper.getInstance() == null)
 			Bmob.initialize(context, "1aa46b02605279e1a84935073af9fc82");
-		if (IsRun)
-			return;
 		IsRun = true;
 		ReadUtil.init(context);
-		init();
 		if (VbeUtil.isNullOrEmpty(EasyPreferences.getString("key")) || VbeUtil.isNullOrEmpty(EasyPreferences.getString("date"))) {
 			IS_ACTIVE = false;
 			EasyPreferences.putBoolean("app", false);
@@ -115,10 +111,10 @@ public class Common
 			EasyPreferences.putBoolean("active", false);
 			EasyPreferences.putString("key", defaultKey);
 		}
-		if (getDrawerBack() == null)
+		if (getDrawerBack(context) == null)
             EasyPreferences.putInt("back", 0);
         EasyPreferences.apply();
-		init();
+		//init();
 		SocialShare.onStart(context);
 		if (isNet(context))
 			getTips();
@@ -199,8 +195,8 @@ public class Common
 			OldLoginDate = mUser.lastLogin.getDate();
 			if (mUser.dated == null)
 				mUser.dated = 1;
-			mUser.device = Util.getDeviceId(context);
-			mUser.serialNo = Util.getSerialNo(context);
+			mUser.device = Build.DEVICE; //Util.getDeviceId(context);
+			mUser.serialNo = Build.MODEL; //Util.getSerialNo(context);
 			Date loginDate = new Date(BmobDate.getTimeStamp(mUser.lastLogin.getDate()));
 			if (loginDate.getDate() != now.getDate())
 			{
@@ -257,8 +253,8 @@ public class Common
 	}
 	
 	private static void init() {
-		VERSION_CODE = EasyPreferences.getInt("check", 0);
 		APP_THEME_ID = EasyPreferences.getInt("theme", 0);
+		VERSION_CODE = EasyPreferences.getInt("check", 0);
 		APP_BACK_ID = EasyPreferences.getInt("back", 0);
 		SDATE = EasyPreferences.getString("checkCode", "");
 		IS_ACTIVE = EasyPreferences.getBoolean("app", false);
@@ -399,7 +395,7 @@ public class Common
 							return;
 						}
 						if (!isAuto) {
-							saveLoginData(context, openId, mode);
+							saveLoginData(openId, mode);
 						}
 						updateUserLogin(context);
 						if (listener != null)
@@ -447,7 +443,7 @@ public class Common
 							return;
 						}
 						if (!isAuto) {
-                            saveLoginData(context, Common.mUser.psd, 1);
+                            saveLoginData(Common.mUser.psd, 1);
 						}
 						updateUserLogin(context);
 						if (listener != null)
@@ -466,7 +462,7 @@ public class Common
 		});
 	}
 
-	public static void saveLoginData(Context context, String sid, int mode) {
+	public static void saveLoginData(String sid, int mode) {
 		EasyPreferences.putString("uid", Common.mUser.name);
 		EasyPreferences.putString("sid", sid);
 		EasyPreferences.putInt("loginmode", mode);
@@ -537,48 +533,48 @@ public class Common
 		return false;
 	}
 
-	private static String getLocalPath() {
-		if (mContext != null) {
-			if (Util.hasAllPermissions(mContext, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-				return LocalPath;
-			}
+	private static String getLocalPath(Context context) {
+		if (Util.hasAllPermissions(context, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+			return LocalPath;
 		}
 		return DataPath;
 	}
 
-	public static String getUpdatePath() {
-		return getLocalPath() + "apk/";
+	public static String getUpdatePath(Context context) {
+		return getLocalPath(context) + "apk/";
 	}
 	
-	public static String getCachePath() {
-		return getLocalPath() + "Cache/";
+	public static String getCachePath(Context context) {
+		return getLocalPath(context) + "Cache/";
 	}
 
 	public static String getDownloadPath(Context context) {
-		mContext = context;
-		return getLocalPath() + "Download/";
+		return getLocalPath(context) + "Download/";
 	}
 	
-	public static String getIconPath() {
-		return getLocalPath() + "Portrait/";
+	public static String getIconPath(Context context) {
+		return getLocalPath(context) + "Portrait/";
 	}
 
-	public static String getAvatarPath() {
-		return getIconPath()+ mUser.name + ".jpg";
+	public static String getAvatarPath(Context context) {
+		if (mUser != null)
+			return getIconPath(context)+ mUser.name + ".jpg";
+		else
+			return "";
 	}
 	
-	public static String getDrawImagePath() {
-		return getIconPath() + "back.jpg";
+	public static String getDrawImagePath(Context context) {
+		return getIconPath(context) + "back.jpg";
 	}
 	
-	public static String getTempImagePath() {
-		return getCachePath() + "temp.jpg";
+	public static String getTempImagePath(Context context) {
+		return getCachePath(context) + "temp.jpg";
 	}
 
 	@Deprecated
-	public static Bitmap getIcon() {
+	public static Bitmap getIcon(Context context) {
 		if (mUser.icon != null) {
-			File path = new File(getIconPath());
+			File path = new File(getIconPath(context));
 			if (!path.exists()) {
 				path.mkdirs();
 			}
@@ -610,14 +606,14 @@ public class Common
 		//if (!downed)
 			//v.setImageDrawable(getRoundedIconDrawable(context, BitmapFactory.decodeResource(context.getResources(), R.mipmap.head)));
 		if (mUser != null) {
-			File path = new File(getIconPath());
+			File path = new File(getIconPath(v.getContext()));
 			if (!path.exists())
 				path.mkdirs();
 			/*if (round)
 				Glide.with(v.getContext()).asBitmap().onlyRetrieveFromCache(false).skipMemoryCache(true).load(new File(getAvatarPath())).apply(RequestOptions.circleCropTransform().placeholder(R.mipmap.head_circle)).into(v);
 			else
 				Glide.with(v.getContext()).asBitmap().skipMemoryCache(IsChangeICON).load(new File(getAvatarPath())).placeholder(R.mipmap.head).into(v);*/
-			File file = new File(getAvatarPath());
+			File file = new File(getAvatarPath(v.getContext()));
 			if (file.exists()) {
 				if (round)
 					v.setImageDrawable(getRoundedIconDrawable(v.getContext(), BitmapFactory.decodeFile(file.getAbsolutePath())));
@@ -625,9 +621,9 @@ public class Common
 					v.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
 			} else {
 				if (round)
-					v.setImageResource(R.mipmap.head_circle);
+					v.setImageResource(R.drawable.head_circle);
 				else
-					v.setImageResource(R.mipmap.head);
+					v.setImageResource(R.drawable.head);
 			}
 			/*else {
 				if (downed) {
@@ -652,29 +648,29 @@ public class Common
 		}
 	}
 	
-	public static void setMyIcon(ImageView v, Context context, RoundedBitmapDrawable defaultIcon) {
+	public static void setMyIcon(ImageView v, Context context) {
 		if (mUser != null && mUser.icon != null) {
-			File file = new File(getAvatarPath());
+			File file = new File(getAvatarPath(v.getContext()));
 			if (file.exists())
 				v.setImageDrawable(getRoundedIconDrawable(context, BitmapFactory.decodeFile(file.getAbsolutePath())));
 			else
-				v.setImageDrawable(defaultIcon);
+				v.setImageResource(R.drawable.head_circle);
 		}
 	}
 	
-	public static BitmapDrawable getHomeBack() {
-		Bitmap bit = getDrawerBack();
+	public static BitmapDrawable getHomeBack(Context context) {
+		Bitmap bit = getDrawerBack(context);
 		if (bit != null)
 			return new BitmapDrawable(bit);
 		return null;
 	}
 	
-	public static Bitmap getDrawerBack() {
+	public static Bitmap getDrawerBack(Context context) {
 		try {
-			File path = new File(getIconPath());
+			File path = new File(getIconPath(context));
 			if (!path.exists())
 				path.mkdirs();
-			File file = new File(getDrawImagePath());
+			File file = new File(getDrawImagePath(context));
 			if (file.exists())
 				return BitmapFactory.decodeFile(file.getAbsolutePath());
 		} catch (Exception e) {
@@ -683,8 +679,8 @@ public class Common
 		return null;
 	}
 
-	public static Bitmap getUserIcon(String username) {
-		File file = new File(Common.getCachePath(), username + ".png");
+	public static Bitmap getUserIcon(Context context, String username) {
+		File file = new File(Common.getCachePath(context), username + ".png");
 		if (file.exists())
 			return BitmapFactory.decodeFile(file.getAbsolutePath());
 		return null;

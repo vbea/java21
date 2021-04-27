@@ -23,7 +23,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:background="?attr/colorPrimary"
-				app:navigationIcon="@mipmap/ic_back"
+				app:navigationIcon="@drawable/ic_back"
 				app:theme="?attr/actionStyle"
 				app:layout_scrollFlags="scroll|enterAlways"
 				app:popupTheme="?attr/popupStyle"/>
@@ -33,14 +33,14 @@
 			android:layout_height="match_parent"
 			android:background="?attr/titleColor"
 			app:layout_behavior="@string/appbar_scrolling_view_behavior">
-			<com.vbea.java21.widget.MyWebView
+			<WebView
 				android:id="@+id/WebViewPage"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"/>
 			<WebView
 				android:id="@+id/WebViewSource"
-				android:layout_width="fill_parent"
-				android:layout_height="fill_parent"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
 				android:layout_marginBottom="56dp"
 				android:visibility="gone"/>
 			<ProgressBar

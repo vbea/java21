@@ -19,17 +19,16 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.StrictMode;
 
-import com.vbea.java21.ActivityManager;
+import com.vbea.java21.ui.ActivityManager;
 import com.vbea.java21.R;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.Util;
-import com.vbea.java21.view.MyAlertDialog;
+import com.vbes.util.VbeUtil;
+import com.vbes.util.view.MyAlertDialog;
 
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.DownloadFileListener;
 import cn.bmob.v3.listener.FindListener;
 
 /**
@@ -52,6 +51,7 @@ public class MyUpdateAgent {
         if (Util.isAndroidO()) {
             NotificationChannel channel = new NotificationChannel("21", "UpdateAgent", NotificationManager.IMPORTANCE_LOW);
             channel.enableVibration(false);
+            channel.enableLights(false);
             notificationManager.createNotificationChannel(channel);
         }
         queryData();
@@ -98,7 +98,7 @@ public class MyUpdateAgent {
         }
 
         filename = response.path_md5 + ".apk";
-        File dist = new File(Common.getUpdatePath());
+        File dist = new File(Common.getUpdatePath(context));
         if (!dist.exists()) dist.mkdirs();
         final File file = new File(dist, filename);
         if (file.exists() && file.length() == response.target_size) {
@@ -138,7 +138,9 @@ public class MyUpdateAgent {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (isExist) {
-                    installApk(file);
+                    response.appVersion.addInstall();
+                    response.appVersion.update(null);
+                    VbeUtil.installAPK(context, file, Common.FileProvider);
                 } else {
                     downloadApk(response.path, file);
                 }
@@ -152,7 +154,7 @@ public class MyUpdateAgent {
 
     private void installApk(File file) {
         response.appVersion.addInstall();
-        response.appVersion.update();
+        response.appVersion.update(null);
         Intent intent = new Intent();
         intent.setAction(android.content.Intent.ACTION_VIEW);
         String mime = Util.getMimeType(filename);
@@ -174,17 +176,21 @@ public class MyUpdateAgent {
                     public void done() {
                         notificationManager.cancelAll();
                         response.appVersion.addDownload();
-                        response.appVersion.update();
-                        if (file.exists())
-                            installApk(file);
+                        response.appVersion.update(null);
+                        if (file.exists()) {
+                            response.appVersion.addInstall();
+                            response.appVersion.update(null);
+                            VbeUtil.installAPK(context, file, Common.FileProvider);
+                        }
                     }
 
                     @Override
                     public void onProgress(long l) {
                         int per = (int)(l * 100 / response.target_size);
-                        if (percents != per) {
-                            createNotification(context.getString(R.string.bmob_common_action_info_exist) + percents + "%");
-                            percents = per;
+                        int per1 = per / 5;
+                        if (percents != per1) {
+                            createNotification(context.getString(R.string.bmob_common_action_info_exist) + per + "%");
+                            percents = per1;
                         }
                     }
                 });
@@ -192,7 +198,7 @@ public class MyUpdateAgent {
         }).start();
     }
 
-    private void downloadApk(BmobFile bmobFile, final File file) {
+    /*private void downloadApk(BmobFile bmobFile, final File file) {
         if (bmobFile != null) {
             bmobFile.download(file, new DownloadFileListener() {
                 @Override
@@ -212,15 +218,14 @@ public class MyUpdateAgent {
                 }
             });
         }
-    }
+    }*/
 
-    private void createNotification(String percent)
-    {
+    private void createNotification(String percent) {
         Notification.Builder builder = new Notification.Builder(context);
         if (Util.isAndroidO()) {
             builder.setChannelId("21");
         }
-        builder.setSmallIcon(R.mipmap.wel_icon);
+        builder.setSmallIcon(R.drawable.wel_icon);
         builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
         builder.setContentTitle(context.getString(R.string.bmob_common_download_notification_prefix));
         builder.setContentText(percent);
@@ -240,8 +245,7 @@ public class MyUpdateAgent {
 
     private void getNetFile(String uri, File file, OnUpdateAgent agent) {
         // 下载网络上的文件
-        try
-        {
+        try {
             URL myFileUrl = new URL(uri);
             HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
             conn.setDoInput(true);

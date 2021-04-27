@@ -5,12 +5,12 @@
 	<item
 		android:id="@+id/item_msg"
 		android:title="消息"
-		android:icon="@mipmap/ic_msg"
+		android:icon="@drawable/ic_msg"
 		app:showAsAction="always"/>
 	<item
 		android:id="@+id/item_newmsg"
 		android:title="消息"
-		android:icon="@mipmap/ic_newmsg"
+		android:icon="@drawable/ic_newmsg"
 		app:showAsAction="always"/>
 	<!--item
 		android:id="@+id/item_alipay"

@@ -77,6 +77,7 @@
 		android:id="@+id/item_end"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:background="@color/dividers"
 		android:gravity="center"
 		android:padding="@dimen/activity_half_margin"
 		android:text="@string/txt_lastrow"

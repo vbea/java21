@@ -7,12 +7,12 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:orientation="vertical"
-		android:background="?attr/titleColor">
+		android:background="@color/pageColor">
 		<include layout="@layout/java_tool"/>
 		<android.support.v4.widget.SwipeRefreshLayout
 			android:id="@+id/inbox_refresh"
-			android:layout_width="fill_parent"
-			android:layout_height="fill_parent">
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
 			<android.support.v7.widget.RecyclerView
 				android:id="@+id/inbox_recyclerView"
 				android:layout_width="match_parent"

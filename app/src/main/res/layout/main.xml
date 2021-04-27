@@ -27,7 +27,7 @@
 					android:background="?attr/colorPrimary"
 					app:layout_scrollFlags="scroll|enterAlways"
 					android:transitionName="@string/shared"
-					app:navigationIcon="@mipmap/ic_menu"
+					app:navigationIcon="@drawable/ic_menu"
 					app:theme="?attr/actionStyle"
 					app:popupTheme="?attr/popupStyle"/>
 				<android.support.design.widget.TabLayout
@@ -59,7 +59,7 @@
 			<ImageView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:src="@mipmap/ic_tips"/>
+				android:src="@drawable/ic_tips"/>
 			<com.vbea.java21.widget.CustomTextView
 				android:id="@+id/txt_quotation"
 				android:layout_width="wrap_content"

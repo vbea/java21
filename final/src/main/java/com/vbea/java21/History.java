@@ -17,7 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import com.vbea.java21.data.WebHelper;
 import com.vbea.java21.data.Histories;
 import com.vbea.java21.data.Histime;
-import com.vbea.java21.list.HistoryAdapter;
+import com.vbea.java21.adapter.HistoryAdapter;
 import com.vbea.java21.view.HistoryDecoration;
 import com.vbea.java21.view.MyDividerDecoration;
 import com.vbea.java21.classes.Util;

@@ -24,7 +24,7 @@
             <ImageView
                 android:layout_width="@dimen/item_size"
                 android:layout_height="@dimen/item_size"
-                android:src="@mipmap/ic_file_download"
+                android:src="@drawable/ic_file_download"
                 android:tint="?attr/textSecondary"/>
             <TextView
                 android:layout_width="wrap_content"

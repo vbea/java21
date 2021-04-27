@@ -8,7 +8,7 @@ import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.GridLayoutManager;
 import com.vbea.java21.data.ThemeItem;
-import com.vbea.java21.list.ThemeAdapter;
+import com.vbea.java21.adapter.ThemeAdapter;
 import com.vbea.java21.classes.Common;
 
 public class Themes extends BaseActivity

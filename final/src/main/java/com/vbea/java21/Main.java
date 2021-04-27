@@ -22,7 +22,7 @@ import com.tencent.stat.StatService;
 import com.vbea.java21.classes.ReadUtil;
 import com.vbea.java21.fragment.ChapterFragment;
 import com.vbea.java21.fragment.KnowFragment;
-import com.vbea.java21.list.FragmentAdapter;
+import com.vbea.java21.adapter.FragmentAdapter;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.view.MyAlertDialog;

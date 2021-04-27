@@ -41,7 +41,7 @@
 						android:layout_height="85dp"
 						android:layout_margin="5dp"
 						android:transitionName="icon_pre"
-						android:src="@mipmap/head"/>
+						android:src="@drawable/head"/>
 					<TextView
 						android:id="@+id/user_topName"
 						android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
 				android:id="@+id/toolbar"
 				android:layout_width="match_parent"
 				android:layout_height="?attr/actionBarSize"
-				app:navigationIcon="@mipmap/ic_back"
+				app:navigationIcon="@drawable/ic_back"
 				app:layout_collapseMode="pin"
 				app:theme="?attr/actionStyle"/>
         </android.support.design.widget.CollapsingToolbarLayout>

@@ -46,7 +46,7 @@
 			android:id="@+id/img_welicon"
 			android:layout_width="140dp"
 			android:layout_height="140dp"
-			android:src="@mipmap/wel_icon"/>
+			android:src="@drawable/wel_icon"/>
 		<TextView
 			android:id="@+id/text_retry"
 			android:layout_height="wrap_content"

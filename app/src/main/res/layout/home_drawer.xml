@@ -28,7 +28,7 @@
 			android:layout_height="85dp"
 			android:layout_margin="5dp"
 			android:transitionName="icon_pre"
-			android:src="@mipmap/head"/>
+			android:src="@drawable/head_circle"/>
 		<TableRow
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
 				<ImageView
 					android:layout_width="40dp"
 					android:layout_height="40dp"
-					android:src="@mipmap/ic_theme"
+					android:src="@drawable/ic_theme"
 					android:tint="?attr/colorPrimary"/>
 				<TextView
 					android:layout_width="match_parent"
@@ -121,7 +121,7 @@
 				<ImageView
 					android:layout_width="40dp"
 					android:layout_height="40dp"
-					android:src="@mipmap/ic_music"
+					android:src="@drawable/ic_music"
 					android:tint="?attr/colorPrimary"/>
 				<TextView
 					android:layout_width="wrap_content"
@@ -158,7 +158,7 @@
 				<ImageView
 					android:layout_width="40dp"
 					android:layout_height="40dp"
-					android:src="@mipmap/ic_api"
+					android:src="@drawable/ic_api"
 					android:tint="?attr/colorPrimary"/>
 				<TextView
 					android:layout_width="match_parent"
@@ -185,7 +185,7 @@
 				<ImageView
 					android:layout_width="40dp"
 					android:layout_height="40dp"
-					android:src="@mipmap/ic_browser"
+					android:src="@drawable/ic_browser"
 					android:tint="?attr/colorPrimary"/>
 				<TextView
 					android:layout_width="match_parent"
@@ -227,7 +227,7 @@
 				<ImageView
 					android:layout_width="40dp"
 					android:layout_height="40dp"
-					android:src="@mipmap/ic_scan"
+					android:src="@drawable/ic_scan"
 					android:tint="?attr/colorPrimary"/>
 				<TextView
 					android:layout_width="match_parent"
@@ -254,7 +254,7 @@
 				<ImageView
 					android:layout_width="40dp"
 					android:layout_height="40dp"
-					android:src="@mipmap/ic_place"
+					android:src="@drawable/ic_place"
 					android:tint="?attr/colorPrimary"/>
 				<TextView
 					android:layout_width="match_parent"
@@ -282,7 +282,7 @@
 				<ImageView
 					android:layout_width="40dp"
 					android:layout_height="40dp"
-					android:src="@mipmap/ic_code"
+					android:src="@drawable/ic_code"
 					android:tint="?attr/colorPrimary" />
 				<TextView
 					android:layout_width="match_parent"
@@ -371,7 +371,7 @@
 				<ImageView
 					android:layout_width="40dp"
 					android:layout_height="40dp"
-					android:src="@mipmap/ic_setting"
+					android:src="@drawable/ic_setting"
 					android:tint="?attr/colorPrimary"/>
 				<TextView
 					android:layout_width="match_parent"
@@ -399,7 +399,7 @@
 				<ImageView
 					android:layout_width="40dp"
 					android:layout_height="40dp"
-					android:src="@mipmap/ic_help"
+					android:src="@drawable/ic_help"
 					android:tint="?attr/colorPrimary"/>
 				<TextView
 					android:layout_width="match_parent"
@@ -426,7 +426,7 @@
 				<ImageView
 					android:layout_width="40dp"
 					android:layout_height="40dp"
-					android:src="@mipmap/ic_exit"
+					android:src="@drawable/ic_exit"
 					android:tint="?attr/colorPrimary"/>
 				<TextView
 					android:layout_width="match_parent"

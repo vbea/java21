@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.vbea.java21.data.WebHelper;
-import com.vbea.java21.list.BookAdapter;
+import com.vbea.java21.adapter.BookAdapter;
 import com.vbea.java21.view.MyDividerDecoration;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.ExceptionHandler;

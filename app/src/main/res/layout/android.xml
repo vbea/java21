@@ -12,23 +12,26 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"/>
 	</android.support.v4.widget.SwipeRefreshLayout>
-	<TextView
-		android:id="@+id/txt_andError"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_centerInParent="true"
-		android:textColor="@color/grey"
-		android:textSize="15sp"
-		android:gravity="center"
-		android:visibility="gone"
-		android:text="@string/load_failed"/>
-	<ProgressBar
-		android:id="@+id/refreshProgress"
+	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="5dp"
-		android:layout_alignParentBottom="true"
-		style="?android:attr/progressBarStyleHorizontal"
-		android:progressDrawable="@drawable/web_progress"
-		android:visibility="gone"
-		android:indeterminate="true"/>
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:gravity="center">
+		<ProgressBar
+			android:id="@+id/refreshProgress"
+			android:layout_width="@dimen/margin_48"
+			android:layout_height="@dimen/margin_48"
+			android:progressDrawable="@drawable/web_progress"
+			android:visibility="gone"/>
+		<TextView
+			android:id="@+id/txt_andError"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/activity_vertical_margin"
+			android:textColor="@color/grey"
+			android:textSize="15sp"
+			android:gravity="center"
+			android:visibility="gone"
+			android:text="@string/load_failed"/>
+	</LinearLayout>
 </RelativeLayout>

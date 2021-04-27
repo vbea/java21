@@ -111,6 +111,8 @@ public class AppVersion extends BmobObject {
     }
 
     public void addDownload() {
+        if (download == null)
+            download = 0;
         this.download = download + 1;
     }
 
@@ -123,6 +125,8 @@ public class AppVersion extends BmobObject {
     }
 
     public void addInstall() {
+        if (install == null)
+            install = 0;
         this.install = install + 1;
     }
 }

@@ -8,6 +8,7 @@
     <color name="textPrimary">#de000000</color>
     <color name="textSecondary">#8a000000</color>
     <color name="dividers">#E1E1E1</color>
+	<color name="pageColor">#f0f0f0</color>
 	<color name="vipColor">#d21a32</color>
 	<!--一般色-->
 	<color name="white">#ffffff</color><!--白色 --> 

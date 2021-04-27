@@ -16,7 +16,7 @@ import com.vbea.java21.R;
 import com.vbea.java21.AndroidWeb;
 import com.vbea.java21.classes.ReadUtil;
 import com.vbea.java21.data.Knowledges;
-import com.vbea.java21.list.KnowledgeAdapter;
+import com.vbea.java21.adapter.KnowledgeAdapter;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.view.MyDividerDecoration;

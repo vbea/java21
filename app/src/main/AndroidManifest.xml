@@ -3,18 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.vbea.java21">
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-feature android:glEsVersion="0x00020000" android:required="true" />
 
     <application
         android:name=".BaseApplication"
@@ -26,15 +15,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true"
         tools:replace="android:allowBackup">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
         <activity
             android:name=".Main"
@@ -45,18 +37,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Themes"
+            android:name=".ui.Themes"
             android:label="@string/setheme"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ApiWord"
+            android:name=".ui.ApiWord"
             android:label="@string/apidoc"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".TextReplace"
+            android:name=".ui.TextReplace"
             android:label="@string/textEditor" />
         <activity
-            android:name=".AdminActivity"
+            android:name=".ui.AdminActivity"
             android:label="@string/activity_admin"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
@@ -70,75 +62,75 @@
             </intent-filter
         -->
         <activity
-            android:name=".Comment"
+            android:name=".ui.Comment"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".Knowledge"
+            android:name=".ui.Knowledge"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".AndroidWeb"
+            android:name=".ui.AndroidWeb"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".MusicList"
+            android:name=".ui.MusicList"
             android:label="@string/morelist"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".FileSelect"
+            android:name=".ui.FileSelect"
             android:label="@string/fileselect"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".Machine"
+            android:name=".ui.Machine"
             android:label="@string/actived" />
         <activity
-            android:name=".Modelist"
+            android:name=".ui.Modelist"
             android:label="@string/modelist"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Setting"
             android:label="@string/settings" />
         <activity
-            android:name=".SetDrawerImage"
+            android:name=".ui.SetDrawerImage"
             android:label="@string/setimage" />
         <activity
-            android:name=".Help"
+            android:name=".ui.Help"
             android:label="@string/help" />
         <activity
-            android:name=".Login"
+            android:name=".ui.Login"
             android:label="@string/java_login" />
         <activity
-            android:name=".Sign"
+            android:name=".ui.Sign"
             android:label="@string/java_sign" />
         <activity
-            android:name=".UserCentral"
+            android:name=".ui.UserCentral"
             android:label="@string/userinfo" />
         <activity
-            android:name=".UserEdit"
+            android:name=".ui.UserEdit"
             android:label="@string/useredit" />
         <activity
-            android:name=".More"
+            android:name=".ui.More"
             android:label="@string/more"
             android:launchMode="singleTask" />
         <activity
-            android:name=".Piano"
+            android:name=".ui.Piano"
             android:label="@string/piano"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".MusicTest"
+            android:name=".ui.MusicTest"
             android:label="@string/musictest"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".MusicTrans"
+            android:name=".ui.MusicTrans"
             android:label="@string/musictrans"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MyInbox"
+            android:name=".ui.MyInbox"
             android:label="@string/myinbox"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".HtmlViewer"
+            android:name=".ui.HtmlViewer"
             android:configChanges="orientation|screenSize"
             android:label="@string/browser"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -152,8 +144,10 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="https" />
             </intent-filter>
             <intent-filter>
@@ -172,13 +166,16 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:scheme="vbea" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="localhost"
                     android:scheme="file" />
@@ -188,80 +185,81 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Bookmark"
+            android:name=".ui.Bookmark"
             android:label="@string/bookmark"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".BrowserSet"
+            android:name=".ui.BrowserSet"
             android:label="@string/browserset"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".DownloadFile"
+            android:name=".ui.DownloadFile"
             android:label="@string/download_mng"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".DownloadBridge"
+            android:name=".ui.DownloadBridge"
             android:label="@string/download_mng"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".History"
+            android:name=".ui.History"
             android:label="@string/history"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Feedback"
+            android:name=".ui.Feedback"
             android:label="@string/feedback" />
         <activity
-            android:name=".VbeStudio"
+            android:name=".ui.VbeStudio"
             android:label="@string/aboutus" />
         <activity
-            android:name=".About"
+            android:name=".ui.About"
             android:label="@string/about" />
         <activity
-            android:name=".ForgetPassword"
+            android:name=".ui.ForgetPassword"
             android:label="@string/forgetpsd" />
         <activity
-            android:name=".ResetPassword"
+            android:name=".ui.ResetPassword"
             android:label="@string/resetpsd" />
         <activity
-            android:name=".QQLoginReg"
+            android:name=".ui.QQLoginReg"
             android:label="@string/java_qqlogin" />
         <activity
-            android:name=".QQShareMessage"
+            android:name=".ui.QQShareMessage"
             android:label="@string/qqmessage" />
         <activity
-            android:name=".BindMobile"
+            android:name=".ui.BindMobile"
             android:label="@string/java_binding" />
         <activity
-            android:name=".WifiViews"
+            android:name=".ui.WifiViews"
             android:label="@string/wifiview" />
         <activity
-            android:name=".IconPreview"
+            android:name=".ui.IconPreview"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Black" />
         <activity
-            android:name=".ImagePreview"
+            android:name=".ui.ImagePreview"
             android:theme="@style/AppTheme.Black" />
         <activity
-            android:name=".ShowWebImage"
+            android:name=".ui.ShowWebImage"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Black" />
         <activity
-            android:name=".Donate"
+            android:name=".ui.Donate"
             android:label="@string/donate"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Decord"
+            android:name=".ui.Decord"
             android:label="@string/decord"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".QRScannerActivity"
-            android:label="@string/activity_qr_scan"/>
+            android:name=".ui.QRScannerActivity"
+            android:label="@string/activity_qr_scan">
+        </activity>
         <activity
-            android:name=".QRResultActivity"
-            android:label="@string/qr_result_activity"/>
+            android:name=".ui.QRResultActivity"
+            android:label="@string/qr_result_activity" />
         <activity
             android:name="cn.bmob.v3.update.UpdateDialogActivity"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
@@ -276,12 +274,15 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="tencent1101326556" />
             </intent-filter>
         </activity>
-        <activity
+
+        <!--activity
             android:name="com.qq.e.ads.ADActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
         <activity
@@ -292,24 +293,31 @@
             android:name="com.qq.e.ads.LandscapeADActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:screenOrientation="landscape" />
+        <service
+            android:name="com.qq.e.comm.DownloadService"
+            android:exported="false" /-->
+
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
-            android:label="@string/app_name"/>
+            android:label="@string/app_name" />
 
-        <service
-            android:name=".audio.AudioService"
-            android:exported="false" />
-        <service
-            android:name="com.qq.e.comm.DownloadService"
-            android:exported="false" />
-        <service
-            android:name=".DownloadService"
-            android:exported="false" />
-        <provider
+        <!--meta-data
+            android:name="TA_APPKEY"
+            android:value="A1M46EZRJ7WI" />
+
+        <meta-data
+            android:name="InstallChannel"
+            android:value="${MTA_CHANNEL}" /-->
+
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.2" />
+        <!--provider
             android:name="com.tencent.mid.api.MidProvider"
             android:authorities="com.vbea.java21.TENCENT.MID.V3"
-            android:exported="true" />
+            android:exported="true" /-->
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
@@ -319,16 +327,25 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/xml_paths" />
         </provider>
-
-        <meta-data
-            android:name="TA_APPKEY"
-            android:value="A1M46EZRJ7WI" />
-        <meta-data
-            android:name="InstallChannel"
-            android:value="${InstallChannel}" />
-        <meta-data
-            android:name="android.max_aspect"
-            android:value="2.2" />
+        <service
+            android:name=".audio.AudioService"
+            android:exported="false" />
+        <service
+            android:name=".ui.DownloadService"
+            android:exported="false" />
     </application>
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
 </manifest>

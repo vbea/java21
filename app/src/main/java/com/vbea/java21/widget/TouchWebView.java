@@ -12,8 +12,7 @@ import android.view.MenuItem;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
-public class TouchWebView extends WebView
-{
+public class TouchWebView extends WebView {
     static String TAG = "CustomActionWebView";
 
     ActionMode mActionMode;
@@ -22,49 +21,41 @@ public class TouchWebView extends WebView
 
     ActionSelectListener mActionSelectListener;
 
-    public TouchWebView(Context context)
-	{
+    public TouchWebView(Context context) {
         super(context);
     }
 
-	public TouchWebView(Context context, AttributeSet attrs)
-	{
+    public TouchWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public TouchWebView(Context context, AttributeSet attrs, int defStyleAttr)
-	{
+    public TouchWebView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     /**
      * 处理item，处理点击
+     *
      * @param actionMode
      */
-    private ActionMode resolveActionMode(ActionMode actionMode)
-	{
-        if (actionMode != null)
-		{
+    private ActionMode resolveActionMode(ActionMode actionMode) {
+        if (actionMode != null) {
             final Menu menu = actionMode.getMenu();
             mActionMode = actionMode;
             menu.clear();
-            for (int i = 0; i < mActionList.size(); i++)
-			{
+            for (int i = 0; i < mActionList.size(); i++) {
                 menu.add(mActionList.get(i));
             }
-            for (int i = 0; i < menu.size(); i++)
-			{
+            for (int i = 0; i < menu.size(); i++) {
                 MenuItem menuItem = menu.getItem(i);
-                menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener()
-				{
-					@Override
-					public boolean onMenuItemClick(MenuItem item)
-					{
-						getSelectedData((String) item.getTitle());
-						releaseAction();
-						return true;
-					}
-				});
+                menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        getSelectedData((String) item.getTitle());
+                        releaseAction();
+                        return true;
+                    }
+                });
             }
         }
         mActionMode = actionMode;
@@ -83,10 +74,8 @@ public class TouchWebView extends WebView
         return resolveActionMode(actionMode);
     }
 
-    private void releaseAction()
-	{
-        if (mActionMode != null)
-		{
+    private void releaseAction() {
+        if (mActionMode != null) {
             mActionMode.finish();
             mActionMode = null;
         }
@@ -94,22 +83,23 @@ public class TouchWebView extends WebView
 
     /**
      * 点击的时候，获取网页中选择的文本，回掉到原生中的js接口
+     *
      * @param title 传入点击的item文本，一起通过js返回给原生接口
      */
     private void getSelectedData(String title) {
 
         String js = "(function getSelectedText() {" +
-			"var txt;" +
-			"var title = \"" + title + "\";" +
-			"if (window.getSelection) {" +
-			"txt = window.getSelection().toString();" +
-			"} else if (window.document.getSelection) {" +
-			"txt = window.document.getSelection().toString();" +
-			"} else if (window.document.selection) {" +
-			"txt = window.document.selection.createRange().text;" +
-			"}" +
-			"JSInterface.callback(txt,title);" +
-			"})()";
+                "var txt;" +
+                "var title = \"" + title + "\";" +
+                "if (window.getSelection) {" +
+                "txt = window.getSelection().toString();" +
+                "} else if (window.document.getSelection) {" +
+                "txt = window.document.getSelection().toString();" +
+                "} else if (window.document.selection) {" +
+                "txt = window.document.selection.createRange().text;" +
+                "}" +
+                "JSInterface.callback(txt,title);" +
+                "})()";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             evaluateJavascript("javascript:" + js, null);
         } else {
@@ -123,20 +113,20 @@ public class TouchWebView extends WebView
 
     /**
      * 设置弹出action列表
+     *
      * @param actionList
      */
-    public void setActionList(List<String> actionList)
-	{
+    public void setActionList(List<String> actionList) {
         mActionList = actionList;
     }
-	
-	public void addActionList(String actionTitle)
-	{
-		mActionList.add(actionTitle);
-	}
+
+    public void addActionList(String actionTitle) {
+        mActionList.add(actionTitle);
+    }
 
     /**
      * 设置点击回调
+     *
      * @param actionSelectListener
      */
     public void setActionSelectListener(ActionSelectListener actionSelectListener) {
@@ -154,25 +144,21 @@ public class TouchWebView extends WebView
     /**
      * js选中的回调接口
      */
-    private class ActionSelectInterface
-	{
+    private class ActionSelectInterface {
         TouchWebView mContext;
 
-        ActionSelectInterface(TouchWebView c)
-		{
+        ActionSelectInterface(TouchWebView c) {
             mContext = c;
         }
 
         @JavascriptInterface
-        public void callback(final String value, final String title)
-		{
-            if(mActionSelectListener != null)
+        public void callback(final String value, final String title) {
+            if (mActionSelectListener != null)
                 mActionSelectListener.onClick(title, value);
         }
     }
-	
-	public interface ActionSelectListener
-	{
-		void onClick(String title, String text);
-	}
+
+    public interface ActionSelectListener {
+        void onClick(String title, String text);
+    }
 }

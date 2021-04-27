@@ -25,7 +25,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.design.widget.FloatingActionButton;
 
 import com.vbea.java21.data.FileItem;
-import com.vbea.java21.list.FileAdapter;
+import com.vbea.java21.adapter.FileAdapter;
 import com.vbea.java21.view.MyDividerDecoration;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;

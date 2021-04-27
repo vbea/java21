@@ -215,7 +215,8 @@
 				android:background="@drawable/btn_normal"
 				android:padding="@dimen/activity_vertical_margin"
 				android:gravity="center_vertical"
-				android:orientation="horizontal">
+				android:orientation="horizontal"
+				android:visibility="gone">
 				<TextView
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"

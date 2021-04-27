@@ -11,109 +11,43 @@ import android.widget.Toast;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.Util;
+import com.vbea.java21.ui.ActivityManager;
+import com.vbea.java21.ui.MyThemes;
 
-public abstract class BaseActivity extends AppCompatActivity
-{
-    protected Toolbar toolbar;
-	private String _title;
-	private ProgressDialog progressDialog;
+public abstract class BaseActivity extends com.vbes.util.ui.BaseActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-	{
+    public void setTheme() {
         Common.start(getApplicationContext());
         setTheme(MyThemes.getTheme());
-        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void renderView() {
         before();
-        toolbar = bind(R.id.toolbar);
-		if (!Util.isNullOrEmpty(_title)) {
-			toolbar.setTitle(_title);
-			_title = "";
-		}
-		setSupportActionBar(toolbar);
         after();
     }
 
     protected abstract void before();
+
     protected abstract void after();
 
-	public void setToolbarTitle(String t)
-	{
-		if (toolbar == null)
-			_title = t;
-		else
-			toolbar.setTitle(t);
-	}
-
-    public <T extends View> T bind(int id)
-	{
+    public <T extends View> T bind(int id) {
         //return (T)findViewById(id);
-		return findViewById(id);
+        return getView(id);
     }
 
-    protected void enableBackButton()
-	{
-        //toolbar.setNavigationIcon(R.mipmap.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener()
-		{
-            @Override
-            public void onClick(View view)
-			{
-				onFinish();
-            }
-        });
+    protected void onFinish() {
+        supportFinishAfterTransition();
     }
-	
-	protected void onFinish()
-	{
-		supportFinishAfterTransition();
-	}
 
     @Override
-    protected void onDestroy()
-	{
+    protected void onDestroy() {
         super.onDestroy();
         try {
-			ActivityManager.getInstance().removeActivity(this);
-		} catch (Exception | Error e) {
-			ExceptionHandler.log("Base:onDestroy", e.toString());
-		}
+            ActivityManager.getInstance().removeActivity(this);
+        } catch (Exception | Error e) {
+            ExceptionHandler.log("Base:onDestroy", e.toString());
+        }
     }
-
-	public void showLoading(@StringRes int id) {
-		showLoading(getString(id));
-	}
-
-	public void showLoading(String msg) {
-		if (progressDialog != null && progressDialog.isShowing()) {
-			return;
-		}
-		progressDialog = ProgressDialog.show(this, "", msg, false, false);
-	}
-
-	public void hideLoading() {
-		if (progressDialog != null && progressDialog.isShowing()) {
-			progressDialog.dismiss();
-		}
-	}
-	
-	protected void toastShortMessage(String message)
-	{
-		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-	}
-
-	protected void toastLongMessage(String message)
-	{
-		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-	}
-
-	protected void toastShortMessage(int message)
-	{
-		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-	}
-
-	protected void toastLongMessage(int message)
-	{
-		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-	}
 }

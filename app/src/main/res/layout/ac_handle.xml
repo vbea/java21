@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?attr/titleColor"
-    tools:context=".AdminActivity">
+    tools:context=".ui.AdminActivity">
     <include layout="@layout/java_tool" />
     <TextView
         android:id="@+id/admin_clearUser"

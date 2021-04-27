@@ -16,7 +16,7 @@ import com.vbea.java21.R;
 import com.vbea.java21.AndroidWeb;
 import com.vbea.java21.classes.ReadUtil;
 import com.vbea.java21.data.Chapter;
-import com.vbea.java21.list.ChapterAdapter;
+import com.vbea.java21.adapter.ChapterAdapter;
 import com.vbea.java21.view.MyDividerDecoration;
 import com.vbea.java21.classes.Common;
 

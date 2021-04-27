@@ -24,9 +24,10 @@ import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.AdvConfig;
-import com.qq.e.ads.splash.SplashAD;
+/*import com.qq.e.ads.splash.SplashAD;
 import com.qq.e.ads.splash.SplashADListener;
-import com.qq.e.comm.util.AdError;
+import com.qq.e.comm.util.AdError;*/
+import com.vbea.java21.ui.MyThemes;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -36,15 +37,14 @@ public class MainActivity extends AppCompatActivity
 	private LinearLayout layoutMain;
 	private AlphaAnimation disappears;
 	private String[] homeTips, homeDics;
-	private SplashAD splashAD;
+	//private SplashAD splashAD;
 	private ViewGroup container;
 	private final String SKIP_TEXT = "跳过 %d";
 	private boolean canJump = false;
 	private int requestOnce = 0;
 	
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
 		Common.start(getApplicationContext());
 		setTheme(MyThemes.getTheme());
 		getWindow().setFlags(1024, 1024);
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity
 		if (Util.isAndroidM())
 			checkAndRequestPermission();
 		else
-			startSplashAD();
+			toHome();
 		/*try
 		{
 			//StatService.startStatService(this, "Aqc1150078134", com.tencent.stat.common.StatConstants.VERSION);
@@ -175,13 +175,13 @@ public class MainActivity extends AppCompatActivity
 	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 		//ExceptionHandler.log("main", "result:" + Util.Join(",", permissions));
 		if (Util.hasAllPermissionsGranted(grantResults))
-			startSplashAD();
+			toHome();
 		else
 			checkAndRequestPermission();
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 	}
 	
-	private void startSplashAD() {
+	/*private void startSplashAD() {
 		try {
 			//ExceptionHandler.log("main", "startSplashAD");
 			if (Common.isWeladv()) {
@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity
 			ExceptionHandler.log("startSplashMain", e);
 			toHome();
 		}
-	}
+	}*/
 	
 	@TargetApi(Build.VERSION_CODES.M)
 	private void checkAndRequestPermission() {
@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity
 			lackedPermission.add(Manifest.permission.ACCESS_FINE_LOCATION);
     	// 权限都已经有了，那么直接调用SDK
 		if (lackedPermission.size() == 0) {
-			startSplashAD();
+			toHome();
 		} else {
 			// 请求所缺少的权限，在onRequestPermissionsResult中再看是否获得权限，如果获得权限就可以调用SDK，否则不要调用SDK。
 			String[] requestPermission = new String[lackedPermission.size()];
@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity
 		mHandler.sendEmptyMessageDelayed(4, 3500);
 	}
 	
-	class MySplashListener implements SplashADListener {
+	/*class MySplashListener implements SplashADListener {
 		@Override
 		public void onADExposure() {
 			
@@ -268,5 +268,5 @@ public class MainActivity extends AppCompatActivity
 		public void onADTick(long p1) {
 			txtSkip.setText(String.format(SKIP_TEXT, Math.round(p1 / 1000f)));
 		}
-	}
+	}*/
 }

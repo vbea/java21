@@ -44,7 +44,6 @@ import org.apache.commons.io.FileUtils;
 
 import com.vbea.java21.BuildConfig;
 import com.vbea.java21.R;
-import com.vbea.java21.view.MyAlertDialog;
 import com.vbes.util.VbeUtil;
 
 public class Util
@@ -166,8 +165,8 @@ public class Util
 		InputStream inStream = null;     
 		try {
 			htmlUrl = new URL(url);         
-			URLConnection connection = htmlUrl.openConnection();         
-			HttpURLConnection httpConnection = (HttpURLConnection)connection;         
+			URLConnection connection = htmlUrl.openConnection();
+			HttpURLConnection httpConnection = (HttpURLConnection)connection;
 			int responseCode = httpConnection.getResponseCode();
 			if(responseCode == HttpURLConnection.HTTP_OK)
 				inStream = httpConnection.getInputStream();
@@ -305,7 +304,7 @@ public class Util
 			//MediaStore.Images.Media.insertImage(context.getContentResolver(), f.getAbsolutePath(), f.getName(), null);
 			ContentValues values = new ContentValues();
 			values.put(MediaStore.Images.Media.DATA, f.getAbsolutePath());
-			values.put(MediaStore.Images.Media.MIME_TYPE, "image/png");
+			values.put(MediaStore.Images.Media.MIME_TYPE, getMimeType(f.getName()));
 			context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
 			context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(f.getParentFile())));
 		} catch (Exception e) {
@@ -376,54 +375,6 @@ public class Util
 			options = null;
 		}
 		return null;
-	}
-	
-	public static final void showResultDialog(Context context, String msg, String title) {
-		showResultDialog(context, msg, title, null);
-	}
-	
-	public static final void showResultDialog(Context context, String msg, String title, DialogInterface.OnClickListener lis) {
-		showResultDialog(context, msg, title, "知道了", lis);
-	}
-	
-	public static final void showResultDialog(Context context, String msg, String title, String ok, DialogInterface.OnClickListener lis) {
-		if(msg == null) return;
-		//String rmsg = msg.replace(",", "\n");
-		new MyAlertDialog(context).setTitle(title).setMessage(msg).setNegativeButton(ok, lis).create().show();
-	}
-	
-	public static void showConfirmCancelDialog(Context context, String title, String message, DialogInterface.OnClickListener posListener) {
-		MyAlertDialog dialog = new MyAlertDialog(context);
-		dialog.setTitle(title);
-		dialog.setMessage(message);
-		dialog.setPositiveButton(android.R.string.ok, posListener);
-		dialog.setNegativeButton(android.R.string.cancel, null).create();
-		//dialog.create().setCanceledOnTouchOutside(false);
-		dialog.show();
-	}
-	
-	public static void showConfirmCancelDialog(Context context, String message, DialogInterface.OnClickListener posListener) {
-		showConfirmCancelDialog(context, android.R.string.dialog_alert_title, message, posListener);
-	}
-	
-	public static void showConfirmCancelDialog(Context context, int title, String message, DialogInterface.OnClickListener posListener) {
-		MyAlertDialog dialog = new MyAlertDialog(context);
-		dialog.setTitle(title);
-		dialog.setMessage(message);
-		dialog.setPositiveButton(android.R.string.ok, posListener);
-		dialog.setNegativeButton(android.R.string.cancel, null).create();
-		//dialog.create().setCanceledOnTouchOutside(false);
-		dialog.show();
-	}
-	
-	public static void showConfirmCancelDialog(Context context, String title, String message, String ok, String cacel, DialogInterface.OnClickListener posListener) {
-		MyAlertDialog dialog = new MyAlertDialog(context);
-		dialog.setTitle(title);
-		dialog.setMessage(message);
-		dialog.setPositiveButton(ok, posListener);
-		dialog.setNegativeButton(cacel, null).create();
-		//dialog.create().setCanceledOnTouchOutside(false);
-		dialog.show();
 	}
 	
 	public static String Join(String splitter, String[] strs) {

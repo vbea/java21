@@ -22,7 +22,7 @@
 				android:layout_width="120dp"
 				android:layout_height="120dp"
 				android:layout_marginTop="8dp"
-				android:src="@mipmap/ic_logo_vbes"/>
+				android:src="@drawable/ic_logo_vbes"/>
 			<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"

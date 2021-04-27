@@ -17,7 +17,7 @@
 			android:layout_width="80dp"
 			android:layout_height="80dp"
 			android:layout_gravity="center_horizontal"
-			android:src="@mipmap/head"/>
+			android:src="@drawable/head"/>
 		<TextView
 			android:id="@+id/txt_qqNick"
 			android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.vbea.java21.list;
+package com.vbea.java21.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

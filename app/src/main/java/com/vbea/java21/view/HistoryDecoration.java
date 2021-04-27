@@ -13,7 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import com.vbea.java21.classes.DensityUtil;
 import com.vbea.java21.data.Histime;
 import com.vbea.java21.R;
-import com.vbea.java21.MyThemes;
+import com.vbea.java21.ui.MyThemes;
 
 public class HistoryDecoration extends RecyclerView.ItemDecoration
 {

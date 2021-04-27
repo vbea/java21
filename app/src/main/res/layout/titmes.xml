@@ -42,7 +42,7 @@
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:layout_marginLeft="2dp"
-						android:src="@mipmap/ic_menu"/>
+						android:src="@drawable/ic_menu"/>
 				</LinearLayout>
 				<ImageView
 					android:id="@+id/item_use"
@@ -50,8 +50,9 @@
 					android:layout_height="45dp"
 					android:layout_centerInParent="true"
 					android:visibility="gone"
+					android:tint="?attr/titleColor"
 					android:background="?attr/colorPrimary"
-					android:src="@mipmap/ic_used"/>
+					android:src="@drawable/ic_used"/>
 				<TextView
 					android:id="@+id/theme_title"
 					android:layout_width="fill_parent"

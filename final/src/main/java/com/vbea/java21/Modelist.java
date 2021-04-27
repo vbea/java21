@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
 
 import com.vbea.java21.data.SQLHelper;
-import com.vbea.java21.list.ModeAdapter;
+import com.vbea.java21.adapter.ModeAdapter;
 import com.vbea.java21.view.MyDividerDecoration;
 
 public class Modelist extends BaseActivity

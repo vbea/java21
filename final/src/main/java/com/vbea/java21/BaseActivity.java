@@ -49,6 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity
 
     protected void enableBackButton()
 	{
+		super.
         //toolbar.setNavigationIcon(R.mipmap.ic_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener()
 		{

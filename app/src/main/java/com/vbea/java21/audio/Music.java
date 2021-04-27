@@ -15,12 +15,9 @@ public class Music
 
 	public String[] getKeys()
 	{
-		try
-		{
+		try {
 			return key.split(",");
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			return null;
 		}
 	}

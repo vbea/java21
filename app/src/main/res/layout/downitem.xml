@@ -5,24 +5,26 @@
 	android:layout_height="wrap_content"
 	android:layout_width="match_parent"
 	android:orientation="horizontal"
+	android:gravity="center_vertical"
 	android:background="@drawable/btn_menu"
-	android:paddingTop="5dp"
-	android:paddingBottom="5dp">
+	android:padding="@dimen/activity_half_margin">
 	<ImageView
 		android:id="@+id/file_icon"
-		android:layout_width="wrap_content"
-		android:layout_height="fill_parent"
-		android:src="@mipmap/ic_file_download"
+		android:layout_width="@dimen/margin_48"
+		android:layout_height="@dimen/margin_48"
+		android:adjustViewBounds="true"
+		android:src="@drawable/ic_file_download"
 		android:tint="?attr/colorAccent"/>
 	<LinearLayout
 		android:layout_height="wrap_content"
-		android:layout_width="wrap_content"
+		android:layout_width="0dp"
 		android:layout_weight="1"
 		android:orientation="vertical"
 		android:gravity="center_vertical"
-		android:paddingTop="5dp"
-		android:paddingBottom="5dp"
-		android:paddingRight="5dp">
+		android:paddingTop="@dimen/activity_quart_margin"
+		android:paddingLeft="@dimen/activity_half_margin"
+		android:paddingRight="@dimen/activity_half_margin"
+		android:paddingBottom="@dimen/activity_quart_margin">
 		<TextView
 			android:id="@+id/file_name"
 			android:layout_width="fill_parent"

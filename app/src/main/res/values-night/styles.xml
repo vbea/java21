@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+	<style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
 		<item name="colorPrimary">@color/title20</item>
 		<item name="colorPrimaryDark">@color/title19</item>
 		<item name="colorAccent">@color/title19_3</item>
 		<item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+		<item name="android:textColorPrimary">@color/white</item>
 		<item name="textPrimary">@color/white</item>
 		<item name="textSecondary">#b3ffffff</item>
 		<item name="titleColor">@color/nightback</item>

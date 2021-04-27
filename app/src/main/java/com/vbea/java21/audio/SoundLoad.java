@@ -39,9 +39,9 @@ public class SoundLoad
 		isCompeted = false;
 		//start new Auduo 20170810
 		mSoundPool1 = getSoundPool();
-		hash_music = new HashMap<String, Integer>(88);
+		hash_music = new HashMap<>(88);
 		//musicAll = new ArrayList<Music>();
-		musicTop = new ArrayList<Music>();
+		musicTop = new ArrayList<>();
 		//hash_music2 = new HashMap<String, Integer>(88);
 	}
 	

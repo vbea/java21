@@ -14,7 +14,7 @@ import android.content.BroadcastReceiver;
 import android.widget.RemoteViews;
 import android.media.AudioManager;
 
-import com.vbea.java21.More;
+import com.vbea.java21.ui.More;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.R;
@@ -44,8 +44,7 @@ public class AudioService extends Service
 	}
 
 	@Override
-	public void onCreate()
-	{
+	public void onCreate() {
 		super.onCreate();
 		notiManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
@@ -57,8 +56,7 @@ public class AudioService extends Service
 	}
 
 	@Override
-	public int onStartCommand(Intent intent, int flags, int startId)
-	{
+	public int onStartCommand(Intent intent, int flags, int startId) {
 		return super.onStartCommand(intent, flags, startId);
 	}
 
@@ -68,8 +66,7 @@ public class AudioService extends Service
 		super.onRebind(intent);
 	}
 
-	public void registerReceiver()
-	{
+	public void registerReceiver() {
 		if (isReceived)
 			unregisterReceiver(receiver);
 		IntentFilter filter = new IntentFilter();
@@ -84,32 +81,28 @@ public class AudioService extends Service
 	}
 
 	@Override
-	public void unregisterReceiver(BroadcastReceiver receiver)
-	{
+	public void unregisterReceiver(BroadcastReceiver receiver) {
 		super.unregisterReceiver(receiver);
 		isReceived = false;
 	}
 	
-	public void addAudioChangedListener(OnAudioChangedListener lis)
-	{
+	public void addAudioChangedListener(OnAudioChangedListener lis) {
 		listener = lis;
 	}
 
 	@Override
-	public void onDestroy()
-	{
+	public void onDestroy() {
 		Stop();
 		super.onDestroy();
 	}
 	
 	//发送通知
-	public void createNotification()
-	{
+	public void createNotification() {
 		if (music == null)
 			return;
 		RemoteViews view = new RemoteViews(getPackageName(), R.layout.music_noti);
 		Notification.Builder builder = new Notification.Builder(this);
-		builder.setSmallIcon(R.mipmap.wel_icon);
+		builder.setSmallIcon(R.drawable.wel_icon);
 		builder.setOngoing(true);
 		if (Util.isAndroidN()) {
 			builder.setCustomContentView(view);
@@ -125,7 +118,7 @@ public class AudioService extends Service
 		view.setOnClickPendingIntent(R.id.noti_play, PendingIntent.getBroadcast(this, 1, new Intent(PLAY_PAUSE), PendingIntent.FLAG_UPDATE_CURRENT));
 		view.setOnClickPendingIntent(R.id.noti_close, PendingIntent.getBroadcast(this, 1, new Intent(PLAY_CLOSE), PendingIntent.FLAG_UPDATE_CURRENT));
 		view.setOnClickPendingIntent(R.id.noti_next, PendingIntent.getBroadcast(this, 2, new Intent(PLAY_NEXT), PendingIntent.FLAG_UPDATE_CURRENT));
-		view.setImageViewResource(R.id.noti_play, isPaused ? R.mipmap.not_play : R.mipmap.not_pause);
+		view.setImageViewResource(R.id.noti_play, isPaused ? R.drawable.not_play : R.drawable.not_pause);
 		notiManager.notify(1, builder.build());
 		registerReceiver();
 	}
@@ -136,28 +129,22 @@ public class AudioService extends Service
 	}*/
 	
 	//播放音乐
-	public void play(int mu)
-	{
+	public void play(int mu) {
 		isNoysi = isPaused = false;
 		if (Common.SOUND == null)
 			return;
-		if (mThread != null)
-		{
-			if (what != mu || !isPlaying)
-			{
+		if (mThread != null) {
+			if (what != mu || !isPlaying) {
 				what = mu;
 				music = Common.SOUND.getMusic(what);
 				mThread.init();
-			}
-			else
+			} else {
 				Stop();
-		}
-		else
-		{
+			}
+		} else {
 			what = mu;
 			music = Common.SOUND.getMusic(what);
-			if (music != null)
-			{
+			if (music != null) {
 				mThread = new MusicThread(false);
 				mThread.setPriority(Thread.MAX_PRIORITY);
 				mThread.start();
@@ -166,8 +153,7 @@ public class AudioService extends Service
 		}
 	}
 	
-	public void Stop()
-	{
+	public void Stop() {
 		isPlay = isPlaying = false;
 		current = max = 0;
 		what = -1;
@@ -180,16 +166,13 @@ public class AudioService extends Service
 			listener.onAudioChange();
 	}
 	
-	public void onPause()
-	{
+	public void onPause() {
 		//isPlay = isPlaying = false;
 		mThread = null;
 	}
 	
-	public void Pause()
-	{
-		if (mThread != null)
-		{
+	public void Pause() {
+		if (mThread != null) {
 			mThread.setIsResume(true);
 			isPlay = false;
 			isPaused = true;
@@ -200,12 +183,10 @@ public class AudioService extends Service
 		}
 	}
 	
-	public void Replay()
-	{
+	public void Replay() {
 		if (Common.SOUND == null)
 			return;
-		if (music != null)
-		{
+		if (music != null) {
 			isPaused = false;
 			isPlay = true;
 			isNoysi = false;
@@ -218,56 +199,46 @@ public class AudioService extends Service
 		}
 	}
 	
-	public boolean isPlay()
-	{
+	public boolean isPlay() {
 		return isPlaying;
 	}
 	
-	public boolean isPause()
-	{
+	public boolean isPause() {
 		return isPaused;
 	}
 	
-	public void setLoop(boolean _loop)
-	{
+	public void setLoop(boolean _loop) {
 		loop = _loop;
 		if (order && loop)
 			order = false;
 	}
 	
-	public void setOrder(boolean _order)
-	{
+	public void setOrder(boolean _order) {
 		order = _order;
 		if (loop && order)
 			loop = false;
 	}
 	
-	public String getMusicName()
-	{
+	public String getMusicName() {
 		if (music != null)
 			return music.getName();
 		return "";
 	}
 	
-	public boolean playNext()
-	{
+	public boolean playNext() {
 		what+=1;
 		music = Common.SOUND.getMusic(what);
 		return music != null;
 	}
 	
-	public void nextMusic()
-	{
-		if (mThread != null)
-		{
+	public void nextMusic() {
+		if (mThread != null) {
 			what+=1;
 			if (what >= Common.SOUND.getMusicCount())
 				what = 0;
 			music = Common.SOUND.getMusic(what);
 			mThread.init();
-		}
-		else
-		{
+		} else {
 			if (isPause())
 				isPaused = false;
 			what+=1;
@@ -279,13 +250,10 @@ public class AudioService extends Service
 			listener.onAudioChange();
 	}
 	
-	private BroadcastReceiver receiver = new BroadcastReceiver()
-	{
+	private BroadcastReceiver receiver = new BroadcastReceiver() {
 		@Override
-		public void onReceive(Context context, Intent intent)
-		{
-			switch (intent.getAction())
-			{
+		public void onReceive(Context context, Intent intent) {
+			switch (intent.getAction()) {
 				case PLAY_NEXT:
 					nextMusic();
 					break;
@@ -293,9 +261,9 @@ public class AudioService extends Service
 					Stop();
 					break;
 				case PLAY_PAUSE:
-					if (isPaused)
+					if (isPaused) {
 						Replay();
-					else {
+					} else {
 						Pause();
 						audioManager.abandonAudioFocus(afListener);
 					}
@@ -317,14 +285,11 @@ public class AudioService extends Service
 		}
 	};
 	
-	private AudioManager.OnAudioFocusChangeListener afListener = new AudioManager.OnAudioFocusChangeListener()
-	{
+	private AudioManager.OnAudioFocusChangeListener afListener = new AudioManager.OnAudioFocusChangeListener() {
 		@Override
-		public void onAudioFocusChange(int code)
-		{
+		public void onAudioFocusChange(int code) {
 			//ExceptionHandler.log("onAudioFocusChange", "code:" + code);
-			switch (code)
-			{
+			switch (code) {
 				//case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
 					//audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamVolume(AudioManager.STREAM_MUSIC), AudioManager.FLAG_REMOVE_SOUND_AND_VIBRATE);
 				case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
@@ -345,73 +310,59 @@ public class AudioService extends Service
 		}
 	};
 	
-	public class AudioBinder extends Binder
-	{
+	public class AudioBinder extends Binder {
 		public AudioService getService()
 		{
 			return AudioService.this;
 		}
 	}
 	
-	class MusicThread extends Thread //implements Runnable
-	{
+	class MusicThread extends Thread { //implements Runnable
 		long longs = 0;
 		long shortx = 0;
 		boolean isResume;
 		
-		public MusicThread(boolean resume)
-		{
+		public MusicThread(boolean resume) {
 			isResume = resume;
 		}
 
-		public void setIsResume(boolean resume)
-		{
+		public void setIsResume(boolean resume) {
 			this.isResume = resume;
 		}
 		
-		public void init()
-		{
-			if (music != null)
-			{
+		public void init() {
+			if (music != null) {
 				strmusic = music.getKeys();
 				longs = music.max;
 				shortx = music.min;
 				zero();
 				isPlay = max > 0;
-			}
-			else
+			} else {
 				stoped();
+			}
 		}
 		
-		public void replay()
-		{
+		public void replay() {
 			longs = music.max;
 			shortx = music.min;
 		}
 		
 		@Override
-		public void run()
-		{
-			try
-			{
+		public void run() {
+			try {
 				if (!isResume)
 					init();
 				else
 					replay();
 				isPlaying = isPlay;
 				sleep(500);
-				while (isPlay)
-				{
-					if (isPlay)
-					{
-						synchronized (this)
-						{
+				while (isPlay) {
+					if (isPlay) {
+						synchronized (this) {
 							mid = strmusic[current].trim();
-							if (mid.indexOf("_") > 0)
-							{
+							if (mid.indexOf("_") > 0) {
 								String[] s = mid.split("_");
-								for (String _mid : s)
-								{
+								for (String _mid : s) {
 									if (!isPlaying)
 										break;
 									mid = _mid.trim();
@@ -422,9 +373,7 @@ public class AudioService extends Service
 								}
 								sleep(shortx/2);
 								current++;
-							}
-							else
-							{
+							} else {
 								if (play(true))
 									Thread.sleep(longs);
 								else
@@ -432,100 +381,81 @@ public class AudioService extends Service
 							}
 						}
 					}
-					if (current == max)
-					{
+					if (current == max) {
 						mid = "";
-						if (isPlay)
-						{
-							if (loop)
-							{
+						if (isPlay) {
+							if (loop) {
 								current = 0;
 								sleep(1000);
-							}
-							else if (order)
-							{
+							} else if (order) {
 								sleep(500);
 								if (playNext())
 									init();
 								else
 									isPlay = false;
-							}
-							else
+							} else {
 								isPlay = false;
+							}
 						}
 					}
 				}
 				isPlaying = false;
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				stoped();
-				ExceptionHandler.log("AudioServise.Thread(" + current + ")", e.toString());
-			}
-			finally
-			{
+				ExceptionHandler.log("AudioService.Thread(" + current + ")", e.toString());
+			} finally {
 				stoped();
 			}
 		}
 
-		public void stoped()
-		{
+		public void stoped() {
 			isPlay = isPlaying = false;
-			if (!isResume)
-			{
+			if (!isResume) {
 				what = -1;
 				zero();
 				Stop();
-			}
-			else
+			} else {
 				onPause();
+			}
 		}
 		
-		private void zero()
-		{
-			if (strmusic != null)
-			{
+		private void zero() {
+			if (strmusic != null) {
 				max = strmusic.length;
 				createNotification();
-			}
-			else
+			} else {
 				max = 0;
+			}
 			current = 0;
 			mid = "";
 		}
 		
-		public void runpl(final String...music)
-		{
-			try
-			{
+		public void runpl(final String...music) {
+			try {
 				Common.SOUND.play(music);
-			}
-			catch (Exception e)
-			{
+			} catch (Exception e) {
 				isPlay = false;
 			}
 		}
 		
-		public boolean play(boolean nor)
-		{
-			if (mid.indexOf("-") > 0)
+		public boolean play(boolean nor) {
+			if (mid.indexOf("-") > 0) {
 				runpl(mid.split("-"));
-			else
+			} else {
 				runpl(mid);
-			if (nor)
+			}
+			if (nor) {
 				current++;
-			if (mid.equals("-"))
-			{
+			}
+			if (mid.equals("-")) {
 				mid = "";
 				return true;
-			}
-			else if (mid.equals("_"))
-			{
+			} else if (mid.equals("_")) {
 				mid = "";
 				return false;
-			}
-			else
+			} else {
 				return Character.isUpperCase(mid.charAt(0));
+			}
 		}
 	}
 }

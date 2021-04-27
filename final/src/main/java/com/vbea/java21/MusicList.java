@@ -3,7 +3,7 @@ package com.vbea.java21;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.LinearLayoutManager;
 
-import com.vbea.java21.list.MusicAdapter;
+import com.vbea.java21.adapter.MusicAdapter;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.audio.*;

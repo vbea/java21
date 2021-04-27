@@ -5,7 +5,7 @@
     <item
         android:id="@+id/item_add"
         android:title="新建任务"
-        android:icon="@mipmap/ic_new"
+        android:icon="@drawable/ic_new"
         app:showAsAction="always"/>
     <item
         android:id="@+id/item_startAll"

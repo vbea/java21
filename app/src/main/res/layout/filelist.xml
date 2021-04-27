@@ -34,7 +34,7 @@
 		android:layout_margin="16dp"
 		android:layout_gravity="bottom|end"
 		android:clickable="true"
-		android:src="@mipmap/ic_done"
+		android:src="@drawable/ic_done"
 		app:fabSize="normal"
 		app:backgroundTint="?attr/colorAccent"
 		app:rippleColor="?attr/btnColor"

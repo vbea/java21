@@ -19,6 +19,7 @@ import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
 import android.webkit.URLUtil;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.view.KeyEvent;
@@ -73,7 +74,8 @@ public class HtmlViewer extends BaseActivity {
     private String lastUrl = "";
     private String lastPageTitle = "";
     private WebHelper webHelper;
-    private FrameLayout coordinatorLayout, fullVideoLayout;
+    private LinearLayout coordinatorLayout;
+    private FrameLayout fullVideoLayout;
     private WebChromeClient.CustomViewCallback customViewCallback;
     private WebConfig webConfig;
     public UriScheme uriScheme;

@@ -144,10 +144,8 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data android:scheme="https" />
             </intent-filter>
             <intent-filter>
@@ -166,22 +164,30 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
-
                 <data android:scheme="vbea" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="localhost"
-                    android:scheme="file" />
+                <data android:host="localhost" android:scheme="file" />
                 <data android:mimeType="text/html" />
                 <data android:pathPattern="*.htm" />
                 <data android:pathPattern="*.html" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.MessageOOM"
+            android:label="@string/laji_pinduoduo"
+            android:icon="@mipmap/ic_pindd"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="pinduoduo" />
             </intent-filter>
         </activity>
         <activity

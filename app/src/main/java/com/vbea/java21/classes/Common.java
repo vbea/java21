@@ -875,8 +875,10 @@ public class Common
 		mUser = null;//登录用户
 		mTips = null;//通知中心
 		myInbox = null;//消息中心
-		copyMsgs.clear();
-		copyMsgs = null;
+		if (copyMsgs != null) {
+			copyMsgs.clear();
+			copyMsgs = null;
+		}
 		//停止正在运行的音乐服务
 		if (audioService != null) {
 			if (audioService.isPlay())

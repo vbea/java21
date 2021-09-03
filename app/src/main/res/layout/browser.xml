@@ -4,17 +4,14 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
-	<FrameLayout
+	<LinearLayout
 		android:id="@+id/webCoordinator"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
+		android:orientation="vertical"
 		android:background="?attr/colorPrimary"
 		android:fitsSystemWindows="true"
 		android:clipToPadding="true">
-	<android.support.design.widget.CoordinatorLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:background="?attr/titleColor">
 		<android.support.design.widget.AppBarLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
@@ -31,8 +28,7 @@
 		<RelativeLayout
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:background="?attr/titleColor"
-			app:layout_behavior="@string/appbar_scrolling_view_behavior">
+			android:background="?attr/titleColor">
 			<WebView
 				android:id="@+id/WebViewPage"
 				android:layout_width="match_parent"
@@ -41,7 +37,6 @@
 				android:id="@+id/WebViewSource"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				android:layout_marginBottom="56dp"
 				android:visibility="gone"/>
 			<ProgressBar
 				android:id="@+id/apiProgress"
@@ -69,8 +64,7 @@
 				android:enabled="false"
 				android:background="#8F000000"/>
 		</RelativeLayout>
-	</android.support.design.widget.CoordinatorLayout>
-	</FrameLayout>
+	</LinearLayout>
     <FrameLayout
         android:id="@+id/webFullVideo"
         android:layout_width="match_parent"

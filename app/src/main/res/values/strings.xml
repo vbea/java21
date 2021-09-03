@@ -119,7 +119,7 @@
 	<string name="history">历史记录</string>
 	<string name="version">V %1$s Build %2$d</string>
 	<string name="abt_ver">当前版本：V%s
-		\n1.新增扫一扫与浏览器的快捷方式
+		\n1.扫一扫逻辑优化
 		\n2.浏览器重构优化
 		\n3.新增图片文件显示缩略图
 		\n4.其他细节优化
@@ -166,4 +166,5 @@
     <string name="waiting">请稍后...</string>
     <string name="qr_result_activity">扫描结果</string>
 	<string name="shortcut_disabled_msg">此功能已失效</string>
+    <string name="laji_pinduoduo">拼多多垃圾</string>
 </resources>

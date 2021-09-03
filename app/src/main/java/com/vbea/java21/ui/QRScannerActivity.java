@@ -59,22 +59,22 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
     private void showResult(String result) {
         if (result.contains("://")) {
-            if (result.contains("http://") || result.contains("https://") || result.contains("vbea://")) {
+            if (result.startsWith("http://") || result.startsWith("https://") || result.startsWith("vbea://")) {
                 Intent intent = new Intent(QRScannerActivity.this, HtmlViewer.class);
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(result));
                 startActivity(intent);
             } else {
-                try {
+                /*try {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.addCategory(Intent.CATEGORY_DEFAULT);
                     intent.setData(Uri.parse(result));
                     startActivity(intent);
-                } catch (Exception e) {
+                } catch (Exception e) {*/
                     Intent intent = new Intent(QRScannerActivity.this, QRResultActivity.class);
                     intent.putExtra(QRResultActivity.QR_RESULT, result);
                     startActivity(intent);
-                }
+                //}
             }
         } else {
             Intent intent = new Intent(QRScannerActivity.this, QRResultActivity.class);

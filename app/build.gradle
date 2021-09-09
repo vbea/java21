@@ -31,14 +31,14 @@ static def releaseTime() {
 }
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.vbea.java21"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode getMyVersionCode()
-        versionName "8.0.20"
+        versionName "8.21.09"
         signingConfig signingConfigs.debug
         flavorDimensions "versionCode"
         multiDexEnabled true

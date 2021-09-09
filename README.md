@@ -1,4 +1,4 @@
-# **Java21** [ ![Download](https://vbes.gitee.io/java21/download.svg) ](https://vbes.gitee.io/java21/801-2142-20200320-release.apk)
+# **Java21** [Download](https://github.com/vbea/java21/releases)
 21天学通Java-邠心工作室
 
 学习交流群222876252

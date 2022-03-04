@@ -209,10 +209,10 @@ public class MainActivity extends AppCompatActivity
 			lackedPermission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
 		if (!Util.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
 			lackedPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-		if (!Util.hasPermission(this, Manifest.permission.READ_PHONE_STATE))
+		/*if (!Util.hasPermission(this, Manifest.permission.READ_PHONE_STATE))
 			lackedPermission.add(Manifest.permission.READ_PHONE_STATE);
 		if (!Util.hasPermission(this, Manifest.permission.ACCESS_FINE_LOCATION))
-			lackedPermission.add(Manifest.permission.ACCESS_FINE_LOCATION);
+			lackedPermission.add(Manifest.permission.ACCESS_FINE_LOCATION);*/
     	// 权限都已经有了，那么直接调用SDK
 		if (lackedPermission.size() == 0) {
 			toHome();

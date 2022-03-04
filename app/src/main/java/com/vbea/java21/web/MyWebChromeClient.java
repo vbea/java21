@@ -1,5 +1,6 @@
-package com.vbea.java21.web;
+ package com.vbea.java21.web;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.vbea.java21.classes.Util;
 import com.vbea.java21.ui.HtmlViewer;
 import com.vbes.util.VbeUtil;
 import com.vbes.util.lis.DialogResult;
@@ -41,9 +43,19 @@ public class MyWebChromeClient extends WebChromeClient {
     }
 
     public void onGeolocationPermissionsShowPrompt(final String origin, final android.webkit.GeolocationPermissions.Callback callback) {
-        VbeUtil.showConfirmCancelDialog(activity, "提示", "来自" + origin + "的网页正在请求定位，是否允许？", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface d, int s) {
-                callback.invoke(origin, true, false);
+        VbeUtil.showConfirmCancelDialog(activity, "提示", "来自" + origin + "的网页正在请求定位，是否允许？", new DialogResult() {
+            @Override
+            public void onConfirm() {
+                if (Util.hasPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    callback.invoke(origin, true, false);
+                } else {
+                    VbeUtil.requestPermission(activity, 10056, Manifest.permission.ACCESS_FINE_LOCATION);
+                }
+            }
+
+            @Override
+            public void onCancel() {
+
             }
         });
     }

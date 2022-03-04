@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import android.os.StrictMode;
 import android.os.Environment;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.view.Menu;
@@ -24,6 +25,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.design.widget.FloatingActionButton;
 
 import com.vbea.java21.BaseActivity;
+import com.vbea.java21.BuildConfig;
 import com.vbea.java21.R;
 import com.vbea.java21.data.FileItem;
 import com.vbea.java21.adapter.FileAdapter;
@@ -31,6 +33,7 @@ import com.vbea.java21.view.MyDividerDecoration;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbes.util.VbeUtil;
+import com.vbes.util.lis.DialogResult;
 import com.vbes.util.view.MyAlertDialog;
 
 public class FileSelect extends BaseActivity
@@ -48,6 +51,7 @@ public class FileSelect extends BaseActivity
 	private File rootPath, currentPath;
 	private TextView txtLocation;
 	private FloatingActionButton btnDone;
+	public static final int RESULT_FILE_ACCESS = 5320;
 
 	@Override
 	protected void before() {
@@ -66,7 +70,20 @@ public class FileSelect extends BaseActivity
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
 		sdate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		init();
+		if (VbeUtil.isAndroidR()) {
+			if (Environment.isExternalStorageManager()) {
+				init();
+			} else {
+				VbeUtil.showResultDialog(this, "受到Android 11分区存储限制，需要设置允许访问非公共存储目录才能将文件保存在自定义目录，请点击设置并允许文件管理权限。", "访问受限", "设置", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						requestAccessFile();
+					}
+				});
+			}
+		} else {
+			init();
+		}
 		
 		mAdapter.setOnItemClickListener(new FileAdapter.OnItemClickListener() {
 			@Override
@@ -105,8 +122,9 @@ public class FileSelect extends BaseActivity
 			@Override
 			public void onDelete(FileItem fileItem) {
 				final File folder = new File(fileItem.getPath());
-				VbeUtil.showConfirmCancelDialog(FileSelect.this, "删除文件夹", "确认要删除此文件夹？", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface d, int s) {
+				VbeUtil.showConfirmCancelDialog(FileSelect.this, "删除文件夹", "确认要删除此文件夹？", new DialogResult() {
+					@Override
+					public void onConfirm() {
 						if (folder.list().length != 0)
 							Util.toastShortMessage(getApplicationContext(), "文件夹不为空，无法删除");
 						else {
@@ -117,6 +135,11 @@ public class FileSelect extends BaseActivity
 								Util.toastShortMessage(getApplicationContext(), "操作失败");
 							}
 						}
+					}
+
+					@Override
+					public void onCancel() {
+
 					}
 				});
 			}
@@ -150,7 +173,7 @@ public class FileSelect extends BaseActivity
 		fileList.clear();
 		txtLocation.setText(files.getPath());
 		mList.add(new FileItem().addLoading());
-		if (!files.exists()) {
+		if (files == null || !files.exists()) {
 			mAdapter.clear();
 		} else {
 			mAdapter.setNewData(mList);
@@ -159,23 +182,28 @@ public class FileSelect extends BaseActivity
 					mList.clear();
 					if (!currentPath.equals(rootPath))
 						mList.add(new FileItem().addUplev());
-					for (File f : files.listFiles()) {
-						if (f.isDirectory()) {
-							FileItem item = new FileItem();
-							item.setName(f.getName());
-							item.setPath(f.getAbsolutePath());
-							item.setIsFolder(true);
-							item.setDetail(sdate.format(new Date(f.lastModified())));
-							item.setSize(f.list().length + "个项目");
-							mList.add(item);
-						} else if (Common.isShowFile) {
-							FileItem item = new FileItem();
-							item.setName(f.getName());
-							item.setPath(f.getAbsolutePath());
-							item.setIsFolder(false);
-							item.setDetail(sdate.format(new Date(f.lastModified())));
-							item.setSize(Util.getFormatSize(f.length()));
-							fileList.add(item);
+					File[] filesList = files.listFiles();
+					if (filesList != null) {
+						for (File f : filesList) {
+							if (f != null) {
+								if (f.isDirectory()) {
+									FileItem item = new FileItem();
+									item.setName(f.getName());
+									item.setPath(f.getAbsolutePath());
+									item.setIsFolder(true);
+									item.setDetail(sdate.format(new Date(f.lastModified())));
+									item.setSize(getChildList(f) + "个项目");
+									mList.add(item);
+								} else if (Common.isShowFile) {
+									FileItem item = new FileItem();
+									item.setName(f.getName());
+									item.setPath(f.getAbsolutePath());
+									item.setIsFolder(false);
+									item.setDetail(sdate.format(new Date(f.lastModified())));
+									item.setSize(Util.getFormatSize(f.length()));
+									fileList.add(item);
+								}
+							}
 						}
 					}
 					mAdapter.setList(mList);
@@ -186,12 +214,26 @@ public class FileSelect extends BaseActivity
 			}, 0);
 		}
 	}
+
+	private int getChildList(File direct) {
+		if (direct.list() != null) {
+			return direct.list().length;
+		} else {
+			return 0;
+		}
+	}
 	
 	private void selectedFile(String path) {
 		Intent intent = new Intent();
 		intent.putExtra("path", path);
 		setResult(RESULT_OK, intent);
 		finishAfterTransition();
+	}
+
+	//申请访问所有文件
+	public void requestAccessFile() {
+		Uri uri = Uri.parse("package:" + BuildConfig.APPLICATION_ID);
+		startActivityForResult(new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, uri), RESULT_FILE_ACCESS);
 	}
 	
 	@Override
@@ -250,7 +292,15 @@ public class FileSelect extends BaseActivity
 		else
 			listFiles(currentPath.getParentFile());
 	}
-	
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+		if (requestCode == RESULT_FILE_ACCESS && Environment.isExternalStorageManager()) {
+			init();
+		}
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();

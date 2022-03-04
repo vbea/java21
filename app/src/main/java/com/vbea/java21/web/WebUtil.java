@@ -12,6 +12,7 @@ import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.ui.HtmlViewer;
 import com.vbes.util.VbeUtil;
+import com.vbes.util.lis.DialogResult;
 
 import org.wlf.filedownloader.DownloadConfiguration;
 import org.wlf.filedownloader.FileDownloader;
@@ -107,8 +108,9 @@ public class WebUtil {
         @Override
         public void onDownloadStart(String url, String userAgent, String disposition, String mimeType, long contentLength) {
             String filename = UrlUtil.decode(getDownloadFileName(disposition, url).trim(), "UTF-8");
-            VbeUtil.showConfirmCancelDialog(activity, "下载文件", "文件名：" + filename + "\n大小：" + Util.getFormatSize(contentLength) + "\n确定要下载该文件？", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface d, int s) {
+            VbeUtil.showConfirmCancelDialog(activity, "下载文件", "文件名：" + filename + "\n大小：" + Util.getFormatSize(contentLength) + "\n确定要下载该文件？", new DialogResult() {
+                @Override
+                public void onConfirm() {
                     DownloadConfiguration.Builder builder = new DownloadConfiguration.Builder();
                     builder.addHeader("Accept", "*/*");
                     builder.addHeader("Content-Disposition", disposition);
@@ -145,6 +147,11 @@ public class WebUtil {
                     {
                         Util.toastShortMessage(getApplicationContext(), "未安装下载管理器");
                     }*/
+                }
+
+                @Override
+                public void onCancel() {
+
                 }
             });
         }

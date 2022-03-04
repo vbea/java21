@@ -4,13 +4,15 @@
 	android:layout_height="match_parent"
 	android:layout_width="match_parent"
 	android:background="@color/black">
-	<ImageView
+	<TextView
 		android:id="@+id/img_setIcon"
-		android:layout_width="30dp"
-		android:layout_height="30dp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
 		android:layout_alignParentEnd="true"
-		android:layout_margin="10dp"
-		android:src="@drawable/ic_picture"/>
+		android:textColor="@color/white"
+		android:textSize="14sp"
+		android:padding="@dimen/activity_vertical_margin"
+		android:text="更换头像"/>
 	<ImageView
 		android:id="@+id/img_headicon"
 		android:layout_width="match_parent"

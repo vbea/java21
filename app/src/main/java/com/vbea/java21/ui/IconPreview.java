@@ -3,7 +3,10 @@ package com.vbea.java21.ui;
 import java.io.File;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.Settings;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.net.Uri;
@@ -12,7 +15,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.TextView;
 
+import com.vbea.java21.BuildConfig;
 import com.vbea.java21.R;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
@@ -37,7 +42,7 @@ public class IconPreview extends AppCompatActivity {
 		setContentView(R.layout.headicon);
 		
 		img_icon = (ImageView) findViewById(R.id.img_headicon);
-		ImageView setIcon = (ImageView) findViewById(R.id.img_setIcon);
+		TextView setIcon = (TextView) findViewById(R.id.img_setIcon);
 		LayoutParams params = img_icon.getLayoutParams();
 		params.height = getWindowManager().getDefaultDisplay().getWidth();
 		img_icon.setLayoutParams(params);
@@ -52,11 +57,23 @@ public class IconPreview extends AppCompatActivity {
 		
 		setIcon.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				if (Util.hasAllPermissions(IconPreview.this, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+				if (VbeUtil.canAccessAllFile(IconPreview.this)) {
 					GalleryUtil.from(IconPreview.this).choose(MimeType.ofImage()).theme(MyThemes.getTheme()).capture(true)
 							.captureStrategy(new CaptureStrategy(true, "com.vbea.java21.fileprovider")).thumbnailScale(0.85f).forResult(1);
-				else
-					Util.requestPermission(IconPreview.this, 1001, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+				} else {
+					if (VbeUtil.isAndroidR()) {
+						VbeUtil.showResultDialog(IconPreview.this, "受到Android 11分区存储限制，需要设置允许访问非公共存储目录才能将文件保存在自定义目录，请点击设置并允许文件管理权限。", "访问受限", "设置", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								//申请访问所有文件
+								Uri uri = Uri.parse("package:" + BuildConfig.APPLICATION_ID);
+								startActivityForResult(new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION, uri), 1001);
+							}
+						});
+					} else {
+						Util.requestPermission(IconPreview.this, 1001, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+					}
+				}
 			}
 		});
 	}
@@ -89,6 +106,9 @@ public class IconPreview extends AppCompatActivity {
 			}
 		} else if (requestCode == 1) {
 			startPhotoZoom(GalleryUtil.obtainResult(data).get(0));
+		} else if (requestCode == 1001) {
+			GalleryUtil.from(IconPreview.this).choose(MimeType.ofImage()).theme(MyThemes.getTheme()).capture(true).capture(true)
+					.captureStrategy(new CaptureStrategy(true, "com.vbea.java21.fileprovider")).thumbnailScale(0.85f).forResult(1);
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}

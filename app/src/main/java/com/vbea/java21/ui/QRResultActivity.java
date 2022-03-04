@@ -33,6 +33,13 @@ public class QRResultActivity extends BaseActivity {
                     showSearch();
                 }
             });
+            bind(R.id.btn_qr_copy).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    VbeUtil.addClipboard(getApplicationContext(), result);
+                    toastShortMessage("已复制到剪贴板");
+                }
+            });
         }
     }
 

@@ -47,12 +47,8 @@ import com.vbea.java21.web.WebUploadUtil;
 import com.vbea.java21.web.WebUtil;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.tencent.connect.common.Constants;
-import com.vbes.util.UriUtils;
 import com.vbes.util.VbeUtil;
 import com.vbes.util.view.MyAlertDialog;
-
-import org.apache.http.client.utils.URIUtils;
-import org.apache.http.client.utils.URLEncodedUtils;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -130,7 +126,7 @@ public class HtmlViewer extends BaseActivity {
             }
         });
 
-        enableBackButton(new View.OnClickListener() {
+        enableBackButton(R.id.toolbar, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (IS_SOURCE)

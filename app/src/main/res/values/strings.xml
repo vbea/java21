@@ -119,18 +119,17 @@
 	<string name="history">历史记录</string>
 	<string name="version">V %1$s Build %2$d</string>
 	<string name="abt_ver">当前版本：V%s
-		\n1.新增Android10兼容性优化
-		\n2.扫一扫逻辑优化
-		\n3.浏览器重构优化
-		\n4.新增图片文件显示缩略图
-		\n5.其他细节优化
+		\n1.新增二维码生成器
+		\n2.新增Android 11兼容性优化
+		\n3.首页菜单新增扫一扫快捷功能
+		\n4.其他细节优化
 	</string>
 	<string name="shared">share_image</string>
 	<string name="about_us">邠心工作室(VbeStudio, VBES)，2013年5月20日成立，至今已有八年时间。目前团队仅有二人，都是90后的编程爱好者，本人是在2012年(高中)自学Java，通过21天时间学完基础知识之后开始研究并开发Android，并于2014年将基础知识整理成教程并发布此APP，帮助那些也想要学习Java的朋友，希望在学习道路上遇到志同道合的朋友。
 	</string>
 	<string name="about_join">邮箱：vbea@foxmail.com
 		\nQ　Q：248104237\nQ群：222876252
-		\n官网：http://vbea.wicp.net\n微博：@邠心工作室
+		\n官网：http://vbea.wicp.net\n微博：@邠心Vbe
 		\n微信公众号：邠心工作室(VbeStudio)\nB站：邠心 (6944655)
 		\n地址：四川省成都市"
 	</string>
@@ -167,5 +166,8 @@
     <string name="waiting">请稍后...</string>
     <string name="qr_result_activity">扫描结果</string>
 	<string name="shortcut_disabled_msg">此功能已失效</string>
-    <string name="laji_pinduoduo">拼多多垃圾</string>
+    <string name="laji_pinduoduo">垃圾APP智能拦截</string>
+	<string name="activity_qr_creator">二维码生成器</string>
+    <string name="txt_qr_creator">生成二维码</string>
+	<string name="tips_qr_creator">请输入你想生成的文字或网址</string>
 </resources>

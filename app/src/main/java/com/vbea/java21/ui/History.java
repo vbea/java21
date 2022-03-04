@@ -26,6 +26,8 @@ import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.TimeAgo;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbes.util.VbeUtil;
+import com.vbes.util.lis.DialogResult;
+import com.vbes.util.list.StickyDecoration;
 
 public class History extends BaseActivity
 {
@@ -33,7 +35,7 @@ public class History extends BaseActivity
 	private WebHelper query;
 	private List<Histories> mList;
 	private List<Histime> dataList;
-	private HistoryDecoration hisDecoration;
+	//private HistoryDecoration hisDecoration;
 
 	@Override
 	protected void before()
@@ -49,8 +51,15 @@ public class History extends BaseActivity
 		mAdapter = new HistoryAdapter();
 		init();
 		recyclerView.addItemDecoration(new MyDividerDecoration(this));
-		hisDecoration = new HistoryDecoration(this, dataList, new DecorationLis());
-		recyclerView.addItemDecoration(hisDecoration);
+		//hisDecoration = new HistoryDecoration(this, dataList, new DecorationLis());
+		//recyclerView.addItemDecoration(hisDecoration);
+		StickyDecoration.StickyOptions options = new StickyDecoration.StickyOptions();
+		options.setStickyBackground(MyThemes.isNightTheme() ? R.color.textSecondary : R.color.dividers);
+		options.setStickyHeight(R.dimen.sectioned_top);
+		options.setStickyPadding(R.dimen.sectioned_alignBottom);
+		options.setTextColor(R.color.textPrimary);
+		options.setTextSize(14);
+		recyclerView.addItemDecoration(new StickyDecoration(this, options, new DecorationLis()));
 		recyclerView.setAdapter(mAdapter);
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -118,8 +127,8 @@ public class History extends BaseActivity
 				mList.add(his);
 				dataList.add(hisTime);
 				mAdapter.setData(mList);
-				if (hisDecoration != null)
-					hisDecoration.setData(dataList);
+				/*if (hisDecoration != null)
+					hisDecoration.setData(dataList);*/
 			}
 		} catch (Exception e) {
 			ExceptionHandler.log("history_query_init", e);
@@ -134,9 +143,9 @@ public class History extends BaseActivity
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		VbeUtil.showConfirmCancelDialog(this, "清空历史记录", "确认操作？", new DialogInterface.OnClickListener() {
+		VbeUtil.showConfirmCancelDialog(this, "清空历史记录", "确认操作？", new DialogResult() {
 			@Override
-			public void onClick(DialogInterface p1, int p2) {
+			public void onConfirm() {
 				try {
 					query.clearHistory();
 					Util.toastShortMessage(History.this, "操作成功");
@@ -145,6 +154,11 @@ public class History extends BaseActivity
 				} catch (Exception e) {
 					Util.toastShortMessage(History.this, "操作失败");
 				}
+			}
+
+			@Override
+			public void onCancel() {
+
 			}
 		});
 		return super.onOptionsItemSelected(item);
@@ -161,19 +175,19 @@ public class History extends BaseActivity
 		super.onDestroy();
 	}
 	
-	class DecorationLis implements HistoryDecoration.DecorationCallback {
+	class DecorationLis implements StickyDecoration.DecorationCallback {
 		@Override
 		public String getGroupId(int position) {
 			if (dataList.get(position).getDate() != null)
 				return dataList.get(position).getDate();
-			return "-1";
+			return "";
 		}
 
-		@Override
+		/*@Override
 		public String getGroupFirstLine(int position) {
 			if (dataList.get(position).getDate() != null)
 				return dataList.get(position).getDate();
 			return "";
-		}
+		}*/
 	}
 }

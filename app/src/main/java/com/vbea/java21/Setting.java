@@ -22,6 +22,7 @@ import com.vbea.java21.ui.SetDrawerImage;
 import com.vbea.java21.ui.Themes;
 import com.vbea.java21.ui.VbeStudio;
 import com.vbes.util.VbeUtil;
+import com.vbes.util.lis.DialogResult;
 import com.vbes.util.view.MyAlertDialog;
 
 public class Setting extends BaseActivity {
@@ -193,15 +194,21 @@ public class Setting extends BaseActivity {
         btnHistory.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 VbeUtil.showConfirmCancelDialog(Setting.this, getString(android.R.string.dialog_alert_title), "您确定要清除阅读记录吗？此操作将清空Java基础、JavaEE和Android初级及进阶教程的阅读记录。",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface d, int s) {
-                                if (saveState(true)) {
-                                    ReadUtil.getInstance().clearAllData(getApplicationContext());
-                                    toastShortMessage("操作成功");
-                                } else
-                                    toastShortMessage("清除失败，请重试");
-                            }
-                        });
+                    new DialogResult() {
+                        @Override
+                        public void onConfirm() {
+                            if (saveState(true)) {
+                                ReadUtil.getInstance().clearAllData(getApplicationContext());
+                                toastShortMessage("操作成功");
+                            } else
+                                toastShortMessage("清除失败，请重试");
+                        }
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+                    });
             }
         });
 
@@ -234,17 +241,23 @@ public class Setting extends BaseActivity {
                     return;
                 }
                 VbeUtil.showConfirmCancelDialog(Setting.this, getString(android.R.string.dialog_alert_title), "您确定要清除缓存？此操作将清空所有网页和图片缓存。",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface d, int s) {
-                                try {
-                                    clean();
-                                    Util.toastShortMessage(getApplicationContext(), "操作成功");
-                                } catch (Exception e) {
-                                    //txtCacheSize.setText("N/A");
-                                    Util.toastShortMessage(getApplicationContext(), "操作失败");
-                                }
+                    new DialogResult() {
+                        @Override
+                        public void onConfirm() {
+                            try {
+                                clean();
+                                Util.toastShortMessage(getApplicationContext(), "操作成功");
+                            } catch (Exception e) {
+                                //txtCacheSize.setText("N/A");
+                                Util.toastShortMessage(getApplicationContext(), "操作失败");
                             }
-                        });
+                        }
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+                    });
             }
         });
 
@@ -255,16 +268,22 @@ public class Setting extends BaseActivity {
                     return;
                 }
                 VbeUtil.showConfirmCancelDialog(Setting.this, getString(android.R.string.dialog_alert_title), "您确定要清除图片缓存？此操作将清空教程评论页面缓存的其他用户头像。",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface d, int s) {
-                                try {
-                                    cleanImage();
-                                    Util.toastShortMessage(getApplicationContext(), "操作成功");
-                                } catch (Exception e) {
-                                    Util.toastShortMessage(getApplicationContext(), "操作失败");
-                                }
+                    new DialogResult() {
+                        @Override
+                        public void onConfirm() {
+                            try {
+                                cleanImage();
+                                Util.toastShortMessage(getApplicationContext(), "操作成功");
+                            } catch (Exception e) {
+                                Util.toastShortMessage(getApplicationContext(), "操作失败");
                             }
-                        });
+                        }
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+                    });
             }
         });
         init();

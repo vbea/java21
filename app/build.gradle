@@ -38,7 +38,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode getMyVersionCode()
-        versionName "8.21.09"
+        versionName "8.21.12"
         signingConfig signingConfigs.debug
         flavorDimensions "versionCode"
         multiDexEnabled true
@@ -64,6 +64,9 @@ android {
             // 混淆文件的位置
             signingConfig signingConfigs.debug
             proguardFile 'proguard-rules.pro'
+            ndk {
+                abiFilters "armeabi-v7a", "arm64-v8a" //, "mips", "x86",  "x86_64" 保留这种架构的CPU
+            }
             zipAlignEnabled true
             debuggable false
         }
@@ -89,7 +92,7 @@ android {
     sourceSets {
         main {
             assets.srcDirs = ['src/main/assets']
-            jniLibs.srcDirs = ['jniLibs']
+            //jniLibs.srcDirs = ['jniLibs']
         }
     }
     compileOptions {
@@ -153,7 +156,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
-    implementation 'com.vbea:utils:2.0.5'
+    implementation 'com.vbea:utils:2.1.0'
     implementation 'com.vbea:bmob:3.6.7'
     //implementation 'cn.bmob.android:bmob-sdk:3.7.8'
     //implementation "io.reactivex.rxjava2:rxjava:2.2.8"
@@ -169,8 +172,8 @@ dependencies {
     implementation 'com.android.support:exifinterface:29.0.0'
     implementation 'com.android.support:palette-v7:29.0.0'
 
-    implementation 'com.qq.mta:mta:3.6.0-release'
-    implementation 'com.tencent.mid:mid:4.1.5-release'
+    //implementation 'com.qq.mta:mta:3.6.0-release'
+    //implementation 'com.tencent.mid:mid:4.1.5-release'z
     //不需要腾讯的依赖引用
     /*implementation 'com.tencent:opensdk:3.1.2'
     implementation 'com.tencent:mta:2.3.0'

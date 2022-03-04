@@ -115,10 +115,10 @@ public class SetDrawerImage extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.item_drawer) {
-            if (Util.hasAllPermissions(SetDrawerImage.this, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            if (Util.hasAllPermissions(SetDrawerImage.this, Manifest.permission.READ_EXTERNAL_STORAGE))
                 GalleryUtil.from(this).choose(MimeType.ofAll()).theme(MyThemes.getTheme()).thumbnailScale(0.85f).forResult(1);
             else
-                Util.requestPermission(SetDrawerImage.this, 1001, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                Util.requestPermission(SetDrawerImage.this, 1001, Manifest.permission.READ_EXTERNAL_STORAGE);
         }
         return true;
     }
@@ -162,6 +162,6 @@ public class SetDrawerImage extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1001 && Util.hasAllPermissionsGranted(grantResults))
-            GalleryUtil.from(this).choose(MimeType.ofAll()).theme(MyThemes.getTheme()).thumbnailScale(0.85f).forResult(1);
+            GalleryUtil.from(this).choose(MimeType.ofAll()).theme(MyThemes.getTheme()).countable(false).thumbnailScale(0.85f).forResult(1);
     }
 }

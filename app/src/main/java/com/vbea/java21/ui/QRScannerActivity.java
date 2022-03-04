@@ -1,8 +1,11 @@
 package com.vbea.java21.ui;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -37,7 +40,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         bind(R.id.qr_gallery).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GalleryUtil.from(QRScannerActivity.this).choose(MimeType.ofImage()).theme(MyThemes.getTheme()).thumbnailScale(0.85f).forResult(120);
+                GalleryUtil.from(QRScannerActivity.this).choose(MimeType.ofImage()).theme(MyThemes.getTheme()).thumbnailScale(0.85f).immediateSelect(true).forResult(120);
             }
         });
     }
@@ -126,7 +129,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     @Override
     protected void onStart() {
         super.onStart();
-        init();
+        mHandler.sendEmptyMessageDelayed(1, 300);
     }
 
     @Override
@@ -142,13 +145,13 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         super.onDestroy();
     }
 
-    /*@SuppressLint("HandlerLeak")
+    @SuppressLint("HandlerLeak")
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    qrLayer.setVisibility(View.GONE);
+                    init();
                     break;
                 case 3:
                     hideLoading();
@@ -157,5 +160,5 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
             }
             super.handleMessage(msg);
         }
-    };*/
+    };
 }

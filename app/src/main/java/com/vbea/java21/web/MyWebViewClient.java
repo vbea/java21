@@ -17,6 +17,7 @@ import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.ui.HtmlViewer;
 import com.vbes.util.VbeUtil;
+import com.vbes.util.lis.DialogResult;
 
 /**
  * Created by Vbe on 2021/3/11.
@@ -40,8 +41,9 @@ public class MyWebViewClient extends WebViewClient {
                     Util.addClipboard(activity, url);
                 Log.i("url", url);
                 String msg = activity.uriScheme.getAppNameByUrl(url);
-                VbeUtil.showConfirmCancelDialog(activity, "提示", msg, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface d, int s) {
+                VbeUtil.showConfirmCancelDialog(activity, "提示", msg, new DialogResult() {
+                    @Override
+                    public void onConfirm() {
                         try {
                             Intent intent = new Intent(Intent.ACTION_VIEW, request.getUrl());
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -50,6 +52,11 @@ public class MyWebViewClient extends WebViewClient {
                             Util.toastShortMessage(activity, "未安装该应用");
                             //ExceptionHandler.log("HtmlDialog", e.toString());a
                         }
+                    }
+
+                    @Override
+                    public void onCancel() {
+
                     }
                 });
             }

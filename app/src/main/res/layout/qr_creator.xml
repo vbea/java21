@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/titleColor"
+    android:clipToPadding="true">
+    <include layout="@layout/java_tool"/>
+    <EditText
+        android:id="@+id/txt_generator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:minLines="1"
+        android:maxLines="5"
+        android:maxLength="500"
+        android:textColor="?attr/textPrimary"
+        android:hint="@string/tips_qr_creator"/>
+    <Button
+        android:id="@+id/btn_generator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:background="@drawable/btn_button"
+        android:textColor="@color/snow"
+        android:text="@string/txt_qr_creator"/>
+    <ImageView
+        android:id="@+id/img_creator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:scaleType="fitStart"/>
+</LinearLayout>

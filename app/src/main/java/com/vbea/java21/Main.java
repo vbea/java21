@@ -29,10 +29,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 
-/*import com.qq.e.ads.banner2.UnifiedBannerADListener;
-import com.qq.e.ads.banner2.UnifiedBannerView;
-import com.qq.e.comm.util.AdError;*/
-import com.tencent.stat.StatService;
 import com.vbea.java21.classes.ReadUtil;
 import com.vbea.java21.fragment.AideFragment;
 import com.vbea.java21.fragment.Android2Fragment;
@@ -55,6 +51,7 @@ import com.vbea.java21.ui.Login;
 import com.vbea.java21.ui.More;
 import com.vbea.java21.ui.MyInbox;
 import com.vbea.java21.ui.MyThemes;
+import com.vbea.java21.ui.QRGenerateActivity;
 import com.vbea.java21.ui.QRScannerActivity;
 import com.vbea.java21.ui.SetDrawerImage;
 import com.vbea.java21.ui.TextReplace;
@@ -68,7 +65,13 @@ import com.vbea.java21.audio.SoundLoad;
 import com.vbea.java21.data.Copys;
 import com.vbea.java21.data.Tips;
 import com.vbes.util.VbeUtil;
+import com.vbes.util.lis.DialogResult;
 import com.vbes.util.view.MyAlertDialog;
+
+/*import com.qq.e.ads.banner2.UnifiedBannerADListener;
+import com.qq.e.ads.banner2.UnifiedBannerView;
+import com.qq.e.comm.util.AdError;
+import com.tencent.stat.StatService;*/
 
 public class Main extends BaseActivity {
     private DrawerLayout mDrawerLayout;
@@ -90,7 +93,7 @@ public class Main extends BaseActivity {
     protected void before() {
         MyThemes.initBackColor(this);
         setContentView(R.layout.main);
-        StatService.registerActivityLifecycleCallbacks(this.getApplication());
+       // StatService.registerActivityLifecycleCallbacks(this.getApplication());
     }
 
     @Override
@@ -194,7 +197,7 @@ public class Main extends BaseActivity {
                 onAutoLogin();
             mHandler.sendEmptyMessageDelayed(6, 500);
         }
-        StatService.trackCustomEvent(this, "onCreate", "");
+        //StatService.trackCustomEvent(this, "onCreate", "");
     }
 	
 	/*private void setHead()
@@ -315,6 +318,11 @@ public class Main extends BaseActivity {
         mHandler.sendEmptyMessageDelayed(1, 500);
     }
 
+    public void goQRGenerate(View v) {
+        Common.startActivityOptions(Main.this, QRGenerateActivity.class);
+        mHandler.sendEmptyMessageDelayed(1, 500);
+    }
+
     public void goQQMessage(View v) {
         if (!Common.isLogin()) {
             Util.toastShortMessage(getApplicationContext(), "请先登录！");
@@ -427,13 +435,14 @@ public class Main extends BaseActivity {
         }
         //else
         //menu.findItem(R.id.item_alipay).setVisible(false);
+        /* 2021/12/06 移除消息中心
         if (Common.getInbox().getCount() > 0) {
             menu.findItem(R.id.item_newmsg).setVisible(true);
             menu.findItem(R.id.item_msg).setVisible(false);
         } else {
             menu.findItem(R.id.item_newmsg).setVisible(false);
             menu.findItem(R.id.item_msg).setVisible(true);
-        }
+        }*/
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -445,6 +454,7 @@ public class Main extends BaseActivity {
         }
         //Common.myInbox.refreshMessage();
         switch (item.getItemId()) {
+            /* 2021/12/06 移除消息中心
             case R.id.item_msg:
             case R.id.item_newmsg:
                 if (Common.isLogin()) {
@@ -453,6 +463,9 @@ public class Main extends BaseActivity {
                     invalidateOptionsMenu();
                 } else
                     Common.startActivityOptions(this, Login.class);
+                break;*/
+            case R.id.item_scanQR:
+                startActivity(new Intent(Main.this, QRScannerActivity.class));
                 break;
             case R.id.item_about:
                 Common.startActivityOptions(Main.this, About.class);
@@ -475,13 +488,19 @@ public class Main extends BaseActivity {
     private void showDynamicMenu(int id) {
         final Copys msg = Common.getCopyMsg(id);
         if (msg != null) {
-            if (msg.getType() == 0)
+            if (msg.getType() == 0) {
                 VbeUtil.showResultDialog(this, msg.getMessage(), msg.getTitle());
-            else if (msg.getType() == 1) {
-                VbeUtil.showConfirmCancelDialog(this, msg.getTitle(), msg.getMessage(), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface d, int p) {
+            } else if (msg.getType() == 1) {
+                VbeUtil.showConfirmCancelDialog(this, msg.getTitle(), msg.getMessage(), new DialogResult() {
+                    @Override
+                    public void onConfirm() {
                         Util.addClipboard(Main.this, msg.getResult());
                         Util.toastShortMessage(getApplicationContext(), "复制成功");
+                    }
+
+                    @Override
+                    public void onCancel() {
+
                     }
                 });
             } else {
@@ -493,11 +512,17 @@ public class Main extends BaseActivity {
                 if (!Util.isNullOrEmpty(msg.getUrl()))
                     intent.setData(Uri.parse(msg.getUrl()));
                 if (!Util.isNullOrEmpty(msg.getMessage())) {
-                    VbeUtil.showConfirmCancelDialog(this, msg.getTitle(), msg.getMessage(), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface d, int p) {
+                    VbeUtil.showConfirmCancelDialog(this, msg.getTitle(), msg.getMessage(), new DialogResult() {
+                        @Override
+                        public void onConfirm() {
                             VbeUtil.startActivityOptions(Main.this, intent);
                             if (!Util.isNullOrEmpty(msg.getResult()))
                                 Util.toastLongMessage(getApplicationContext(), msg.getResult());
+                        }
+
+                        @Override
+                        public void onCancel() {
+
                         }
                     });
                 } else {
@@ -511,7 +536,7 @@ public class Main extends BaseActivity {
 
     @Override
     protected void onPause() {
-        StatService.onPause(this);
+        //StatService.onPause(this);
         super.onPause();
     }
 	
@@ -572,7 +597,7 @@ public class Main extends BaseActivity {
         //showBanner();
         if (!menuReady && Common.isNet(this))
             Common.getTestMsg();
-        StatService.onResume(this);
+        //StatService.onResume(this);
         super.onResume();
     }
 
@@ -808,7 +833,7 @@ public class Main extends BaseActivity {
     protected void onStop() {
 		/*if (Common.isSupportMD())
 			toolbar.setTransitionName(getString(R.string.shared));*/
-        StatService.onStop(this);
+        //StatService.onStop(this);
         super.onStop();
     }
 

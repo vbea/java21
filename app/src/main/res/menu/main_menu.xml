@@ -2,7 +2,7 @@
 <menu
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto">
-	<item
+	<!--item
 		android:id="@+id/item_msg"
 		android:title="消息"
 		android:icon="@drawable/ic_msg"
@@ -11,10 +11,12 @@
 		android:id="@+id/item_newmsg"
 		android:title="消息"
 		android:icon="@drawable/ic_newmsg"
+		app:showAsAction="always"/-->
+	<item
+		android:id="@+id/item_scanQR"
+		android:title="@string/activity_qr_scan"
+		android:icon="@drawable/ic_scan_qr"
 		app:showAsAction="always"/>
-	<!--item
-		android:id="@+id/item_alipay"
-		android:title="@string/getalipay"/-->
 	<item
 		android:id="@+id/item_about"
 		android:title="@string/about"/>

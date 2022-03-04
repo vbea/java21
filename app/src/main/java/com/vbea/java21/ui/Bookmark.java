@@ -15,6 +15,7 @@ import com.vbea.java21.view.MyDividerDecoration;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbes.util.VbeUtil;
+import com.vbes.util.lis.DialogResult;
 
 public class Bookmark extends BaseActivity
 {
@@ -64,9 +65,9 @@ public class Bookmark extends BaseActivity
 								onUpdateBookmark(id);
 								break;*/
 							case 1:
-								VbeUtil.showConfirmCancelDialog(Bookmark.this, "删除书签", "确认操作？", new DialogInterface.OnClickListener() {
+								VbeUtil.showConfirmCancelDialog(Bookmark.this, "删除书签", "确认操作？", new DialogResult() {
 									@Override
-									public void onClick(DialogInterface p1, int p2) {
+									public void onConfirm() {
 										if (onDeleteBookmark(String.valueOf(id))) {
 											Util.toastShortMessage(getApplicationContext(), "删除成功");
 											init();
@@ -74,6 +75,11 @@ public class Bookmark extends BaseActivity
 										} else {
 											Util.toastShortMessage(getApplicationContext(), "删除失败");
 										}
+									}
+
+									@Override
+									public void onCancel() {
+
 									}
 								});
 								break;

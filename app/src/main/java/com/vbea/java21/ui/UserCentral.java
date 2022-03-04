@@ -45,6 +45,7 @@ import com.tencent.connect.UserInfo;
 import com.tencent.connect.common.Constants;
 import com.vbes.util.AstroUtil;
 import com.vbes.util.VbeUtil;
+import com.vbes.util.lis.DialogResult;
 import com.vbes.util.view.MyAlertDialog;
 
 import org.json.JSONObject;
@@ -184,17 +185,23 @@ public class UserCentral extends BaseActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 VbeUtil.showConfirmCancelDialog(UserCentral.this, "注销", "您确定要退出登录？",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int w) {
-                                Common.Logout(UserCentral.this);
-                                Common.startActivityOptions(UserCentral.this, Login.class);
-                                new Handler().postDelayed(new Runnable() {
-                                    public void run() {
-                                        finish();
-                                    }
-                                }, 500);
-                            }
-                        });
+                    new DialogResult() {
+                        @Override
+                        public void onConfirm() {
+                            Common.Logout(UserCentral.this);
+                            Common.startActivityOptions(UserCentral.this, Login.class);
+                            new Handler().postDelayed(new Runnable() {
+                                public void run() {
+                                    finish();
+                                }
+                            }, 500);
+                        }
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+                    });
             }
         });
         setIcon();
@@ -253,26 +260,37 @@ public class UserCentral extends BaseActivity {
                         }
                         break;
                     case 1:
-                        if (qq)
-                            unbindDialog("QQ", new DialogInterface.OnClickListener() {
+                        if (qq) {
+                            unbindDialog("QQ", new DialogResult() {
                                 @Override
-                                public void onClick(DialogInterface p1, int p2) {
+                                public void onConfirm() {
                                     Common.mUser.qq = "";
                                     Common.mUser.qqId = "";
                                     Common.updateUser();
                                     inicBind(Common.mUser);
                                 }
-                            });
-                        else
-                            unbindDialog("微信", new DialogInterface.OnClickListener() {
+
                                 @Override
-                                public void onClick(DialogInterface p1, int p2) {
+                                public void onCancel() {
+
+                                }
+                            });
+                        } else {
+                            unbindDialog("微信", new DialogResult() {
+                                @Override
+                                public void onConfirm() {
                                     Common.mUser.weixin = "";
                                     Common.mUser.wxId = "";
                                     Common.updateUser();
                                     inicBind(Common.mUser);
                                 }
+
+                                @Override
+                                public void onCancel() {
+
+                                }
                             });
+                        }
                         break;
                 }
             }
@@ -291,12 +309,17 @@ public class UserCentral extends BaseActivity {
                         Common.startActivityOptions(UserCentral.this, BindMobile.class);
                         break;
                     case 1: {
-                        unbindDialog("手机", new DialogInterface.OnClickListener() {
+                        unbindDialog("手机", new DialogResult() {
                             @Override
-                            public void onClick(DialogInterface p1, int p2) {
+                            public void onConfirm() {
                                 Common.mUser.mobile = "";
                                 Common.updateUser();
                                 inicBind(Common.mUser);
+                            }
+
+                            @Override
+                            public void onCancel() {
+
                             }
                         });
                         break;
@@ -307,8 +330,8 @@ public class UserCentral extends BaseActivity {
         dialogBuild.show();
     }
 
-    public void unbindDialog(String type, DialogInterface.OnClickListener lis) {
-        VbeUtil.showConfirmCancelDialog(this, "解绑" + type, "您确定要解绑" + type + "？", lis);
+    public void unbindDialog(String type, DialogResult result) {
+        VbeUtil.showConfirmCancelDialog(this, "解绑" + type, "您确定要解绑" + type + "？", result);
     }
 
     public void init() {

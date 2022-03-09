@@ -42,7 +42,7 @@ public class More extends BaseActivity
 
 	@Override
 	protected void after() {
-		enableBackButton();
+		enableBackButton(R.id.toolbar);
 		arraySize = getResources().getStringArray(R.array.array_pianosize);
 		RelativeLayout btnLoop = bind(R.id.btn_setLoop);
 		RelativeLayout btnOrder = bind(R.id.btn_setOrder);

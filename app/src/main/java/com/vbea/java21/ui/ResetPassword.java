@@ -42,7 +42,7 @@ public class ResetPassword extends BaseActivity {
             Util.toastShortMessage(getApplicationContext(), "获取用户信息失败，请重试");
             reset.setEnabled(false);
         }
-        enableBackButton(new View.OnClickListener() {
+        enableBackButton(R.id.toolbar, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 exitDialog();

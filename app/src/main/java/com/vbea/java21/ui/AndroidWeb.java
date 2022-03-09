@@ -72,7 +72,7 @@ public class AndroidWeb extends BaseActivity {
 
     @Override
     protected void after() {
-        enableBackButton();
+        enableBackButton(R.id.toolbar);
         proGro = bind(R.id.artProgress);
         myweb = bind(R.id.artWebView);
         NightView = bind(R.id.art_nightView);

@@ -34,7 +34,7 @@ public class QRGenerateActivity extends BaseActivity {
 
     @Override
     protected void after() {
-        enableBackButton();
+        enableBackButton(R.id.toolbar);
         txtGenerate = bind(R.id.txt_generator);
         imgQRCode = bind(R.id.img_creator);
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);

@@ -43,7 +43,7 @@ public class SetDrawerImage extends BaseActivity {
 
     @Override
     protected void after() {
-        enableBackButton();
+        enableBackButton(R.id.toolbar);
         RecyclerView recyclerView = bind(R.id.drw_recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(),

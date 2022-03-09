@@ -19,7 +19,7 @@ public class Donate extends BaseActivity
 	@Override
 	public void after()
 	{
-		enableBackButton();
+		enableBackButton(R.id.toolbar);
 		ImageView alipay = bind(R.id.img_donate1);
 		ImageView wechat = bind(R.id.img_donate2);
 		

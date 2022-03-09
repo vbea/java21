@@ -70,7 +70,7 @@ public class QQLoginReg extends BaseActivity {
 
     @Override
     public void after() {
-        enableBackButton();
+        enableBackButton(R.id.toolbar);
         btnOK = bind(R.id.btn_qqComplete);
         qqIcon = bind(R.id.img_qqIcon);
         qqNick = bind(R.id.txt_qqNick);

@@ -29,7 +29,7 @@ public class Bookmark extends BaseActivity
 
 	@Override
 	public void after() {
-		enableBackButton();
+		enableBackButton(R.id.toolbar);
 		init();
 		RecyclerView recyclerView = bind(R.id.music_recyclerView);
 		recyclerView.addItemDecoration(new MyDividerDecoration(this));

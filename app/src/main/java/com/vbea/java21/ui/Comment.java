@@ -101,7 +101,7 @@ public class Comment extends BaseActivity {
             edtComment.setEnabled(false);
             edtComment.setHint("您已被禁言，无法评论，请联系管理员解禁");
         }
-        enableBackButton(new View.OnClickListener() {
+        enableBackButton(R.id.toolbar, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (reference != null && reference.length() > 0)

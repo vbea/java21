@@ -35,7 +35,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
     @Override
     protected void after() {
-        enableBackButton();
+        enableBackButton(R.id.toolbar);
         zBarView.setDelegate(this);
         bind(R.id.qr_gallery).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -22,7 +22,7 @@ public class QRResultActivity extends BaseActivity {
 
     @Override
     protected void after() {
-        enableBackButton();
+        enableBackButton(R.id.toolbar);
         result = getIntent().getStringExtra(QR_RESULT);
         TextView textView = bind(R.id.txt_qr_result);
         if (!VbeUtil.isNullOrEmpty(result)) {

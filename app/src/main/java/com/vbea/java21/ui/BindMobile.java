@@ -44,7 +44,7 @@ public class BindMobile extends BaseActivity {
 
     @Override
     protected void after() {
-        enableBackButton();
+        enableBackButton(R.id.toolbar);
         edtPhone = bind(R.id.edt_bdphone);
         edtOldPhone = bind(R.id.edt_oldphone);
         tabOldPhone = bind(R.id.tab_oldPhone);

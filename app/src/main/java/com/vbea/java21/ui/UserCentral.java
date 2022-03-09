@@ -71,7 +71,7 @@ public class UserCentral extends BaseActivity {
 
     @Override
     public void after() {
-        enableBackButton();
+        enableBackButton(R.id.toolbar);
         AppBarLayout appbar = bind(R.id.appbar);
         RelativeLayout userTop = bind(R.id.user_top);
         topLayout = bind(R.id.topLayout);

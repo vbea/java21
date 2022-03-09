@@ -52,7 +52,7 @@ public class Sign extends BaseActivity {
         edtNick = bind(R.id.signNick);
         rdbMale = bind(R.id.rdbMale);
 
-        enableBackButton(new View.OnClickListener() {
+        enableBackButton(R.id.toolbar, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (canGoback)

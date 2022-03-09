@@ -59,7 +59,7 @@ public class ApiWord extends BaseActivity {
 
     @Override
     protected void after() {
-        enableBackButton();
+        enableBackButton(R.id.toolbar);
         proGro = bind(R.id.apiProgress);
         myweb = bind(R.id.WebViewApi);
         NightView = bind(R.id.api_nightView);

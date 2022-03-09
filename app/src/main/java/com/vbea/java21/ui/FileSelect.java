@@ -60,7 +60,7 @@ public class FileSelect extends BaseActivity
 
 	@Override
 	public void after() {
-		enableBackButton();
+		enableBackButton(R.id.toolbar);
 		recyclerView = bind(R.id.file_recyclerView);
 		btnDone = bind(R.id.fbtn_done);
 		txtLocation = bind(R.id.file_location);

@@ -84,6 +84,7 @@ public class HtmlViewer extends BaseActivity {
     @Override
     protected void before() {
         setContentView(R.layout.browser);
+        enableBackButton(R.id.toolbar);
         setToolbarTitle("点此输入网址或搜索");
     }
 

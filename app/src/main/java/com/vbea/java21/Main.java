@@ -130,7 +130,7 @@ public class Main extends BaseActivity {
         tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.white), ContextCompat.getColor(this, R.color.gray2));
         MyThemes.ISCHANGED = true;
         Common.IsChangeICON = true;
-        enableToolBar();
+        enableToolBar(R.id.toolbar);
         drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
         mDrawerLayout.addDrawerListener(drawerToggle);
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {

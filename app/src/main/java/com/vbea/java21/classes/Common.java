@@ -82,7 +82,8 @@ public class Common
 	public static final String FileProvider = "com.vbea.java21.fileprovider";
 	public static final String ExterPath = Environment.getExternalStorageDirectory().getAbsolutePath();
 	private static final String LocalPath = ExterPath + "/ZDApp/";
-	private static final String DataPath = "/data/data/com.vbea.java21/file";
+	private static final String DataPath = "/data/data/com.vbea.java21/file/";
+	private static final String DownloadPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/Java21/";
 	private static List<Tips> mTips = null;
 	public static InboxManager myInbox;
 	private static long lastTipsTime;
@@ -537,7 +538,7 @@ public class Common
 		if (Util.hasAllPermissions(context, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 			return LocalPath;
 		}
-		return DataPath;
+		return DownloadPath;
 	}
 
 	public static String getUpdatePath(Context context) {

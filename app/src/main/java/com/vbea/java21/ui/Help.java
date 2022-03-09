@@ -8,37 +8,31 @@ import com.vbea.java21.BaseActivity;
 import com.vbea.java21.R;
 import com.vbea.java21.classes.Common;
 
-public class Help extends BaseActivity
-{
-	@Override
-	protected void before()
-	{
-		setContentView(R.layout.help);
-	}
+public class Help extends BaseActivity {
+    @Override
+    protected void before() {
+        setContentView(R.layout.help);
+    }
 
-	@Override
-	public void after()
-	{
-		enableBackButton();
-		WebView web = bind(R.id.webHelp);
-		web.loadUrl("file:///android_asset/java/help.html");
-	}
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		getMenuInflater().inflate(R.menu.feed_menu, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
+    @Override
+    public void after() {
+        enableBackButton(R.id.toolbar);
+        WebView web = bind(R.id.webHelp);
+        web.loadUrl("file:///android_asset/java/help.html");
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		if (item.getItemId() == R.id.item_feedback)
-		{
-			Common.startActivityOptions(Help.this, Feedback.class);
-		}
-		return true;
-	}
-	
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.feed_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.item_feedback) {
+            Common.startActivityOptions(Help.this, Feedback.class);
+        }
+        return true;
+    }
+
 }

@@ -40,7 +40,7 @@ public class Setting extends BaseActivity {
 
     @Override
     public void after() {
-        enableBackButton();
+        enableBackButton(R.id.toolbar);
         //btnAdver = bind(R.id.btnSetadv);
         btnSetheme = bind(R.id.btn_setTheme);
         btnSetimg = bind(R.id.btn_setImage);

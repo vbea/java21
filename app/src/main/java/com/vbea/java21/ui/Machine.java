@@ -43,7 +43,7 @@ public class Machine extends BaseActivity {
 
     @Override
     protected void after() {
-        enableBackButton();
+        enableBackButton(R.id.toolbar);
         //START = getIntent().getBooleanExtra("start", false);
         Button btnSubm = bind(R.id.btn_commitRegist);
         //TextView txtCheck = bind(R.id.text_probation);

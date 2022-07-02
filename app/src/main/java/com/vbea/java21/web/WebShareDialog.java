@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,6 +22,8 @@ import com.vbea.java21.R;
 import com.vbea.java21.classes.SocialShare;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.ui.HtmlViewer;
+import com.vbes.util.VbeUtil;
+import com.vbes.util.view.MyAlertDialog;
 
 /**
  * Created by Vbe on 2021/3/11.
@@ -30,6 +33,9 @@ public class WebShareDialog implements IUiListener {
     private String shareTitle;
     private Activity mActivity;
     private BottomSheetDialog mBSDialog;
+    private String[] shareModel = {"网页标题", "你有一份惊喜", "婚礼纪"};
+    private String[] shareTitles = {"", "叮！你有一份惊喜待查收~", "吴德彬和肖璐的婚礼邀请"};
+    private String[] shareMessage = {"", "点击查收~(✪ω✪)~", "我们将在6月14日举行婚礼，诚挚邀请您的到来"};
 
     public WebShareDialog(Activity activity) {
         mActivity = activity;
@@ -80,7 +86,20 @@ public class WebShareDialog implements IUiListener {
 
         share_wx.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                SocialShare.shareToWeixin(shareTitle, shareTitle, shareUrl, BitmapFactory.decodeResource(activity.getResources(), R.mipmap.web_share_icon));
+                if (shareUrl.contains("wedding")) {
+                    new MyAlertDialog(activity).setTitle("设置分享模板").setItems(shareModel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (which == 0) {
+                                SocialShare.shareToWeixin(shareTitle, shareTitle, shareUrl, BitmapFactory.decodeResource(activity.getResources(), R.mipmap.share_wedding));
+                            } else {
+                                SocialShare.shareToWeixin(shareTitles[which], shareMessage[which], shareUrl, BitmapFactory.decodeResource(activity.getResources(), R.mipmap.share_wedding));
+                            }
+                        }
+                    }).show();
+                } else {
+                    SocialShare.shareToWeixin(shareTitle, shareTitle, shareUrl, BitmapFactory.decodeResource(activity.getResources(), R.mipmap.web_share_icon));
+                }
             }
         });
 

@@ -3,6 +3,8 @@ package com.vbea.java21;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,6 +32,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 
 import com.vbea.java21.classes.ReadUtil;
+import com.vbea.java21.data.Users;
 import com.vbea.java21.fragment.AideFragment;
 import com.vbea.java21.fragment.Android2Fragment;
 import com.vbea.java21.fragment.AndroidFragment;
@@ -467,6 +470,12 @@ public class Main extends BaseActivity {
             case R.id.item_scanQR:
                 startActivity(new Intent(Main.this, QRScannerActivity.class));
                 break;
+            case R.id.item_covid_18:
+                startToBrowser("https://feiyan.wecity.qq.com/wuhan/dist/index.html#/?tab=chengshiyiqing&channel=AAFnGdwUIhK0V4QeZ2Rxb91t");
+                break;
+            case R.id.item_covid_19:
+                startToBrowser("https://feiyan.wecity.qq.com/wuhan/dist/index.html#/?tab=shishitongbao&channel=AAFnGdwUIhK0V4QeZ2Rxb91t");
+                break;
             case R.id.item_about:
                 Common.startActivityOptions(Main.this, About.class);
                 break;
@@ -532,6 +541,13 @@ public class Main extends BaseActivity {
                 }
             }
         }
+    }
+
+    private void startToBrowser(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setClass(this, HtmlViewer.class);
+        intent.setData(Uri.parse(url));
+        VbeUtil.startActivityOptions(this, intent);
     }
 
     @Override
@@ -710,6 +726,24 @@ public class Main extends BaseActivity {
     }
 
     public void onAutoLogin() {
+        Users users = new Users();
+        users.name = "vbea";
+        users.nickname = "邠心";
+        users.address = "中国";
+        users.birthday = "2013-05-20";
+        users.dated = 5201314;
+        users.email = "vbea@vbestudio.com";
+        users.gender = true;
+        users.device = "Holo Lines";
+        users.valid = true;
+        users.role = 1;
+        users.icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo_vbes);
+        if (users != null) {
+            Common.USERID = users.name;
+            Common.mUser = users;
+            showUserInfo();
+            return;
+        }
         try {
             if (!Common.isLogin()) {
                 mHandler.sendEmptyMessage(10);

@@ -379,7 +379,7 @@ public class QQLoginReg extends BaseActivity {
             @Override
             public void done(BmobException p1) {
                 if (p1 == null) {
-                    mUser.icon = icon;
+                    //mUser.icon = icon;
                     td3 = false;
                 }
             }

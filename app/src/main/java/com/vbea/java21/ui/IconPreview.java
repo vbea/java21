@@ -5,7 +5,6 @@ import java.io.File;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.Settings;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -57,6 +56,8 @@ public class IconPreview extends AppCompatActivity {
 		
 		setIcon.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				if (true)
+				return;
 				if (VbeUtil.canAccessAllFile(IconPreview.this)) {
 					GalleryUtil.from(IconPreview.this).choose(MimeType.ofImage()).theme(MyThemes.getTheme()).capture(true)
 							.captureStrategy(new CaptureStrategy(true, "com.vbea.java21.fileprovider")).thumbnailScale(0.85f).forResult(1);
@@ -122,7 +123,7 @@ public class IconPreview extends AppCompatActivity {
 			{
 				if (p1 == null) {
 					Util.toastShortMessage(getApplicationContext(), "上传成功");
-					Common.mUser.icon = icon;
+					//Common.mUser.icon = icon;
 					Common.updateUser();
 				} else {
 					ExceptionHandler.log("uploadIcon", p1.toString());

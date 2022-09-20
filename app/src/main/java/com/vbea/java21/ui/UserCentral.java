@@ -362,14 +362,17 @@ public class UserCentral extends BaseActivity {
             sb.append("\n　用户组：");
             sb.append(roles.getText().toString());
             sb.append("\n注册时间：");
-            sb.append(user.getCreatedAt());
+            //sb.append(user.getCreatedAt());
+            sb.append("2013年05月20日");
             sb.append("\n上次登录：");
-            sb.append(Common.OldLoginDate);
+            //sb.append(Common.OldLoginDate);
+            sb.append("刚刚");
             sb.append("\n累计登录：");
             sb.append(user.dated);
             sb.append("天");
             sb.append("\n登录方式：");
-            sb.append(getLoginType());
+            //sb.append(getLoginType());
+            sb.append("离线");
         }
     }
 

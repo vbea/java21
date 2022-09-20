@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.MimeTypeMap;
@@ -44,19 +45,39 @@ public class WebUtil {
     }
 
     public static String getDownloadFileName(String disposition, String url) {
+        if (!VbeUtil.isNullOrEmpty(disposition)) {
+            int index = disposition.indexOf("filename=");
+            if (index >= 0) {
+                String name = disposition.substring(index + 9);
+                name = name.replaceAll("\"", "");
+                return name;
+            }
+        }
         Pattern pattern = Pattern.compile("\"(.*)\"");
         Matcher matcher = pattern.matcher(disposition);
         while (matcher.find()) {
             return Util.trim(matcher.group(), '"');
         }
-        String suffixes = "avi|mpeg|3gp|mp3|mp4|wav|jpeg|gif|jpg|png|apk|exe|pdf|rar|zip|docx|doc";
-        Pattern pat = Pattern.compile("[\\w]+[\\.](" + suffixes + ")");
-        matcher = pat.matcher(url);
+        String uri = url.substring(url.lastIndexOf("/") + 1);
+        //修复浏览器下载文件时文件名匹配失败的BUG
+        //String suffixes = "avi|mpeg|3gp|mp3|mp4|wav|jpeg|gif|jpg|png|apk|exe|pdf|rar|zip|docx|doc";
+        //Pattern pat = Pattern.compile("[^\\/]+[\\.](" + suffixes + ")");
+        Pattern pat = Pattern.compile("[^\\/]+[\\.]+[^\\?\\:\\/\\*\\|]+");
+        matcher = pat.matcher(uri);
         while (matcher.find()) {
             return matcher.group();
         }
         return disposition;
     }
+
+    public static String validDownloadFileName(String filename) {
+        int idx = filename.indexOf("?");
+        if (idx > 0) {
+            return filename.substring(0, idx);
+        }
+        return filename;
+    }
+
 
     public static void saveBitmap(HtmlViewer activity, String imageUri, String folder) {
         Request request = new Request.Builder()
@@ -107,7 +128,10 @@ public class WebUtil {
 
         @Override
         public void onDownloadStart(String url, String userAgent, String disposition, String mimeType, long contentLength) {
-            String filename = UrlUtil.decode(getDownloadFileName(disposition, url).trim(), "UTF-8");
+            Log.i("disposition", disposition);
+            Log.i("disposition-url", url);
+            String name = UrlUtil.decode(getDownloadFileName(disposition, url).trim(), "UTF-8");
+            String filename = validDownloadFileName(name);
             VbeUtil.showConfirmCancelDialog(activity, "下载文件", "文件名：" + filename + "\n大小：" + Util.getFormatSize(contentLength) + "\n确定要下载该文件？", new DialogResult() {
                 @Override
                 public void onConfirm() {

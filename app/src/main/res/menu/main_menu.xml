@@ -18,6 +18,12 @@
 		android:icon="@drawable/ic_scan_qr"
 		app:showAsAction="always"/>
 	<item
+		android:id="@+id/item_covid_19"
+		android:title="国内疫情消息"/>
+	<item
+		android:id="@+id/item_covid_18"
+		android:title="海外疫情消息"/>
+	<item
 		android:id="@+id/item_about"
 		android:title="@string/about"/>
 </menu>

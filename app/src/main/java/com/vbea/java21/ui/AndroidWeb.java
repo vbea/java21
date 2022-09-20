@@ -67,12 +67,13 @@ public class AndroidWeb extends BaseActivity {
         sub = getIntent().getExtras().getString("sub", "");
         id = getIntent().getExtras().getString("id", "");
         type = getIntent().getIntExtra("type", -1);
-        setToolbarTitle(title);
     }
 
     @Override
     protected void after() {
         enableBackButton(R.id.toolbar);
+        getSupportActionBar().setTitle(title);
+        Log.i("vbe-set-title", title);
         proGro = bind(R.id.artProgress);
         myweb = bind(R.id.artWebView);
         NightView = bind(R.id.art_nightView);

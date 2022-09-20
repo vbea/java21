@@ -257,6 +257,7 @@
 	</string-array>
 	<string-array name="array_bookaction">
 		<item>浏览</item>
+		<item>修改</item>
 		<item>删除</item>
 	</string-array>
 	<string-array name="array_hisaction">

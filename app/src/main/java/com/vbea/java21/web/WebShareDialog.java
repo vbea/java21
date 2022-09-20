@@ -31,6 +31,7 @@ import com.vbes.util.view.MyAlertDialog;
 public class WebShareDialog implements IUiListener {
     private String shareUrl;
     private String shareTitle;
+    private Bitmap shareImage;
     private Activity mActivity;
     private BottomSheetDialog mBSDialog;
     private String[] shareModel = {"网页标题", "你有一份惊喜", "婚礼纪"};
@@ -98,20 +99,20 @@ public class WebShareDialog implements IUiListener {
                         }
                     }).show();
                 } else {
-                    SocialShare.shareToWeixin(shareTitle, shareTitle, shareUrl, BitmapFactory.decodeResource(activity.getResources(), R.mipmap.web_share_icon));
+                    SocialShare.shareToWeixin(shareTitle, shareTitle, shareUrl, getShareImage());
                 }
             }
         });
 
         share_wxpy.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                SocialShare.shareToWeixinZone(shareTitle, shareTitle, shareUrl, BitmapFactory.decodeResource(activity.getResources(), R.mipmap.web_share_icon));
+                SocialShare.shareToWeixinZone(shareTitle, shareTitle, shareUrl, getShareImage());
             }
         });
 
         share_sina.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                SocialShare.shareToWeixinFavorite(shareTitle, shareTitle, shareUrl, BitmapFactory.decodeResource(activity.getResources(), R.mipmap.web_share_icon));
+                SocialShare.shareToWeixinFavorite(shareTitle, shareTitle, shareUrl, getShareImage());
             }
         });
     }
@@ -119,7 +120,23 @@ public class WebShareDialog implements IUiListener {
     public void showShare(String title, String url) {
         shareTitle = title;
         shareUrl = url;
+        shareImage = null;
         mBSDialog.show();
+    }
+
+    public void showShare(String title, String url, Bitmap bitmap) {
+        shareTitle = title;
+        shareUrl = url;
+        shareImage = bitmap;
+        mBSDialog.show();
+    }
+
+    private Bitmap getShareImage() {
+        if (shareImage != null) {
+            return shareImage;
+        } else {
+            return BitmapFactory.decodeResource(mActivity.getResources(), R.mipmap.web_share_icon);
+        }
     }
 
     public void result(Intent data) {

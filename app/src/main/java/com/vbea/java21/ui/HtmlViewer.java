@@ -14,6 +14,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.WindowManager;
+import android.webkit.WebIconDatabase;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.WebChromeClient;
@@ -36,7 +37,9 @@ import com.vbea.java21.BaseActivity;
 import com.vbea.java21.R;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
+import com.vbea.java21.data.BookMark;
 import com.vbea.java21.data.WebHelper;
+import com.vbea.java21.view.BookmarkDialog;
 import com.vbea.java21.web.MyWebChromeClient;
 import com.vbea.java21.web.MyWebViewClient;
 import com.vbea.java21.web.UriScheme;
@@ -275,6 +278,7 @@ public class HtmlViewer extends BaseActivity {
         menu.findItem(R.id.item_back).setVisible(webView.canGoBack() && !IS_SOURCE);
         menu.findItem(R.id.item_forward).setVisible(webView.canGoForward() && !IS_SOURCE);
         menu.findItem(R.id.item_androidshare).setVisible(!currentUrl.equals(""));
+        menu.findItem(R.id.item_book_store).setVisible(!currentUrl.equals(""));
         menu.findItem(R.id.item_code).setVisible(!currentUrl.equals("") && SOURCE_STATUS != 2);
         menu.findItem(R.id.item_home).setVisible(webConfig.isValidHome());
         menu.findItem(R.id.item_code).setTitle(IS_SOURCE ? "返回" : "查看源");
@@ -292,14 +296,17 @@ public class HtmlViewer extends BaseActivity {
         else if (item.getItemId() == R.id.item_flush) {
             if (Common.isNet(this) && !IS_SOURCE)
                 webView.reload();
-        } else if (item.getItemId() == R.id.item_addbook)
-            showBookmark();
-        else if (item.getItemId() == R.id.item_history)
+        } else if (item.getItemId() == R.id.item_book_store) {
+            //showBookmark();
+            addBookmark();
+        } else if (item.getItemId() == R.id.item_addbook) {
+            Common.startActivityForResult(HtmlViewer.this, Bookmark.class, BOOKMARK_HISTORY_RESULT_CODE);
+        } else if (item.getItemId() == R.id.item_history)
             Common.startActivityForResult(HtmlViewer.this, History.class, BOOKMARK_HISTORY_RESULT_CODE);
         else if (item.getItemId() == R.id.item_download)
             Common.startActivityOptions(HtmlViewer.this, DownloadFile.class);
         else if (item.getItemId() == R.id.item_androidshare) {
-            shareDialog.showShare(webView.getTitle(), currentUrl);
+            shareDialog.showShare(webView.getTitle(), currentUrl, webView.getFavicon());
         } else if (item.getItemId() == R.id.item_code) {
             if (Util.isNullOrEmpty(currentUrl))
                 return true;
@@ -361,10 +368,18 @@ public class HtmlViewer extends BaseActivity {
 
     private void addBookmark() {
         if (webHelper != null) {
-            if (webHelper.addBookmark(webView.getTitle(), webView.getUrl()) > 0)
-                toastShortMessage("添加书签成功");
-            else
-                toastShortMessage("添加失败");
+            BookMark bookMark = new BookMark();
+            bookMark.setTitle(webView.getTitle());
+            bookMark.setUrl(webView.getUrl());
+            BookmarkDialog.showAddDialog(this, bookMark, new BookmarkDialog.CallBack() {
+                @Override
+                public void onCallback(String id, BookMark target) {
+                    if (webHelper.addBookmark(target.getTitle(), target.getUrl()) > 0)
+                        toastShortMessage("添加书签成功");
+                    else
+                        toastShortMessage("添加失败");
+                }
+            });
         }
     }
 

@@ -199,7 +199,8 @@
         <activity
             android:name=".ui.Bookmark"
             android:label="@string/bookmark"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name=".ui.BrowserSet"
             android:label="@string/browserset"

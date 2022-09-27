@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.tencent.connect.common.Constants;
 import com.tencent.connect.share.QQShare;
@@ -90,13 +91,17 @@ public class SocialShare {
         WXMediaMessage msg = new WXMediaMessage(webpage);
         msg.title = title;
         msg.description = desc;
-        if (bt != null)
-            msg.thumbData = Util.bmpToByteArray(bt, true);
-        SendMessageToWX.Req req = new SendMessageToWX.Req();
-        req.transaction = buildTransaction("webpage");
-        req.message = msg;
-        req.scene = scene;
-        mWeiXin.sendReq(req);
+        try {
+            if (bt != null)
+                msg.thumbData = Util.bmpToByteArray(bt, true);
+            SendMessageToWX.Req req = new SendMessageToWX.Req();
+            req.transaction = buildTransaction("webpage");
+            req.message = msg;
+            req.scene = scene;
+            mWeiXin.sendReq(req);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 	
 	/*public static void shareToSina(Activity act, String text)

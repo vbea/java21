@@ -61,9 +61,7 @@ public class LearnListAdapter<T extends ILearnList> extends BaseListAdapter<T> {
             holder.setGone(R.id.item_title, false);
             holder.setClickable(R.id.item_layout,false);
             holder.setBackgroundResource(R.id.item_layout, R.color.android_disable);
-        }
-        else
-        {
+        } else {
             if (Util.isNullOrEmpty(item.getPrefix()))
                 holder.setText(R.id.item_title, item.getTitle());
             else

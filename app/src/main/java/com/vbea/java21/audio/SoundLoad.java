@@ -20,8 +20,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
-public class SoundLoad
-{
+public class SoundLoad {
 	private SoundPool mSoundPool1;//,mSoundPool2;//,mSoundPool3;
 	private AssetManager am;
 	private List<Music> musicTop;

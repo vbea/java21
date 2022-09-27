@@ -87,7 +87,7 @@ public class HtmlViewer extends BaseActivity {
     @Override
     protected void before() {
         setContentView(R.layout.browser);
-        enableBackButton(R.id.toolbar);
+        enableToolBar(R.id.toolbar);
         setToolbarTitle("点此输入网址或搜索");
     }
 
@@ -243,10 +243,15 @@ public class HtmlViewer extends BaseActivity {
         searchItem.setActionView(searchView);
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View p1, boolean p2) {
+            public void onFocusChange(View p1, boolean focus) {
                 //webView.setCanNestedScroll(!p2);
-                if (!p2)
+                if (focus) {
+                    Log.i("vbe-focus", ""+focus);
+                    //toolbar.setNavigationIcon(R.drawable.not_close);
+                } else {
                     searchItem.collapseActionView();
+                    //toolbar.setNavigationIcon(R.drawable.ic_back);
+                }
             }
         });
         searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon)

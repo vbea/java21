@@ -5,15 +5,12 @@ import com.vbea.java21.classes.Util;
 
 import cn.bmob.v3.BmobObject;
 
-public class AndroidHtml extends BmobObject implements ILearnList
-{
+public class AndroidHtml implements ILearnList {
 	public String title;
 	public String prefix;
 	public String remark;
 	public String url;
-	public Integer order;
 	public Boolean isTitle;
-	public Boolean enable;
 
 	@Override
 	public String getTitle() {
@@ -38,17 +35,12 @@ public class AndroidHtml extends BmobObject implements ILearnList
 	}
 
 	@Override
-	public Integer getOrder() {
-		return order;
-	}
-
-	@Override
 	public Boolean isTitle() {
 		return isTitle;
 	}
 
 	@Override
 	public boolean isRead() {
-		return ReadUtil.getInstance().isReadAndroid(getObjectId());
+		return ReadUtil.getInstance().isReadAndroid(title);
 	}
 }

@@ -118,14 +118,16 @@ public class WebShareDialog implements IUiListener {
     }
 
     public void showShare(String title, String url) {
-        shareTitle = title;
-        shareUrl = url;
-        shareImage = null;
-        mBSDialog.show();
+       showShare(title, url, null);
     }
 
     public void showShare(String title, String url, Bitmap bitmap) {
-        shareTitle = title;
+        int index = title.indexOf("四川手机报");
+        if (index > 0) {
+            shareTitle = title.substring(0, index - 1);
+        } else {
+            shareTitle = title;
+        }
         shareUrl = url;
         shareImage = bitmap;
         mBSDialog.show();

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.Button;
@@ -29,12 +30,6 @@ import com.vbea.java21.data.Comments;
 import com.vbea.java21.adapter.CommentAdapter;
 import com.vbes.util.VbeUtil;
 import com.vbes.util.lis.DialogResult;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.UpdateListener;
-import cn.bmob.v3.exception.BmobException;
 
 public class Comment extends BaseActivity {
     /**
@@ -217,7 +212,7 @@ public class Comment extends BaseActivity {
 
     private void getData(boolean cache) throws Exception {
         emptyView.setText("请稍候...");
-        BmobQuery<Comments> sql = new BmobQuery<Comments>();
+        /*BmobQuery<Comments> sql = new BmobQuery<Comments>();
         sql.addWhereEqualTo("id", resId);
         sql.addWhereEqualTo("type", type);
         sql.order("-createdAt");
@@ -232,7 +227,7 @@ public class Comment extends BaseActivity {
                 } else
                     mHandler.sendEmptyMessage(6);
             }
-        });
+        });*/
     }
 
     private String addOrRemoveUserAction(String old, boolean add) {
@@ -278,13 +273,13 @@ public class Comment extends BaseActivity {
         coms.device = Util.getDeviceModel();
         coms.reference = reference;
         coms.date = dateformat.format(new Date());
-        coms.save(new SaveListener<String>() {
+        /*coms.save(new SaveListener<String>() {
             @Override
             public void done(String p1, BmobException e) {
                 //if (e == null)
                 //mHandler.sendEmptyMessage(2);
             }
-        });
+        });*/
         if (!Util.isNullOrEmpty(reply)) {
             Common.myInbox.addMessage(resId, reply, Common.mUser.nickname + "回复了你的评论：" + text, title, url, type);
         }
@@ -293,7 +288,7 @@ public class Comment extends BaseActivity {
     }
 
     private void updateComment(Comments com) {
-        if (com.getObjectId() != null) {
+        /*if (com.getObjectId() != null) {
             com.update(com.getObjectId(), new UpdateListener() {
                 @Override
                 public void done(BmobException p1) {
@@ -302,11 +297,11 @@ public class Comment extends BaseActivity {
                     mHandler.sendEmptyMessage(5);
                 }
             });
-        }
+        }*/
     }
 
     private void deleteComment(Comments com, final int p) {
-        if (com.getObjectId() != null) {
+        /*if (com.getObjectId() != null) {
             com.delete(com.getObjectId(), new UpdateListener() {
                 @Override
                 public void done(BmobException p1) {
@@ -317,7 +312,7 @@ public class Comment extends BaseActivity {
                         mHandler.sendEmptyMessage(4);
                 }
             });
-        }
+        }*/
     }
 
     private void clear() {
@@ -333,6 +328,7 @@ public class Comment extends BaseActivity {
         super.onResume();
     }
 
+    @SuppressLint("HandlerLeak")
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

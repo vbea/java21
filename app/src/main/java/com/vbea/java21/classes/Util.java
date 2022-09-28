@@ -40,7 +40,7 @@ import android.provider.MediaStore;
 import android.widget.Toast;
 import android.webkit.MimeTypeMap;
 import android.telephony.TelephonyManager;
-import org.apache.commons.io.FileUtils;
+//import org.apache.commons.io.FileUtils;
 
 import com.vbea.java21.BuildConfig;
 import com.vbea.java21.R;
@@ -459,7 +459,7 @@ public class Util
 			File file = new File(path, name);
 			if (!file.exists())
 				file.createNewFile();
-			FileUtils.copyToFile(inStream, file);
+			//FileUtils.copyToFile(inStream, file);
 			inStream.close();
 		} catch (Exception e) {
 			ExceptionHandler.log("Util.downloadFile", e.toString());    
@@ -748,21 +748,16 @@ public class Util
 		cbm.setText(msg);
 	}
 	
-	public static String ReadFileToString(InputStream is)
-	{
-		try
-		{
+	public static String ReadFileToString(InputStream is) {
+		try {
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			int i = -1;
-			while((i=is.read())!=-1)
-			{
+			while((i=is.read())!=-1) {
 				baos.write(i);
 			}
 			baos.close();
 			return baos.toString();
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			return null;
 		}
 	}

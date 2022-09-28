@@ -44,7 +44,7 @@ public class CommentAdapter extends BaseListAdapter<Comments> { //RecyclerView.A
 		TextView txt_endorse = holder.getView(R.id.txt_endorse);
 		TextView txt_oppose = holder.getView(R.id.txt_oppose);
 		holder.setText(R.id.comm_name, item.name);
-		holder.setText(R.id.comm_date, timeAgo.getTimeAgo(item.getCreatedAt(), item.date));
+		//holder.setText(R.id.comm_date, timeAgo.getTimeAgo(item.getCreatedAt(), item.date));
 		holder.setText(R.id.comm_text, item.comment);
 		holder.setText(R.id.comm_device, Util.isNullOrEmpty(item.device) ? "" : item.device);
 		boolean isMy = Common.isMyUser(item.user);

@@ -16,9 +16,7 @@ import java.util.List;
  */
 public class LearnListAdapter<T extends ILearnList> extends BaseListAdapter<T> {
     private OnItemClickListener onItemClickListener;
-    private boolean isEnd;
-    private int removedItem = 0;
-    private String server = "";
+    //private boolean isEnd;
 
     public LearnListAdapter() {
         super(R.layout.item_learn);
@@ -29,12 +27,13 @@ public class LearnListAdapter<T extends ILearnList> extends BaseListAdapter<T> {
         if (list != null && list.size() > 0) {
             mList.clear();
             mList.addAll(list);
-            isEnd = false;
-            if (Util.isServerDataId(mList.get(0).getOrder())) {
+            //isEnd = true;
+            notifyDataSetChanged();
+            /*if (Util.isServerDataId(mList.get(0).getOrder())) {
                 server = mList.get(0).getUrl();
                 mList.remove(0);
                 removedItem = 1;
-            }
+            }*/
         }
     }
 
@@ -46,7 +45,7 @@ public class LearnListAdapter<T extends ILearnList> extends BaseListAdapter<T> {
 
     public int size() {
         if (mList != null)
-            return mList.size() + removedItem;
+            return mList.size();
         return 0;
     }
 
@@ -74,12 +73,12 @@ public class LearnListAdapter<T extends ILearnList> extends BaseListAdapter<T> {
             holder.getView(R.id.item_layout).setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     if(onItemClickListener != null) {
-                        onItemClickListener.onItemClick(item.getObjectId(), item.getTitle(), item.getSubTitle(), server + item.getUrl());
+                        onItemClickListener.onItemClick(item.getTitle(), item.getSubTitle(), item.getUrl(), p);
                     }
                 }
             });
         }
-        holder.setGone(R.id.item_endView, isEnd && p == mList.size() - 1);
+        //holder.setGone(R.id.item_endView, isEnd && p == mList.size() - 1);
         holder.setGone(R.id.item_readImg, item.isRead());
     }
 
@@ -87,11 +86,11 @@ public class LearnListAdapter<T extends ILearnList> extends BaseListAdapter<T> {
         this.onItemClickListener = itemClickListener;
     }
 
-    public void setEnd(int count) {
-        isEnd = (mList.size() + removedItem) == count;
-    }
+    /*public void setEnd(int count) {
+        isEnd = mList.size() == count;
+    }*/
 
     public interface OnItemClickListener {
-        void onItemClick(String id, String title, String sub, String url);
+        void onItemClick(String title, String sub, String url, int position);
     }
 }

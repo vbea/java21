@@ -40,14 +40,10 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.CountListener;
-import cn.bmob.v3.exception.BmobException;
-
 public class AndroidWeb extends BaseActivity {
     private WebView myweb;
     private ProgressBar proGro;
-    private String id, title, sub, url;
+    private String title, sub, url;
     private BottomSheetDialog mBSDialog;
     private TextView NightView, CommentView;
     private LinearLayout share_qq, share_qzone, share_wx, share_wxpy;
@@ -65,7 +61,7 @@ public class AndroidWeb extends BaseActivity {
         url = getIntent().getExtras().getString("url", "");
         title = getIntent().getExtras().getString("title", "");
         sub = getIntent().getExtras().getString("sub", "");
-        id = getIntent().getExtras().getString("id", "");
+        //id = getIntent().getExtras().getString("id", "");
         type = getIntent().getIntExtra("type", -1);
     }
 
@@ -274,7 +270,7 @@ public class AndroidWeb extends BaseActivity {
     private void goComment() {
         Intent intent = new Intent(this, Comment.class);
         intent.putExtra("title", title);
-        intent.putExtra("id", id);
+        //intent.putExtra("id", id);
         intent.putExtra("type", type);
         intent.putExtra("url", url);
         Common.startActivityOptions(this, intent);
@@ -382,7 +378,7 @@ public class AndroidWeb extends BaseActivity {
     }
 
     private void getCommentCount() {
-        BmobQuery<Comments> sql = new BmobQuery<Comments>();
+        /*BmobQuery<Comments> sql = new BmobQuery<Comments>();
         sql.addWhereEqualTo("id", id);
         sql.addWhereEqualTo("type", type);
         sql.count(Comments.class, new CountListener() {
@@ -391,7 +387,7 @@ public class AndroidWeb extends BaseActivity {
                 if (p2 == null)
                     CommentView.setText(String.format(template, p1));
             }
-        });
+        });*/
     }
 	
 	/*private void applyTips()

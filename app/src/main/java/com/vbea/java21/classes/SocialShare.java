@@ -37,20 +37,24 @@ public class SocialShare {
     public static int WX_TYPE = 0;//0:share 1:login
 
     public static void onStart(Context context) {
-        if (mTencent == null)
-            mTencent = Tencent.createInstance(QQ_AppKey, context);
-        if (mWeiXin == null) {
-            mWeiXin = WXAPIFactory.createWXAPI(context, WeiXin_AppKey, true);
-            mWeiXin.registerApp(WeiXin_AppKey);
+        try {
+            if (mTencent == null)
+                mTencent = Tencent.createInstance(QQ_AppKey, context);
+            if (mWeiXin == null) {
+                mWeiXin = WXAPIFactory.createWXAPI(context, WeiXin_AppKey, true);
+                mWeiXin.registerApp(WeiXin_AppKey);
+            }
+            if (wxLogin == null) {
+                wxLogin = WXAPIFactory.createWXAPI(context, WX_APPID, true);
+                wxLogin.registerApp(WX_APPID);
+            }
+            /*if (mSina == null)
+                mSina = new AuthInfo(context, Sina_AppKey, "https://api.weibo.com/oauth2/default.html", SCOPE);
+            if (mSinaShare == null)
+                mSinaShare = WeiboShareSDK.createWeiboAPI(context, Sina_AppKey);*/
+        } catch (Error e) {
+            e.printStackTrace();
         }
-        if (wxLogin == null) {
-            wxLogin = WXAPIFactory.createWXAPI(context, WX_APPID, true);
-            wxLogin.registerApp(WX_APPID);
-        }
-		/*if (mSina == null)
-			mSina = new AuthInfo(context, Sina_AppKey, "https://api.weibo.com/oauth2/default.html", SCOPE);
-		if (mSinaShare == null)
-			mSinaShare = WeiboShareSDK.createWeiboAPI(context, Sina_AppKey);*/
     }
 
     public static boolean isWXInstall() {

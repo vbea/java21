@@ -1,9 +1,6 @@
 package com.vbea.java21.update;
 
-import com.vbea.java21.classes.MD5Util;
 import com.vbea.java21.classes.Util;
-
-import cn.bmob.v3.datatype.BmobFile;
 
 /**
  * Created by Vbe on 2018/12/7.

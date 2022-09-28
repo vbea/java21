@@ -16,10 +16,6 @@ import android.widget.Button;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.CountListener;
-import cn.bmob.v3.exception.BmobException;
-
 import com.vbea.java21.BaseActivity;
 import com.vbea.java21.R;
 import com.vbea.java21.data.Users;
@@ -154,7 +150,7 @@ public class BindMobile extends BaseActivity {
 	}*/
 
     private void nameExist(String name) {
-        BmobQuery<Users> sql1 = new BmobQuery<Users>();
+        /*BmobQuery<Users> sql1 = new BmobQuery<Users>();
         sql1.addWhereEqualTo("name", name);
         BmobQuery<Users> sql2 = new BmobQuery<Users>();
         sql2.addWhereEqualTo("mobile", name);
@@ -173,7 +169,7 @@ public class BindMobile extends BaseActivity {
                     isNameExist = true;
                 td = false;
             }
-        });
+        });*/
     }
 
     class CheckThread extends Thread {

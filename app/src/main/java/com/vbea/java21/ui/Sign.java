@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.Button;
@@ -23,12 +24,6 @@ import com.vbea.java21.classes.MD5Util;
 import com.vbea.java21.classes.SettingUtil;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.data.Users;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.datatype.BmobDate;
-import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.CountListener;
-import cn.bmob.v3.exception.BmobException;
 
 public class Sign extends BaseActivity {
     private RadioButton rdbMale;
@@ -138,7 +133,7 @@ public class Sign extends BaseActivity {
     }
 
     private void nameExist(String name) {
-        BmobQuery<Users> sql1 = new BmobQuery<Users>();
+        /*BmobQuery<Users> sql1 = new BmobQuery<Users>();
         sql1.addWhereEqualTo("name", name);
         BmobQuery<Users> sql2 = new BmobQuery<Users>();
         sql2.addWhereEqualTo("mobile", name);
@@ -157,11 +152,11 @@ public class Sign extends BaseActivity {
                     isNameExist = true;
                 td1 = false;
             }
-        });
+        });*/
     }
 
     private void mailExist(String mail) {
-        BmobQuery<Users> sql = new BmobQuery<Users>();
+        /*BmobQuery<Users> sql = new BmobQuery<Users>();
         sql.addWhereEqualTo("email", mail);
         sql.addWhereEqualTo("valid", true);
         sql.count(Users.class, new CountListener() {
@@ -173,7 +168,7 @@ public class Sign extends BaseActivity {
                     isEmailExist = true;
                 td2 = false;
             }
-        });
+        });*/
     }
 
     private boolean isUsername(String user) {
@@ -244,12 +239,12 @@ public class Sign extends BaseActivity {
                     user.valid = true;
                     //add on 20180405 -start
                     user.dated = 0;
-                    user.lastLogin = new BmobDate(new Date());
+                    //user.lastLogin = new BmobDate(new Date());
                     user.settings = Common.getSettingJson(new SettingUtil());
                     //-end
                     if (Common.IS_ACTIVE)
                         user.key = Common.KEY;
-                    user.save(new SaveListener<String>() {
+                    /*user.save(new SaveListener<String>() {
                         @Override
                         public void done(String s, BmobException e) {
                             if (e == null)
@@ -257,7 +252,7 @@ public class Sign extends BaseActivity {
                             else
                                 mHandler.sendEmptyMessage(2);
                         }
-                    });
+                    });*/
                 }
             } catch (Exception e) {
                 mHandler.sendEmptyMessage(2);
@@ -268,6 +263,7 @@ public class Sign extends BaseActivity {
         }
     }
 
+    @SuppressLint("HandlerLeak")
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

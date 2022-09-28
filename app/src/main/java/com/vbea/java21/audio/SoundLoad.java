@@ -138,8 +138,7 @@ public class SoundLoad {
 			String json = Util.ReadFileToString(am.open("music/music.json"));
 			if (json != null) {
 				Gson gson = new Gson();
-				JsonParser jsp = new JsonParser();
-				JsonArray jArray = jsp.parse(json).getAsJsonArray();
+				JsonArray jArray = JsonParser.parseString(json).getAsJsonArray();
 				for (JsonElement obj : jArray) {
 					Music music = gson.fromJson(obj, Music.class);
 					music.isTop = true;

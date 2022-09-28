@@ -27,10 +27,6 @@ import com.vbea.java21.classes.Util;
 import com.vbes.util.VbeUtil;
 import com.vbes.util.view.MyAlertDialog;
 
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
-
 /**
  * Created by Vbe on 2018/12/6.
  */
@@ -63,7 +59,7 @@ public class MyUpdateAgent {
     }
 
     private void queryData() {
-        BmobQuery<AppVersion> query = new BmobQuery<>();
+        /*BmobQuery<AppVersion> query = new BmobQuery<>();
         query.addWhereEqualTo("platform", "Android");
         query.addWhereEqualTo("channel", "app");
         query.addWhereGreaterThan("version_i", getVersionCode());
@@ -82,7 +78,7 @@ public class MyUpdateAgent {
                     ExceptionHandler.log("updateFailed", e);
                 }
             }
-        });
+        });*/
     }
 
     private void showUpdateDialog() {
@@ -154,7 +150,7 @@ public class MyUpdateAgent {
 
     private void installApk(File file) {
         response.appVersion.addInstall();
-        response.appVersion.update(null);
+        //response.appVersion.update(null);
         Intent intent = new Intent();
         intent.setAction(android.content.Intent.ACTION_VIEW);
         String mime = Util.getMimeType(filename);

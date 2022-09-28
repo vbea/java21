@@ -1,13 +1,8 @@
 package com.vbea.java21.data;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 
-import cn.bmob.v3.datatype.BmobDate;
-import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.BmobObject;
-
-public class Users extends BmobObject
+public class Users //extends BmobObject
 {
 	//public String objectId;
 	public String name;
@@ -29,7 +24,7 @@ public class Users extends BmobObject
 	public Integer role;
 	public Boolean valid;
 	public String settings;
-	public BmobDate lastLogin;
+	//public BmobDate lastLogin;
 	public String device;
 	public String serialNo;
 }

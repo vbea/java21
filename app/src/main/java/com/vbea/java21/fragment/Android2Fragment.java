@@ -7,36 +7,27 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.content.Intent;
-import android.widget.TextView;
-import android.widget.ProgressBar;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.vbea.java21.R;
+import com.vbea.java21.classes.CourseUtil;
 import com.vbea.java21.ui.AndroidWeb;
-import com.vbea.java21.ui.MyThemes;
 import com.vbea.java21.classes.ReadUtil;
 import com.vbea.java21.data.AndroidAdvance;
 import com.vbea.java21.adapter.LearnListAdapter;
 import com.vbea.java21.view.MyDividerDecoration;
 import com.vbea.java21.classes.Common;
-import com.vbea.java21.classes.ExceptionHandler;
 import com.vbes.util.fragment.BaseFragment;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.CountListener;
-import cn.bmob.v3.exception.BmobException;
 
 public class Android2Fragment extends BaseFragment {
     //邠心工作室 2017.07.14
-    private SwipeRefreshLayout refreshLayout;
+    //private SwipeRefreshLayout refreshLayout;
     private RecyclerView recyclerView;
-    private TextView errorText;
-    private ProgressBar proRefresh;
+    //private TextView errorText;
+    //private ProgressBar proRefresh;
     private LearnListAdapter<AndroidAdvance> mAdapter;
-    private int mCount = -1;
+    //private int mCount = -1;
     private final int type = 2;
 
     public Android2Fragment() {
@@ -46,15 +37,15 @@ public class Android2Fragment extends BaseFragment {
     @Override
     public void onInitView(View view) {
         mAdapter = new LearnListAdapter<>();
-        errorText = getView(R.id.txt_andError);
-        proRefresh = getView(R.id.refreshProgress);
+        //errorText = getView(R.id.txt_andError);
+        //proRefresh = getView(R.id.refreshProgress);
         recyclerView = getView(R.id.cpt_recyclerView);
-        refreshLayout = getView(R.id.swp_refresh);
+        //refreshLayout = getView(R.id.swp_refresh);
         recyclerView.addItemDecoration(new MyDividerDecoration(getContext()));
         recyclerView.setAdapter(mAdapter);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        refreshLayout.setColorSchemeResources(MyThemes.getColorPrimary(), MyThemes.getColorAccent());
+        //refreshLayout.setColorSchemeResources(MyThemes.getColorPrimary(), MyThemes.getColorAccent());
         //mList = new ArrayList<AndroidHtml>();
         //if (Common.isLogin())
         getCount();
@@ -65,28 +56,28 @@ public class Android2Fragment extends BaseFragment {
 		}*/
         mAdapter.setOnItemClickListener(new LearnListAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(String id, String title, String sub, String url) {
+            public void onItemClick(String title, String sub, String url, int p) {
                 //更新数据
 				/*update();
 				if (true)return;*/
-                ReadUtil.getInstance().addItemAndroidAdvance(id);
+                ReadUtil.getInstance().addItemAndroidAdvance(title);
                 Intent intent = new Intent(getActivity(), AndroidWeb.class);
-                intent.putExtra("id", id);
+                //intent.putExtra("id", id);
                 intent.putExtra("url", url);
                 intent.putExtra("title", title);
                 intent.putExtra("sub", sub);
                 intent.putExtra("type", type);
                 Common.startActivityOptions(getActivity(), intent);
-                mAdapter.notifyDataSetChanged();
+                mAdapter.notifyItemChanged(p);
             }
         });
 
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        /*refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 getCount();
             }
-        });
+        });*/
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -100,7 +91,7 @@ public class Android2Fragment extends BaseFragment {
     }
 
     private void getCount() {
-        if (!Common.isNet(getContext())) {
+        /*if (!Common.isNet(getContext())) {
             init();
             return;
         }
@@ -125,11 +116,12 @@ public class Android2Fragment extends BaseFragment {
             });
         } else {
             refresh();
-        }
+        }*/
+        mAdapter.setList(new CourseUtil(getContext(), "android2.json").getCourseList(AndroidAdvance.class));
     }
 
     private void refresh() {
-        if (mCount <= 0 || !Common.isNet(getContext())) {
+        /*if (mCount <= 0 || !Common.isNet(getContext())) {
             init();
             return;
         }
@@ -151,11 +143,11 @@ public class Android2Fragment extends BaseFragment {
                     ExceptionHandler.log("Android2Fragment-refresh", e);
                 mHandler.sendEmptyMessage(1);
             }
-        });
+        });*/
     }
 
     private void addItem() {
-        if (mCount > mAdapter.size()) {
+        /*if (mCount > mAdapter.size()) {
             recyclerView.stopScroll();
             proRefresh.setVisibility(View.VISIBLE);
             BmobQuery<AndroidAdvance> query = new BmobQuery<AndroidAdvance>();
@@ -176,21 +168,21 @@ public class Android2Fragment extends BaseFragment {
                         ExceptionHandler.log("Android2Fragment-add", e);
                 }
             });
-        }
+        }*/
     }
 
     private void init() {
-        proRefresh.setVisibility(View.GONE);
+        /*proRefresh.setVisibility(View.GONE);
         errorText.setText("加载失败\n请检查你的网络连接");
         if (refreshLayout.isRefreshing())
-            refreshLayout.setRefreshing(false);
+            refreshLayout.setRefreshing(false);*/
         if (mAdapter.getItemCount() > 0) {
-            errorText.setVisibility(View.GONE);
+            //errorText.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
             mAdapter.notifyDataSetChanged();
         } else {
             recyclerView.setVisibility(View.GONE);
-            errorText.setVisibility(View.VISIBLE);
+            //errorText.setVisibility(View.VISIBLE);
         }
     }
 
@@ -203,11 +195,11 @@ public class Android2Fragment extends BaseFragment {
                     init();
                     break;
                 case 3:
-                    errorText.setText("敬请期待");
+                    /*errorText.setText("敬请期待");
                     errorText.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
                     if (refreshLayout.isRefreshing())
-                        refreshLayout.setRefreshing(false);
+                        refreshLayout.setRefreshing(false);*/
                     break;
 				/*case 4:
 					Util.toastShortMessage(getActivity(), "更新成功");
@@ -224,8 +216,8 @@ public class Android2Fragment extends BaseFragment {
 
     @Override
     public void onResume() {
-        if (refreshLayout != null && refreshLayout.isRefreshing())
-            refreshLayout.setRefreshing(false);
+        /*if (refreshLayout != null && refreshLayout.isRefreshing())
+            refreshLayout.setRefreshing(false);*/
         super.onResume();
     }
 }

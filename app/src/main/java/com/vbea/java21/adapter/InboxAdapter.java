@@ -31,7 +31,7 @@ public class InboxAdapter extends BaseListAdapter<Messages> { //recyclerView.Ada
         TextView rightMenu = holder.getView(R.id.item_rightMenu);
         txtTitle.setText(item.title);
         holder.setText(R.id.item_messageContent, "[" + (item.read ? "已读" : "未读") + "] " + item.message);
-        holder.setText(R.id.item_messageDate, timeAgo.getTimeAgo(item.getCreatedAt()));
+        //holder.setText(R.id.item_messageDate, timeAgo.getTimeAgo(item.getCreatedAt()));
         slidingView.closeMenu();
         txtTitle.getPaint().setFakeBoldText(!item.read);
         leftMenu.setText(item.read ? "设为未读" : "设为已读");

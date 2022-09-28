@@ -124,10 +124,10 @@ public class Main extends BaseActivity {
         fa.addItem(new ChapterFragment(), getString(R.string.contacts));
         fa.addItem(new KnowFragment(), getString(R.string.javaadv));
         fa.addItem(new JavaFragment(), "J2EE");
-        fa.addItem(new DatabaseFragment(), "SQL");
         fa.addItem(new AndroidFragment(), "安卓基础");
         fa.addItem(new Android2Fragment(), "安卓进阶");
-        fa.addItem(new AideFragment(), "AIDE");
+        fa.addItem(new DatabaseFragment(), "SQL");
+        //fa.addItem(new AideFragment(), "AIDE");
         viewpager.setAdapter(fa);
         tabLayout.setupWithViewPager(viewpager);
         tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.white), ContextCompat.getColor(this, R.color.gray2));

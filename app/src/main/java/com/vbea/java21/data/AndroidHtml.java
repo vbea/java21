@@ -3,24 +3,8 @@ package com.vbea.java21.data;
 import com.vbea.java21.classes.ReadUtil;
 import com.vbea.java21.classes.Util;
 
-import cn.bmob.v3.BmobObject;
-
-public class AndroidHtml implements ILearnList {
-	public String title;
-	public String prefix;
-	public String remark;
-	public String url;
-	public Boolean isTitle;
-
-	@Override
-	public String getTitle() {
-		return title;
-	}
-
-	@Override
-	public String getSubTitle() {
-		return remark;
-	}
+public class AndroidHtml extends ILearnList {
+	final String publicPath = "android/";
 
 	@Override
 	public String getPrefix() {
@@ -31,16 +15,13 @@ public class AndroidHtml implements ILearnList {
 
 	@Override
 	public String getUrl() {
-		return url;
-	}
-
-	@Override
-	public Boolean isTitle() {
-		return isTitle;
+		return host + publicPath + url;
 	}
 
 	@Override
 	public boolean isRead() {
+		if (isTitle)
+			return false;
 		return ReadUtil.getInstance().isReadAndroid(title);
 	}
 }

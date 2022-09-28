@@ -41,17 +41,7 @@ import com.vbes.util.secret.Dec;
 import com.vbes.util.secret.Key;
 import com.vbes.util.secret.ProdKey;
 
-import cn.bmob.v3.Bmob;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobWrapper;
-import cn.bmob.v3.datatype.BmobDate;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.UpdateListener;
-import cn.bmob.v3.listener.DownloadFileListener;
-import cn.bmob.v3.exception.BmobException;
-
-public class Common
-{
+public class Common {
 	private static boolean IsRun = false;//是否运行
 	public static int APP_THEME_ID = -1;//主题
 	public static int APP_BACK_ID = 0;//背景图片
@@ -95,8 +85,8 @@ public class Common
 			return;
 		}
 		init();
-		if (BmobWrapper.getInstance() == null)
-			Bmob.initialize(context, "1aa46b02605279e1a84935073af9fc82");
+		/*if (BmobWrapper.getInstance() == null)
+			Bmob.initialize(context, "1aa46b02605279e1a84935073af9fc82");*/
 		IsRun = true;
 		ReadUtil.init(context);
 		if (VbeUtil.isNullOrEmpty(EasyPreferences.getString("key")) || VbeUtil.isNullOrEmpty(EasyPreferences.getString("date"))) {
@@ -191,7 +181,7 @@ public class Common
 		}
 		else
 			OldSerialNo = mUser.serialNo;
-		Date now = new Date();
+		/*Date now = new Date();
 		if (mUser.lastLogin != null) {
 			OldLoginDate = mUser.lastLogin.getDate();
 			if (mUser.dated == null)
@@ -214,7 +204,7 @@ public class Common
 			OldLoginDate = mUser.lastLogin.getDate();
 			mUser.dated = 1;
 			updateUser();
-		}
+		}*/
 	}
 	
 	public static void updateUser() {
@@ -222,7 +212,7 @@ public class Common
 			if (mUser == null)
 				return;
 			Users user = new Users();
-			user.setObjectId(mUser.getObjectId());
+			//user.setObjectId(mUser.getObjectId());
 			user.psd = mUser.psd;
 			//user.role = mUser.role;
 			user.nickname = mUser.nickname;
@@ -238,16 +228,16 @@ public class Common
 			user.weixin = mUser.weixin;
 			user.mobile = mUser.mobile;
 			user.settings = mUser.settings;
-			user.lastLogin = mUser.lastLogin;
+			//user.lastLogin = mUser.lastLogin;
 			user.dated = mUser.dated;
 			user.device = mUser.device;
 			user.serialNo = mUser.serialNo;
-			user.update(new UpdateListener() {
+			/*user.update(new UpdateListener() {
 				public void done(BmobException e) {
 					if (e != null)
 						ExceptionHandler.log("Bmob_updateUser", e.toString());
 				}
-			});
+			});*/
 		} catch (Exception e) {
 			ExceptionHandler.log("updateUser", e.toString());
 		}
@@ -383,7 +373,7 @@ public class Common
 	}
 	
 	private static void socialLogin(final Context context, String column, String openId, boolean isAuto, int mode, final LoginListener listener) throws Exception {
-		BmobQuery<Users> sql = new BmobQuery<Users>();
+		/*BmobQuery<Users> sql = new BmobQuery<Users>();
 		sql.addWhereEqualTo(column, openId);
 		sql.findObjects(new FindListener<Users>() {
 			@Override
@@ -414,11 +404,11 @@ public class Common
 						listener.onError(e.toString());
 				}
 			}
-		});
+		});*/
 	}
 	
 	public static void Login(final Context context, final String username, final String pasdword, final boolean isAuto, final LoginListener listener) throws Exception {
-		BmobQuery<Users> sql1 = new BmobQuery<Users>();
+		/*BmobQuery<Users> sql1 = new BmobQuery<Users>();
 		sql1.addWhereEqualTo("name", username);
 		BmobQuery<Users> sql2 = new BmobQuery<Users>();
 		sql2.addWhereEqualTo("email", username);
@@ -462,7 +452,7 @@ public class Common
 						listener.onError(e.toString());
 				}
 			}
-		});
+		});*/
 	}
 
 	public static void saveLoginData(String sid, int mode) {
@@ -729,7 +719,7 @@ public class Common
 	}
 	
 	public static void getTestMsg() {
-		BmobQuery<Copys> sql = new BmobQuery<>();
+		/*BmobQuery<Copys> sql = new BmobQuery<>();
 		sql.addWhereEqualTo("enable", true);
 		sql.findObjects(new FindListener<Copys>() {
 			@Override
@@ -738,7 +728,7 @@ public class Common
 					copyMsgs = list;
 				}
 			}
-		});
+		});*/
 	}
 	
 	public static List<Copys> getCopyMsg() {
@@ -751,7 +741,7 @@ public class Common
 	
 	public static void getTips() {
 		lastTipsTime = System.currentTimeMillis();
-		BmobQuery<Tips> sql1 = new BmobQuery<>();
+		/*BmobQuery<Tips> sql1 = new BmobQuery<>();
 		sql1.addWhereGreaterThanOrEqualTo("dates", new BmobDate(new Date()));
 		BmobQuery<Tips> sql2 = new BmobQuery<>();
 		sql2.addWhereEqualTo("islong", true);
@@ -773,7 +763,7 @@ public class Common
 						mTips.clear();
 				}
 			}
-		});
+		});*/
 	}
 	
 	public static Tips getTip() {

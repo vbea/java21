@@ -18,12 +18,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.datatype.BmobDate;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.UpdateListener;
-
 /**
  * Created by Vbe on 2018/12/12.
  */
@@ -57,7 +51,7 @@ public class AdminActivity extends BaseActivity {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        BmobDate bmobCreatedAtDate = new BmobDate(createdAtDate);
+        /*BmobDate bmobCreatedAtDate = new BmobDate(createdAtDate);
         dialog = ProgressDialog.show(this, "运行中", "请稍候...");
         BmobQuery<Users> query = new BmobQuery<>();
         query.addWhereLessThan("updatedAt", bmobCreatedAtDate);
@@ -75,17 +69,17 @@ public class AdminActivity extends BaseActivity {
                     toastLongMessage(e.toString());
                 }
             }
-        });
+        });*/
     }
 
     private void deleteUser(Users u) {
-        new Users().delete(u.getObjectId(), new UpdateListener() {
+        /*new Users().delete(u.getObjectId(), new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 if (e == null)
                     deleteCount += 1;
             }
-        });
+        });*/
     }
 
     @SuppressLint("HandlerLeak")

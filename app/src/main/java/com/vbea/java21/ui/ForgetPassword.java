@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
@@ -17,10 +18,6 @@ import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.data.Users;
-
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.exception.BmobException;
 
 public class ForgetPassword extends BaseActivity {
     private Button btnForget;
@@ -101,7 +98,7 @@ public class ForgetPassword extends BaseActivity {
         public void run() {
             result = false;
             try {
-                BmobQuery<Users> sql = new BmobQuery<Users>();
+                /*BmobQuery<Users> sql = new BmobQuery<Users>();
                 sql.addWhereEqualTo("name", edtUsername.getText().toString());
                 sql.addWhereEqualTo("email", edtEmail.getText().toString());
                 sql.addWhereEqualTo("valid", true);
@@ -126,7 +123,7 @@ public class ForgetPassword extends BaseActivity {
                         } else
                             mHandler.sendEmptyMessage(1);
                     }
-                });
+                });*/
             } catch (Exception e) {
                 mHandler.sendEmptyMessage(1);
                 ExceptionHandler.log("ForgetPsd", e.toString());
@@ -134,8 +131,7 @@ public class ForgetPassword extends BaseActivity {
         }
     }
 
-    ;
-
+    @SuppressLint("HandlerLeak")
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

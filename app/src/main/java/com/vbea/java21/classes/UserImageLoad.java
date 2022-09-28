@@ -10,11 +10,6 @@ import com.vbea.java21.data.Users;
 import java.io.File;
 import java.util.List;
 
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.DownloadFileListener;
-import cn.bmob.v3.listener.FindListener;
-
 /**
  * Created by Vbe on 2018/12/11.
  */
@@ -29,7 +24,7 @@ public class UserImageLoad {
     }
 
     private void saveUserIconByName(String name) {
-        BmobQuery<Users> sql = new BmobQuery<>();
+        /*BmobQuery<Users> sql = new BmobQuery<>();
         sql.addWhereEqualTo("name", name);
         sql.findObjects(new FindListener<Users>() {
             @Override
@@ -51,10 +46,10 @@ public class UserImageLoad {
                         public void onProgress(Integer p1, long p2) {
 
                         }
-                    });*/
+                    });*
                 }
             }
-        });
+        });*/
     }
 
     /*private Bitmap getNetBitmap(String imageUri)

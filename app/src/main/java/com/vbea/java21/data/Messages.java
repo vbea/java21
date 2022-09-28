@@ -1,8 +1,8 @@
 package com.vbea.java21.data;
 
-import cn.bmob.v3.BmobObject;
+//import cn.bmob.v3.BmobObject;
 
-public class Messages extends BmobObject
+public class Messages //extends BmobObject
 {
 	public String user;
 	public String title;

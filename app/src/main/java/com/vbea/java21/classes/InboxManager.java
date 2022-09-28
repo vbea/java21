@@ -2,12 +2,6 @@ package com.vbea.java21.classes;
 
 import java.util.List;
 import com.vbea.java21.data.Messages;
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.CountListener;
-import cn.bmob.v3.listener.FindListener;
-import cn.bmob.v3.listener.UpdateListener;
-import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.exception.BmobException;
 
 public class InboxManager
 {
@@ -21,7 +15,7 @@ public class InboxManager
 		if (time - lastTime > 30000)
 		{
 			lastTime = time;
-			BmobQuery<Messages> sql = new BmobQuery<Messages>();
+			/*BmobQuery<Messages> sql = new BmobQuery<Messages>();
 			sql.addWhereEqualTo("user", Common.getUsername());
 			sql.addWhereEqualTo("read", false);
 			sql.count(Messages.class, new CountListener()
@@ -42,7 +36,7 @@ public class InboxManager
 							callback.onSuccess();
 					}
 				}
-			});
+			});*/
 		}
 	}
 	
@@ -66,9 +60,8 @@ public class InboxManager
 		lastTime = 0;
 	}
 	
-	public void getMessage(final InboxCallback callback)
-	{
-		BmobQuery<Messages> sql = new BmobQuery<Messages>();
+	public void getMessage(final InboxCallback callback) {
+		/*BmobQuery<Messages> sql = new BmobQuery<Messages>();
 		sql.addWhereEqualTo("user", Common.getUsername());
 		sql.order("read,-createdAt");
 		sql.findObjects(new FindListener<Messages>()
@@ -89,11 +82,10 @@ public class InboxManager
 						callback.onSuccess();
 				}
 			}
-		});
+		});*/
 	}
 	
-	public void addMessage(String ref, String user, String title, String msg, String url, int type)
-	{
+	public void addMessage(String ref, String user, String title, String msg, String url, int type) {
 		Messages message = new Messages();
 		message.refId = ref;
 		message.user = user;
@@ -102,7 +94,7 @@ public class InboxManager
 		message.url = url;
 		message.type = type;
 		message.read = false;
-		message.save(new SaveListener<String>()
+		/*message.save(new SaveListener<String>()
 		{
 			@Override
 			public void done(String p1, BmobException e)
@@ -110,12 +102,11 @@ public class InboxManager
 				if (e != null)
 					ExceptionHandler.log(FLAG, e.toString());
 			}
-		});
+		});*/
 	}
 	
-	public void updateMessage(Messages msg, final InboxCallback callback)
-	{
-		msg.update(msg.getObjectId(), new UpdateListener()
+	public void updateMessage(Messages msg, final InboxCallback callback) {
+		/*msg.update(msg.getObjectId(), new UpdateListener()
 		{
 			@Override
 			public void done(BmobException e)
@@ -133,13 +124,12 @@ public class InboxManager
 						callback.onSuccess();
 				}
 			}
-		});
+		});*/
 	}
 	
-	public void deleteMessage(Messages msg, int p)
-	{
+	public void deleteMessage(Messages msg, int p) {
 		mList.remove(p);
-		msg.delete(msg.getObjectId(), new UpdateListener()
+		/*msg.delete(msg.getObjectId(), new UpdateListener()
 		{
 			@Override
 			public void done(BmobException e)
@@ -149,7 +139,7 @@ public class InboxManager
 				else
 					refreshMessage();
 			}
-		});
+		});*/
 	}
 	
 	public void logout()

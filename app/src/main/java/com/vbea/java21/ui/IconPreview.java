@@ -21,9 +21,6 @@ import com.vbea.java21.R;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.ExceptionHandler;
-import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.listener.UploadFileListener;
-import cn.bmob.v3.exception.BmobException;
 
 import com.vbes.util.CropImage;
 import com.vbes.util.GalleryUtil;
@@ -115,7 +112,7 @@ public class IconPreview extends AppCompatActivity {
 	}
 
 	public void uploadIcon(File file) {
-		final BmobFile icon = new BmobFile(file);
+		/*final BmobFile icon = new BmobFile(file);
 		icon.upload(new UploadFileListener()
 		{
 			@Override
@@ -130,7 +127,7 @@ public class IconPreview extends AppCompatActivity {
 					Util.toastShortMessage(getApplicationContext(), "上传失败");
 				}
 			}
-		});
+		});*/
 	}
 	
 	public void setIcon(Bitmap src) {

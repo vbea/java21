@@ -1,11 +1,10 @@
 package com.vbea.java21.update;
 
-import cn.bmob.v3.BmobObject;
-
 /**
  * Created by Vbe on 2019/12/5.
  */
-public class AppVersion extends BmobObject {
+public class AppVersion //extends BmobObject
+{
     private String update_log;
     private String version;
     private Integer version_i;
@@ -128,5 +127,9 @@ public class AppVersion extends BmobObject {
         if (install == null)
             install = 0;
         this.install = install + 1;
+    }
+
+    public void update(AppVersion version) {
+
     }
 }

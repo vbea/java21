@@ -2,22 +2,8 @@ package com.vbea.java21.data;
 
 import com.vbea.java21.classes.ReadUtil;
 
-import cn.bmob.v3.BmobObject;
-
-public class JavaEE extends BmobObject implements ILearnList
-{
-	public String title;
-	public String prefix;
-	//public String remark;
-	public String url;
-	public Integer order;
-	public Boolean isTitle;
-	public Boolean enable;
-
-	@Override
-	public String getTitle() {
-		return title;
-	}
+public class JavaEE extends ILearnList {
+	final String publicPath = "java/";
 
 	@Override
 	public String getSubTitle() {
@@ -31,21 +17,13 @@ public class JavaEE extends BmobObject implements ILearnList
 
 	@Override
 	public String getUrl() {
-		return url;
-	}
-
-	@Override
-	public Integer getOrder() {
-		return order;
-	}
-
-	@Override
-	public Boolean isTitle() {
-		return isTitle;
+		return host + publicPath + url;
 	}
 
 	@Override
 	public boolean isRead() {
-		return ReadUtil.getInstance().isReadJavaEE(getObjectId());
+		if (isTitle)
+			return false;
+		return ReadUtil.getInstance().isReadJavaEE(title);
 	}
 }

@@ -50,10 +50,6 @@ import com.vbes.util.view.MyAlertDialog;
 
 import org.json.JSONObject;
 
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.listener.CountListener;
-import cn.bmob.v3.exception.BmobException;
-
 public class UserCentral extends BaseActivity {
     private ImageView icon;
     private LayoutInflater inflat;
@@ -725,7 +721,7 @@ public class UserCentral extends BaseActivity {
     }
 
     public void validateUser(String key, String openId, String other) {
-        BmobQuery<Users> sql = new BmobQuery<>();
+        /*BmobQuery<Users> sql = new BmobQuery<>();
         sql.addWhereEqualTo(key, openId);
         sql.addWhereEqualTo("valid", true);
         sql.count(Users.class, new CountListener() {
@@ -753,7 +749,7 @@ public class UserCentral extends BaseActivity {
                 } else
                     mHandler.sendEmptyMessage(0);
             }
-        });
+        });*/
     }
 
     @SuppressLint("HandlerLeak")

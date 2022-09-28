@@ -39,31 +39,31 @@ public class ReadUtil {
     }
 
     public boolean isReadJava(String num) {
-        return radJava.indexOf(num) > -1;
+        return radJava.contains(num);
     }
 
     public boolean isReadJavaAdvance(String num) {
-        return radJava2.indexOf(num) > -1;
+        return radJava2.contains(num);
     }
 
     public boolean isReadJavaEE(String num) {
-        return radJ2ee.indexOf(num) > -1;
+        return radJ2ee.contains(num);
     }
 
     public boolean isReadAndroid(String num) {
-        return radAndroid.indexOf(num) > -1;
+        return radAndroid.contains(num);
     }
 
     public boolean isReadAndroidAdvance(String num) {
-        return radAndroid2.indexOf(num) > -1;
+        return radAndroid2.contains(num);
     }
 
     public boolean isReadAide(String num) {
-        return radAide.indexOf(num) > -1;
+        return radAide.contains(num);
     }
 
     public boolean isReadDatabase(String num) {
-        return radDatabase.indexOf(num) > -1;
+        return radDatabase.contains(num);
     }
 
     public void addItemJava(String num) {

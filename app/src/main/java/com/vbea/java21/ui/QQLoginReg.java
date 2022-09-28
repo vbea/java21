@@ -34,15 +34,6 @@ import com.vbea.java21.classes.SocialShare;
 import com.vbea.java21.classes.SettingUtil;
 import com.vbea.java21.data.Users;
 
-import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.datatype.BmobDate;
-import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.CountListener;
-import cn.bmob.v3.listener.UpdateListener;
-import cn.bmob.v3.listener.UploadFileListener;
-import cn.bmob.v3.exception.BmobException;
-
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
 import com.tencent.connect.UserInfo;
@@ -203,7 +194,7 @@ public class QQLoginReg extends BaseActivity {
     }
 
     private void nameExist(String name) {
-        BmobQuery<Users> sql1 = new BmobQuery<Users>();
+        /*BmobQuery<Users> sql1 = new BmobQuery<Users>();
         sql1.addWhereEqualTo("name", name);
         BmobQuery<Users> sql2 = new BmobQuery<Users>();
         sql2.addWhereEqualTo("mobile", name);
@@ -222,11 +213,11 @@ public class QQLoginReg extends BaseActivity {
                     isNameExist = true;
                 td1 = false;
             }
-        });
+        });*/
     }
 
     private void mailExist(String mail) {
-        BmobQuery<Users> sql = new BmobQuery<Users>();
+        /*BmobQuery<Users> sql = new BmobQuery<Users>();
         sql.addWhereEqualTo("email", mail);
         sql.addWhereEqualTo("valid", true);
         sql.count(Users.class, new CountListener() {
@@ -238,7 +229,7 @@ public class QQLoginReg extends BaseActivity {
                     isEmailExist = true;
                 td2 = false;
             }
-        });
+        });*/
     }
 
     private void init() {
@@ -374,7 +365,7 @@ public class QQLoginReg extends BaseActivity {
     }
 
     public void uploadIcon(File file) {
-        final BmobFile icon = new BmobFile(file);
+        /*final BmobFile icon = new BmobFile(file);
         icon.upload(new UploadFileListener() {
             @Override
             public void done(BmobException p1) {
@@ -383,7 +374,7 @@ public class QQLoginReg extends BaseActivity {
                     td3 = false;
                 }
             }
-        });
+        });*/
     }
 
     class SignThread extends Thread implements Runnable {
@@ -425,14 +416,14 @@ public class QQLoginReg extends BaseActivity {
                     mUser.mark = "他很懒，什么也没留下";
                     //add on 20180405 -start
                     mUser.dated = 0;
-                    mUser.lastLogin = new BmobDate(new Date());
+                    //mUser.lastLogin = new BmobDate(new Date());
                     mUser.settings = Common.getSettingJson(new SettingUtil());
                     //mUser.Set_Music = Common.MUSIC;
                     //-end
                     if (Common.IS_ACTIVE)
                         mUser.key = Common.KEY;
                     Users _m = mUser;
-                    _m.save(new SaveListener<String>() {
+                    /*_m.save(new SaveListener<String>() {
                         @Override
                         public void done(String s, BmobException e) {
                             if (e == null) {
@@ -444,7 +435,7 @@ public class QQLoginReg extends BaseActivity {
                                 mHandler.sendEmptyMessage(3);
                             }
                         }
-                    });
+                    });*/
                 }
             } catch (Exception e) {
                 ExceptionHandler.log("qqregThread", e.toString());
@@ -462,7 +453,7 @@ public class QQLoginReg extends BaseActivity {
                         if (Common.mUser != null && code == 1) {
                             if (useQQinfo.isChecked()) {
                                 mUser.name = Common.mUser.name;
-                                try {
+                                /*try {
                                     File file = getIconFile();
                                     if (file.exists())
                                         uploadIcon(file);//上传头像
@@ -474,7 +465,7 @@ public class QQLoginReg extends BaseActivity {
                                         if (e != null)
                                             ExceptionHandler.log("QQreg_qqBind_update", e.toString());
                                     }
-                                });
+                                });*/
                                 //同步用户资料
                                 Common.mUser.nickname = mUser.nickname;
                                 Common.mUser.qq = mUser.qq;
@@ -483,7 +474,7 @@ public class QQLoginReg extends BaseActivity {
                                 if (Common.mUser.address == null || Common.mUser.address.equals(""))
                                     Common.mUser.address = mUser.address;
                             } else {
-                                Users _user = new Users();
+                                /*Users _user = new Users();
                                 _user.setObjectId(Common.mUser.getObjectId());
                                 _user.qq = mUser.qq;
                                 _user.qqId = mUser.qqId;
@@ -497,7 +488,7 @@ public class QQLoginReg extends BaseActivity {
                                 });
                                 //同步用户资料
                                 Common.mUser.qq = _user.qq;
-                                Common.mUser.qqId = _user.qqId;
+                                Common.mUser.qqId = _user.qqId;*/
                             }
                             mHandler.sendEmptyMessage(2);
                         } else

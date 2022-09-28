@@ -17,9 +17,6 @@ import com.vbea.java21.classes.MD5Util;
 import com.vbea.java21.classes.Common;
 import com.vbes.util.view.MyAlertDialog;
 
-import cn.bmob.v3.listener.UpdateListener;
-import cn.bmob.v3.exception.BmobException;
-
 public class ResetPassword extends BaseActivity {
     private EditText newPsd, queryPsd;
     private String objectId;
@@ -72,7 +69,7 @@ public class ResetPassword extends BaseActivity {
                 }
                 reset.setText("请稍候...");
                 reset.setEnabled(false);
-                new MyThread().start();
+                //new MyThread().start();
             }
         });
     }
@@ -95,7 +92,7 @@ public class ResetPassword extends BaseActivity {
         exitDialog();
     }
 
-    private class MyThread extends Thread implements Runnable {
+    /*private class MyThread extends Thread implements Runnable {
         public void run() {
             Users user = new Users();
             user.setValue("psd", MD5Util.getMD5(queryPsd.getText().toString()));
@@ -109,10 +106,10 @@ public class ResetPassword extends BaseActivity {
                 }
             });
         }
-    }
+    }*/
 
+    @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
-        @SuppressLint("HandlerLeak")
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {

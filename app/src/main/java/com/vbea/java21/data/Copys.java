@@ -1,8 +1,6 @@
 package com.vbea.java21.data;
 
-import cn.bmob.v3.BmobObject;
-
-public class Copys extends BmobObject
+public class Copys //extends BmobObject
 {
 	private String title;
 	private String message;

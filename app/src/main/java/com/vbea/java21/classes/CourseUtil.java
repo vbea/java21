@@ -24,7 +24,7 @@ public class CourseUtil {
         assetManager = context.getAssets();
     }
 
-    public <T extends ILearnList> List<T> getCourseList(Class t) {
+    public <T extends ILearnList> List<T> getCourseList(Class<T> t) {
         List<T> list = new ArrayList<>();
         try {
             String json = Util.ReadFileToString(assetManager.open("course/" + path));
@@ -32,7 +32,7 @@ public class CourseUtil {
                 Gson gson = new Gson();
                 JsonArray jArray = JsonParser.parseString(json).getAsJsonArray();
                 for (JsonElement obj : jArray) {
-                    T item = (T) gson.fromJson(obj, t);
+                    T item = gson.fromJson(obj, t);
                     list.add(item);
                 }
             }

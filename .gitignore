@@ -5,3 +5,4 @@ build
 local.properties
 /app/cert.properties
 tencent
+release

@@ -17,7 +17,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /-->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-    <!--uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" /-->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" tools:ignore="QueryAllPackagesPermission" />
 
     <application
         android:name=".BaseApplication"
@@ -290,9 +290,9 @@
         <activity
             android:name=".ui.QRResultActivity"
             android:label="@string/qr_result_activity" />
-        <activity
+        <!--activity
             android:name="cn.bmob.v3.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Material.Light.Dialog" />
+            android:theme="@android:style/Theme.Material.Light.Dialog" /-->
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden"

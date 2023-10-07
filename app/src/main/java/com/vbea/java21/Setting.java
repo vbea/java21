@@ -1,5 +1,7 @@
 package com.vbea.java21;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.widget.RelativeLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,7 +30,7 @@ import com.vbes.util.view.MyAlertDialog;
 public class Setting extends BaseActivity {
     private SharedPreferences spf;
     private TextView txtCacheSize, txtImageSize;
-    private TextView btnSetheme, btnSetimg, btnScore, btnJoin, btnFeed, btnDonate, btnHistory, btnTextsize;
+    private TextView btnJoin;
     private LinearLayout /*btnAdver, btnWelAdv,*/ btnUpdate, btnMusic, btnTips;
     private Switch swiMusic, swiTips, swiAdv, swiWelAdv;
     private boolean isTipsChange = false;
@@ -42,14 +44,14 @@ public class Setting extends BaseActivity {
     public void after() {
         enableBackButton(R.id.toolbar);
         //btnAdver = bind(R.id.btnSetadv);
-        btnSetheme = bind(R.id.btn_setTheme);
-        btnSetimg = bind(R.id.btn_setImage);
-        btnScore = bind(R.id.btn_setScore);
+        TextView btnSetheme = bind(R.id.btn_setTheme);
+        TextView btnSetimg = bind(R.id.btn_setImage);
+        TextView btnScore = bind(R.id.btn_setScore);
         btnJoin = bind(R.id.btn_setJoin);
-        btnFeed = bind(R.id.btn_setHelp);
-        btnHistory = bind(R.id.btn_setHistory);
-        btnDonate = bind(R.id.btn_setDonate);
-        btnTextsize = bind(R.id.btn_setTextsize);
+        TextView btnFeed = bind(R.id.btn_setHelp);
+        TextView btnHistory = bind(R.id.btn_setHistory);
+        TextView btnDonate = bind(R.id.btn_setDonate);
+        TextView btnTextsize = bind(R.id.btn_setTextsize);
         btnUpdate = bind(R.id.btnUpdate);
         RelativeLayout btnCache = bind(R.id.btn_setClearCache);
         RelativeLayout btnImageCache = bind(R.id.btn_setClearCacheImage);
@@ -286,6 +288,15 @@ public class Setting extends BaseActivity {
                     });
             }
         });
+        setOnClickListener(R.id.btn_setMultiple, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {;
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                intent.setClassName("com.oplus.multiapp", "com.oplus.multiapp.ui.entry.ActivityMainActivity");
+                startActivity(intent);
+            }
+        });
         init();
     }
 
@@ -314,9 +325,22 @@ public class Setting extends BaseActivity {
             }
             //if (Common.isNoadv() && Common.isVipUser())
             //	btnWelAdv.setVisibility(View.VISIBLE);
+            //getMoreItem();
         } catch (Exception e) {
             txtCacheSize.setText("N/A");
             txtImageSize.setText("N/A");
+        }
+    }
+
+    private void getMoreItem() {
+        PackageManager packageManager = getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo("com.oplus.multiapp", 0);
+            if (packageInfo != null) {
+                setGone(R.id.btn_setMultiple, true);
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
     }
 

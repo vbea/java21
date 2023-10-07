@@ -31,6 +31,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 
+import com.vbea.java21.bridge.Spam3;
 import com.vbea.java21.classes.ReadUtil;
 import com.vbea.java21.data.Users;
 import com.vbea.java21.fragment.AideFragment;
@@ -47,6 +48,7 @@ import com.vbea.java21.classes.InboxManager;
 import com.vbea.java21.ui.About;
 import com.vbea.java21.ui.ActivityManager;
 import com.vbea.java21.ui.AdminActivity;
+import com.vbea.java21.ui.AdultPreview;
 import com.vbea.java21.ui.ApiWord;
 import com.vbea.java21.ui.Help;
 import com.vbea.java21.ui.HtmlViewer;
@@ -337,6 +339,12 @@ public class Main extends BaseActivity {
 
     public void goBrowser(View v) {
         Common.startActivityOptions(Main.this, HtmlViewer.class);
+        mHandler.sendEmptyMessageDelayed(1, 500);
+    }
+
+    public void goAvGallery(View v) {
+        Common.startActivityOptions(Main.this, Spam3.class);
+        //Common.startActivityOptions(Main.this, AdultPreview.class);
         mHandler.sendEmptyMessageDelayed(1, 500);
     }
 	

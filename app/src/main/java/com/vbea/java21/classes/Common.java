@@ -859,6 +859,21 @@ public class Common {
 		void onLogin(int code);
 		void onError(String error);
 	}
+
+	public static boolean execCmd(String cmd) {
+		Process process = null;
+		try {
+			process = Runtime.getRuntime().exec(cmd + "\n");
+			//process.waitFor();
+		} catch (Exception e) {
+			e.printStackTrace();
+			ExceptionHandler.log("ExecCmd", e);
+			return false;
+		} finally {
+			process.destroy();
+		}
+		return true;
+	}
 	
 	public static void gc(Context c) {
 		//gc垃圾回收: 恢复到初始化状态

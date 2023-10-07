@@ -38,7 +38,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 30
         versionCode getMyVersionCode()
-        versionName "8.22.10"
+        versionName "8.23.4"
         signingConfig signingConfigs.debug
         flavorDimensions "versionCode"
         multiDexEnabled true

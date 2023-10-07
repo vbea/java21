@@ -98,7 +98,8 @@
 				android:padding="@dimen/activity_vertical_margin"
 				android:background="@drawable/btn_normal"
 				android:gravity="center_vertical"
-				android:orientation="horizontal">
+				android:orientation="horizontal"
+				android:visibility="gone">
 				<TextView
 					android:layout_width="0dp"
 					android:layout_height="wrap_content"
@@ -111,6 +112,17 @@
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"/>
 			</LinearLayout>
+			<TextView
+				android:id="@+id/btn_setMultiple"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="应用分身"
+				android:background="@drawable/btn_menu"
+				android:gravity="start|center_vertical"
+				android:padding="@dimen/activity_vertical_margin"
+				android:textColor="?attr/textPrimary"
+				android:textSize="16sp"
+				android:visibility="gone"/>
 			<RelativeLayout
 				android:id="@+id/btn_setClearCache"
 				android:layout_width="match_parent"

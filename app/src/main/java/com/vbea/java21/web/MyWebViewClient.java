@@ -13,6 +13,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.vbea.java21.BuildConfig;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
 import com.vbea.java21.ui.HtmlViewer;
@@ -37,9 +38,10 @@ public class MyWebViewClient extends WebViewClient {
                 activity.currentUrl = url.replace("vbea://", "http://");
                 activity.loadUrls(url);
             } else {
-                if (Common.isAdminUser())
+                if (BuildConfig.DEBUG) {
+                    Log.i("url", url);
                     Util.addClipboard(activity, url);
-                Log.i("url", url);
+                }
                 String msg = activity.uriScheme.getAppNameByUrl(url);
                 VbeUtil.showConfirmCancelDialog(activity, "提示", msg, new DialogResult() {
                     @Override

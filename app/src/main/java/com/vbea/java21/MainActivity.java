@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.content.Intent;
 
 import android.support.v7.app.AppCompatActivity;
+
 import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.classes.Common;
 import com.vbea.java21.classes.Util;
@@ -29,62 +30,61 @@ import com.qq.e.ads.splash.SplashADListener;
 import com.qq.e.comm.util.AdError;*/
 import com.vbea.java21.ui.MyThemes;
 
-public class MainActivity extends AppCompatActivity
-{
-	private View based;
-	private ImageView imgIcon;
-	private TextView txtTitle, txtTip, txtDic, txtSkip;
-	private LinearLayout layoutMain;
-	private AlphaAnimation disappears;
-	private String[] homeTips, homeDics;
-	//private SplashAD splashAD;
-	private ViewGroup container;
-	private final String SKIP_TEXT = "跳过 %d";
-	private boolean canJump = false;
-	private int requestOnce = 0;
-	
+public class MainActivity extends AppCompatActivity {
+    private View based;
+    private ImageView imgIcon;
+    private TextView txtTitle, txtTip, txtDic, txtSkip;
+    private LinearLayout layoutMain;
+    private AlphaAnimation disappears;
+    private String[] homeTips, homeDics;
+    //private SplashAD splashAD;
+    private ViewGroup container;
+    private final String SKIP_TEXT = "跳过 %d";
+    private boolean canJump = false;
+    private int requestOnce = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-		Common.start(getApplicationContext());
-		setTheme(MyThemes.getTheme());
-		getWindow().setFlags(1024, 1024);
+        Common.start(getApplicationContext());
+        setTheme(MyThemes.getTheme());
+        getWindow().setFlags(1024, 1024);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.welcome);
-		based = findViewById(R.id.welLayout);
-		container = (ViewGroup) findViewById(R.id.splashContainer);
-		layoutMain = (LinearLayout) findViewById(R.id.welcome_layout);
-		imgIcon = (ImageView) findViewById(R.id.img_welicon);
-		txtTitle = (TextView) findViewById(R.id.text_retry);
-		txtTip = (TextView) findViewById(R.id.welcome_tips);
-		txtDic = (TextView) findViewById(R.id.welcome_dics);
-		txtSkip = (TextView) findViewById(R.id.welcome_skip);
-		homeTips = getResources().getStringArray(R.array.array_homeTips);
-		homeDics = getResources().getStringArray(R.array.array_homeDics);
-		disappears = new AlphaAnimation(1, 0);
-		disappears.setDuration(1000);
-		disappears.setAnimationListener(new Animation.AnimationListener() {
-			@Override
-			public void onAnimationStart(Animation p1) {
-			}
+        based = findViewById(R.id.welLayout);
+        container = (ViewGroup) findViewById(R.id.splashContainer);
+        layoutMain = (LinearLayout) findViewById(R.id.welcome_layout);
+        imgIcon = (ImageView) findViewById(R.id.img_welicon);
+        txtTitle = (TextView) findViewById(R.id.text_retry);
+        txtTip = (TextView) findViewById(R.id.welcome_tips);
+        txtDic = (TextView) findViewById(R.id.welcome_dics);
+        txtSkip = (TextView) findViewById(R.id.welcome_skip);
+        homeTips = getResources().getStringArray(R.array.array_homeTips);
+        homeDics = getResources().getStringArray(R.array.array_homeDics);
+        disappears = new AlphaAnimation(1, 0);
+        disappears.setDuration(1000);
+        disappears.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation p1) {
+            }
 
-			@Override
-			public void onAnimationEnd(Animation p1) {
-				imgIcon.setVisibility(View.INVISIBLE);
-				txtTip.setVisibility(View.INVISIBLE);
-				txtDic.setVisibility(View.INVISIBLE);
-			}
-				
-			@Override
-			public void onAnimationRepeat(Animation p1) {
-			}
-		});
-		if (Common.VERSION_CODE == 0) {
-			Common.update(this, false);
-		}
-		if (Util.isAndroidM())
-			checkAndRequestPermission();
-		else
-			toHome();
+            @Override
+            public void onAnimationEnd(Animation p1) {
+                imgIcon.setVisibility(View.INVISIBLE);
+                txtTip.setVisibility(View.INVISIBLE);
+                txtDic.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation p1) {
+            }
+        });
+        if (Common.VERSION_CODE == 0) {
+            Common.update(this, false);
+        }
+        if (Util.isAndroidM())
+            checkAndRequestPermission();
+        else
+            toHome();
 		/*try
 		{
 			//StatService.startStatService(this, "Aqc1150078134", com.tencent.stat.common.StatConstants.VERSION);
@@ -94,92 +94,90 @@ public class MainActivity extends AppCompatActivity
 			ExceptionHandler.log("mta", e.toString());
 		}*/
     }
-	
-	@SuppressLint("HandlerLeak")
-	Handler mHandler = new Handler() {
-		@Override
-		public void handleMessage(Message msg) {
-			switch (msg.what) {
-				case 0:
-					getRandomTip();
-					break;
-				case 1:
-					if (Common.isSupportMD()) {
-						getRandomDic();
-						imgIcon.startAnimation(disappears);
-						txtTip.startAnimation(disappears);
-						txtDic.startAnimation(disappears);
-					}
-					break;
-				case 2:
-					Intent intent = new Intent();
-					intent.putExtra("start", true);
-					intent.setClass(MainActivity.this, Main.class);
-					Common.startActivityOption(MainActivity.this, intent, based, getString(R.string.shared));
-					break;
-				case 3:
-					if (canJump) {
-						Intent intent1 = new Intent(MainActivity.this, Main.class);
-						intent1.putExtra("start", true);
-						Common.startActivityOptions(MainActivity.this, intent1);
-						mHandler.sendEmptyMessageDelayed(4, 500);
-					} else
-						canJump = true;
-					break;
-				case 4:
-					finish();
-					break;
-			}
-			super.handleMessage(msg);
-		}
-	};
 
-	@Override
-	protected void onPause()
-	{
-		super.onPause();
-		canJump = false;
-	}
+    @SuppressLint("HandlerLeak")
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 0:
+                    getRandomTip();
+                    break;
+                case 1:
+                    if (Common.isSupportMD()) {
+                        getRandomDic();
+                        imgIcon.startAnimation(disappears);
+                        txtTip.startAnimation(disappears);
+                        txtDic.startAnimation(disappears);
+                    }
+                    break;
+                case 2:
+                    Intent intent = new Intent();
+                    intent.putExtra("start", true);
+                    intent.setClass(MainActivity.this, Main.class);
+                    Common.startActivityOption(MainActivity.this, intent, based, getString(R.string.shared));
+                    break;
+                case 3:
+                    if (canJump) {
+                        Intent intent1 = new Intent(MainActivity.this, Main.class);
+                        intent1.putExtra("start", true);
+                        Common.startActivityOptions(MainActivity.this, intent1);
+                        mHandler.sendEmptyMessageDelayed(4, 500);
+                    } else
+                        canJump = true;
+                    break;
+                case 4:
+                    finish();
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
 
-	@Override
-	protected void onResume()
-	{
-		imgIcon.setVisibility(View.VISIBLE);
-		getRandomTips();
-		mHandler.sendEmptyMessage(3);
-		super.onResume();
-	}
+    @Override
+    protected void onPause() {
+        super.onPause();
+        canJump = false;
+    }
 
-	@Override
-	protected void onDestroy() {
-		mHandler.removeCallbacksAndMessages(null);
-		super.onDestroy();
-	}
-	
-	private void getRandomTips() {
-		if (layoutMain.getVisibility() == View.VISIBLE) {
-			getRandomTip();
-			getRandomDic();
-		}
-	}
-	
-	private void getRandomTip() {
-		txtTip.setText(homeTips[(int)(Math.random() * (double)homeTips.length)]);
-	}
+    @Override
+    protected void onResume() {
+        imgIcon.setVisibility(View.VISIBLE);
+        getRandomTips();
+        mHandler.sendEmptyMessage(3);
+        super.onResume();
+    }
 
-	private void getRandomDic() {
-		txtDic.setText(homeDics[(int)(Math.random() * (double)homeDics.length)]);
-	}
-	
-	@Override
-	public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-		//ExceptionHandler.log("main", "result:" + Util.Join(",", permissions));
-		if (Util.hasAllPermissionsGranted(grantResults))
-			toHome();
-		else
-			checkAndRequestPermission();
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-	}
+    @Override
+    protected void onDestroy() {
+        mHandler.removeCallbacksAndMessages(null);
+        super.onDestroy();
+    }
+
+    private void getRandomTips() {
+        if (layoutMain.getVisibility() == View.VISIBLE) {
+            getRandomTip();
+            getRandomDic();
+        }
+    }
+
+    private void getRandomTip() {
+        txtTip.setText(homeTips[(int) (Math.random() * (double) homeTips.length)]);
+    }
+
+    private void getRandomDic() {
+        txtDic.setText(homeDics[(int) (Math.random() * (double) homeDics.length)]);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        //ExceptionHandler.log("main", "result:" + Util.Join(",", permissions));
+        if (Util.hasAllPermissionsGranted(grantResults))
+            toHome();
+        else
+            checkAndRequestPermission();
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
 	
 	/*private void startSplashAD() {
 		try {
@@ -196,40 +194,40 @@ public class MainActivity extends AppCompatActivity
 			toHome();
 		}
 	}*/
-	
-	@TargetApi(Build.VERSION_CODES.M)
-	private void checkAndRequestPermission() {
-		requestOnce+=1;
-		if (requestOnce > 2) {
-			toHome();
-			return;
-		}
-		List<String> lackedPermission = new ArrayList<>();
-		if (!Util.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE))
-			lackedPermission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-		if (!Util.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
-			lackedPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void checkAndRequestPermission() {
+        requestOnce += 1;
+        if (requestOnce > 2) {
+            toHome();
+            return;
+        }
+        List<String> lackedPermission = new ArrayList<>();
+        if (!Util.hasPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE))
+            lackedPermission.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+        if (!Util.hasPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
+            lackedPermission.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 		/*if (!Util.hasPermission(this, Manifest.permission.READ_PHONE_STATE))
 			lackedPermission.add(Manifest.permission.READ_PHONE_STATE);
 		if (!Util.hasPermission(this, Manifest.permission.ACCESS_FINE_LOCATION))
 			lackedPermission.add(Manifest.permission.ACCESS_FINE_LOCATION);*/
-    	// 权限都已经有了，那么直接调用SDK
-		if (lackedPermission.size() == 0) {
-			toHome();
-		} else {
-			// 请求所缺少的权限，在onRequestPermissionsResult中再看是否获得权限，如果获得权限就可以调用SDK，否则不要调用SDK。
-			String[] requestPermission = new String[lackedPermission.size()];
-			requestPermission = lackedPermission.toArray(requestPermission);
-			requestPermissions(requestPermission, 1024);
-		}
-	}
+        // 权限都已经有了，那么直接调用SDK
+        if (lackedPermission.size() == 0) {
+            toHome();
+        } else {
+            // 请求所缺少的权限，在onRequestPermissionsResult中再看是否获得权限，如果获得权限就可以调用SDK，否则不要调用SDK。
+            String[] requestPermission = new String[lackedPermission.size()];
+            requestPermission = lackedPermission.toArray(requestPermission);
+            requestPermissions(requestPermission, 1024);
+        }
+    }
 
-	public void toHome() {
-		mHandler.sendEmptyMessageDelayed(0, 1000);
-		mHandler.sendEmptyMessageDelayed(1, 1500);
-		mHandler.sendEmptyMessageDelayed(2, 2500);
-		mHandler.sendEmptyMessageDelayed(4, 3500);
-	}
+    public void toHome() {
+        mHandler.sendEmptyMessageDelayed(0, 1000);
+        mHandler.sendEmptyMessageDelayed(1, 1500);
+        mHandler.sendEmptyMessageDelayed(2, 2500);
+        mHandler.sendEmptyMessageDelayed(4, 3500);
+    }
 	
 	/*class MySplashListener implements SplashADListener {
 		@Override

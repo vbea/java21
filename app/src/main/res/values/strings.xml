@@ -125,7 +125,7 @@
 		\n4.其他细节优化
 	</string>
 	<string name="shared">share_image</string>
-	<string name="about_us">邠心工作室(VbeStudio, VBES)，2013年5月20日成立，至今已有九年时间。目前团队仅有二人，并且都是90后的编程爱好者，本人是在2012年(高中)自学Java，通过21天时间学完基础知识之后开始研究并开发Android，并于2014年将基础知识整理成教程并发布此APP，帮助那些也想要学习Java的朋友，希望在学习道路上遇到志同道合的朋友。
+	<string name="about_us">邠心工作室(VbeStudio, VBES)，2013年5月20日成立，至今已有十年时间。目前团队仅有二人，并且都是90后的编程爱好者，本人是在2012年(高中)自学Java，通过21天时间学完基础知识之后开始研究并开发Android，并于2014年将基础知识整理成教程并发布此APP，帮助那些也想要学习Java的朋友，希望在学习道路上遇到志同道合的朋友。
 	</string>
 	<string name="about_join">邮箱：vbea@foxmail.com
 		\nQ　Q：248104237\nQ群：222876252
@@ -135,7 +135,7 @@
 	</string>
 	<string name="about_mark">欢迎加入我们一起交流分享Android开发和设计，一起学习Java和前端、后端开发技术，一起探索前沿技术，有意请加入我们的QQ群，谢谢！
 	</string>
-	<string name="copyright">邠心工作室 版权所有\nCopyright © 2014-2022 VbeStudio. All Rights Reserved
+	<string name="copyright">邠心工作室 版权所有\nCopyright © 2014-2023 VbeStudio. All Rights Reserved
 	</string>
 	<string name="donateinfo">您可以通过支付宝转账、微信转账，或者付费加入Q群222876252或49321718，也可以加入邠心工作室开发组QQ群135482843。您的支持给我们提供了动力，是对我们最大的鼓励！
 		\n（加入邠心工作室开发组Q群(135482843)的作为回报我们将送出7.0版本源码一份以及自学大礼包，包括文字教程、视频、源码实例等）\n二维码见下面，点击可放大
@@ -166,8 +166,15 @@
     <string name="waiting">请稍后...</string>
     <string name="qr_result_activity">扫描结果</string>
 	<string name="shortcut_disabled_msg">此功能已失效</string>
-    <string name="laji_pinduoduo">垃圾APP智能拦截</string>
 	<string name="activity_qr_creator">二维码生成器</string>
     <string name="txt_qr_creator">生成二维码</string>
 	<string name="tips_qr_creator">请输入你想生成的文字或网址</string>
+	<string name="laji_pinduoduo">垃圾拼多多</string>
+	<string name="laji_jingdong">垃圾京东</string>
+	<string name="laji_taobao">垃圾淘宝</string>
+	<string name="laji_alipay">垃圾支付宝</string>
+	<string name="laji_wechat">垃圾微信</string>
+	<string name="laji_app">关联启动拦截器</string>
+	<string name="dual_taobao">双开淘宝</string>
+	<string name="dual_alipay">双开支付宝</string>
 </resources>

@@ -6,3 +6,6 @@ local.properties
 /app/cert.properties
 tencent
 release
+*.lnk
+*.iml
+*.log

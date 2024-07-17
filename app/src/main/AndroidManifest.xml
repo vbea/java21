@@ -532,9 +532,11 @@
         </provider>
         <service
             android:name=".audio.AudioService"
+            android:foregroundServiceType="mediaPlayback"
             android:exported="false" />
         <service
             android:name=".ui.DownloadService"
+            android:foregroundServiceType="dataSync"
             android:exported="false" />
     </application>
 

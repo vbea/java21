@@ -31,7 +31,7 @@ public class Feedback extends BaseActivity
 	@Override
 	public void after()
 	{
-		enableBackButton();
+		enableBackButton(R.id.toolbar);
 		btnFeed = bind(R.id.btn_feed);
 		txtFeedback = bind(R.id.txt_feed);
 		txtContact = bind(R.id.txt_feedCon);

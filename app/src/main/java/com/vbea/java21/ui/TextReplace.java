@@ -26,7 +26,7 @@ public class TextReplace extends BaseActivity {
 
     @Override
     protected void after() {
-        enableBackButton();
+        enableBackButton(R.id.toolbar);
         edit = bind(R.id.edt_replace);
         Button btnPlace = bind(R.id.btn_replace);
         baseView = bind(R.id.txtreplaceRelativeLayout);

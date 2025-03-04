@@ -57,7 +57,7 @@ public class DownloadFile extends BaseActivity {
 
     @Override
     protected void after() {
-        enableBackButton();
+        enableBackButton(R.id.toolbar);
         noView = bind(R.id.dm_noView);
         recyclerView = bind(R.id.dm_recyclerView);
         recyclerView.addItemDecoration(new MyDividerDecoration(this));

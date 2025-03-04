@@ -18,7 +18,7 @@ public class Decord extends BaseActivity
 	@Override
 	protected void after()
 	{
-		enableBackButton();
+		enableBackButton(R.id.toolbar);
 		ImageView img_icon = bind(R.id.img_headicon);
 		int id = getIntent().getIntExtra("id", 0);
 		if (id > 0)

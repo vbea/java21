@@ -66,7 +66,7 @@ public class JavaFragment extends BaseFragment {
                 intent.putExtra("id", id);
                 intent.putExtra("url", url);
                 intent.putExtra("title", title);
-                intent.putExtra("sub", sub);
+                //intent.putExtra("sub", sub);
                 intent.putExtra("type", type);
                 Common.startActivityOptions(getActivity(), intent);
                 mAdapter.notifyDataSetChanged();

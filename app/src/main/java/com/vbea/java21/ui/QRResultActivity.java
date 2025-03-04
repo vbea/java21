@@ -22,7 +22,7 @@ public class QRResultActivity extends BaseActivity {
 
     @Override
     protected void after() {
-        enableBackButton();
+        enableBackButton(R.id.toolbar);
         result = getIntent().getStringExtra(QR_RESULT);
         TextView textView = bind(R.id.txt_qr_result);
         if (!VbeUtil.isNullOrEmpty(result)) {
@@ -31,6 +31,13 @@ public class QRResultActivity extends BaseActivity {
                 @Override
                 public void onClick(View view) {
                     showSearch();
+                }
+            });
+            bind(R.id.btn_qr_copy).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    VbeUtil.addClipboard(getApplicationContext(), result);
+                    toastShortMessage("已复制到剪贴板");
                 }
             });
         }

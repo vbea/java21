@@ -82,7 +82,8 @@ public class Common
 	public static final String FileProvider = "com.vbea.java21.fileprovider";
 	public static final String ExterPath = Environment.getExternalStorageDirectory().getAbsolutePath();
 	private static final String LocalPath = ExterPath + "/ZDApp/";
-	private static final String DataPath = "/data/data/com.vbea.java21/file";
+	private static final String DataPath = "/data/data/com.vbea.java21/file/";
+	private static final String DownloadPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath() + "/Java21/";
 	private static List<Tips> mTips = null;
 	public static InboxManager myInbox;
 	private static long lastTipsTime;
@@ -278,6 +279,8 @@ public class Common
 	}
 	
 	public static boolean canLogin() {
+		if (mUser == null)
+			return true;
 		if (AUTO_LOGIN_MODE <= 0 || USERID.equals("") || USERPASS.equals("") || mUser != null || !IS_ACTIVE)
 			return false;
 		return true;
@@ -537,7 +540,7 @@ public class Common
 		if (Util.hasAllPermissions(context, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
 			return LocalPath;
 		}
-		return DataPath;
+		return DownloadPath;
 	}
 
 	public static String getUpdatePath(Context context) {
@@ -578,12 +581,13 @@ public class Common
 			if (!path.exists()) {
 				path.mkdirs();
 			}
-			File file = new File(path, mUser.icon.getFilename());
+			File file = new File("");
+			//File file = new File(path, mUser.icon.getFilename());
 			if (file.exists())
 				return BitmapFactory.decodeFile(file.getAbsolutePath());
 			else {
 				try {
-					mUser.icon.download(file, new DownloadFileListener() {
+					/*mUser.icon.download(file, new DownloadFileListener() {
 						@Override
 						public void done(String p1, BmobException p2) {
 							
@@ -593,7 +597,7 @@ public class Common
 						public void onProgress(Integer p1, long p2) {
 
 						}
-					});
+					});*/
 				} catch (Exception e) {
 					ExceptionHandler.log("getIcon", e.toString());
 				}
@@ -603,6 +607,13 @@ public class Common
 	}
 	
 	public static void setIcon(ImageView v, boolean round) {
+		if (mUser != null) {
+			if (round)
+				v.setImageDrawable(getRoundedIconDrawable(v.getContext(), mUser.icon));
+			else
+				v.setImageBitmap(mUser.icon);
+			return;
+		}
 		//if (!downed)
 			//v.setImageDrawable(getRoundedIconDrawable(context, BitmapFactory.decodeResource(context.getResources(), R.mipmap.head)));
 		if (mUser != null) {
@@ -875,8 +886,10 @@ public class Common
 		mUser = null;//登录用户
 		mTips = null;//通知中心
 		myInbox = null;//消息中心
-		copyMsgs.clear();
-		copyMsgs = null;
+		if (copyMsgs != null) {
+			copyMsgs.clear();
+			copyMsgs = null;
+		}
 		//停止正在运行的音乐服务
 		if (audioService != null) {
 			if (audioService.isPlay())

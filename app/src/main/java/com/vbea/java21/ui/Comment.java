@@ -28,6 +28,7 @@ import com.vbea.java21.classes.ExceptionHandler;
 import com.vbea.java21.data.Comments;
 import com.vbea.java21.adapter.CommentAdapter;
 import com.vbes.util.VbeUtil;
+import com.vbes.util.lis.DialogResult;
 
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.listener.SaveListener;
@@ -100,7 +101,7 @@ public class Comment extends BaseActivity {
             edtComment.setEnabled(false);
             edtComment.setHint("您已被禁言，无法评论，请联系管理员解禁");
         }
-        enableBackButton(new View.OnClickListener() {
+        enableBackButton(R.id.toolbar, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (reference != null && reference.length() > 0)
@@ -161,10 +162,15 @@ public class Comment extends BaseActivity {
 
             @Override
             public void onDelete(final Comments comm, final int position) {
-                deleteDialog(new DialogInterface.OnClickListener() {
+                VbeUtil.showConfirmCancelDialog(Comment.this, "删除评论", "您确定要删除此评论？", new DialogResult() {
                     @Override
-                    public void onClick(DialogInterface p1, int p2) {
+                    public void onConfirm() {
                         deleteComment(comm, position);
+                    }
+
+                    @Override
+                    public void onCancel() {
+
                     }
                 });
             }
@@ -246,10 +252,6 @@ public class Comment extends BaseActivity {
             newStr.append(Common.getUsername());
         }
         return Util.removeEmptyItem(newStr.toString().split(","));
-    }
-
-    private void deleteDialog(DialogInterface.OnClickListener lis) {
-        VbeUtil.showConfirmCancelDialog(this, "删除评论", "您确定要删除此评论？", lis);
     }
 
     private void showInput() {

@@ -30,7 +30,7 @@ public class About extends BaseActivity
 
 	@Override
 	public void after() {
-		enableBackButton();
+		enableBackButton(R.id.toolbar);
 		actLayout = bind(R.id.abt_actLayout);
 		TableRow rowStatus = bind(R.id.tab_actStatus);
 		install = bind(R.id.about_install);

@@ -16,12 +16,31 @@
         android:textColor="?attr/textPrimary"
         android:textIsSelectable="true"
         android:textSize="15sp"/>
-    <Button
-        android:id="@+id/btn_qr_search"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_vertical_margin"
-        android:background="@drawable/btn_button"
-        android:textColor="@color/snow"
-        android:text="浏览/搜索"/>
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_qr_copy"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="@dimen/activity_half_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:background="@drawable/btn_button"
+            android:textColor="@color/snow"
+            android:text="复制"/>
+        <Button
+            android:id="@+id/btn_qr_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:background="@drawable/btn_button"
+            android:textColor="@color/snow"
+            android:text="浏览/搜索"/>
+    </LinearLayout>
 </LinearLayout>

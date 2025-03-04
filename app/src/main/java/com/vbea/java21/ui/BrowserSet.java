@@ -31,7 +31,7 @@ public class BrowserSet extends BaseActivity
 
 	@Override
 	protected void after() {
-		enableBackButton();
+		enableBackButton(R.id.toolbar);
 		txtSearch = bind(R.id.txt_webSearch);
 		txtUserAgent = bind(R.id.txt_webUa);
 		txtSavePath = bind(R.id.txt_webSavePath);

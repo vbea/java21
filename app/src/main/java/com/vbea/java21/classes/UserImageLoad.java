@@ -39,7 +39,7 @@ public class UserImageLoad {
                     if (user.icon == null)
                         return;
                     File file = new File(Common.getCachePath(null), user.name + ".png");
-                    user.icon.download(file, new DownloadFileListener() {
+                    /*user.icon.download(file, new DownloadFileListener() {
                         @Override
                         public void done(String p1, BmobException p2) {
                             if (listener != null) {
@@ -51,7 +51,7 @@ public class UserImageLoad {
                         public void onProgress(Integer p1, long p2) {
 
                         }
-                    });
+                    });*/
                 }
             }
         });

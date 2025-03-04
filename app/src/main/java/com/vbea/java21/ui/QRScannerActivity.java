@@ -1,8 +1,11 @@
 package com.vbea.java21.ui;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -32,12 +35,12 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
     @Override
     protected void after() {
-        enableBackButton();
+        enableBackButton(R.id.toolbar);
         zBarView.setDelegate(this);
         bind(R.id.qr_gallery).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GalleryUtil.from(QRScannerActivity.this).choose(MimeType.ofImage()).theme(MyThemes.getTheme()).thumbnailScale(0.85f).forResult(120);
+                GalleryUtil.from(QRScannerActivity.this).choose(MimeType.ofImage()).theme(MyThemes.getTheme()).thumbnailScale(0.85f).immediateSelect(true).forResult(120);
             }
         });
     }
@@ -59,22 +62,22 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
 
     private void showResult(String result) {
         if (result.contains("://")) {
-            if (result.contains("http://") || result.contains("https://") || result.contains("vbea://")) {
+            if (result.startsWith("http://") || result.startsWith("https://") || result.startsWith("vbea://")) {
                 Intent intent = new Intent(QRScannerActivity.this, HtmlViewer.class);
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse(result));
                 startActivity(intent);
             } else {
-                try {
+                /*try {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.addCategory(Intent.CATEGORY_DEFAULT);
                     intent.setData(Uri.parse(result));
                     startActivity(intent);
-                } catch (Exception e) {
+                } catch (Exception e) {*/
                     Intent intent = new Intent(QRScannerActivity.this, QRResultActivity.class);
                     intent.putExtra(QRResultActivity.QR_RESULT, result);
                     startActivity(intent);
-                }
+                //}
             }
         } else {
             Intent intent = new Intent(QRScannerActivity.this, QRResultActivity.class);
@@ -126,7 +129,7 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
     @Override
     protected void onStart() {
         super.onStart();
-        init();
+        mHandler.sendEmptyMessageDelayed(1, 300);
     }
 
     @Override
@@ -142,13 +145,13 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
         super.onDestroy();
     }
 
-    /*@SuppressLint("HandlerLeak")
+    @SuppressLint("HandlerLeak")
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    qrLayer.setVisibility(View.GONE);
+                    init();
                     break;
                 case 3:
                     hideLoading();
@@ -157,5 +160,5 @@ public class QRScannerActivity extends BaseActivity implements QRCodeView.Delega
             }
             super.handleMessage(msg);
         }
-    };*/
+    };
 }

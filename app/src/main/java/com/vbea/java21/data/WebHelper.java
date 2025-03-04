@@ -84,6 +84,21 @@ public class WebHelper extends SQLiteOpenHelper {
         return 0;
     }
 
+    public int updateBookmark(BookMark item, String... id) {
+        SQLiteDatabase db = getWritableDatabase();
+        try {
+            ContentValues map = new ContentValues();
+            map.put(COL_TITLE, item.getTitle());
+            map.put(COL_URL, item.getUrl());
+            return db.update(TABLE_BOOK, map, "id=?", id);
+        } catch (Exception e) {
+            ExceptionHandler.log("sql_editBookmark", e.toString());
+        } finally {
+            db.close();
+        }
+        return 0;
+    }
+
     //获取所有的历史记录
     public Cursor listHistory() throws Exception {
         SQLiteDatabase db = getReadableDatabase();

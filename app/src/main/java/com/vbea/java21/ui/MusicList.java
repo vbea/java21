@@ -13,69 +13,67 @@ import com.vbea.java21.audio.*;
 import com.vbea.java21.view.MyDividerDecoration;
 import com.vbes.util.list.BaseListAdapter;
 
-public class MusicList extends BaseActivity
-{
-	private RecyclerView recyclerView;
-	private MusicAdapter mAdapter;
+public class MusicList extends BaseActivity {
+    private RecyclerView recyclerView;
+    private MusicAdapter mAdapter;
 
-	@Override
-	protected void before()
-	{
-		setContentView(R.layout.musiclist);
-	}
+    @Override
+    protected void before() {
+        setContentView(R.layout.musiclist);
+    }
 
-	@Override
-	protected void after()
-	{
-		enableBackButton();
-		recyclerView = bind(R.id.music_recyclerView);
-		
-		mAdapter = new MusicAdapter();
-		mAdapter.setIsVip(Common.isVipUser());
-		recyclerView.addItemDecoration(new MyDividerDecoration(this));
-		recyclerView.setAdapter(mAdapter);
-		recyclerView.setHasFixedSize(true);
-		recyclerView.setLayoutManager(new LinearLayoutManager(this));
-		mAdapter.addData(Common.SOUND.getMusicList());
+    @Override
+    protected void after() {
+        enableBackButton(R.id.toolbar);
+        recyclerView = bind(R.id.music_recyclerView);
 
-		mAdapter.setOnItemClickListener(new BaseListAdapter.OnItemClickListener() {
-			@Override
-			public void onItemClick(int i, View view) {
-				final int old = Common.audioService.what;
-				Common.audioService.play(i);
-				mAdapter.notifyItemChanged(old);
-				mAdapter.notifyItemChanged(i);
-			}
-		});
+        mAdapter = new MusicAdapter();
+        mAdapter.setIsVip(Common.isVipUser());
+        recyclerView.addItemDecoration(new MyDividerDecoration(this));
+        recyclerView.setAdapter(mAdapter);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mAdapter.addData(Common.SOUND.getMusicList());
 
-		mAdapter.setOnItemLongClickListener(new BaseListAdapter.OnItemLongClickListener() {
-			@Override
-			public void onItemLongClick(int i, View view) {
-				Music music = mAdapter.getItemData(i);
-				Util.addClipboard(MusicList.this, "music", music.key);
-				Util.toastShortMessage(getApplicationContext(), "已复制代码到剪贴板");
-			}
-		});
+        mAdapter.setOnItemClickListener(new BaseListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int i, View view) {
+                final int old = Common.audioService.what;
+                Common.audioService.play(i);
+                mAdapter.notifyItemChanged(old);
+                mAdapter.notifyItemChanged(i);
+            }
+        });
 
-		Common.audioService.addAudioChangedListener(new OnAudioChangedListener() {
-			@Override
-			public void onAudioChange() {
-				try {
-					mAdapter.notifyDataSetChanged();
-				} catch (Exception ignored){}
-			}
-		});
-	}
+        mAdapter.setOnItemLongClickListener(new BaseListAdapter.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(int i, View view) {
+                Music music = mAdapter.getItemData(i);
+                Util.addClipboard(MusicList.this, "music", music.key);
+                Util.toastShortMessage(getApplicationContext(), "已复制代码到剪贴板");
+            }
+        });
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		mAdapter.notifyDataSetChanged();
-	}
+        Common.audioService.addAudioChangedListener(new OnAudioChangedListener() {
+            @Override
+            public void onAudioChange() {
+                try {
+                    mAdapter.notifyDataSetChanged();
+                } catch (Exception ignored) {
+                }
+            }
+        });
+    }
 
-	@Override
-	protected void onDestroy() {
-		Common.audioService.addAudioChangedListener(null);
-		super.onDestroy();
-	}
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onDestroy() {
+        Common.audioService.addAudioChangedListener(null);
+        super.onDestroy();
+    }
 }

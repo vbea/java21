@@ -176,7 +176,8 @@
 				android:gravity="start|center_vertical"
 				android:padding="@dimen/activity_vertical_margin"
 				android:textColor="?attr/textPrimary"
-				android:textSize="16sp"/>
+				android:textSize="16sp"
+				android:enabled="false"/>
 			<TextView
 				android:id="@+id/btn_setJoin"
 				android:layout_width="match_parent"
@@ -186,7 +187,8 @@
 				android:gravity="start|center_vertical"
 				android:padding="@dimen/activity_vertical_margin"
 				android:textColor="?attr/textPrimary"
-				android:textSize="16sp"/>
+				android:textSize="16sp"
+				android:enabled="false"/>
 			<TextView
 				android:id="@+id/btn_setHelp"
 				android:layout_width="match_parent"
@@ -196,7 +198,8 @@
 				android:gravity="start|center_vertical"
 				android:padding="@dimen/activity_vertical_margin"
 				android:textColor="?attr/textPrimary"
-				android:textSize="16sp"/>
+				android:textSize="16sp"
+				android:enabled="false"/>
 			<TextView
 				android:id="@+id/btn_setDonate"
 				android:layout_width="match_parent"

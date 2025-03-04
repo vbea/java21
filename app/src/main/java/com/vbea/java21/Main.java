@@ -3,6 +3,8 @@ package com.vbea.java21;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,11 +31,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 
-/*import com.qq.e.ads.banner2.UnifiedBannerADListener;
-import com.qq.e.ads.banner2.UnifiedBannerView;
-import com.qq.e.comm.util.AdError;*/
-import com.tencent.stat.StatService;
 import com.vbea.java21.classes.ReadUtil;
+import com.vbea.java21.data.Users;
 import com.vbea.java21.fragment.AideFragment;
 import com.vbea.java21.fragment.Android2Fragment;
 import com.vbea.java21.fragment.AndroidFragment;
@@ -55,6 +54,7 @@ import com.vbea.java21.ui.Login;
 import com.vbea.java21.ui.More;
 import com.vbea.java21.ui.MyInbox;
 import com.vbea.java21.ui.MyThemes;
+import com.vbea.java21.ui.QRGenerateActivity;
 import com.vbea.java21.ui.QRScannerActivity;
 import com.vbea.java21.ui.SetDrawerImage;
 import com.vbea.java21.ui.TextReplace;
@@ -68,7 +68,13 @@ import com.vbea.java21.audio.SoundLoad;
 import com.vbea.java21.data.Copys;
 import com.vbea.java21.data.Tips;
 import com.vbes.util.VbeUtil;
+import com.vbes.util.lis.DialogResult;
 import com.vbes.util.view.MyAlertDialog;
+
+/*import com.qq.e.ads.banner2.UnifiedBannerADListener;
+import com.qq.e.ads.banner2.UnifiedBannerView;
+import com.qq.e.comm.util.AdError;
+import com.tencent.stat.StatService;*/
 
 public class Main extends BaseActivity {
     private DrawerLayout mDrawerLayout;
@@ -90,7 +96,7 @@ public class Main extends BaseActivity {
     protected void before() {
         MyThemes.initBackColor(this);
         setContentView(R.layout.main);
-        StatService.registerActivityLifecycleCallbacks(this.getApplication());
+       // StatService.registerActivityLifecycleCallbacks(this.getApplication());
     }
 
     @Override
@@ -127,7 +133,7 @@ public class Main extends BaseActivity {
         tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.white), ContextCompat.getColor(this, R.color.gray2));
         MyThemes.ISCHANGED = true;
         Common.IsChangeICON = true;
-        enableToolBar();
+        enableToolBar(R.id.toolbar);
         drawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.app_name, R.string.app_name);
         mDrawerLayout.addDrawerListener(drawerToggle);
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
@@ -194,7 +200,7 @@ public class Main extends BaseActivity {
                 onAutoLogin();
             mHandler.sendEmptyMessageDelayed(6, 500);
         }
-        StatService.trackCustomEvent(this, "onCreate", "");
+        //StatService.trackCustomEvent(this, "onCreate", "");
     }
 	
 	/*private void setHead()
@@ -315,6 +321,11 @@ public class Main extends BaseActivity {
         mHandler.sendEmptyMessageDelayed(1, 500);
     }
 
+    public void goQRGenerate(View v) {
+        Common.startActivityOptions(Main.this, QRGenerateActivity.class);
+        mHandler.sendEmptyMessageDelayed(1, 500);
+    }
+
     public void goQQMessage(View v) {
         if (!Common.isLogin()) {
             Util.toastShortMessage(getApplicationContext(), "请先登录！");
@@ -427,13 +438,14 @@ public class Main extends BaseActivity {
         }
         //else
         //menu.findItem(R.id.item_alipay).setVisible(false);
+        /* 2021/12/06 移除消息中心
         if (Common.getInbox().getCount() > 0) {
             menu.findItem(R.id.item_newmsg).setVisible(true);
             menu.findItem(R.id.item_msg).setVisible(false);
         } else {
             menu.findItem(R.id.item_newmsg).setVisible(false);
             menu.findItem(R.id.item_msg).setVisible(true);
-        }
+        }*/
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -445,6 +457,7 @@ public class Main extends BaseActivity {
         }
         //Common.myInbox.refreshMessage();
         switch (item.getItemId()) {
+            /* 2021/12/06 移除消息中心
             case R.id.item_msg:
             case R.id.item_newmsg:
                 if (Common.isLogin()) {
@@ -453,6 +466,15 @@ public class Main extends BaseActivity {
                     invalidateOptionsMenu();
                 } else
                     Common.startActivityOptions(this, Login.class);
+                break;*/
+            case R.id.item_scanQR:
+                startActivity(new Intent(Main.this, QRScannerActivity.class));
+                break;
+            case R.id.item_covid_18:
+                startToBrowser("https://feiyan.wecity.qq.com/wuhan/dist/index.html#/?tab=chengshiyiqing&channel=AAFnGdwUIhK0V4QeZ2Rxb91t");
+                break;
+            case R.id.item_covid_19:
+                startToBrowser("https://feiyan.wecity.qq.com/wuhan/dist/index.html#/?tab=shishitongbao&channel=AAFnGdwUIhK0V4QeZ2Rxb91t");
                 break;
             case R.id.item_about:
                 Common.startActivityOptions(Main.this, About.class);
@@ -475,13 +497,19 @@ public class Main extends BaseActivity {
     private void showDynamicMenu(int id) {
         final Copys msg = Common.getCopyMsg(id);
         if (msg != null) {
-            if (msg.getType() == 0)
+            if (msg.getType() == 0) {
                 VbeUtil.showResultDialog(this, msg.getMessage(), msg.getTitle());
-            else if (msg.getType() == 1) {
-                VbeUtil.showConfirmCancelDialog(this, msg.getTitle(), msg.getMessage(), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface d, int p) {
+            } else if (msg.getType() == 1) {
+                VbeUtil.showConfirmCancelDialog(this, msg.getTitle(), msg.getMessage(), new DialogResult() {
+                    @Override
+                    public void onConfirm() {
                         Util.addClipboard(Main.this, msg.getResult());
                         Util.toastShortMessage(getApplicationContext(), "复制成功");
+                    }
+
+                    @Override
+                    public void onCancel() {
+
                     }
                 });
             } else {
@@ -493,11 +521,17 @@ public class Main extends BaseActivity {
                 if (!Util.isNullOrEmpty(msg.getUrl()))
                     intent.setData(Uri.parse(msg.getUrl()));
                 if (!Util.isNullOrEmpty(msg.getMessage())) {
-                    VbeUtil.showConfirmCancelDialog(this, msg.getTitle(), msg.getMessage(), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface d, int p) {
+                    VbeUtil.showConfirmCancelDialog(this, msg.getTitle(), msg.getMessage(), new DialogResult() {
+                        @Override
+                        public void onConfirm() {
                             VbeUtil.startActivityOptions(Main.this, intent);
                             if (!Util.isNullOrEmpty(msg.getResult()))
                                 Util.toastLongMessage(getApplicationContext(), msg.getResult());
+                        }
+
+                        @Override
+                        public void onCancel() {
+
                         }
                     });
                 } else {
@@ -509,9 +543,16 @@ public class Main extends BaseActivity {
         }
     }
 
+    private void startToBrowser(String url) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setClass(this, HtmlViewer.class);
+        intent.setData(Uri.parse(url));
+        VbeUtil.startActivityOptions(this, intent);
+    }
+
     @Override
     protected void onPause() {
-        StatService.onPause(this);
+        //StatService.onPause(this);
         super.onPause();
     }
 	
@@ -572,7 +613,7 @@ public class Main extends BaseActivity {
         //showBanner();
         if (!menuReady && Common.isNet(this))
             Common.getTestMsg();
-        StatService.onResume(this);
+        //StatService.onResume(this);
         super.onResume();
     }
 
@@ -685,6 +726,24 @@ public class Main extends BaseActivity {
     }
 
     public void onAutoLogin() {
+        Users users = new Users();
+        users.name = "vbea";
+        users.nickname = "邠心";
+        users.address = "中国";
+        users.birthday = "2013-05-20";
+        users.dated = 5201314;
+        users.email = "vbea@vbestudio.com";
+        users.gender = true;
+        users.device = "Holo Lines";
+        users.valid = true;
+        users.role = 1;
+        users.icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_logo_vbes);
+        if (users != null) {
+            Common.USERID = users.name;
+            Common.mUser = users;
+            showUserInfo();
+            return;
+        }
         try {
             if (!Common.isLogin()) {
                 mHandler.sendEmptyMessage(10);
@@ -808,7 +867,7 @@ public class Main extends BaseActivity {
     protected void onStop() {
 		/*if (Common.isSupportMD())
 			toolbar.setTransitionName(getString(R.string.shared));*/
-        StatService.onStop(this);
+        //StatService.onStop(this);
         super.onStop();
     }
 

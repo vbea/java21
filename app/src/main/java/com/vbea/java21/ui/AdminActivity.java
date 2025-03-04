@@ -38,7 +38,7 @@ public class AdminActivity extends BaseActivity {
 
     @Override
     protected void after() {
-        enableBackButton();
+        enableBackButton(R.id.toolbar);
         bind(R.id.admin_clearUser).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

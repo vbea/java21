@@ -71,7 +71,7 @@ public class Login extends BaseActivity {
         }
         edtUid.setText(Common.USERID);
 
-        enableBackButton(new View.OnClickListener() {
+        enableBackButton(R.id.toolbar, new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (canGoback)

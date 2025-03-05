@@ -125,6 +125,7 @@ android {
         jcenter()
         google()
         maven { url "file:/C:/Android/android-sdk/extras/android/m2repository/" }
+        maven { url "file:/D:/Android/android-sdk/extras/android/m2repository/" }
     }
     /*compileOptions {
         sourceCompatibility = "1.8"
